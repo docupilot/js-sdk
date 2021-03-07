@@ -1,0 +1,1534 @@
+openapi: 3.0.3
+info:
+  title: Docupilot V2 APIs
+  version: '2.0'
+  x-logo:
+    url: https://docupilot.app/assets/img/logo-master.png
+    backgroundColor: '#FFFFFF'
+    altText: Docupilot logo
+  description: Docupilot V2 APIs
+paths:
+  /accounts/v2/users/me/:
+    get:
+      operationId: accounts_v2_users_me_retrieve
+      description: ''
+      tags:
+      - accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: accounts_v2_users_me_update
+      description: ''
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/v2/folders/:
+    get:
+      operationId: list_folders
+      description: Get list of folders
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - folders
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFolderList'
+          description: ''
+    post:
+      operationId: create_folder
+      description: Create a folder
+      tags:
+      - folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Folder'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+  /api/v2/folders/{id}/:
+    put:
+      operationId: update_folder
+      description: Updates a folder
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this folder.
+        required: true
+      tags:
+      - folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Folder'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    delete:
+      operationId: delete_folder
+      description: Delete a folder. This operation moves all templates under this
+        folder to home directory.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this folder.
+        required: true
+      tags:
+      - folders
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v2/history/:
+    get:
+      operationId: get_created_documents_history
+      description: Get created documents history
+      parameters:
+      - in: query
+        name: document
+        schema:
+          type: integer
+          nullable: true
+      - in: query
+        name: end_date
+        schema:
+          type: string
+          format: date-time
+        description: 'DateTime string in this format : 2019-05-02 16:25:12.353000'
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: start_date
+        schema:
+          type: string
+          format: date-time
+        description: 'DateTime string in this format : 2019-05-02 16:25:12.353000'
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - error
+          - pending
+          - success
+      tags:
+      - history
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMergeHistoryList'
+          description: ''
+  /api/v2/linked_accounts/:
+    get:
+      operationId: list_delivery_accounts
+      description: Get list of linked accounts
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sign_now
+          - webhook
+          - zoho_crm
+      tags:
+      - linked_accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDeliveryAccountList'
+          description: ''
+  /api/v2/linked_accounts/{id}/:
+    delete:
+      operationId: revoke_delivery_account
+      description: Revoke linked account
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v2/templates/:
+    get:
+      operationId: list_templates
+      description: Get list of templates
+      parameters:
+      - in: query
+        name: folder
+        schema:
+          type: integer
+          nullable: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: output_type
+        schema:
+          type: string
+          enum:
+          - docx
+          - jpeg
+          - pdf
+          - png
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - test
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - docx
+          - fillable_pdf
+          - g_document
+          - g_presentation
+          - g_spreadsheet
+          - html
+          - pptx
+          - xlsx
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTemplateList'
+          description: ''
+    post:
+      operationId: create_template
+      description: Create template
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/{id}/:
+    get:
+      operationId: get_template
+      description: Get template
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+    put:
+      operationId: update_template
+      description: Update template
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+    delete:
+      operationId: trash_template
+      description: Move template to trash
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v2/templates/{id}/content/:
+    get:
+      operationId: templates_content_retrieve
+      description: Get or update template content
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+    post:
+      operationId: templates_content_create
+      description: Get or update template content
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/{id}/generate/:
+    post:
+      operationId: generate_document
+      description: Generate document from template
+      parameters:
+      - in: query
+        name: download
+        schema:
+          type: string
+          enum:
+          - 'false'
+          - file
+          - 'true'
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      - in: query
+        name: test_mode
+        schema:
+          type: boolean
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/{id}/permanent_delete/:
+    delete:
+      operationId: delete_template_permanently
+      description: Delete a template permanently from trash
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v2/templates/{id}/restore/:
+    put:
+      operationId: restore_template_from_trash
+      description: Restore a template from trash
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/{id}/schema/:
+    get:
+      operationId: get_template_schema
+      description: Get template schema
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/{id}/test_data/:
+    get:
+      operationId: get_test_data
+      description: Get test data used for testing template
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/{template_id}/batch_processes/:
+    get:
+      operationId: list_bulk_generation_tasks
+      description: List bulk generation tasks
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBatchProcessList'
+          description: ''
+  /api/v2/templates/{template_id}/batch_processes/{id}/:
+    get:
+      operationId: get_bulk_generation_task
+      description: Get bulk generation task
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int32
+        description: Task id
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        description: Template id
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchProcess'
+          description: ''
+  /api/v2/templates/{template_id}/batch_processes/{id}/cancel/:
+    put:
+      operationId: cancel_bulk_generation_task
+      description: Cancel a bulk generation task
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int32
+        description: Task id
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        description: Template id
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchProcess'
+          description: ''
+  /api/v2/templates/{template_id}/batch_processes/{id}/draft/:
+    get:
+      operationId: get_bulk_generation_draft
+      description: Get a task saved as draft
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int32
+        description: Task id
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        description: Template id
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchProcess'
+          description: ''
+  /api/v2/templates/{template_id}/batch_processes/{id}/trigger/:
+    post:
+      operationId: trigger_bulk_generation_draft
+      description: Trigger a bulk generation task
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int32
+        description: Task id
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        description: Template id
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchProcess'
+          description: ''
+  /api/v2/templates/{template_id}/batch_processes/upload/:
+    post:
+      operationId: upload_for_bulk_generation
+      description: Upload a new csv for bulk generate. This will create a task in
+        DRAFT mode.
+      parameters:
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        description: Template id
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BatchProcess'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchProcess'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/:
+    get:
+      operationId: list_template_deliveries
+      description: Get deliveries configured under this template
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDeliveryList'
+          description: ''
+    post:
+      operationId: create_template_delivery
+      description: Create delivery
+      parameters:
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/{id}/:
+    get:
+      operationId: retrieve_template_delivery
+      description: Get delivery
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+          description: ''
+    put:
+      operationId: update_template_delivery
+      description: Update delivery
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Delivery'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Delivery'
+          description: ''
+    delete:
+      operationId: delete_template_delivery
+      description: Delete delivery
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v2/templates/{template_id}/file_info/download/:
+    get:
+      operationId: download_template_file
+      description: Download template file
+      parameters:
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileInfo'
+          description: ''
+  /api/v2/templates/{template_id}/merge_links/:
+    get:
+      operationId: list_generation_links
+      description: Get document create link parameters. URL to create document will
+        be /documents/create/{path}
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDocumentMergeLinkList'
+          description: ''
+  /api/v2/templates/all/:
+    get:
+      operationId: list_all_templates
+      description: List all templates, excluding trashed, without pagination.
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+  /api/v2/templates/trash/:
+    get:
+      operationId: list_trashed_templates
+      description: List all trashed templates.
+      tags:
+      - templates
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+components:
+  schemas:
+    BatchProcess:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        file:
+          $ref: '#/components/schemas/FileInfo'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchProcessTask'
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/BatchProcessStatusEnum'
+          minimum: 0
+          maximum: 32767
+        start_time:
+          type: string
+          format: date-time
+          nullable: true
+        end_time:
+          type: string
+          format: date-time
+          nullable: true
+        total:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        success:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+      required:
+      - errors
+      - file
+      - id
+    BatchProcessStatusEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+    BatchProcessTask:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        merge_type:
+          $ref: '#/components/schemas/MergeTypeEnum'
+        merge_data:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/BatchProcessTaskStatusEnum'
+          minimum: 0
+          maximum: 32767
+        status_message:
+          type: string
+          nullable: true
+          maxLength: 255
+        batch_process:
+          type: integer
+        document:
+          type: integer
+      required:
+      - batch_process
+      - document
+      - id
+    BatchProcessTaskStatusEnum:
+      enum:
+      - 0
+      - 1
+      - 2
+      type: integer
+    Delivery:
+      type: object
+      description: |-
+        Write value only in `post` and not allow the field to be updated in `put/patch` requests.
+        Can be used for non-write_only fields
+
+        To use it, specify a list of fields as `write_once_fields` on the serializer's Meta:
+        ```
+        class Meta:
+            model = Model
+            fields = '__all__' or (list of fields)
+            write_once_fields = ('collection', )
+        ```
+
+        Now the fields in `write_once_fields` can be set during POST (create),
+        but cannot be changed afterwards via PUT or PATCH (update).
+
+        Reference: http://blog.qax.io/write-once-fields-with-django-rest-framework/
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        account:
+          type: integer
+          nullable: true
+      required:
+      - id
+      - name
+      - type
+    DeliveryAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        is_expired:
+          type: boolean
+        credentials:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+      required:
+      - credentials
+      - id
+      - name
+      - type
+    DocumentMergeLink:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        path:
+          type: string
+          readOnly: true
+        unique_key:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - path
+      - unique_key
+    FileInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+      required:
+      - id
+      - name
+    Folder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+      required:
+      - id
+      - name
+    MergeHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        document:
+          allOf:
+          - $ref: '#/components/schemas/Template'
+          readOnly: true
+        delivery_type:
+          type: string
+          maxLength: 255
+        status:
+          $ref: '#/components/schemas/MergeHistoryStatusEnum'
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        created_file_name:
+          type: string
+          maxLength: 255
+        message:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        mode:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - created_file_name
+      - created_time
+      - delivery_type
+      - document
+      - id
+      - status
+    MergeHistoryStatusEnum:
+      enum:
+      - pending
+      - success
+      - error
+      type: string
+    MergeTypeEnum:
+      enum:
+      - active
+      - test
+      type: string
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - id
+    PaginatedBatchProcessList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchProcess'
+    PaginatedDeliveryAccountList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryAccount'
+    PaginatedDeliveryList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Delivery'
+    PaginatedDocumentMergeLinkList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentMergeLink'
+    PaginatedFolderList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Folder'
+    PaginatedMergeHistoryList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MergeHistory'
+    PaginatedTemplateList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+    Template:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+      required:
+      - id
+      - title
+    TypeEnum:
+      enum:
+      - email
+      - webhook
+      - docu_sign
+      - sign_now
+      - zoho_crm
+      - dropbox
+      - google_drive
+      - hellosign
+      - podio
+      - one_drive
+      - eversign
+      - aws_s3
+      type: string
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 30
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          readOnly: true
+        timezone:
+          type: string
+          nullable: true
+          maxLength: 100
+        organization:
+          $ref: '#/components/schemas/Organization'
+      required:
+      - email
+      - id
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: bearer
+externalDocs:
+  url: https://help.docupilot.app/developers/api-overview
+  description: Help docs on how to use API
