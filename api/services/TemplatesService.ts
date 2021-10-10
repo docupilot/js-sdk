@@ -1,43 +1,34 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BatchProcess } from '../models/BatchProcess';
-import type { Delivery } from '../models/Delivery';
-import type { FileInfo } from '../models/FileInfo';
-import type { PaginatedBatchProcessList } from '../models/PaginatedBatchProcessList';
-import type { PaginatedDeliveryList } from '../models/PaginatedDeliveryList';
-import type { PaginatedDocumentMergeLinkList } from '../models/PaginatedDocumentMergeLinkList';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { Template } from '../models/Template';
+import type { UpdateTemplate } from '../models/UpdateTemplate';
 import { request as __request } from '../core/request';
 
 export class TemplatesService {
 
     /**
      * Get list of templates
+     * @param folder
+     * @param ordering Which field to use when ordering the results.
+     * @param outputType
+     * @param page A page number within the paginated result set.
+     * @param search A search term.
+     * @param status
+     * @param type
      * @returns PaginatedTemplateList
      * @throws ApiError
      */
-    public static async listTemplates({
-        folder,
-        ordering,
-        outputType,
-        page,
-        search,
-        status,
-        type,
-    }: {
-        folder?: number | null,
-        /** Which field to use when ordering the results. **/
+    public static async listTemplates(
+        folder?: number,
         ordering?: string,
         outputType?: 'docx' | 'jpeg' | 'pdf' | 'png',
-        /** A page number within the paginated result set. **/
         page?: number,
-        /** A search term. **/
         search?: string,
         status?: 'active' | 'test',
         type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
-    }): Promise<PaginatedTemplateList> {
+    ): Promise<PaginatedTemplateList> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/`,
@@ -56,14 +47,13 @@ export class TemplatesService {
 
     /**
      * Create template
+     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async createTemplate({
-        requestBody,
-    }: {
+    public static async createTemplate(
         requestBody: Template,
-    }): Promise<Template> {
+    ): Promise<Template> {
         const result = await __request({
             method: 'POST',
             path: `/api/v2/templates/`,
@@ -73,16 +63,14 @@ export class TemplatesService {
     }
 
     /**
-     * Get template
+     * Get one template
+     * @param id A unique integer value identifying this document.
      * @returns Template
      * @throws ApiError
      */
-    public static async getTemplate({
-        id,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async getTemplate(
         id: number,
-    }): Promise<Template> {
+    ): Promise<Template> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${id}/`,
@@ -92,17 +80,15 @@ export class TemplatesService {
 
     /**
      * Update template
+     * @param id A unique integer value identifying this document.
+     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async updateTemplate({
-        id,
-        requestBody,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async updateTemplate(
         id: number,
-        requestBody: Template,
-    }): Promise<Template> {
+        requestBody: UpdateTemplate,
+    ): Promise<Template> {
         const result = await __request({
             method: 'PUT',
             path: `/api/v2/templates/${id}/`,
@@ -113,15 +99,13 @@ export class TemplatesService {
 
     /**
      * Move template to trash
-     * @returns any No response body
+     * @param id A unique integer value identifying this document.
+     * @returns void
      * @throws ApiError
      */
-    public static async trashTemplate({
-        id,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async trashTemplate(
         id: number,
-    }): Promise<any> {
+    ): Promise<void> {
         const result = await __request({
             method: 'DELETE',
             path: `/api/v2/templates/${id}/`,
@@ -130,16 +114,14 @@ export class TemplatesService {
     }
 
     /**
-     * Get or update template content
+     * Get template content
+     * @param id A unique integer value identifying this document.
      * @returns Template
      * @throws ApiError
      */
-    public static async templatesContentRetrieve({
-        id,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async getContent(
         id: number,
-    }): Promise<Template> {
+    ): Promise<Template> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${id}/content/`,
@@ -148,18 +130,16 @@ export class TemplatesService {
     }
 
     /**
-     * Get or update template content
+     * Update template content
+     * @param id A unique integer value identifying this document.
+     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async templatesContentCreate({
-        id,
-        requestBody,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async updateContent(
         id: number,
         requestBody: Template,
-    }): Promise<Template> {
+    ): Promise<Template> {
         const result = await __request({
             method: 'POST',
             path: `/api/v2/templates/${id}/content/`,
@@ -169,45 +149,14 @@ export class TemplatesService {
     }
 
     /**
-     * Generate document from template
-     * @returns Template
-     * @throws ApiError
-     */
-    public static async generateDocument({
-        id,
-        requestBody,
-        download,
-        testMode,
-    }: {
-        /** A unique integer value identifying this document. **/
-        id: number,
-        requestBody: Template,
-        download?: 'false' | 'file' | 'true',
-        testMode?: boolean,
-    }): Promise<Template> {
-        const result = await __request({
-            method: 'POST',
-            path: `/api/v2/templates/${id}/generate/`,
-            query: {
-                'download': download,
-                'test_mode': testMode,
-            },
-            body: requestBody,
-        });
-        return result.body;
-    }
-
-    /**
      * Delete a template permanently from trash
-     * @returns any No response body
+     * @param id A unique integer value identifying this document.
+     * @returns void
      * @throws ApiError
      */
-    public static async deleteTemplatePermanently({
-        id,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async deleteTemplatePermanently(
         id: number,
-    }): Promise<any> {
+    ): Promise<void> {
         const result = await __request({
             method: 'DELETE',
             path: `/api/v2/templates/${id}/permanent_delete/`,
@@ -217,17 +166,15 @@ export class TemplatesService {
 
     /**
      * Restore a template from trash
+     * @param id A unique integer value identifying this document.
+     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async restoreTemplateFromTrash({
-        id,
-        requestBody,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async restoreTemplateFromTrash(
         id: number,
         requestBody: Template,
-    }): Promise<Template> {
+    ): Promise<Template> {
         const result = await __request({
             method: 'PUT',
             path: `/api/v2/templates/${id}/restore/`,
@@ -238,15 +185,13 @@ export class TemplatesService {
 
     /**
      * Get template schema
+     * @param id A unique integer value identifying this document.
      * @returns Template
      * @throws ApiError
      */
-    public static async getTemplateSchema({
-        id,
-    }: {
-        /** A unique integer value identifying this document. **/
+    public static async getTemplateSchema(
         id: number,
-    }): Promise<Template> {
+    ): Promise<Template> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${id}/schema/`,
@@ -255,313 +200,8 @@ export class TemplatesService {
     }
 
     /**
-     * Get test data used for testing template
-     * @returns Template
-     * @throws ApiError
-     */
-    public static async getTestData({
-        id,
-    }: {
-        /** A unique integer value identifying this document. **/
-        id: number,
-    }): Promise<Template> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${id}/test_data/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * List bulk generation tasks
-     * @returns PaginatedBatchProcessList
-     * @throws ApiError
-     */
-    public static async listBulkGenerationTasks({
-        templateId,
-        ordering,
-        page,
-    }: {
-        templateId: number,
-        /** Which field to use when ordering the results. **/
-        ordering?: string,
-        /** A page number within the paginated result set. **/
-        page?: number,
-    }): Promise<PaginatedBatchProcessList> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/batch_processes/`,
-            query: {
-                'ordering': ordering,
-                'page': page,
-            },
-        });
-        return result.body;
-    }
-
-    /**
-     * Get bulk generation task
-     * @returns BatchProcess
-     * @throws ApiError
-     */
-    public static async getBulkGenerationTask({
-        id,
-        templateId,
-    }: {
-        /** Task id **/
-        id: number,
-        /** Template id **/
-        templateId: number,
-    }): Promise<BatchProcess> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/batch_processes/${id}/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Cancel a bulk generation task
-     * @returns BatchProcess
-     * @throws ApiError
-     */
-    public static async cancelBulkGenerationTask({
-        id,
-        templateId,
-        requestBody,
-    }: {
-        /** Task id **/
-        id: number,
-        /** Template id **/
-        templateId: number,
-        requestBody: BatchProcess,
-    }): Promise<BatchProcess> {
-        const result = await __request({
-            method: 'PUT',
-            path: `/api/v2/templates/${templateId}/batch_processes/${id}/cancel/`,
-            body: requestBody,
-        });
-        return result.body;
-    }
-
-    /**
-     * Get a task saved as draft
-     * @returns BatchProcess
-     * @throws ApiError
-     */
-    public static async getBulkGenerationDraft({
-        id,
-        templateId,
-    }: {
-        /** Task id **/
-        id: number,
-        /** Template id **/
-        templateId: number,
-    }): Promise<BatchProcess> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/batch_processes/${id}/draft/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Trigger a bulk generation task
-     * @returns BatchProcess
-     * @throws ApiError
-     */
-    public static async triggerBulkGenerationDraft({
-        id,
-        templateId,
-        requestBody,
-    }: {
-        /** Task id **/
-        id: number,
-        /** Template id **/
-        templateId: number,
-        requestBody: BatchProcess,
-    }): Promise<BatchProcess> {
-        const result = await __request({
-            method: 'POST',
-            path: `/api/v2/templates/${templateId}/batch_processes/${id}/trigger/`,
-            body: requestBody,
-        });
-        return result.body;
-    }
-
-    /**
-     * Upload a new csv for bulk generate. This will create a task in DRAFT mode.
-     * @returns BatchProcess
-     * @throws ApiError
-     */
-    public static async uploadForBulkGeneration({
-        templateId,
-        requestBody,
-    }: {
-        /** Template id **/
-        templateId: number,
-        requestBody: BatchProcess,
-    }): Promise<BatchProcess> {
-        const result = await __request({
-            method: 'POST',
-            path: `/api/v2/templates/${templateId}/batch_processes/upload/`,
-            body: requestBody,
-        });
-        return result.body;
-    }
-
-    /**
-     * Get deliveries configured under this template
-     * @returns PaginatedDeliveryList
-     * @throws ApiError
-     */
-    public static async listTemplateDeliveries({
-        templateId,
-        ordering,
-        page,
-    }: {
-        templateId: number,
-        /** Which field to use when ordering the results. **/
-        ordering?: string,
-        /** A page number within the paginated result set. **/
-        page?: number,
-    }): Promise<PaginatedDeliveryList> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/deliveries/`,
-            query: {
-                'ordering': ordering,
-                'page': page,
-            },
-        });
-        return result.body;
-    }
-
-    /**
-     * Create delivery
-     * @returns Delivery
-     * @throws ApiError
-     */
-    public static async createTemplateDelivery({
-        templateId,
-        requestBody,
-    }: {
-        templateId: number,
-        requestBody: Delivery,
-    }): Promise<Delivery> {
-        const result = await __request({
-            method: 'POST',
-            path: `/api/v2/templates/${templateId}/deliveries/`,
-            body: requestBody,
-        });
-        return result.body;
-    }
-
-    /**
-     * Get delivery
-     * @returns Delivery
-     * @throws ApiError
-     */
-    public static async retrieveTemplateDelivery({
-        id,
-        templateId,
-    }: {
-        /** A unique integer value identifying this delivery. **/
-        id: number,
-        templateId: number,
-    }): Promise<Delivery> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Update delivery
-     * @returns Delivery
-     * @throws ApiError
-     */
-    public static async updateTemplateDelivery({
-        id,
-        templateId,
-        requestBody,
-    }: {
-        /** A unique integer value identifying this delivery. **/
-        id: number,
-        templateId: number,
-        requestBody: Delivery,
-    }): Promise<Delivery> {
-        const result = await __request({
-            method: 'PUT',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
-            body: requestBody,
-        });
-        return result.body;
-    }
-
-    /**
-     * Delete delivery
-     * @returns any No response body
-     * @throws ApiError
-     */
-    public static async deleteTemplateDelivery({
-        id,
-        templateId,
-    }: {
-        /** A unique integer value identifying this delivery. **/
-        id: number,
-        templateId: number,
-    }): Promise<any> {
-        const result = await __request({
-            method: 'DELETE',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Download template file
-     * @returns FileInfo
-     * @throws ApiError
-     */
-    public static async downloadTemplateFile({
-        templateId,
-    }: {
-        templateId: number,
-    }): Promise<FileInfo> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/file_info/download/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Get document create link parameters. URL to create document will be /documents/create/{path}
-     * @returns PaginatedDocumentMergeLinkList
-     * @throws ApiError
-     */
-    public static async listGenerationLinks({
-        templateId,
-        page,
-    }: {
-        templateId: number,
-        /** A page number within the paginated result set. **/
-        page?: number,
-    }): Promise<PaginatedDocumentMergeLinkList> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${templateId}/merge_links/`,
-            query: {
-                'page': page,
-            },
-        });
-        return result.body;
-    }
-
-    /**
-     * List all templates, excluding trashed, without pagination.
+     * List all templates
+     * Will return all templates without pagination, excluding templates in trashed
      * @returns Template
      * @throws ApiError
      */
@@ -574,7 +214,23 @@ export class TemplatesService {
     }
 
     /**
-     * List all trashed templates.
+     * Download template file
+     * @param templateId
+     * @returns Template
+     * @throws ApiError
+     */
+    public static async downloadTemplateFile(
+        templateId: number,
+    ): Promise<Template> {
+        const result = await __request({
+            method: 'GET',
+            path: `/api/v2/templates/download/`,
+        });
+        return result.body;
+    }
+
+    /**
+     * List all templates in trash.
      * @returns Template
      * @throws ApiError
      */

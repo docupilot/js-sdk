@@ -19,15 +19,15 @@
  * Inspired by https://stackoverflow.com/a/37487134/627411.
  * Taken from https://blog.qax.io/write-once-fields-with-django-rest-framework/
  */
-export type DeliveryAccount = {
+export type UpdateDeliveryAccount = {
     readonly id: number;
-    type: DeliveryAccount.type;
+    type: UpdateDeliveryAccount.type;
     readonly name: string;
     credentials: Record<string, any>;
     readonly is_expired: boolean;
 }
 
-export namespace DeliveryAccount {
+export namespace UpdateDeliveryAccount {
 
     export enum type {
         HELLOSIGN = 'hellosign',

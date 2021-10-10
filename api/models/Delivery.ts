@@ -2,28 +2,46 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { TypeEnum } from './TypeEnum';
-
 /**
+ * Adds support for write once fields to serializers.
  * Write value only in `post` and not allow the field to be updated in `put/patch` requests.
- * Can be used for non-write_only fields
  *
  * To use it, specify a list of fields as `write_once_fields` on the serializer's Meta:
  * ```
  * class Meta:
- * model = Model
- * fields = '__all__' or (list of fields)
+ * model = SomeModel
+ * fields = '__all__'
  * write_once_fields = ('collection', )
  * ```
  *
  * Now the fields in `write_once_fields` can be set during POST (create),
  * but cannot be changed afterwards via PUT or PATCH (update).
- *
- * Reference: http://blog.qax.io/write-once-fields-with-django-rest-framework/
+ * Inspired by https://stackoverflow.com/a/37487134/627411.
+ * Taken from https://blog.qax.io/write-once-fields-with-django-rest-framework/
  */
 export type Delivery = {
     readonly id: number;
     name: string;
-    type: TypeEnum;
+    type: Delivery.type;
     account?: number | null;
+}
+
+export namespace Delivery {
+
+    export enum type {
+        EMAIL = 'email',
+        WEBHOOK = 'webhook',
+        DOCU_SIGN = 'docu_sign',
+        SIGN_NOW = 'sign_now',
+        ZOHO_CRM = 'zoho_crm',
+        DROPBOX = 'dropbox',
+        GOOGLE_DRIVE = 'google_drive',
+        PODIO = 'podio',
+        ONE_DRIVE = 'one_drive',
+        EVERSIGN = 'eversign',
+        HELLOSIGN = 'hellosign',
+        AWS_S3 = 'aws_s3',
+    }
+
+
 }

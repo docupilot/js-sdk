@@ -22,7 +22,7 @@ import type { TemplateSettings } from './TemplateSettings';
  * Inspired by https://stackoverflow.com/a/37487134/627411.
  * Taken from https://blog.qax.io/write-once-fields-with-django-rest-framework/
  */
-export type Template = {
+export type UpdateTemplate = {
     readonly id: number;
     preferences?: TemplateSettings;
     readonly info: FillablePdfSettings;
@@ -36,14 +36,14 @@ export type Template = {
     }> | null;
     title: string;
     description?: string | null;
-    type: Template.type;
+    type: UpdateTemplate.type;
     readonly created_time: string;
-    document_status?: Template.document_status;
+    document_status?: UpdateTemplate.document_status;
     deleted_time?: string | null;
     folder?: number | null;
 }
 
-export namespace Template {
+export namespace UpdateTemplate {
 
     export enum type {
         DOCX = 'docx',
