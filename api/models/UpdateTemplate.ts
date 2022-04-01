@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { FillablePdfSettings } from './FillablePdfSettings';
 import type { TemplateSettings } from './TemplateSettings';
 
 /**
@@ -24,19 +23,11 @@ import type { TemplateSettings } from './TemplateSettings';
  */
 export type UpdateTemplate = {
     readonly id: number;
+    uploaded_file: number;
     preferences?: TemplateSettings;
-    readonly info: FillablePdfSettings;
-    dynamic_images?: Array<{
-        token: string,
-        left: number,
-        top: number,
-        page: number,
-        width?: number,
-        height?: number,
-    }> | null;
     title: string;
     description?: string | null;
-    type: UpdateTemplate.type;
+    readonly type: UpdateTemplate.type;
     readonly created_time: string;
     document_status?: UpdateTemplate.document_status;
     deleted_time?: string | null;

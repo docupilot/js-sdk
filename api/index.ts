@@ -14,7 +14,7 @@ export { ChildTemplate } from './models/ChildTemplate';
 export { Delivery } from './models/Delivery';
 export { DeliveryAccount } from './models/DeliveryAccount';
 export type { DocumentMergeLink } from './models/DocumentMergeLink';
-export type { FileInfo } from './models/FileInfo';
+export type { File } from './models/File';
 export type { FileUploadMeta } from './models/FileUploadMeta';
 export type { FillablePdfSettings } from './models/FillablePdfSettings';
 export type { Folder } from './models/Folder';
@@ -36,7 +36,7 @@ export { UpdateTemplate } from './models/UpdateTemplate';
 export { User } from './models/User';
 export type { UserPersonalization } from './models/UserPersonalization';
 
-export { FileInfoService } from './services/FileInfoService';
+export { FilesService } from './services/FilesService';
 export { FoldersService } from './services/FoldersService';
 export { GeneralService } from './services/GeneralService';
 export { GenerateBulkService } from './services/GenerateBulkService';

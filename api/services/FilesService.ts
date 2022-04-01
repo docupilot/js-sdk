@@ -1,22 +1,21 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FileInfo } from '../models/FileInfo';
 import { request as __request } from '../core/request';
 
-export class FileInfoService {
+export class FilesService {
 
     /**
      * @param requestBody
-     * @returns FileInfo
+     * @returns File
      * @throws ApiError
      */
     public static async uploadTemplate(
         requestBody?: any,
-    ): Promise<FileInfo> {
+    ): Promise<Blob> {
         const result = await __request({
             method: 'POST',
-            path: `/api/v2/file_info/upload_template/`,
+            path: `/api/v2/files/upload_template/`,
             body: requestBody,
         });
         return result.body;

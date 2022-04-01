@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type FileInfo = {
+export type File = {
     readonly id: number;
     path: string;
     name: string;

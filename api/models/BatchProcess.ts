@@ -3,11 +3,10 @@
 /* eslint-disable */
 
 import type { BatchProcessTask } from './BatchProcessTask';
-import type { FileInfo } from './FileInfo';
 
 export type BatchProcess = {
     readonly id: number;
-    file: FileInfo;
+    file: Blob;
     readonly errors: Array<BatchProcessTask>;
     status?: BatchProcess.status;
     start_time?: string | null;

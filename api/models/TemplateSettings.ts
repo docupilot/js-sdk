@@ -2,22 +2,34 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { FillablePdfSettings } from './FillablePdfSettings';
+
 export type TemplateSettings = {
-    output_file_name?: string;
-    output_type?: TemplateSettings.output_type;
-    flatten_pdf?: boolean;
-    format?: TemplateSettings.format;
-    orientation?: TemplateSettings.orientation;
-    timezone?: string;
-    auto_number?: number | null;
-    header?: string | null;
-    footer?: string | null;
     margin?: {
         top?: number,
         left?: number,
         right?: number,
         bottom?: number,
     } | null;
+    timezone?: string;
+    readonly info: FillablePdfSettings;
+    dynamic_images: Array<{
+        token: string,
+        left: number,
+        top: number,
+        page: number,
+        width?: number,
+        height?: number,
+    }>;
+    output_file_name?: string;
+    output_type?: TemplateSettings.output_type;
+    password?: string | null;
+    format?: TemplateSettings.format;
+    orientation?: TemplateSettings.orientation;
+    header?: string | null;
+    footer?: string | null;
+    auto_number?: number | null;
+    flatten_pdf?: boolean;
 }
 
 export namespace TemplateSettings {
