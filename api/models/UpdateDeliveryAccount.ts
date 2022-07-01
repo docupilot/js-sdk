@@ -2,8 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { TemplateSettings } from './TemplateSettings';
-
 /**
  * Adds support for write once fields to serializers.
  * Write value only in `post` and not allow the field to be updated in `put/patch` requests.
@@ -21,35 +19,19 @@ import type { TemplateSettings } from './TemplateSettings';
  * Inspired by https://stackoverflow.com/a/37487134/627411.
  * Taken from https://blog.qax.io/write-once-fields-with-django-rest-framework/
  */
-export type Template = {
+export type UpdateDeliveryAccount = {
     readonly id: number;
-    uploaded_file: number;
-    preferences?: TemplateSettings;
-    title: string;
-    description?: string | null;
-    type: Template.type;
-    readonly created_time: string;
-    document_status?: Template.document_status;
-    deleted_time?: string | null;
-    folder?: number | null;
+    type: UpdateDeliveryAccount.type;
+    readonly name: string;
+    credentials: Record<string, any>;
+    readonly is_expired: boolean;
 }
 
-export namespace Template {
+export namespace UpdateDeliveryAccount {
 
     export enum type {
-        DOCX = 'docx',
-        HTML = 'html',
-        FILLABLE_PDF = 'fillable_pdf',
-        PPTX = 'pptx',
-        XLSX = 'xlsx',
-        G_DOCUMENT = 'g_document',
-        G_PRESENTATION = 'g_presentation',
-        G_SPREADSHEET = 'g_spreadsheet',
-    }
-
-    export enum document_status {
-        ACTIVE = 'active',
-        TEST = 'test',
+        HELLOSIGN = 'hellosign',
+        AWS_S3 = 'aws_s3',
     }
 
 

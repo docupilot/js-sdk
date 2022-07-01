@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type FileInfo = {
-    readonly id: number;
-    name: string;
+export type BulkGenerateMeta = {
+    max_test_rows: number;
 }

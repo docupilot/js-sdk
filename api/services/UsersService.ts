@@ -4,13 +4,14 @@
 import type { User } from '../models/User';
 import { request as __request } from '../core/request';
 
-export class AccountsService {
+export class UsersService {
 
     /**
+     * get logged in user details
      * @returns User
      * @throws ApiError
      */
-    public static async accountsV2UsersMeRetrieve(): Promise<User> {
+    public static async getMe(): Promise<User> {
         const result = await __request({
             method: 'GET',
             path: `/accounts/v2/users/me/`,
@@ -19,14 +20,14 @@ export class AccountsService {
     }
 
     /**
+     * update logged in user details
+     * @param requestBody
      * @returns User
      * @throws ApiError
      */
-    public static async accountsV2UsersMeUpdate({
-        requestBody,
-    }: {
+    public static async updateMe(
         requestBody?: User,
-    }): Promise<User> {
+    ): Promise<User> {
         const result = await __request({
             method: 'PUT',
             path: `/accounts/v2/users/me/`,

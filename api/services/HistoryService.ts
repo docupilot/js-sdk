@@ -8,28 +8,23 @@ export class HistoryService {
 
     /**
      * Get created documents history
+     * @param document
+     * @param endDate DateTime in this format: 2019-05-02 16:25:12.353000
+     * @param ordering Which field to use when ordering the results.
+     * @param page A page number within the paginated result set.
+     * @param startDate DateTime in this format: 2019-05-02 16:25:12.353000
+     * @param status
      * @returns PaginatedMergeHistoryList
      * @throws ApiError
      */
-    public static async getCreatedDocumentsHistory({
-        document,
-        endDate,
-        ordering,
-        page,
-        startDate,
-        status,
-    }: {
-        document?: number | null,
-        /** DateTime string in this format : 2019-05-02 16:25:12.353000 **/
+    public static async getCreatedDocumentsHistory(
+        document?: number,
         endDate?: string,
-        /** Which field to use when ordering the results. **/
         ordering?: string,
-        /** A page number within the paginated result set. **/
         page?: number,
-        /** DateTime string in this format : 2019-05-02 16:25:12.353000 **/
         startDate?: string,
         status?: 'error' | 'pending' | 'success',
-    }): Promise<PaginatedMergeHistoryList> {
+    ): Promise<PaginatedMergeHistoryList> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/history/`,
@@ -41,6 +36,22 @@ export class HistoryService {
                 'start_date': startDate,
                 'status': status,
             },
+        });
+        return result.body;
+    }
+
+    /**
+     * download generated document if available
+     * @param id A unique integer value identifying this merge history.
+     * @returns any
+     * @throws ApiError
+     */
+    public static async downloadCreatedDocument(
+        id: number,
+    ): Promise<any> {
+        const result = await __request({
+            method: 'GET',
+            path: `/api/v2/history/${id}/download/`,
         });
         return result.body;
     }
