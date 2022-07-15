@@ -106,3 +106,4 @@ dist
 # intellij
 .idea
 
+build

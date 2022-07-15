@@ -1,0 +1,38 @@
+name: QC & Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish_release_artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        id: setup-node
+        with:
+          cache: 'npm'
+          node-version: '14.18.2'
+
+      - run: npm i
+
+      - name: Build
+        run: |
+          set -e      # fail with non-zero exit code on error
+          tsc
+          tar --exclude="*.tsbuildinfo" --exclude="examples" -czvf build.tar.gz -C build .
+          echo 'created build.tar.gz'
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_DEPENDENCIES_PAT }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./build.tar.gz
+          asset_name: docupilot-js-sdk.es5.zip
+          asset_content_type: application/zip
