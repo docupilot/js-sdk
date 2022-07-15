@@ -2,10 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type File = {
+export type AuthToken = {
     readonly id: number;
-    path: string;
+    readonly token: string;
     name: string;
-    tag: string;
-    readonly size: number | null;
 }

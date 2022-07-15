@@ -1,34 +1,38 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CopyTemplate } from '../models/CopyTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { Template } from '../models/Template';
-import type { UpdateTemplate } from '../models/UpdateTemplate';
 import { request as __request } from '../core/request';
 
 export class TemplatesService {
 
     /**
      * Get list of templates
-     * @param folder
-     * @param ordering Which field to use when ordering the results.
-     * @param outputType
-     * @param page A page number within the paginated result set.
-     * @param search A search term.
-     * @param status
-     * @param type
      * @returns PaginatedTemplateList
      * @throws ApiError
      */
-    public static async listTemplates(
+    public static async listTemplates({
+        folder,
+        ordering,
+        outputType,
+        page,
+        search,
+        status,
+        type,
+    }: {
         folder?: number,
+        /** Which field to use when ordering the results. **/
         ordering?: string,
-        outputType?: 'docx' | 'jpeg' | 'pdf' | 'png',
+        outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        /** A page number within the paginated result set. **/
         page?: number,
+        /** A search term. **/
         search?: string,
         status?: 'active' | 'test',
         type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
-    ): Promise<PaginatedTemplateList> {
+    }): Promise<PaginatedTemplateList> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/`,
@@ -47,13 +51,14 @@ export class TemplatesService {
 
     /**
      * Create template
-     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async createTemplate(
-        requestBody: Template,
-    ): Promise<Template> {
+    public static async createTemplate({
+        requestBody,
+    }: {
+        requestBody: any,
+    }): Promise<Template> {
         const result = await __request({
             method: 'POST',
             path: `/api/v2/templates/`,
@@ -64,13 +69,15 @@ export class TemplatesService {
 
     /**
      * Get one template
-     * @param id A unique integer value identifying this document.
      * @returns Template
      * @throws ApiError
      */
-    public static async getTemplate(
+    public static async getTemplate({
+        id,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
-    ): Promise<Template> {
+    }): Promise<Template> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${id}/`,
@@ -80,15 +87,17 @@ export class TemplatesService {
 
     /**
      * Update template
-     * @param id A unique integer value identifying this document.
-     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async updateTemplate(
+    public static async updateTemplate({
+        id,
+        requestBody,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
-        requestBody: UpdateTemplate,
-    ): Promise<Template> {
+        requestBody: Template,
+    }): Promise<Template> {
         const result = await __request({
             method: 'PUT',
             path: `/api/v2/templates/${id}/`,
@@ -98,14 +107,37 @@ export class TemplatesService {
     }
 
     /**
-     * Move template to trash
-     * @param id A unique integer value identifying this document.
-     * @returns void
+     * Update template content
+     * @returns Template
      * @throws ApiError
      */
-    public static async trashTemplate(
+    public static async updateTemplateContent({
+        id,
+        requestBody,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
-    ): Promise<void> {
+        requestBody?: any,
+    }): Promise<Template> {
+        const result = await __request({
+            method: 'PATCH',
+            path: `/api/v2/templates/${id}/`,
+            body: requestBody,
+        });
+        return result.body;
+    }
+
+    /**
+     * Move template to trash
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static async trashTemplate({
+        id,
+    }: {
+        /** A unique integer value identifying this document. **/
+        id: number,
+    }): Promise<any> {
         const result = await __request({
             method: 'DELETE',
             path: `/api/v2/templates/${id}/`,
@@ -114,49 +146,55 @@ export class TemplatesService {
     }
 
     /**
-     * Get template content
-     * @param id A unique integer value identifying this document.
+     * Copy template including preferences, deliveries
      * @returns Template
      * @throws ApiError
      */
-    public static async getContent(
+    public static async copyTemplate({
+        id,
+        requestBody,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
-    ): Promise<Template> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/${id}/content/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Update template content
-     * @param id A unique integer value identifying this document.
-     * @param requestBody
-     * @returns Template
-     * @throws ApiError
-     */
-    public static async updateContent(
-        id: number,
-        requestBody: Template,
-    ): Promise<Template> {
+        requestBody: CopyTemplate,
+    }): Promise<Template> {
         const result = await __request({
             method: 'POST',
-            path: `/api/v2/templates/${id}/content/`,
+            path: `/api/v2/templates/${id}/copy/`,
             body: requestBody,
         });
         return result.body;
     }
 
     /**
-     * Delete a template permanently from trash
-     * @param id A unique integer value identifying this document.
-     * @returns void
+     * Download template file
+     * @returns any
      * @throws ApiError
      */
-    public static async deleteTemplatePermanently(
+    public static async downloadTemplateFile({
+        id,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
-    ): Promise<void> {
+    }): Promise<any> {
+        const result = await __request({
+            method: 'GET',
+            path: `/api/v2/templates/${id}/download/`,
+        });
+        return result.body;
+    }
+
+    /**
+     * Delete a template permanently from trash
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static async deleteTemplatePermanently({
+        id,
+    }: {
+        /** A unique integer value identifying this document. **/
+        id: number,
+    }): Promise<any> {
         const result = await __request({
             method: 'DELETE',
             path: `/api/v2/templates/${id}/permanent_delete/`,
@@ -166,15 +204,17 @@ export class TemplatesService {
 
     /**
      * Restore a template from trash
-     * @param id A unique integer value identifying this document.
-     * @param requestBody
      * @returns Template
      * @throws ApiError
      */
-    public static async restoreTemplateFromTrash(
+    public static async restoreTemplateFromTrash({
+        id,
+        requestBody,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
         requestBody: Template,
-    ): Promise<Template> {
+    }): Promise<Template> {
         const result = await __request({
             method: 'PUT',
             path: `/api/v2/templates/${id}/restore/`,
@@ -185,13 +225,15 @@ export class TemplatesService {
 
     /**
      * Get template schema
-     * @param id A unique integer value identifying this document.
      * @returns Template
      * @throws ApiError
      */
-    public static async getTemplateSchema(
+    public static async getTemplateSchema({
+        id,
+    }: {
+        /** A unique integer value identifying this document. **/
         id: number,
-    ): Promise<Template> {
+    }): Promise<Template> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${id}/schema/`,
@@ -209,22 +251,6 @@ export class TemplatesService {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/all/`,
-        });
-        return result.body;
-    }
-
-    /**
-     * Download template file
-     * @param templateId
-     * @returns Template
-     * @throws ApiError
-     */
-    public static async downloadTemplateFile(
-        templateId: number,
-    ): Promise<Template> {
-        const result = await __request({
-            method: 'GET',
-            path: `/api/v2/templates/download/`,
         });
         return result.body;
     }

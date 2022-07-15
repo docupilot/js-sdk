@@ -2,20 +2,321 @@ openapi: 3.0.3
 info:
   title: Docupilot V2 APIs
   version: '2.0'
-  x-logo:
-    url: https://docupilot.app/assets/img/logo-master.png
-    backgroundColor: '#FFFFFF'
-    altText: Docupilot logo
   description: Docupilot V2 APIs
+  termsOfService: https://docupilot.app/terms-and-conditions/
+  contact:
+    name: Team Docupilot
+    email: support@docupilot.app
 paths:
+  /accounts/v2/auth_tokens/:
+    get:
+      operationId: list_auth_tokens
+      parameters:
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+      tags:
+        - auth_tokens
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthToken'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_auth_token
+      tags:
+        - auth_tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+        - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/auth_tokens/{id}/:
+    put:
+      operationId: update_auth_token
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this auth token.
+          required: true
+      tags:
+        - auth_tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_auth_token
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this auth token.
+          required: true
+      tags:
+        - auth_tokens
+      security:
+        - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/subscription/details/:
+    get:
+      operationId: get_subscription_details
+      tags:
+        - subscription
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargebeeSubscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/hosted_page/:
+    get:
+      operationId: get_chargebee_hosted_page
+      parameters:
+        - in: query
+          name: plan_id
+          schema:
+            type: string
+      tags:
+        - subscription
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/portal_session/:
+    get:
+      operationId: get_chargebee_portal_session
+      tags:
+        - subscription
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargebeeSubscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/users/change_password/:
+    put:
+      operationId: change_password
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+        required: true
+      security:
+        - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
   /accounts/v2/users/me/:
     get:
-      operationId: accounts_v2_users_me_retrieve
-      description: ''
+      operationId: get_me
+      summary: get logged in user details
       tags:
-      - accounts
+        - users
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -23,11 +324,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
     put:
-      operationId: accounts_v2_users_me_update
-      description: ''
+      operationId: update_me
+      summary: update logged in user details
       tags:
-      - accounts
+        - users
       requestBody:
         content:
           application/json:
@@ -40,7 +347,8 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -48,39 +356,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
   /api/v2/folders/:
     get:
       operationId: list_folders
-      description: Get list of folders
+      summary: Get list of folders
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
       tags:
-      - folders
+        - folders
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedFolderList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_folder
-      description: Create a folder
+      summary: Create a folder
       tags:
-      - folders
+        - folders
       requestBody:
         content:
           application/json:
@@ -94,7 +423,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
@@ -102,19 +432,37 @@ paths:
               schema:
                 $ref: '#/components/schemas/Folder'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/folders/{id}/:
     put:
       operationId: update_folder
-      description: Updates a folder
+      summary: Updates a folder
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this folder.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this folder.
+          required: true
       tags:
-      - folders
+        - folders
       requestBody:
         content:
           application/json:
@@ -128,7 +476,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -136,70 +485,119 @@ paths:
               schema:
                 $ref: '#/components/schemas/Folder'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
     delete:
       operationId: delete_folder
-      description: Delete a folder. This operation moves all templates under this
-        folder to home directory.
+      description: This operation moves all templates under this folder to home directory.
+      summary: Delete a folder.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this folder.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this folder.
+          required: true
       tags:
-      - folders
+        - folders
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/history/:
     get:
       operationId: get_created_documents_history
-      description: Get created documents history
+      summary: Get created documents history
       parameters:
-      - in: query
-        name: document
-        schema:
-          type: integer
-          nullable: true
-      - in: query
-        name: end_date
-        schema:
-          type: string
-          format: date-time
-        description: 'DateTime string in this format : 2019-05-02 16:25:12.353000'
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: query
-        name: start_date
-        schema:
-          type: string
-          format: date-time
-        description: 'DateTime string in this format : 2019-05-02 16:25:12.353000'
-      - in: query
-        name: status
-        schema:
-          type: string
-          enum:
-          - error
-          - pending
-          - success
+        - in: query
+          name: document
+          schema:
+            type: integer
+        - in: query
+          name: end_date
+          schema:
+            type: string
+            format: date-time
+          description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - in: query
+          name: start_date
+          schema:
+            type: string
+            format: date-time
+          description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - error
+              - pending
+              - success
       tags:
-      - history
+        - history
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -207,136 +605,488 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedMergeHistoryList'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/history/{id}/download/:
+    get:
+      operationId: download_created_document
+      summary: download generated document if available
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this merge history.
+          required: true
+      tags:
+        - history
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/:
     get:
       operationId: list_delivery_accounts
-      description: Get list of linked accounts
+      summary: Get list of linked accounts
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - aws_s3
-          - docu_sign
-          - dropbox
-          - email
-          - eversign
-          - google_drive
-          - hellosign
-          - one_drive
-          - podio
-          - sign_now
-          - webhook
-          - zoho_crm
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - aws_s3
+              - docu_sign
+              - dropbox
+              - eversign
+              - google_drive
+              - hellosign
+              - one_drive
+              - podio
+              - sign_now
+              - zoho_crm
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedDeliveryAccountList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeliveryAccount'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: add_delivery_account
+      summary: Create linked account
+      tags:
+        - linked_accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryAccount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeliveryAccount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DeliveryAccount'
+        required: true
+      security:
+        - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryAccount'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/linked_accounts/{integrator_type}/invoke/:
+    get:
+      operationId: linked_accounts_invoke_retrieve
+      description: Redirects to oauth endpoint to add a new linked account of given
+        'integrator_type'
+      parameters:
+        - in: query
+          name: environment
+          schema:
+            type: string
+          description: 'sub-type of integrator. For example: sandbox or production for
+          docu_sign'
+        - in: path
+          name: integrator_type
+          schema:
+            type: string
+            pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
+          required: true
+      tags:
+        - linked_accounts
+      security:
+        - SessionAuthentication: []
+      responses:
+        '302':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/linked_accounts/{id}/:
+    put:
+      operationId: update_delivery_account
+      summary: Refresh linked account
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
+      tags:
+        - linked_accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDeliveryAccount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateDeliveryAccount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateDeliveryAccount'
+        required: true
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryAccount'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
     delete:
       operationId: revoke_delivery_account
-      description: Revoke linked account
+      summary: Revoke linked account
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/linked_accounts/{id}/reconnect/:
+    get:
+      operationId: linked_accounts_reconnect_retrieve
+      description: Redirects to oauth endpoint for re-connecting an account
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
+      tags:
+        - linked_accounts
+      security:
+        - SessionAuthentication: []
+      responses:
+        '302':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/personalization/:
+    get:
+      operationId: get_user_personalization
+      tags:
+        - personalization
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: update_user_personalization
+      tags:
+        - personalization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPersonalization'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserPersonalization'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserPersonalization'
+        required: true
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
   /api/v2/templates/:
     get:
       operationId: list_templates
-      description: Get list of templates
+      summary: Get list of templates
       parameters:
-      - in: query
-        name: folder
-        schema:
-          type: integer
-          nullable: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - in: query
-        name: output_type
-        schema:
-          type: string
-          enum:
-          - docx
-          - jpeg
-          - pdf
-          - png
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: status
-        schema:
-          type: string
-          enum:
-          - active
-          - test
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - docx
-          - fillable_pdf
-          - g_document
-          - g_presentation
-          - g_spreadsheet
-          - html
-          - pptx
-          - xlsx
+        - in: query
+          name: folder
+          schema:
+            type: integer
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - in: query
+          name: output_type
+          schema:
+            type: string
+            enum:
+              - docx
+              - html
+              - jpeg
+              - pdf
+              - png
+              - pptx
+              - xlsx
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - active
+              - test
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - docx
+              - fillable_pdf
+              - g_document
+              - g_presentation
+              - g_spreadsheet
+              - html
+              - pptx
+              - xlsx
       tags:
-      - templates
+        - templates
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -344,66 +1094,110 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedTemplateList'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
     post:
       operationId: create_template
-      description: Create template
+      summary: Create template
       tags:
-      - templates
+        - templates
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Template'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Template'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Template'
+              $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /api/v2/templates/{id}/:
     get:
       operationId: get_template
-      description: Get template
+      summary: Get one template
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
     put:
       operationId: update_template
-      description: Update template
+      summary: Update template
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           application/json:
@@ -417,673 +1211,1394 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_template_content
+      summary: Update template content
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
+      tags:
+        - templates
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateNewTemplate'
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
     delete:
       operationId: trash_template
-      description: Move template to trash
+      summary: Move template to trash
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
-  /api/v2/templates/{id}/content/:
-    get:
-      operationId: templates_content_retrieve
-      description: Get or update template content
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
+        '400':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/ValidationError'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/copy/:
     post:
-      operationId: templates_content_create
-      description: Get or update template content
+      operationId: copy_template
+      summary: Copy template including preferences, deliveries
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Template'
+              $ref: '#/components/schemas/CopyTemplate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Template'
+              $ref: '#/components/schemas/CopyTemplate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Template'
+              $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-  /api/v2/templates/{id}/generate/:
-    post:
-      operationId: generate_document
-      description: Generate document from template
-      parameters:
-      - in: query
-        name: download
-        schema:
-          type: string
-          enum:
-          - 'false'
-          - file
-          - 'true'
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      - in: query
-        name: test_mode
-        schema:
-          type: boolean
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Template'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Template'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Template'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-  /api/v2/templates/{id}/permanent_delete/:
-    delete:
-      operationId: delete_template_permanently
-      description: Delete a template permanently from trash
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-  /api/v2/templates/{id}/restore/:
-    put:
-      operationId: restore_template_from_trash
-      description: Restore a template from trash
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Template'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Template'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Template'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-  /api/v2/templates/{id}/schema/:
-    get:
-      operationId: get_template_schema
-      description: Get template schema
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-  /api/v2/templates/{id}/test_data/:
-    get:
-      operationId: get_test_data
-      description: Get test data used for testing template
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-  /api/v2/templates/{template_id}/batch_processes/:
-    get:
-      operationId: list_bulk_generation_tasks
-      description: List bulk generation tasks
-      parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedBatchProcessList'
-          description: ''
-  /api/v2/templates/{template_id}/batch_processes/{id}/:
-    get:
-      operationId: get_bulk_generation_task
-      description: Get bulk generation task
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BatchProcess'
-          description: ''
-  /api/v2/templates/{template_id}/batch_processes/{id}/cancel/:
-    put:
-      operationId: cancel_bulk_generation_task
-      description: Cancel a bulk generation task
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BatchProcess'
-          description: ''
-  /api/v2/templates/{template_id}/batch_processes/{id}/draft/:
-    get:
-      operationId: get_bulk_generation_draft
-      description: Get a task saved as draft
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BatchProcess'
-          description: ''
-  /api/v2/templates/{template_id}/batch_processes/{id}/trigger/:
-    post:
-      operationId: trigger_bulk_generation_draft
-      description: Trigger a bulk generation task
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BatchProcess'
-          description: ''
-  /api/v2/templates/{template_id}/batch_processes/upload/:
-    post:
-      operationId: upload_for_bulk_generation
-      description: Upload a new csv for bulk generate. This will create a task in
-        DRAFT mode.
-      parameters:
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BatchProcess'
-        required: true
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BatchProcess'
-          description: ''
-  /api/v2/templates/{template_id}/deliveries/:
-    get:
-      operationId: list_template_deliveries
-      description: Get deliveries configured under this template
-      parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedDeliveryList'
-          description: ''
-    post:
-      operationId: create_template_delivery
-      description: Create delivery
-      parameters:
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Delivery'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Delivery'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Delivery'
-        required: true
-      security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Delivery'
+                $ref: '#/components/schemas/Template'
           description: ''
-  /api/v2/templates/{template_id}/deliveries/{id}/:
-    get:
-      operationId: retrieve_template_delivery
-      description: Get delivery
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
-      tags:
-      - templates
-      security:
-      - tokenAuth: []
-      responses:
-        '200':
+        '400':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Delivery'
+                $ref: '#/components/schemas/ValidationError'
           description: ''
-    put:
-      operationId: update_template_delivery
-      description: Update delivery
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/download/:
+    get:
+      operationId: download_template_file
+      summary: Download template file
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/generate/:
+    post:
+      operationId: generate_document
+      summary: Generate document from template
+      parameters:
+        - in: query
+          name: download
+          schema:
+            type: string
+            enum:
+              - 'false'
+              - file
+              - 'true'
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
+      tags:
+        - generate
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Delivery'
+              $ref: '#/components/schemas/Template'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Delivery'
+              $ref: '#/components/schemas/Template'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Delivery'
+              $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Delivery'
+                $ref: '#/components/schemas/Template'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/permanent_delete/:
     delete:
-      operationId: delete_template_delivery
-      description: Delete delivery
+      operationId: delete_template_permanently
+      summary: Delete a template permanently from trash
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
-  /api/v2/templates/{template_id}/file_info/download/:
-    get:
-      operationId: download_template_file
-      description: Download template file
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/restore/:
+    put:
+      operationId: restore_template_from_trash
+      summary: Restore a template from trash
       parameters:
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FileInfo'
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/schema/:
+    get:
+      operationId: get_template_schema
+      summary: Get template schema
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
+      tags:
+        - templates
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/test/:
+    post:
+      operationId: test_document_generation
+      summary: Test document generation
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
+      tags:
+        - generate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Template'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Template'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Template'
+        required: true
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/test_data/:
+    get:
+      operationId: get_test_data
+      summary: Get test data used for testing template
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
+      tags:
+        - generate
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/:
+    get:
+      operationId: list_template_deliveries
+      summary: Get deliveries configured under this template
+      parameters:
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateDelivery'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_template_delivery
+      summary: Create delivery
+      parameters:
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/{id}/:
+    get:
+      operationId: retrieve_template_delivery
+      summary: Get delivery
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    put:
+      operationId: update_template_delivery
+      summary: Update delivery
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_template_delivery
+      summary: Delete delivery
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/{id}/attachments/:
+    post:
+      operationId: upload_delivery_attachments
+      summary: upload email delivery attachments
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EmailDeliveryAttachment'
+        required: true
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/:
+    get:
+      operationId: download_delivery_attachment
+      summary: download delivery attachment
+      parameters:
+        - in: path
+          name: attachment_id
+          schema:
+            type: string
+            pattern: ^\d+$
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_delivery_attachment
+      summary: delete email delivery attachment
+      parameters:
+        - in: path
+          name: attachment_id
+          schema:
+            type: string
+            pattern: ^\d+$
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - template_delivery
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/:
+    get:
+      operationId: list_bulk_generation_tasks
+      summary: List bulk generation tasks
+      parameters:
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
+      tags:
+        - generate_bulk
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedBulkGenList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/{id}/:
+    get:
+      operationId: get_bulk_generation_task
+      summary: Get bulk generation task
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
+      tags:
+        - generate_bulk
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGen'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/{id}/cancel/:
+    put:
+      operationId: cancel_bulk_generation_task
+      summary: Cancel a bulk generation task
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
+      tags:
+        - generate_bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkGen'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkGen'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkGen'
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGen'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/{id}/draft/:
+    get:
+      operationId: get_bulk_generation_draft
+      summary: Get a task saved as draft
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
+      tags:
+        - generate_bulk
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGenData'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/{id}/trigger/:
+    put:
+      operationId: trigger_bulk_generation_draft
+      summary: Trigger a bulk generation task
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
+      tags:
+        - generate_bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkGen'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkGen'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkGen'
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGen'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/upload/:
+    post:
+      operationId: upload_for_bulk_generation
+      description: This will create a task in DRAFT mode.
+      summary: Upload a new csv for bulk generate.
+      parameters:
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
+      tags:
+        - generate_bulk
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkGenUpload'
+        required: true
+      security:
+        - SessionAuthentication: []
+        - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGenData'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/templates/{template_id}/merge_links/:
     get:
       operationId: list_generation_links
-      description: Get document create link parameters. URL to create document will
-        be /documents/create/{path}
+      description: URL to create document will be {host}/{path}
+      summary: Get document create link path
       parameters:
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - templates
+        - generate
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedDocumentMergeLinkList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocumentMergeLink'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /api/v2/templates/all/:
     get:
       operationId: list_all_templates
-      description: List all templates, excluding trashed, without pagination.
+      description: Will return all templates without pagination, excluding templates
+        in trashed
+      summary: List all templates
       tags:
-      - templates
+        - templates
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /api/v2/templates/trash/:
     get:
       operationId: list_trashed_templates
-      description: List all trashed templates.
+      summary: List all templates in trash.
       tags:
-      - templates
+        - templates
       security:
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1091,24 +2606,205 @@ paths:
               schema:
                 $ref: '#/components/schemas/Template'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /banner_notifications/:
+    get:
+      operationId: list_banner_notifications
+      tags:
+        - general
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BannerNotification'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /meta/:
+    get:
+      operationId: get_app_meta
+      tags:
+        - general
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meta'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /plans/:
+    get:
+      operationId: list_subscription_plans
+      tags:
+        - general
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Plan'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /tz/:
+    get:
+      operationId: list_timezones
+      tags:
+        - general
+      security:
+        - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Timezone'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
 components:
   schemas:
-    BatchProcess:
+    AttachmentsConfig:
+      type: object
+      properties:
+        allowed_types:
+          type: string
+        max_files:
+          type: integer
+        max_total_size:
+          type: integer
+      required:
+        - allowed_types
+        - max_files
+        - max_total_size
+      description: ''
+    AuthToken:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        file:
-          $ref: '#/components/schemas/FileInfo'
+        token:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+      required:
+        - id
+        - name
+        - token
+      description: ''
+    BannerNotification:
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        action:
+          $ref: '#/components/schemas/BannerNotificationAction'
+      required:
+        - action
+        - content
+        - id
+      description: ''
+    BannerNotificationAction:
+      type: object
+      properties:
+        text:
+          type: string
+        attributes:
+          type: object
+          additionalProperties: {}
+      required:
+        - attributes
+        - text
+      description: ''
+    BulkGen:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
         errors:
           type: array
           items:
-            $ref: '#/components/schemas/BatchProcessTask'
+            $ref: '#/components/schemas/BulkGenTask'
           readOnly: true
         status:
-          allOf:
-          - $ref: '#/components/schemas/BatchProcessStatusEnum'
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+          type: integer
           minimum: 0
           maximum: 32767
         start_time:
@@ -1130,110 +2826,494 @@ components:
           minimum: -2147483648
           nullable: true
       required:
-      - errors
-      - file
-      - id
-    BatchProcessStatusEnum:
-      enum:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      type: integer
-    BatchProcessTask:
+        - errors
+        - id
+      description: ''
+    BulkGenData:
       type: object
       properties:
         id:
           type: integer
-          readOnly: true
-        merge_type:
-          $ref: '#/components/schemas/MergeTypeEnum'
-        merge_data:
+        data:
           type: object
           additionalProperties: {}
-          nullable: true
-        status:
-          allOf:
-          - $ref: '#/components/schemas/BatchProcessTaskStatusEnum'
-          minimum: 0
-          maximum: 32767
+        row_count:
+          type: integer
+      required:
+        - data
+        - id
+        - row_count
+      description: ''
+    BulkGenTask:
+      type: object
+      properties:
         status_message:
           type: string
           nullable: true
           maxLength: 255
-        batch_process:
-          type: integer
-        document:
+      description: ''
+    BulkGenUpload:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+        - file
+      description: ''
+    BulkGenerateMeta:
+      type: object
+      properties:
+        max_test_rows:
           type: integer
       required:
-      - batch_process
-      - document
-      - id
-    BatchProcessTaskStatusEnum:
-      enum:
-      - 0
-      - 1
-      - 2
-      type: integer
-    Delivery:
+        - max_test_rows
+      description: ''
+    ChangePassword:
       type: object
-      description: |-
-        Write value only in `post` and not allow the field to be updated in `put/patch` requests.
-        Can be used for non-write_only fields
-
-        To use it, specify a list of fields as `write_once_fields` on the serializer's Meta:
-        ```
-        class Meta:
-            model = Model
-            fields = '__all__' or (list of fields)
-            write_once_fields = ('collection', )
-        ```
-
-        Now the fields in `write_once_fields` can be set during POST (create),
-        but cannot be changed afterwards via PUT or PATCH (update).
-
-        Reference: http://blog.qax.io/write-once-fields-with-django-rest-framework/
+      properties:
+        current_password:
+          type: string
+          writeOnly: true
+        new_password:
+          type: string
+          writeOnly: true
+      required:
+        - current_password
+        - new_password
+      description: ''
+    ChargebeeSubscription:
+      type: object
+      properties:
+        plan_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        billing_period_unit:
+          type: string
+          nullable: true
+          maxLength: 255
+        current_term_start:
+          type: string
+          readOnly: true
+        current_term_end:
+          type: string
+          readOnly: true
+        documents_allowed:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+        documents_created:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+      required:
+        - current_term_end
+        - current_term_start
+      description: ''
+    ChildTemplate:
+      type: object
       properties:
         id:
           type: integer
+          readOnly: true
+        title:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        type:
+          enum:
+            - docx
+            - html
+            - fillable_pdf
+            - pptx
+            - xlsx
+            - g_document
+            - g_presentation
+            - g_spreadsheet
+          type: string
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        document_status:
+          enum:
+            - active
+            - test
+          type: string
+        deleted_time:
+          type: string
+          format: date-time
+          nullable: true
+        created_by:
+          type: integer
+        folder:
+          type: integer
+          nullable: true
+      required:
+        - created_by
+        - created_time
+        - id
+        - title
+      description: ''
+    CopyTemplate:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 50
+      required:
+        - title
+      description: ''
+    DeliveryAccount:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          enum:
+            - hellosign
+            - aws_s3
+          type: string
+        sub_type:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          nullable: true
+        credentials:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+        is_expired:
+          type: boolean
+          readOnly: true
+      required:
+        - credentials
+        - id
+        - is_expired
+        - name
+        - sub_type
+        - type
+    DocuSignDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              order:
+                type: string
+              recipient_type:
+                type: string
+                enum:
+                  - signer
+                  - agent
+                  - cc
+                  - editor
+              name:
+                type: string
+                minLength: 1
+              email_address:
+                type: string
+                format: email
+            required:
+              - recipient_type
+              - name
+              - email_address
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        subject:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        fullname_anchor_tags:
+          type: boolean
+        sequenced_signing:
+          type: boolean
+        custom_tags:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        expire_after:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        enable_optional_signers:
+          type: boolean
+      required:
+        - id
+        - name
+        - signers
+      description: ''
+    DocumentMergeLink:
+      type: object
+      properties:
+        path:
+          type: string
+          readOnly: true
+      required:
+        - path
+      description: ''
+    DropboxDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        folder:
+          type: string
+      required:
+        - id
+        - name
+      description: ''
+    DynamicImage:
+      type: object
+      properties:
+        token:
+          type: string
+          minLength: 1
+        page:
+          type: integer
+          default: 1
+        left:
+          type: number
+          format: double
+        top:
+          type: number
+          format: double
+        width:
+          type: number
+          format: double
+        height:
+          type: number
+          format: double
+      required:
+        - height
+        - left
+        - token
+        - top
+        - width
+      description: ''
+    EmailDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
           readOnly: true
         name:
           type: string
           maxLength: 255
         type:
-          $ref: '#/components/schemas/TypeEnum'
-        account:
-          type: integer
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        from_email:
+          type: string
+          maxLength: 255
+        to_email:
+          type: array
+          items:
+            type: string
+            maxLength: 200
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 200
           nullable: true
+        bcc:
+          type: array
+          items:
+            type: string
+            maxLength: 200
+          nullable: true
+        headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        subject:
+          type: string
+          maxLength: 255
+        body:
+          type: string
       required:
-      - id
-      - name
-      - type
-    DeliveryAccount:
+        - attachments
+        - from_email
+        - id
+        - name
+        - to_email
+      description: ''
+    EmailDeliveryAttachment:
+      type: object
+      properties:
+        attachments:
+          type: array
+          items:
+            type: string
+            format: binary
+      required:
+        - attachments
+      description: ''
+    EversignDelivery:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        account:
+          type: integer
+          nullable: true
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              pin:
+                type: string
+              name:
+                type: string
+                minLength: 1
+              email:
+                type: string
+                format: email
+              order:
+                type: string
+            required:
+              - name
+              - email
+        recipients:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+              email:
+                type: string
+                format: email
+            required:
+              - name
+              - email
+          nullable: true
         name:
           type: string
-          readOnly: true
+          maxLength: 255
         type:
-          $ref: '#/components/schemas/TypeEnum'
-        is_expired:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        title:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        use_signer_order:
           type: boolean
-        credentials:
-          type: object
-          additionalProperties: {}
-          writeOnly: true
+        reminders:
+          type: boolean
+        require_all_signers:
+          type: boolean
+        expires_in:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+        enable_optional_signers:
+          type: boolean
       required:
-      - credentials
-      - id
-      - name
-      - type
-    DocumentMergeLink:
+        - id
+        - name
+        - signers
+      description: ''
+    File:
       type: object
       properties:
         id:
@@ -1241,26 +3321,58 @@ components:
           readOnly: true
         path:
           type: string
-          readOnly: true
-        unique_key:
-          type: string
-          maxLength: 100
-      required:
-      - id
-      - path
-      - unique_key
-    FileInfo:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
+          writeOnly: true
+          maxLength: 255
         name:
           type: string
           maxLength: 255
+        tag:
+          type: string
+          writeOnly: true
+          maxLength: 255
+        size:
+          type: integer
+          readOnly: true
+          nullable: true
       required:
-      - id
-      - name
+        - id
+        - name
+        - path
+        - size
+        - tag
+      description: ''
+    FileUploadMeta:
+      type: object
+      properties:
+        email_attachments:
+          $ref: '#/components/schemas/AttachmentsConfig'
+      required:
+        - email_attachments
+      description: ''
+    FillablePdfSettings:
+      type: object
+      properties:
+        width:
+          type: number
+          format: double
+          readOnly: true
+        height:
+          type: number
+          format: double
+          readOnly: true
+        no_of_pages:
+          type: integer
+          readOnly: true
+        dynamic_images:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+          nullable: true
+      required:
+        - height
+        - no_of_pages
+        - width
+      description: ''
     Folder:
       type: object
       properties:
@@ -1271,23 +3383,150 @@ components:
           type: string
           maxLength: 50
       required:
-      - id
-      - name
+        - id
+        - name
+      description: ''
+    ForbiddenError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+      description: ''
+    GoogleDriveDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        folder:
+          type: string
+        folder_id:
+          type: string
+          nullable: true
+          maxLength: 100
+      required:
+        - id
+        - name
+      description: ''
+    HelloSignDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+              email_address:
+                type: string
+                format: email
+            required:
+              - name
+              - email_address
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        title:
+          type: string
+          nullable: true
+        subject:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+          nullable: true
+        use_text_tags:
+          type: boolean
+        hide_text_tags:
+          type: boolean
+        sequenced_signing:
+          type: boolean
+        enable_optional_signers:
+          type: boolean
+      required:
+        - id
+        - name
+        - signers
+      description: ''
     MergeHistory:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        document:
+        template:
           allOf:
-          - $ref: '#/components/schemas/Template'
+            - $ref: '#/components/schemas/ChildTemplate'
           readOnly: true
+        data:
+          type: object
+          additionalProperties: {}
+        data_expired:
+          type: boolean
+        document_expired:
+          type: boolean
         delivery_type:
           type: string
           maxLength: 255
         status:
-          $ref: '#/components/schemas/MergeHistoryStatusEnum'
+          enum:
+            - pending
+            - success
+            - error
+          type: string
         created_time:
           type: string
           format: date-time
@@ -1304,23 +3543,102 @@ components:
           nullable: true
           maxLength: 255
       required:
-      - created_file_name
-      - created_time
-      - delivery_type
-      - document
-      - id
-      - status
-    MergeHistoryStatusEnum:
-      enum:
-      - pending
-      - success
-      - error
-      type: string
-    MergeTypeEnum:
-      enum:
-      - active
-      - test
-      type: string
+        - created_file_name
+        - created_time
+        - data
+        - data_expired
+        - delivery_type
+        - document_expired
+        - id
+        - status
+        - template
+      description: ''
+    Meta:
+      type: object
+      properties:
+        file_uploads:
+          $ref: '#/components/schemas/FileUploadMeta'
+        subscription:
+          $ref: '#/components/schemas/SubscriptionMeta'
+        batch_process_max_allowed_test_rows:
+          $ref: '#/components/schemas/BulkGenerateMeta'
+      required:
+        - batch_process_max_allowed_test_rows
+        - file_uploads
+        - subscription
+      description: ''
+    NewTemplate:
+      type: object
+      description: ''
+      properties:
+        file:
+          type: string
+          format: binary
+        folder:
+          type: integer
+          nullable: true
+        title:
+          type: string
+          maxLength: 50
+        output_type:
+          enum:
+            - html
+            - pdf
+            - jpeg
+            - png
+            - docx
+            - pptx
+            - xlsx
+          type: string
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+        - file
+        - output_type
+        - title
+    NotFoundError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+      description: ''
+    OneDriveDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        folder:
+          type: string
+      required:
+        - id
+        - name
+      description: ''
     Organization:
       type: object
       properties:
@@ -1332,8 +3650,9 @@ components:
           nullable: true
           maxLength: 255
       required:
-      - id
-    PaginatedBatchProcessList:
+        - id
+      description: ''
+    PaginatedBulkGenList:
       type: object
       properties:
         count:
@@ -1352,87 +3671,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/BatchProcess'
-    PaginatedDeliveryAccountList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryAccount'
-    PaginatedDeliveryList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Delivery'
-    PaginatedDocumentMergeLinkList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DocumentMergeLink'
-    PaginatedFolderList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Folder'
+            $ref: '#/components/schemas/BulkGen'
     PaginatedMergeHistoryList:
       type: object
       properties:
@@ -1473,33 +3712,397 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+    PatchedUpdateNewTemplate:
+      type: object
+      description: ''
+      properties:
+        file:
+          type: string
+          format: binary
+    Plan:
+      type: object
+      properties:
+        plan_id:
+          type: string
+          readOnly: true
+        documents_allowed:
+          type: integer
+          readOnly: true
+        price:
+          type: integer
+          readOnly: true
+        billing_period_unit:
+          enum:
+            - year
+            - month
+          type: string
+          readOnly: true
+      required:
+        - billing_period_unit
+        - documents_allowed
+        - plan_id
+        - price
+      description: ''
+    PolymorphicDelivery:
+      oneOf:
+        - $ref: '#/components/schemas/EmailDelivery'
+        - $ref: '#/components/schemas/WebhookDelivery'
+        - $ref: '#/components/schemas/DropboxDelivery'
+        - $ref: '#/components/schemas/OneDriveDelivery'
+        - $ref: '#/components/schemas/SignNowDelivery'
+        - $ref: '#/components/schemas/GoogleDriveDelivery'
+        - $ref: '#/components/schemas/S3Delivery'
+        - $ref: '#/components/schemas/HelloSignDelivery'
+        - $ref: '#/components/schemas/DocuSignDelivery'
+        - $ref: '#/components/schemas/EversignDelivery'
+      discriminator:
+        propertyName: type
+        mapping:
+          email: '#/components/schemas/EmailDelivery'
+          webhook: '#/components/schemas/WebhookDelivery'
+          dropbox: '#/components/schemas/DropboxDelivery'
+          one_drive: '#/components/schemas/OneDriveDelivery'
+          sign_now: '#/components/schemas/SignNowDelivery'
+          google_drive: '#/components/schemas/GoogleDriveDelivery'
+          aws_s3: '#/components/schemas/S3Delivery'
+          hellosign: '#/components/schemas/HelloSignDelivery'
+          docu_sign: '#/components/schemas/DocuSignDelivery'
+          eversign: '#/components/schemas/EversignDelivery'
+    S3Delivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        bucket:
+          type: string
+          maxLength: 2000
+        key_prefix:
+          type: string
+          nullable: true
+          maxLength: 2000
+      required:
+        - bucket
+        - id
+        - name
+      description: ''
+    SignNowDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              order:
+                type: string
+              role:
+                type: string
+                minLength: 1
+              email:
+                type: string
+                format: email
+            required:
+              - role
+              - email
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        subject:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+          nullable: true
+        sequenced_signing:
+          type: boolean
+        enable_optional_signers:
+          type: boolean
+      required:
+        - id
+        - name
+        - signers
+      description: ''
+    SubscriptionMeta:
+      type: object
+      properties:
+        offers:
+          type: object
+          additionalProperties: {}
+      required:
+        - offers
+      description: ''
     Template:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        preferences:
+          $ref: '#/components/schemas/TemplateSettings'
         title:
           type: string
           maxLength: 50
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        type:
+          enum:
+            - docx
+            - html
+            - fillable_pdf
+            - pptx
+            - xlsx
+            - g_document
+            - g_presentation
+            - g_spreadsheet
+          type: string
+          readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        document_status:
+          enum:
+            - active
+            - test
+          type: string
+        deleted_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        folder:
+          type: integer
+          nullable: true
       required:
-      - id
-      - title
-    TypeEnum:
-      enum:
-      - email
-      - webhook
-      - docu_sign
-      - sign_now
-      - zoho_crm
-      - dropbox
-      - google_drive
-      - hellosign
-      - podio
-      - one_drive
-      - eversign
-      - aws_s3
-      type: string
+        - created_time
+        - deleted_time
+        - id
+        - title
+        - type
+      description: ''
+    TemplateDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+          readOnly: true
+      required:
+        - id
+        - name
+        - type
+      description: ''
+    TemplateSettings:
+      type: object
+      properties:
+        margin:
+          type: object
+          additionalProperties: false
+          properties:
+            top:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 11
+            left:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 8
+            right:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 8
+            bottom:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 11
+          nullable: true
+        timezone:
+          type: string
+        info:
+          allOf:
+            - $ref: '#/components/schemas/FillablePdfSettings'
+          readOnly: true
+        dynamic_images:
+          type: array
+          items:
+            $ref: '#/components/schemas/DynamicImage'
+          nullable: true
+        output_file_name:
+          type: string
+          maxLength: 255
+        output_type:
+          enum:
+            - html
+            - pdf
+            - jpeg
+            - png
+            - docx
+            - pptx
+            - xlsx
+          type: string
+        password:
+          type: string
+          nullable: true
+          maxLength: 255
+        format:
+          enum:
+            - A3
+            - A4
+            - A5
+            - Legal
+            - Letter
+            - Tabloid
+          type: string
+        orientation:
+          enum:
+            - portrait
+            - landscape
+          type: string
+        header:
+          type: string
+          nullable: true
+        footer:
+          type: string
+          nullable: true
+        auto_number:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+          nullable: true
+        flatten_pdf:
+          type: boolean
+      required:
+        - info
+      description: ''
+    Timezone:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+        tz:
+          type: string
+          readOnly: true
+      required:
+        - name
+        - tz
+      description: ''
+    UnauthenticatedError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+      description: ''
+    UpdateDeliveryAccount:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          enum:
+            - hellosign
+            - aws_s3
+          type: string
+        sub_type:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          nullable: true
+        credentials:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+        is_expired:
+          type: boolean
+          readOnly: true
+      required:
+        - credentials
+        - id
+        - is_expired
+        - name
+        - sub_type
+        - type
     User:
       type: object
       properties:
@@ -1517,18 +4120,222 @@ components:
           format: email
           readOnly: true
         timezone:
+          enum:
+            - Pacific/Midway
+            - America/Adak
+            - Pacific/Honolulu
+            - Pacific/Marquesas
+            - America/Anchorage
+            - America/Tijuana
+            - America/Los_Angeles
+            - America/Phoenix
+            - America/Chihuahua
+            - America/Denver
+            - America/Belize
+            - America/Chicago
+            - Pacific/Easter
+            - America/Mexico_City
+            - America/Regina
+            - America/Bogota
+            - America/Cancun
+            - America/New_York
+            - America/Port-au-Prince
+            - America/Havana
+            - America/Indiana/Indianapolis
+            - America/Asuncion
+            - America/Halifax
+            - America/Caracas
+            - America/Cuiaba
+            - America/Manaus
+            - America/Santiago
+            - America/Grand_Turk
+            - America/St_Johns
+            - America/Fortaleza
+            - America/Sao_Paulo
+            - America/Cayenne
+            - America/Buenos_Aires
+            - America/Godthab
+            - America/Montevideo
+            - America/Miquelon
+            - America/Bahia
+            - America/Noronha
+            - Atlantic/Azores
+            - Atlantic/Cape_Verde
+            - Africa/Casablanca
+            - Europe/London
+            - Africa/Monrovia
+            - Europe/Amsterdam
+            - Europe/Belgrade
+            - Europe/Brussels
+            - Europe/Warsaw
+            - Africa/Algiers
+            - Africa/Windhoek
+            - Asia/Amman
+            - Europe/Athens
+            - Asia/Beirut
+            - Africa/Cairo
+            - Asia/Damascus
+            - Asia/Gaza
+            - Africa/Harare
+            - Europe/Helsinki
+            - Asia/Jerusalem
+            - Europe/Kaliningrad
+            - Africa/Tripoli
+            - Asia/Baghdad
+            - Asia/Istanbul
+            - Asia/Kuwait
+            - Europe/Minsk
+            - Europe/Moscow
+            - Africa/Nairobi
+            - Asia/Tehran
+            - Asia/Muscat
+            - Europe/Astrakhan
+            - Asia/Baku
+            - Europe/Samara
+            - Indian/Mauritius
+            - Asia/Tbilisi
+            - Asia/Yerevan
+            - Asia/Kabul
+            - Asia/Tashkent
+            - Asia/Yekaterinburg
+            - Asia/Karachi
+            - Asia/Kolkata
+            - Asia/Colombo
+            - Asia/Katmandu
+            - Asia/Almaty
+            - Asia/Dhaka
+            - Asia/Rangoon
+            - Asia/Novosibirsk
+            - Asia/Bangkok
+            - Asia/Barnaul
+            - Asia/Hovd
+            - Asia/Krasnoyarsk
+            - Asia/Tomsk
+            - Asia/Chongqing
+            - Asia/Irkutsk
+            - Asia/Kuala_Lumpur
+            - Australia/Perth
+            - Asia/Taipei
+            - Asia/Ulaanbaatar
+            - Asia/Pyongyang
+            - Australia/Eucla
+            - Asia/Chita
+            - Asia/Tokyo
+            - Asia/Seoul
+            - Asia/Yakutsk
+            - Australia/Adelaide
+            - Australia/Darwin
+            - Australia/Brisbane
+            - Australia/Canberra
+            - Pacific/Guam
+            - Australia/Hobart
+            - Asia/Vladivostok
+            - Australia/Lord_Howe
+            - Pacific/Bougainville
+            - Asia/Srednekolymsk
+            - Asia/Magadan
+            - Pacific/Norfolk
+            - Asia/Sakhalin
+            - Pacific/Guadalcanal
+            - Asia/Anadyr
+            - Pacific/Auckland
+            - Pacific/Fiji
+            - Pacific/Chatham
+            - Pacific/Tongatapu
+            - Pacific/Apia
+            - Pacific/Kiritimati
+            - null
           type: string
           nullable: true
-          maxLength: 100
         organization:
           $ref: '#/components/schemas/Organization'
       required:
-      - email
-      - id
+        - email
+        - id
+      description: ''
+    UserPersonalization:
+      type: object
+      properties:
+        key:
+          type: string
+          maxLength: 100
+        value:
+          type: string
+        parsed_value:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+        - key
+        - parsed_value
+        - value
+      description: ''
+    ValidationError:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        non_field_errors:
+          type: array
+          items:
+            type: string
+      required:
+        - errors
+        - non_field_errors
+      description: ''
+    WebhookDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        url:
+          type: string
+          maxLength: 255
+        headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      required:
+        - id
+        - name
+        - url
+      description: ''
   securitySchemes:
+    SessionAuthentication:
+      type: apiKey
+      in: cookie
+      name: sessionid
+      description: browser based login takes care of this
     tokenAuth:
       type: http
       scheme: bearer
 externalDocs:
-  url: https://help.docupilot.app/developers/api-overview
   description: Help docs on how to use API
+  url: https://help.docupilot.app/developers/api-overview

@@ -37,7 +37,7 @@ export class GeneralService {
      * @returns Plan
      * @throws ApiError
      */
-    public static async listSubscriptionPlans(): Promise<Plan> {
+    public static async listSubscriptionPlans(): Promise<Array<Plan>> {
         const result = await __request({
             method: 'GET',
             path: `/plans/`,
@@ -49,7 +49,7 @@ export class GeneralService {
      * @returns Timezone
      * @throws ApiError
      */
-    public static async listTimezones(): Promise<Timezone> {
+    public static async listTimezones(): Promise<Array<Timezone>> {
         const result = await __request({
             method: 'GET',
             path: `/tz/`,

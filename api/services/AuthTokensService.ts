@@ -1,86 +1,85 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Folder } from '../models/Folder';
+import type { AuthToken } from '../models/AuthToken';
 import { request as __request } from '../core/request';
 
-export class FoldersService {
+export class AuthTokensService {
 
     /**
-     * Get list of folders
-     * @returns Folder
+     * @returns AuthToken
      * @throws ApiError
      */
-    public static async listFolders({
+    public static async listAuthTokens({
         ordering,
+        search,
     }: {
         /** Which field to use when ordering the results. **/
         ordering?: string,
-    }): Promise<Array<Folder>> {
+        /** A search term. **/
+        search?: string,
+    }): Promise<Array<AuthToken>> {
         const result = await __request({
             method: 'GET',
-            path: `/api/v2/folders/`,
+            path: `/accounts/v2/auth_tokens/`,
             query: {
                 'ordering': ordering,
+                'search': search,
             },
         });
         return result.body;
     }
 
     /**
-     * Create a folder
-     * @returns Folder
+     * @returns AuthToken
      * @throws ApiError
      */
-    public static async createFolder({
+    public static async createAuthToken({
         requestBody,
     }: {
-        requestBody: Folder,
-    }): Promise<Folder> {
+        requestBody: AuthToken,
+    }): Promise<AuthToken> {
         const result = await __request({
             method: 'POST',
-            path: `/api/v2/folders/`,
+            path: `/accounts/v2/auth_tokens/`,
             body: requestBody,
         });
         return result.body;
     }
 
     /**
-     * Updates a folder
-     * @returns Folder
+     * @returns AuthToken
      * @throws ApiError
      */
-    public static async updateFolder({
+    public static async updateAuthToken({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this folder. **/
+        /** A unique integer value identifying this auth token. **/
         id: number,
-        requestBody: Folder,
-    }): Promise<Folder> {
+        requestBody: AuthToken,
+    }): Promise<AuthToken> {
         const result = await __request({
             method: 'PUT',
-            path: `/api/v2/folders/${id}/`,
+            path: `/accounts/v2/auth_tokens/${id}/`,
             body: requestBody,
         });
         return result.body;
     }
 
     /**
-     * Delete a folder.
-     * This operation moves all templates under this folder to home directory.
      * @returns any No response body
      * @throws ApiError
      */
-    public static async deleteFolder({
+    public static async deleteAuthToken({
         id,
     }: {
-        /** A unique integer value identifying this folder. **/
+        /** A unique integer value identifying this auth token. **/
         id: number,
     }): Promise<any> {
         const result = await __request({
             method: 'DELETE',
-            path: `/api/v2/folders/${id}/`,
+            path: `/accounts/v2/auth_tokens/${id}/`,
         });
         return result.body;
     }

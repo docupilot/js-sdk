@@ -1,31 +1,30 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Delivery } from '../models/Delivery';
-import type { PaginatedDeliveryList } from '../models/PaginatedDeliveryList';
+import type { PolymorphicDelivery } from '../models/PolymorphicDelivery';
+import type { TemplateDelivery } from '../models/TemplateDelivery';
 import { request as __request } from '../core/request';
 
 export class TemplateDeliveryService {
 
     /**
      * Get deliveries configured under this template
-     * @param templateId
-     * @param ordering Which field to use when ordering the results.
-     * @param page A page number within the paginated result set.
-     * @returns PaginatedDeliveryList
+     * @returns TemplateDelivery
      * @throws ApiError
      */
-    public static async listTemplateDeliveries(
+    public static async listTemplateDeliveries({
+        templateId,
+        ordering,
+    }: {
         templateId: number,
+        /** Which field to use when ordering the results. **/
         ordering?: string,
-        page?: number,
-    ): Promise<PaginatedDeliveryList> {
+    }): Promise<Array<TemplateDelivery>> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${templateId}/deliveries/`,
             query: {
                 'ordering': ordering,
-                'page': page,
             },
         });
         return result.body;
@@ -33,15 +32,16 @@ export class TemplateDeliveryService {
 
     /**
      * Create delivery
-     * @param templateId
-     * @param requestBody
-     * @returns Delivery
+     * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async createTemplateDelivery(
+    public static async createTemplateDelivery({
+        templateId,
+        requestBody,
+    }: {
         templateId: number,
-        requestBody: Delivery,
-    ): Promise<Delivery> {
+        requestBody?: PolymorphicDelivery,
+    }): Promise<PolymorphicDelivery> {
         const result = await __request({
             method: 'POST',
             path: `/api/v2/templates/${templateId}/deliveries/`,
@@ -52,15 +52,17 @@ export class TemplateDeliveryService {
 
     /**
      * Get delivery
-     * @param id A unique integer value identifying this delivery.
-     * @param templateId
-     * @returns Delivery
+     * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async retrieveTemplateDelivery(
+    public static async retrieveTemplateDelivery({
+        id,
+        templateId,
+    }: {
+        /** A unique integer value identifying this delivery. **/
         id: number,
         templateId: number,
-    ): Promise<Delivery> {
+    }): Promise<PolymorphicDelivery> {
         const result = await __request({
             method: 'GET',
             path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
@@ -70,17 +72,19 @@ export class TemplateDeliveryService {
 
     /**
      * Update delivery
-     * @param id A unique integer value identifying this delivery.
-     * @param templateId
-     * @param requestBody
-     * @returns Delivery
+     * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async updateTemplateDelivery(
+    public static async updateTemplateDelivery({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /** A unique integer value identifying this delivery. **/
         id: number,
         templateId: number,
-        requestBody: Delivery,
-    ): Promise<Delivery> {
+        requestBody?: PolymorphicDelivery,
+    }): Promise<PolymorphicDelivery> {
         const result = await __request({
             method: 'PUT',
             path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
@@ -91,18 +95,87 @@ export class TemplateDeliveryService {
 
     /**
      * Delete delivery
-     * @param id A unique integer value identifying this delivery.
-     * @param templateId
-     * @returns void
+     * @returns any No response body
      * @throws ApiError
      */
-    public static async deleteTemplateDelivery(
+    public static async deleteTemplateDelivery({
+        id,
+        templateId,
+    }: {
+        /** A unique integer value identifying this delivery. **/
         id: number,
         templateId: number,
-    ): Promise<void> {
+    }): Promise<any> {
         const result = await __request({
             method: 'DELETE',
             path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
+        });
+        return result.body;
+    }
+
+    /**
+     * upload email delivery attachments
+     * @returns PolymorphicDelivery
+     * @throws ApiError
+     */
+    public static async uploadDeliveryAttachments({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /** A unique integer value identifying this delivery. **/
+        id: number,
+        templateId: number,
+        requestBody: any,
+    }): Promise<PolymorphicDelivery> {
+        const result = await __request({
+            method: 'POST',
+            path: `/api/v2/templates/${templateId}/deliveries/${id}/attachments/`,
+            body: requestBody,
+        });
+        return result.body;
+    }
+
+    /**
+     * download delivery attachment
+     * @returns PolymorphicDelivery
+     * @throws ApiError
+     */
+    public static async downloadDeliveryAttachment({
+        attachmentId,
+        id,
+        templateId,
+    }: {
+        attachmentId: string,
+        /** A unique integer value identifying this delivery. **/
+        id: number,
+        templateId: number,
+    }): Promise<PolymorphicDelivery> {
+        const result = await __request({
+            method: 'GET',
+            path: `/api/v2/templates/${templateId}/deliveries/${id}/attachments/${attachmentId}/`,
+        });
+        return result.body;
+    }
+
+    /**
+     * delete email delivery attachment
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static async deleteDeliveryAttachment({
+        attachmentId,
+        id,
+        templateId,
+    }: {
+        attachmentId: string,
+        /** A unique integer value identifying this delivery. **/
+        id: number,
+        templateId: number,
+    }): Promise<any> {
+        const result = await __request({
+            method: 'DELETE',
+            path: `/api/v2/templates/${templateId}/deliveries/${id}/attachments/${attachmentId}/`,
         });
         return result.body;
     }
