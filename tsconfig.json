@@ -68,7 +68,8 @@
     /* Advanced Options */
     "skipLibCheck": true,                     /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true,  /* Disallow inconsistently-cased references to the same file. */
-    "resolveJsonModule": false
+    "resolveJsonModule": true
   },
+  "include": ["**/*.ts" ,"package.json"],
   "exclude": ["node_modules", "test", "build" ,"**/*.spec.ts"]
 }
