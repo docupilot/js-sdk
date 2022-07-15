@@ -1,7 +1,7 @@
 # Docupilot API - JS SDK
 
 This SDK will help simplify interaction with Docupilot
- APIs from `nodejs` or `javascript` environments
+APIs from `nodejs` or `javascript` environments
 
 #### Installation
 
@@ -22,5 +22,5 @@ const client = Docupilot.authorize('<your api token>');
 To troy out the _basic_ example
 
 ```bash
-DOCUPILOT_TOKEN=<your-api-token> ts-node examples/basic
+DOCUPILOT_ACCESS_KEY=<your-access-key> DOCUPILOT_ACCESS_SECRET=<your-access-secret> ts-node basic.ts
 ```

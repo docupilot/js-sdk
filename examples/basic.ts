@@ -1,9 +1,11 @@
 import Docupilot from '../index';
 
 async function run() {
-  const client = await Docupilot.authorize();
-  console.log(await client.FoldersService.listFolders({}));
-  console.log(await client.TemplatesService.listTemplates({}));
+  const Client = await Docupilot.authorize();
+  const user = await Client.UsersService.getMe();
+  console.log(`Docupilot client authenticated as ${user.email}`);
+  console.log(await Client.FoldersService.listFolders({}));
+  console.log(await Client.TemplatesService.listTemplates({}));
 }
 
 run()
