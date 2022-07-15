@@ -1,19 +1,28 @@
 import * as API from './api/index';
 
 class Client {
-  readonly TemplatesService = API.TemplatesService;
-  readonly FoldersService = API.FoldersService;
-  readonly HistoryService = API.HistoryService;
-  readonly LinkedAccountsService = API.LinkedAccountsService;
+  static readonly FoldersService = API.FoldersService;
+  static readonly TemplatesService = API.TemplatesService;
+  static readonly GenerateService = API.GenerateService;
+  static readonly HistoryService = API.HistoryService;
+  static readonly LinkedAccountsService = API.LinkedAccountsService;
+  static readonly GenerateBulkService = API.GenerateBulkService;
+  static readonly TemplateDeliveryService = API.TemplateDeliveryService;
+  static readonly UsersService = API.UsersService;
 }
 
 export default class Docupilot {
-  static async authorize(token?: string) {
-    API.OpenAPI.BASE = (process.env.DOCUPILOT_HOST || 'http://api.docupilot.app').replace(/\/+$/g, '');
-    API.OpenAPI.TOKEN = token ?? process.env.DOCUPILOT_TOKEN;
-    console.log("API.OpenAPI.BASE", API.OpenAPI.BASE, API.OpenAPI.TOKEN);
-    const user = await API.AccountsService.accountsV2UsersMeRetrieve();
-    console.log(`Docupilot client authenticated as ${user.email}`);
-    return new Client();
+  static async authorize(
+    access_key: string = process.env.DOCUPILOT_ACCESS_KEY as string,
+    access_secret: string = process.env.DOCUPILOT_ACCESS_SECRET as string,
+    host: string = process.env.DOCUPILOT_HOST as string,
+    logger = console.log,
+  ) {
+    API.OpenAPI.BASE = (host ?? 'https://api.docupilot.app').replace(
+      /\/+$/g,
+      '',
+    );
+    API.OpenAPI.TOKEN = btoa(`${access_key}:${access_secret}`);
+    return Client;
   }
 }
