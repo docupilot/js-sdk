@@ -1,28 +1,32 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BatchProcess } from '../models/BatchProcess';
-import type { PaginatedBatchProcessList } from '../models/PaginatedBatchProcessList';
+import type { BulkGen } from '../models/BulkGen';
+import type { BulkGenData } from '../models/BulkGenData';
+import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
 import { request as __request } from '../core/request';
 
 export class GenerateBulkService {
 
     /**
      * List bulk generation tasks
-     * @param templateId
-     * @param ordering Which field to use when ordering the results.
-     * @param page A page number within the paginated result set.
-     * @returns PaginatedBatchProcessList
+     * @returns PaginatedBulkGenList
      * @throws ApiError
      */
-    public static async listBulkGenerationTasks(
+    public static async listBulkGenerationTasks({
+        templateId,
+        ordering,
+        page,
+    }: {
         templateId: number,
+        /** Which field to use when ordering the results. **/
         ordering?: string,
+        /** A page number within the paginated result set. **/
         page?: number,
-    ): Promise<PaginatedBatchProcessList> {
+    }): Promise<PaginatedBulkGenList> {
         const result = await __request({
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/bulk_generate/`,
+            path: `/api/v2/templates/${templateId}/generate/bulk/`,
             query: {
                 'ordering': ordering,
                 'page': page,
@@ -33,38 +37,44 @@ export class GenerateBulkService {
 
     /**
      * Get bulk generation task
-     * @param id Task id
-     * @param templateId Template id
-     * @returns BatchProcess
+     * @returns BulkGen
      * @throws ApiError
      */
-    public static async getBulkGenerationTask(
+    public static async getBulkGenerationTask({
+        id,
+        templateId,
+    }: {
+        /** Task id **/
         id: number,
+        /** Template id **/
         templateId: number,
-    ): Promise<BatchProcess> {
+    }): Promise<BulkGen> {
         const result = await __request({
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/bulk_generate/${id}/`,
+            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/`,
         });
         return result.body;
     }
 
     /**
      * Cancel a bulk generation task
-     * @param id Task id
-     * @param templateId Template id
-     * @param requestBody
-     * @returns BatchProcess
+     * @returns BulkGen
      * @throws ApiError
      */
-    public static async cancelBulkGenerationTask(
+    public static async cancelBulkGenerationTask({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /** Task id **/
         id: number,
+        /** Template id **/
         templateId: number,
-        requestBody: BatchProcess,
-    ): Promise<BatchProcess> {
+        requestBody?: BulkGen,
+    }): Promise<BulkGen> {
         const result = await __request({
             method: 'PUT',
-            path: `/api/v2/templates/${templateId}/bulk_generate/${id}/cancel/`,
+            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/cancel/`,
             body: requestBody,
         });
         return result.body;
@@ -72,38 +82,44 @@ export class GenerateBulkService {
 
     /**
      * Get a task saved as draft
-     * @param id Task id
-     * @param templateId Template id
-     * @returns BatchProcess
+     * @returns BulkGenData
      * @throws ApiError
      */
-    public static async getBulkGenerationDraft(
+    public static async getBulkGenerationDraft({
+        id,
+        templateId,
+    }: {
+        /** Task id **/
         id: number,
+        /** Template id **/
         templateId: number,
-    ): Promise<BatchProcess> {
+    }): Promise<BulkGenData> {
         const result = await __request({
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/bulk_generate/${id}/draft/`,
+            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/draft/`,
         });
         return result.body;
     }
 
     /**
      * Trigger a bulk generation task
-     * @param id Task id
-     * @param templateId Template id
-     * @param requestBody
-     * @returns BatchProcess
+     * @returns BulkGen
      * @throws ApiError
      */
-    public static async triggerBulkGenerationDraft(
+    public static async triggerBulkGenerationDraft({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /** Task id **/
         id: number,
+        /** Template id **/
         templateId: number,
-        requestBody: BatchProcess,
-    ): Promise<BatchProcess> {
+        requestBody?: BulkGen,
+    }): Promise<BulkGen> {
         const result = await __request({
-            method: 'POST',
-            path: `/api/v2/templates/${templateId}/bulk_generate/${id}/trigger/`,
+            method: 'PUT',
+            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/trigger/`,
             body: requestBody,
         });
         return result.body;
@@ -112,18 +128,20 @@ export class GenerateBulkService {
     /**
      * Upload a new csv for bulk generate.
      * This will create a task in DRAFT mode.
-     * @param templateId Template id
-     * @param requestBody
-     * @returns BatchProcess
+     * @returns BulkGenData
      * @throws ApiError
      */
-    public static async uploadForBulkGeneration(
+    public static async uploadForBulkGeneration({
+        templateId,
+        requestBody,
+    }: {
+        /** Template id **/
         templateId: number,
-        requestBody: BatchProcess,
-    ): Promise<BatchProcess> {
+        requestBody: any,
+    }): Promise<BulkGenData> {
         const result = await __request({
             method: 'POST',
-            path: `/api/v2/templates/${templateId}/bulk_generate/upload/`,
+            path: `/api/v2/templates/${templateId}/generate/bulk/upload/`,
             body: requestBody,
         });
         return result.body;

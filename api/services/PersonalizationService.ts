@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { User } from '../models/User';
 import type { UserPersonalization } from '../models/UserPersonalization';
 import { request as __request } from '../core/request';
 
@@ -19,13 +20,14 @@ export class PersonalizationService {
     }
 
     /**
-     * @param requestBody
-     * @returns UserPersonalization
+     * @returns User
      * @throws ApiError
      */
-    public static async updateUserPersonalization(
+    public static async updateUserPersonalization({
+        requestBody,
+    }: {
         requestBody: UserPersonalization,
-    ): Promise<UserPersonalization> {
+    }): Promise<User> {
         const result = await __request({
             method: 'POST',
             path: `/api/v2/personalization/`,

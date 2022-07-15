@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { DynamicImage } from './DynamicImage';
 import type { FillablePdfSettings } from './FillablePdfSettings';
 
 export type TemplateSettings = {
@@ -12,15 +13,8 @@ export type TemplateSettings = {
         bottom?: number,
     } | null;
     timezone?: string;
-    readonly info: FillablePdfSettings;
-    dynamic_images: Array<{
-        token: string,
-        left: number,
-        top: number,
-        page: number,
-        width?: number,
-        height?: number,
-    }>;
+    readonly info: (FillablePdfSettings);
+    dynamic_images?: Array<DynamicImage> | null;
     output_file_name?: string;
     output_type?: TemplateSettings.output_type;
     password?: string | null;
@@ -35,10 +29,13 @@ export type TemplateSettings = {
 export namespace TemplateSettings {
 
     export enum output_type {
+        HTML = 'html',
         PDF = 'pdf',
         JPEG = 'jpeg',
         PNG = 'png',
         DOCX = 'docx',
+        PPTX = 'pptx',
+        XLSX = 'xlsx',
     }
 
     export enum format {

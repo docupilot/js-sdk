@@ -3,10 +3,10 @@
 /* eslint-disable */
 
 export type Plan = {
-    plan_id: string;
-    documents_allowed: number;
-    price: number;
-    billing_period_unit: Plan.billing_period_unit;
+    readonly plan_id: string;
+    readonly documents_allowed: number;
+    readonly price: number;
+    readonly billing_period_unit: Plan.billing_period_unit;
 }
 
 export namespace Plan {

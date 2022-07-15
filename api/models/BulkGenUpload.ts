@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type DocumentMergeLink = {
-    readonly path: string;
+export type BulkGenUpload = {
+    file: string;
 }
