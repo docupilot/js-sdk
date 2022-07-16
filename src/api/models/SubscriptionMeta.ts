@@ -4,4 +4,5 @@
 
 export type SubscriptionMeta = {
     offers: Record<string, any>;
-}
+};
+

@@ -12,4 +12,5 @@ export type BulkGen = {
     end_time?: string | null;
     total?: number | null;
     success?: number | null;
-}
+};
+

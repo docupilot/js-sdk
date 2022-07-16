@@ -7,4 +7,5 @@ export type Plan = {
     readonly documents_allowed: number;
     readonly price: number;
     readonly billing_period_unit: 'year' | 'month';
-}
+};
+

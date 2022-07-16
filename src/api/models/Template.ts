@@ -14,4 +14,5 @@ export type Template = {
     document_status?: 'active' | 'test';
     readonly deleted_time: string | null;
     folder?: number | null;
-}
+};
+

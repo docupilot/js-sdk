@@ -2,11 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { File } from './File';
+
 export type EmailDelivery = {
     readonly id: number;
-    readonly attachments: Array<Buffer | ArrayBuffer | ArrayBufferView>;
+    readonly attachments: Array<File>;
     name: string;
-    type?: 'email' | 'webhook' | 'docu_sign' | 'sign_now' | 'zoho_crm' | 'dropbox' | 'google_drive' | 'podio' | 'one_drive' | 'eversign' | 'hellosign' | 'aws_s3';
+    type?: 'email';
     from_email: string;
     to_email: Array<string>;
     cc?: Array<string> | null;
@@ -14,4 +16,5 @@ export type EmailDelivery = {
     headers?: Record<string, any> | null;
     subject?: string;
     body?: string;
-}
+};
+

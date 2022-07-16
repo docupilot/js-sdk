@@ -6,4 +6,5 @@ export type AuthToken = {
     readonly id: number;
     readonly token: string;
     name: string;
-}
+};
+

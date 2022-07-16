@@ -3,6 +3,9 @@
 /* eslint-disable */
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class LinkedAccountsService {
@@ -12,27 +15,30 @@ export class LinkedAccountsService {
      * @returns DeliveryAccount
      * @throws ApiError
      */
-    public static async listDeliveryAccounts({
+    public static listDeliveryAccounts({
         ordering,
         search,
         type,
     }: {
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
-        /** A search term. **/
+        /**
+         * A search term.
+         */
         search?: string,
         type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'zoho_crm',
-    }): Promise<Array<DeliveryAccount>> {
-        const result = await __request({
+    }): CancelablePromise<Array<DeliveryAccount>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/linked_accounts/`,
+            url: '/api/v2/linked_accounts/',
             query: {
                 'ordering': ordering,
                 'search': search,
                 'type': type,
             },
         });
-        return result.body;
     }
 
     /**
@@ -40,35 +46,40 @@ export class LinkedAccountsService {
      * @returns DeliveryAccount
      * @throws ApiError
      */
-    public static async addDeliveryAccount({
+    public static addDeliveryAccount({
         requestBody,
     }: {
         requestBody: DeliveryAccount,
-    }): Promise<DeliveryAccount> {
-        const result = await __request({
+    }): CancelablePromise<DeliveryAccount> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/linked_accounts/`,
+            url: '/api/v2/linked_accounts/',
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
      * Redirects to oauth endpoint to add a new linked account of given 'integrator_type'
-     * @returns any
+     * @returns void
      * @throws ApiError
      */
-    public static async linkedAccountsInvokeRetrieve({
+    public static linkedAccountsInvokeRetrieve({
         integratorType,
         environment,
     }: {
         integratorType: string,
-        /** sub-type of integrator. For example: sandbox or production for docu_sign **/
+        /**
+         * sub-type of integrator. For example: sandbox or production for docu_sign
+         */
         environment?: string,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/linked_accounts/${integratorType}/invoke/`,
+            url: '/api/v2/linked_accounts/{integrator_type}/invoke/',
+            path: {
+                'integrator_type': integratorType,
+            },
             query: {
                 'environment': environment,
             },
@@ -76,7 +87,6 @@ export class LinkedAccountsService {
                 302: `No response body`,
             },
         });
-        return result.body;
     }
 
     /**
@@ -84,59 +94,72 @@ export class LinkedAccountsService {
      * @returns DeliveryAccount
      * @throws ApiError
      */
-    public static async updateDeliveryAccount({
+    public static updateDeliveryAccount({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this delivery account. **/
+        /**
+         * A unique integer value identifying this delivery account.
+         */
         id: number,
         requestBody: UpdateDeliveryAccount,
-    }): Promise<DeliveryAccount> {
-        const result = await __request({
+    }): CancelablePromise<DeliveryAccount> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/linked_accounts/${id}/`,
+            url: '/api/v2/linked_accounts/{id}/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
      * Revoke linked account
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async revokeDeliveryAccount({
+    public static revokeDeliveryAccount({
         id,
     }: {
-        /** A unique integer value identifying this delivery account. **/
+        /**
+         * A unique integer value identifying this delivery account.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/v2/linked_accounts/${id}/`,
+            url: '/api/v2/linked_accounts/{id}/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
      * Redirects to oauth endpoint for re-connecting an account
-     * @returns any
+     * @returns void
      * @throws ApiError
      */
-    public static async linkedAccountsReconnectRetrieve({
+    public static linkedAccountsReconnectRetrieve({
         id,
     }: {
-        /** A unique integer value identifying this delivery account. **/
+        /**
+         * A unique integer value identifying this delivery account.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/linked_accounts/${id}/reconnect/`,
+            url: '/api/v2/linked_accounts/{id}/reconnect/',
+            path: {
+                'id': id,
+            },
             errors: {
                 302: `No response body`,
             },
         });
-        return result.body;
     }
 
 }

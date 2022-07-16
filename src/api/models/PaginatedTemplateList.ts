@@ -9,4 +9,5 @@ export type PaginatedTemplateList = {
     next?: string | null;
     previous?: string | null;
     results?: Array<Template>;
-}
+};
+

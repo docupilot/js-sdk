@@ -12,4 +12,5 @@ export type ChildTemplate = {
     deleted_time?: string | null;
     created_by: number;
     folder?: number | null;
-}
+};
+

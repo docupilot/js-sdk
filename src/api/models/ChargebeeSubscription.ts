@@ -9,4 +9,5 @@ export type ChargebeeSubscription = {
     readonly current_term_end: string;
     documents_allowed?: number;
     documents_created?: number;
-}
+};
+

@@ -5,4 +5,5 @@
 export type Folder = {
     readonly id: number;
     name: string;
-}
+};
+

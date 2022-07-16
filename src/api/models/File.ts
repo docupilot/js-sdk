@@ -8,4 +8,5 @@ export type File = {
     name: string;
     tag: string;
     readonly size: number | null;
-}
+};
+

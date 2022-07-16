@@ -5,6 +5,9 @@ import type { BannerNotification } from '../models/BannerNotification';
 import type { Meta } from '../models/Meta';
 import type { Plan } from '../models/Plan';
 import type { Timezone } from '../models/Timezone';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class GeneralService {
@@ -13,48 +16,44 @@ export class GeneralService {
      * @returns BannerNotification
      * @throws ApiError
      */
-    public static async listBannerNotifications(): Promise<BannerNotification> {
-        const result = await __request({
+    public static listBannerNotifications(): CancelablePromise<BannerNotification> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/banner_notifications/`,
+            url: '/banner_notifications/',
         });
-        return result.body;
     }
 
     /**
      * @returns Meta
      * @throws ApiError
      */
-    public static async getAppMeta(): Promise<Meta> {
-        const result = await __request({
+    public static getAppMeta(): CancelablePromise<Meta> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/meta/`,
+            url: '/meta/',
         });
-        return result.body;
     }
 
     /**
      * @returns Plan
      * @throws ApiError
      */
-    public static async listSubscriptionPlans(): Promise<Array<Plan>> {
-        const result = await __request({
+    public static listSubscriptionPlans(): CancelablePromise<Array<Plan>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/plans/`,
+            url: '/plans/',
         });
-        return result.body;
     }
 
     /**
      * @returns Timezone
      * @throws ApiError
      */
-    public static async listTimezones(): Promise<Array<Timezone>> {
-        const result = await __request({
+    public static listTimezones(): CancelablePromise<Array<Timezone>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/tz/`,
+            url: '/tz/',
         });
-        return result.body;
     }
 
 }

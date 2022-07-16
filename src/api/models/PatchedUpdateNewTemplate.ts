@@ -3,5 +3,6 @@
 /* eslint-disable */
 
 export type PatchedUpdateNewTemplate = {
-    file?: string;
-}
+    file?: Blob;
+};
+
