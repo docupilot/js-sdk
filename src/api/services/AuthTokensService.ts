@@ -2,6 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AuthToken } from '../models/AuthToken';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class AuthTokensService {
@@ -10,78 +13,90 @@ export class AuthTokensService {
      * @returns AuthToken
      * @throws ApiError
      */
-    public static async listAuthTokens({
+    public static listAuthTokens({
         ordering,
         search,
     }: {
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
-        /** A search term. **/
+        /**
+         * A search term.
+         */
         search?: string,
-    }): Promise<Array<AuthToken>> {
-        const result = await __request({
+    }): CancelablePromise<Array<AuthToken>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/accounts/v2/auth_tokens/`,
+            url: '/accounts/v2/auth_tokens/',
             query: {
                 'ordering': ordering,
                 'search': search,
             },
         });
-        return result.body;
     }
 
     /**
      * @returns AuthToken
      * @throws ApiError
      */
-    public static async createAuthToken({
+    public static createAuthToken({
         requestBody,
     }: {
         requestBody: AuthToken,
-    }): Promise<AuthToken> {
-        const result = await __request({
+    }): CancelablePromise<AuthToken> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/accounts/v2/auth_tokens/`,
+            url: '/accounts/v2/auth_tokens/',
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
      * @returns AuthToken
      * @throws ApiError
      */
-    public static async updateAuthToken({
+    public static updateAuthToken({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this auth token. **/
+        /**
+         * A unique integer value identifying this auth token.
+         */
         id: number,
         requestBody: AuthToken,
-    }): Promise<AuthToken> {
-        const result = await __request({
+    }): CancelablePromise<AuthToken> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/accounts/v2/auth_tokens/${id}/`,
+            url: '/accounts/v2/auth_tokens/{id}/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async deleteAuthToken({
+    public static deleteAuthToken({
         id,
     }: {
-        /** A unique integer value identifying this auth token. **/
+        /**
+         * A unique integer value identifying this auth token.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/accounts/v2/auth_tokens/${id}/`,
+            url: '/accounts/v2/auth_tokens/{id}/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
 }

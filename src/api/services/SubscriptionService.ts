@@ -2,6 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class SubscriptionService {
@@ -10,43 +13,40 @@ export class SubscriptionService {
      * @returns ChargebeeSubscription
      * @throws ApiError
      */
-    public static async getSubscriptionDetails(): Promise<ChargebeeSubscription> {
-        const result = await __request({
+    public static getSubscriptionDetails(): CancelablePromise<ChargebeeSubscription> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/accounts/v2/subscription/details/`,
+            url: '/accounts/v2/subscription/details/',
         });
-        return result.body;
     }
 
     /**
      * @returns any
      * @throws ApiError
      */
-    public static async getChargebeeHostedPage({
+    public static getChargebeeHostedPage({
         planId,
     }: {
         planId?: string,
-    }): Promise<Record<string, any>> {
-        const result = await __request({
+    }): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/accounts/v2/subscription/hosted_page/`,
+            url: '/accounts/v2/subscription/hosted_page/',
             query: {
                 'plan_id': planId,
             },
         });
-        return result.body;
     }
 
     /**
      * @returns ChargebeeSubscription
      * @throws ApiError
      */
-    public static async getChargebeePortalSession(): Promise<ChargebeeSubscription> {
-        const result = await __request({
+    public static getChargebeePortalSession(): CancelablePromise<ChargebeeSubscription> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/accounts/v2/subscription/portal_session/`,
+            url: '/accounts/v2/subscription/portal_session/',
         });
-        return result.body;
     }
 
 }

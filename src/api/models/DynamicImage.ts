@@ -9,4 +9,5 @@ export type DynamicImage = {
     top: number;
     width: number;
     height: number;
-}
+};
+

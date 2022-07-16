@@ -4,4 +4,5 @@
 
 export type BulkGenTask = {
     status_message?: string | null;
-}
+};
+

@@ -3,7 +3,11 @@
 /* eslint-disable */
 import type { BulkGen } from '../models/BulkGen';
 import type { BulkGenData } from '../models/BulkGenData';
+import type { BulkGenUpload } from '../models/BulkGenUpload';
 import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class GenerateBulkService {
@@ -13,26 +17,32 @@ export class GenerateBulkService {
      * @returns PaginatedBulkGenList
      * @throws ApiError
      */
-    public static async listBulkGenerationTasks({
+    public static listBulkGenerationTasks({
         templateId,
         ordering,
         page,
     }: {
         templateId: number,
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
-        /** A page number within the paginated result set. **/
+        /**
+         * A page number within the paginated result set.
+         */
         page?: number,
-    }): Promise<PaginatedBulkGenList> {
-        const result = await __request({
+    }): CancelablePromise<PaginatedBulkGenList> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/generate/bulk/`,
+            url: '/api/v2/templates/{template_id}/generate/bulk/',
+            path: {
+                'template_id': templateId,
+            },
             query: {
                 'ordering': ordering,
                 'page': page,
             },
         });
-        return result.body;
     }
 
     /**
@@ -40,20 +50,27 @@ export class GenerateBulkService {
      * @returns BulkGen
      * @throws ApiError
      */
-    public static async getBulkGenerationTask({
+    public static getBulkGenerationTask({
         id,
         templateId,
     }: {
-        /** Task id **/
+        /**
+         * Task id
+         */
         id: number,
-        /** Template id **/
+        /**
+         * Template id
+         */
         templateId: number,
-    }): Promise<BulkGen> {
-        const result = await __request({
+    }): CancelablePromise<BulkGen> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/`,
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -61,23 +78,31 @@ export class GenerateBulkService {
      * @returns BulkGen
      * @throws ApiError
      */
-    public static async cancelBulkGenerationTask({
+    public static cancelBulkGenerationTask({
         id,
         templateId,
         requestBody,
     }: {
-        /** Task id **/
+        /**
+         * Task id
+         */
         id: number,
-        /** Template id **/
+        /**
+         * Template id
+         */
         templateId: number,
         requestBody?: BulkGen,
-    }): Promise<BulkGen> {
-        const result = await __request({
+    }): CancelablePromise<BulkGen> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/cancel/`,
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/cancel/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -85,20 +110,27 @@ export class GenerateBulkService {
      * @returns BulkGenData
      * @throws ApiError
      */
-    public static async getBulkGenerationDraft({
+    public static getBulkGenerationDraft({
         id,
         templateId,
     }: {
-        /** Task id **/
+        /**
+         * Task id
+         */
         id: number,
-        /** Template id **/
+        /**
+         * Template id
+         */
         templateId: number,
-    }): Promise<BulkGenData> {
-        const result = await __request({
+    }): CancelablePromise<BulkGenData> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/draft/`,
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -106,23 +138,31 @@ export class GenerateBulkService {
      * @returns BulkGen
      * @throws ApiError
      */
-    public static async triggerBulkGenerationDraft({
+    public static triggerBulkGenerationDraft({
         id,
         templateId,
         requestBody,
     }: {
-        /** Task id **/
+        /**
+         * Task id
+         */
         id: number,
-        /** Template id **/
+        /**
+         * Template id
+         */
         templateId: number,
         requestBody?: BulkGen,
-    }): Promise<BulkGen> {
-        const result = await __request({
+    }): CancelablePromise<BulkGen> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/templates/${templateId}/generate/bulk/${id}/trigger/`,
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -131,20 +171,25 @@ export class GenerateBulkService {
      * @returns BulkGenData
      * @throws ApiError
      */
-    public static async uploadForBulkGeneration({
+    public static uploadForBulkGeneration({
         templateId,
-        requestBody,
+        formData,
     }: {
-        /** Template id **/
+        /**
+         * Template id
+         */
         templateId: number,
-        requestBody: any,
-    }): Promise<BulkGenData> {
-        const result = await __request({
+        formData: BulkGenUpload,
+    }): CancelablePromise<BulkGenData> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/${templateId}/generate/bulk/upload/`,
-            body: requestBody,
+            url: '/api/v2/templates/{template_id}/generate/bulk/upload/',
+            path: {
+                'template_id': templateId,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
-        return result.body;
     }
 
 }

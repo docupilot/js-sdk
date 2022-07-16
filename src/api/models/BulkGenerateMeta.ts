@@ -4,4 +4,5 @@
 
 export type BulkGenerateMeta = {
     max_test_rows: number;
-}
+};
+

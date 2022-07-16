@@ -9,4 +9,5 @@ export type PaginatedBulkGenList = {
     next?: string | null;
     previous?: string | null;
     results?: Array<BulkGen>;
-}
+};
+

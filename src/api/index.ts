@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export { ApiError } from './core/ApiError';
+export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
+export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
@@ -61,8 +63,8 @@ export type { WebhookDelivery } from './models/WebhookDelivery';
 export { AuthTokensService } from './services/AuthTokensService';
 export { FoldersService } from './services/FoldersService';
 export { GeneralService } from './services/GeneralService';
-export { GenerateBulkService } from './services/GenerateBulkService';
 export { GenerateService } from './services/GenerateService';
+export { GenerateBulkService } from './services/GenerateBulkService';
 export { HistoryService } from './services/HistoryService';
 export { LinkedAccountsService } from './services/LinkedAccountsService';
 export { PersonalizationService } from './services/PersonalizationService';

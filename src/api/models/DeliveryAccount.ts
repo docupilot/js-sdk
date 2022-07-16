@@ -9,4 +9,5 @@ export type DeliveryAccount = {
     readonly name: string | null;
     credentials: Record<string, any>;
     readonly is_expired: boolean;
-}
+};
+

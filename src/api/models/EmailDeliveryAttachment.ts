@@ -3,5 +3,6 @@
 /* eslint-disable */
 
 export type EmailDeliveryAttachment = {
-    attachments: Array<string>;
-}
+    attachments: Array<Blob>;
+};
+

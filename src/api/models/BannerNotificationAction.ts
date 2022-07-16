@@ -5,4 +5,5 @@
 export type BannerNotificationAction = {
     text: string;
     attributes: Record<string, any>;
-}
+};
+

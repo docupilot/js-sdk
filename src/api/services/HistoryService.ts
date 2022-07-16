@@ -2,6 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { PaginatedMergeHistoryList } from '../models/PaginatedMergeHistoryList';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class HistoryService {
@@ -11,7 +14,7 @@ export class HistoryService {
      * @returns PaginatedMergeHistoryList
      * @throws ApiError
      */
-    public static async getCreatedDocumentsHistory({
+    public static getCreatedDocumentsHistory({
         document,
         endDate,
         ordering,
@@ -20,19 +23,27 @@ export class HistoryService {
         status,
     }: {
         document?: number,
-        /** DateTime in this format: 2019-05-02 16:25:12.353000 **/
+        /**
+         * DateTime in this format: 2019-05-02 16:25:12.353000
+         */
         endDate?: string,
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
-        /** A page number within the paginated result set. **/
+        /**
+         * A page number within the paginated result set.
+         */
         page?: number,
-        /** DateTime in this format: 2019-05-02 16:25:12.353000 **/
+        /**
+         * DateTime in this format: 2019-05-02 16:25:12.353000
+         */
         startDate?: string,
         status?: 'error' | 'pending' | 'success',
-    }): Promise<PaginatedMergeHistoryList> {
-        const result = await __request({
+    }): CancelablePromise<PaginatedMergeHistoryList> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/history/`,
+            url: '/api/v2/history/',
             query: {
                 'document': document,
                 'end_date': endDate,
@@ -42,25 +53,28 @@ export class HistoryService {
                 'status': status,
             },
         });
-        return result.body;
     }
 
     /**
      * download generated document if available
-     * @returns any
+     * @returns binary
      * @throws ApiError
      */
-    public static async downloadCreatedDocument({
+    public static downloadCreatedDocument({
         id,
     }: {
-        /** A unique integer value identifying this merge history. **/
+        /**
+         * A unique integer value identifying this merge history.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/history/${id}/download/`,
+            url: '/api/v2/history/{id}/download/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
 }

@@ -5,4 +5,5 @@
 export type Timezone = {
     readonly name: string;
     readonly tz: string;
-}
+};
+

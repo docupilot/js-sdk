@@ -8,4 +8,5 @@ export type BannerNotification = {
     id: string;
     content: string;
     action: BannerNotificationAction;
-}
+};
+

@@ -3,6 +3,9 @@
 /* eslint-disable */
 import type { User } from '../models/User';
 import type { UserPersonalization } from '../models/UserPersonalization';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class PersonalizationService {
@@ -11,29 +14,28 @@ export class PersonalizationService {
      * @returns any
      * @throws ApiError
      */
-    public static async getUserPersonalization(): Promise<Record<string, any>> {
-        const result = await __request({
+    public static getUserPersonalization(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/personalization/`,
+            url: '/api/v2/personalization/',
         });
-        return result.body;
     }
 
     /**
      * @returns User
      * @throws ApiError
      */
-    public static async updateUserPersonalization({
+    public static updateUserPersonalization({
         requestBody,
     }: {
         requestBody: UserPersonalization,
-    }): Promise<User> {
-        const result = await __request({
+    }): CancelablePromise<User> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/personalization/`,
+            url: '/api/v2/personalization/',
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
 }

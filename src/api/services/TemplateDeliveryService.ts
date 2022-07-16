@@ -1,8 +1,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { EmailDeliveryAttachment } from '../models/EmailDeliveryAttachment';
 import type { PolymorphicDelivery } from '../models/PolymorphicDelivery';
 import type { TemplateDelivery } from '../models/TemplateDelivery';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class TemplateDeliveryService {
@@ -12,22 +16,26 @@ export class TemplateDeliveryService {
      * @returns TemplateDelivery
      * @throws ApiError
      */
-    public static async listTemplateDeliveries({
+    public static listTemplateDeliveries({
         templateId,
         ordering,
     }: {
         templateId: number,
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
-    }): Promise<Array<TemplateDelivery>> {
-        const result = await __request({
+    }): CancelablePromise<Array<TemplateDelivery>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/deliveries/`,
+            url: '/api/v2/templates/{template_id}/deliveries/',
+            path: {
+                'template_id': templateId,
+            },
             query: {
                 'ordering': ordering,
             },
         });
-        return result.body;
     }
 
     /**
@@ -35,19 +43,22 @@ export class TemplateDeliveryService {
      * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async createTemplateDelivery({
+    public static createTemplateDelivery({
         templateId,
         requestBody,
     }: {
         templateId: number,
         requestBody?: PolymorphicDelivery,
-    }): Promise<PolymorphicDelivery> {
-        const result = await __request({
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/${templateId}/deliveries/`,
+            url: '/api/v2/templates/{template_id}/deliveries/',
+            path: {
+                'template_id': templateId,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -55,19 +66,24 @@ export class TemplateDeliveryService {
      * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async retrieveTemplateDelivery({
+    public static retrieveTemplateDelivery({
         id,
         templateId,
     }: {
-        /** A unique integer value identifying this delivery. **/
+        /**
+         * A unique integer value identifying this delivery.
+         */
         id: number,
         templateId: number,
-    }): Promise<PolymorphicDelivery> {
-        const result = await __request({
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -75,42 +91,53 @@ export class TemplateDeliveryService {
      * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async updateTemplateDelivery({
+    public static updateTemplateDelivery({
         id,
         templateId,
         requestBody,
     }: {
-        /** A unique integer value identifying this delivery. **/
+        /**
+         * A unique integer value identifying this delivery.
+         */
         id: number,
         templateId: number,
         requestBody?: PolymorphicDelivery,
-    }): Promise<PolymorphicDelivery> {
-        const result = await __request({
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
      * Delete delivery
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async deleteTemplateDelivery({
+    public static deleteTemplateDelivery({
         id,
         templateId,
     }: {
-        /** A unique integer value identifying this delivery. **/
+        /**
+         * A unique integer value identifying this delivery.
+         */
         id: number,
         templateId: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/`,
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -118,22 +145,28 @@ export class TemplateDeliveryService {
      * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async uploadDeliveryAttachments({
+    public static uploadDeliveryAttachments({
         id,
         templateId,
-        requestBody,
+        formData,
     }: {
-        /** A unique integer value identifying this delivery. **/
+        /**
+         * A unique integer value identifying this delivery.
+         */
         id: number,
         templateId: number,
-        requestBody: any,
-    }): Promise<PolymorphicDelivery> {
-        const result = await __request({
+        formData: EmailDeliveryAttachment,
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/attachments/`,
-            body: requestBody,
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
-        return result.body;
     }
 
     /**
@@ -141,43 +174,55 @@ export class TemplateDeliveryService {
      * @returns PolymorphicDelivery
      * @throws ApiError
      */
-    public static async downloadDeliveryAttachment({
+    public static downloadDeliveryAttachment({
         attachmentId,
         id,
         templateId,
     }: {
         attachmentId: string,
-        /** A unique integer value identifying this delivery. **/
+        /**
+         * A unique integer value identifying this delivery.
+         */
         id: number,
         templateId: number,
-    }): Promise<PolymorphicDelivery> {
-        const result = await __request({
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/attachments/${attachmentId}/`,
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
+            path: {
+                'attachment_id': attachmentId,
+                'id': id,
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
     /**
      * delete email delivery attachment
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async deleteDeliveryAttachment({
+    public static deleteDeliveryAttachment({
         attachmentId,
         id,
         templateId,
     }: {
         attachmentId: string,
-        /** A unique integer value identifying this delivery. **/
+        /**
+         * A unique integer value identifying this delivery.
+         */
         id: number,
         templateId: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/v2/templates/${templateId}/deliveries/${id}/attachments/${attachmentId}/`,
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
+            path: {
+                'attachment_id': attachmentId,
+                'id': id,
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
 }

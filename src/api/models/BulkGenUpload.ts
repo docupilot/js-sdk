@@ -3,5 +3,6 @@
 /* eslint-disable */
 
 export type BulkGenUpload = {
-    file: string;
-}
+    file: Blob;
+};
+

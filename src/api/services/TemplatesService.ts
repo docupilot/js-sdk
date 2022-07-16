@@ -2,8 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
+import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
+import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
 import type { Template } from '../models/Template';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class TemplatesService {
@@ -13,7 +18,7 @@ export class TemplatesService {
      * @returns PaginatedTemplateList
      * @throws ApiError
      */
-    public static async listTemplates({
+    public static listTemplates({
         folder,
         ordering,
         outputType,
@@ -23,19 +28,25 @@ export class TemplatesService {
         type,
     }: {
         folder?: number,
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
         outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
-        /** A page number within the paginated result set. **/
+        /**
+         * A page number within the paginated result set.
+         */
         page?: number,
-        /** A search term. **/
+        /**
+         * A search term.
+         */
         search?: string,
         status?: 'active' | 'test',
         type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
-    }): Promise<PaginatedTemplateList> {
-        const result = await __request({
+    }): CancelablePromise<PaginatedTemplateList> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/`,
+            url: '/api/v2/templates/',
             query: {
                 'folder': folder,
                 'ordering': ordering,
@@ -46,7 +57,6 @@ export class TemplatesService {
                 'type': type,
             },
         });
-        return result.body;
     }
 
     /**
@@ -54,17 +64,17 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async createTemplate({
-        requestBody,
+    public static createTemplate({
+        formData,
     }: {
-        requestBody: any,
-    }): Promise<Template> {
-        const result = await __request({
+        formData: NewTemplate,
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/`,
-            body: requestBody,
+            url: '/api/v2/templates/',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
-        return result.body;
     }
 
     /**
@@ -72,17 +82,21 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async getTemplate({
+    public static getTemplate({
         id,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${id}/`,
+            url: '/api/v2/templates/{id}/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -90,20 +104,25 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async updateTemplate({
+    public static updateTemplate({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
         requestBody: Template,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/templates/${id}/`,
+            url: '/api/v2/templates/{id}/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -111,38 +130,47 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async updateTemplateContent({
+    public static updateTemplateContent({
         id,
-        requestBody,
+        formData,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-        requestBody?: any,
-    }): Promise<Template> {
-        const result = await __request({
+        formData?: PatchedUpdateNewTemplate,
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'PATCH',
-            path: `/api/v2/templates/${id}/`,
-            body: requestBody,
+            url: '/api/v2/templates/{id}/',
+            path: {
+                'id': id,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
-        return result.body;
     }
 
     /**
      * Move template to trash
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async trashTemplate({
+    public static trashTemplate({
         id,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/v2/templates/${id}/`,
+            url: '/api/v2/templates/{id}/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -150,56 +178,69 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async copyTemplate({
+    public static copyTemplate({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
         requestBody: CopyTemplate,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/${id}/copy/`,
+            url: '/api/v2/templates/{id}/copy/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
      * Download template file
-     * @returns any
+     * @returns binary
      * @throws ApiError
      */
-    public static async downloadTemplateFile({
+    public static downloadTemplateFile({
         id,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${id}/download/`,
+            url: '/api/v2/templates/{id}/download/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
      * Delete a template permanently from trash
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async deleteTemplatePermanently({
+    public static deleteTemplatePermanently({
         id,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/v2/templates/${id}/permanent_delete/`,
+            url: '/api/v2/templates/{id}/permanent_delete/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -207,20 +248,25 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async restoreTemplateFromTrash({
+    public static restoreTemplateFromTrash({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
         requestBody: Template,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/templates/${id}/restore/`,
+            url: '/api/v2/templates/{id}/restore/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -228,17 +274,21 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async getTemplateSchema({
+    public static getTemplateSchema({
         id,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${id}/schema/`,
+            url: '/api/v2/templates/{id}/schema/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -247,12 +297,11 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async listAllTemplates(): Promise<Template> {
-        const result = await __request({
+    public static listAllTemplates(): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/all/`,
+            url: '/api/v2/templates/all/',
         });
-        return result.body;
     }
 
     /**
@@ -260,12 +309,11 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static async listTrashedTemplates(): Promise<Template> {
-        const result = await __request({
+    public static listTrashedTemplates(): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/trash/`,
+            url: '/api/v2/templates/trash/',
         });
-        return result.body;
     }
 
 }

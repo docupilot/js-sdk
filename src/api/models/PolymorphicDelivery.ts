@@ -14,3 +14,4 @@ import type { SignNowDelivery } from './SignNowDelivery';
 import type { WebhookDelivery } from './WebhookDelivery';
 
 export type PolymorphicDelivery = (EmailDelivery | WebhookDelivery | DropboxDelivery | OneDriveDelivery | SignNowDelivery | GoogleDriveDelivery | S3Delivery | HelloSignDelivery | DocuSignDelivery | EversignDelivery);
+

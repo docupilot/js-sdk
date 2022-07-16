@@ -4,4 +4,5 @@
 
 export type DocumentMergeLink = {
     readonly path: string;
-}
+};
+

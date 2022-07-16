@@ -3,25 +3,28 @@
 /* eslint-disable */
 import type { ChangePassword } from '../models/ChangePassword';
 import type { User } from '../models/User';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class UsersService {
 
     /**
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async changePassword({
+    public static changePassword({
         requestBody,
     }: {
         requestBody: ChangePassword,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/accounts/v2/users/change_password/`,
+            url: '/accounts/v2/users/change_password/',
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -29,12 +32,11 @@ export class UsersService {
      * @returns User
      * @throws ApiError
      */
-    public static async getMe(): Promise<User> {
-        const result = await __request({
+    public static getMe(): CancelablePromise<User> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/accounts/v2/users/me/`,
+            url: '/accounts/v2/users/me/',
         });
-        return result.body;
     }
 
     /**
@@ -42,17 +44,17 @@ export class UsersService {
      * @returns User
      * @throws ApiError
      */
-    public static async updateMe({
+    public static updateMe({
         requestBody,
     }: {
         requestBody?: User,
-    }): Promise<User> {
-        const result = await __request({
+    }): CancelablePromise<User> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/accounts/v2/users/me/`,
+            url: '/accounts/v2/users/me/',
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
 }

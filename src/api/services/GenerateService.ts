@@ -3,6 +3,9 @@
 /* eslint-disable */
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
 import type { Template } from '../models/Template';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class GenerateService {
@@ -12,25 +15,30 @@ export class GenerateService {
      * @returns Template
      * @throws ApiError
      */
-    public static async generateDocument({
+    public static generateDocument({
         id,
         requestBody,
         download,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
         requestBody: Template,
         download?: 'false' | 'file' | 'true',
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/${id}/generate/`,
+            url: '/api/v2/templates/{id}/generate/',
+            path: {
+                'id': id,
+            },
             query: {
                 'download': download,
             },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -38,20 +46,25 @@ export class GenerateService {
      * @returns Template
      * @throws ApiError
      */
-    public static async testDocumentGeneration({
+    public static testDocumentGeneration({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
         requestBody: Template,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/templates/${id}/test/`,
+            url: '/api/v2/templates/{id}/test/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -59,17 +72,21 @@ export class GenerateService {
      * @returns Template
      * @throws ApiError
      */
-    public static async getTestData({
+    public static getTestData({
         id,
     }: {
-        /** A unique integer value identifying this document. **/
+        /**
+         * A unique integer value identifying this document.
+         */
         id: number,
-    }): Promise<Template> {
-        const result = await __request({
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${id}/test_data/`,
+            url: '/api/v2/templates/{id}/test_data/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
     /**
@@ -78,16 +95,18 @@ export class GenerateService {
      * @returns DocumentMergeLink
      * @throws ApiError
      */
-    public static async listGenerationLinks({
+    public static listGenerationLinks({
         templateId,
     }: {
         templateId: number,
-    }): Promise<Array<DocumentMergeLink>> {
-        const result = await __request({
+    }): CancelablePromise<Array<DocumentMergeLink>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/templates/${templateId}/merge_links/`,
+            url: '/api/v2/templates/{template_id}/merge_links/',
+            path: {
+                'template_id': templateId,
+            },
         });
-        return result.body;
     }
 
 }

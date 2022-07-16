@@ -2,6 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Folder } from '../models/Folder';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
 export class FoldersService {
@@ -11,20 +14,21 @@ export class FoldersService {
      * @returns Folder
      * @throws ApiError
      */
-    public static async listFolders({
+    public static listFolders({
         ordering,
     }: {
-        /** Which field to use when ordering the results. **/
+        /**
+         * Which field to use when ordering the results.
+         */
         ordering?: string,
-    }): Promise<Array<Folder>> {
-        const result = await __request({
+    }): CancelablePromise<Array<Folder>> {
+        return __request(OpenAPI, {
             method: 'GET',
-            path: `/api/v2/folders/`,
+            url: '/api/v2/folders/',
             query: {
                 'ordering': ordering,
             },
         });
-        return result.body;
     }
 
     /**
@@ -32,17 +36,17 @@ export class FoldersService {
      * @returns Folder
      * @throws ApiError
      */
-    public static async createFolder({
+    public static createFolder({
         requestBody,
     }: {
         requestBody: Folder,
-    }): Promise<Folder> {
-        const result = await __request({
+    }): CancelablePromise<Folder> {
+        return __request(OpenAPI, {
             method: 'POST',
-            path: `/api/v2/folders/`,
+            url: '/api/v2/folders/',
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
@@ -50,39 +54,48 @@ export class FoldersService {
      * @returns Folder
      * @throws ApiError
      */
-    public static async updateFolder({
+    public static updateFolder({
         id,
         requestBody,
     }: {
-        /** A unique integer value identifying this folder. **/
+        /**
+         * A unique integer value identifying this folder.
+         */
         id: number,
         requestBody: Folder,
-    }): Promise<Folder> {
-        const result = await __request({
+    }): CancelablePromise<Folder> {
+        return __request(OpenAPI, {
             method: 'PUT',
-            path: `/api/v2/folders/${id}/`,
+            url: '/api/v2/folders/{id}/',
+            path: {
+                'id': id,
+            },
             body: requestBody,
+            mediaType: 'application/json',
         });
-        return result.body;
     }
 
     /**
      * Delete a folder.
      * This operation moves all templates under this folder to home directory.
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static async deleteFolder({
+    public static deleteFolder({
         id,
     }: {
-        /** A unique integer value identifying this folder. **/
+        /**
+         * A unique integer value identifying this folder.
+         */
         id: number,
-    }): Promise<any> {
-        const result = await __request({
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
             method: 'DELETE',
-            path: `/api/v2/folders/${id}/`,
+            url: '/api/v2/folders/{id}/',
+            path: {
+                'id': id,
+            },
         });
-        return result.body;
     }
 
 }

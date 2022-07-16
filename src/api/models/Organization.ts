@@ -5,4 +5,5 @@
 export type Organization = {
     readonly id: number;
     name?: string | null;
-}
+};
+

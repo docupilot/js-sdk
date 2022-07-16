@@ -7,13 +7,13 @@ import type { FillablePdfSettings } from './FillablePdfSettings';
 
 export type TemplateSettings = {
     margin?: {
-        top?: number,
-        left?: number,
-        right?: number,
-        bottom?: number,
+        top?: number;
+        left?: number;
+        right?: number;
+        bottom?: number;
     } | null;
     timezone?: string;
-    readonly info: (FillablePdfSettings);
+    readonly info: FillablePdfSettings;
     dynamic_images?: Array<DynamicImage> | null;
     output_file_name?: string;
     output_type?: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
@@ -24,4 +24,5 @@ export type TemplateSettings = {
     footer?: string | null;
     auto_number?: number | null;
     flatten_pdf?: boolean;
-}
+};
+
