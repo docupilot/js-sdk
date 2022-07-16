@@ -1,4 +1,4 @@
-import * as API from './api/index';
+import * as API from './api';
 
 class Client {
   static readonly FoldersService = API.FoldersService;
