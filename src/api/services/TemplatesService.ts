@@ -10,6 +10,7 @@ import type { Template } from '../models/Template';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class TemplatesService {
 
@@ -67,7 +68,7 @@ export class TemplatesService {
     public static createTemplate({
         formData,
     }: {
-        formData: NewTemplate,
+        formData: OmitReadonly<NewTemplate>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -112,7 +113,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: Template,
+        requestBody: OmitReadonly<Template>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -138,7 +139,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-        formData?: PatchedUpdateNewTemplate,
+        formData?: OmitReadonly<PatchedUpdateNewTemplate>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -186,7 +187,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: CopyTemplate,
+        requestBody: OmitReadonly<CopyTemplate>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -256,7 +257,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: Template,
+        requestBody: OmitReadonly<Template>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'PUT',

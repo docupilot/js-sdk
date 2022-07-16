@@ -6,6 +6,7 @@ import type { Folder } from '../models/Folder';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class FoldersService {
 
@@ -39,7 +40,7 @@ export class FoldersService {
     public static createFolder({
         requestBody,
     }: {
-        requestBody: Folder,
+        requestBody: OmitReadonly<Folder>,
     }): CancelablePromise<Folder> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -62,7 +63,7 @@ export class FoldersService {
          * A unique integer value identifying this folder.
          */
         id: number,
-        requestBody: Folder,
+        requestBody: OmitReadonly<Folder>,
     }): CancelablePromise<Folder> {
         return __request(OpenAPI, {
             method: 'PUT',

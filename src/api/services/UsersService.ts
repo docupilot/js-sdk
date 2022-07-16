@@ -7,6 +7,7 @@ import type { User } from '../models/User';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class UsersService {
 
@@ -17,7 +18,7 @@ export class UsersService {
     public static changePassword({
         requestBody,
     }: {
-        requestBody: ChangePassword,
+        requestBody: OmitReadonly<ChangePassword>,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -47,7 +48,7 @@ export class UsersService {
     public static updateMe({
         requestBody,
     }: {
-        requestBody?: User,
+        requestBody?: OmitReadonly<User>,
     }): CancelablePromise<User> {
         return __request(OpenAPI, {
             method: 'PUT',

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate.spec.node": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client node",
     "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
-    "webpack": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack && npm run generate.spec.node"
+    "webpack": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.spec.node"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,7 @@
     "@types/node-fetch": "^2.6.2",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.7",
-    "openapi-typescript-codegen": "^0.23.0",
+    "openapi-typescript-codegen": "file:../opensource/openapi-typescript-codegen",
     "ts-loader": "^9.3.1",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3",

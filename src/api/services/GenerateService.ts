@@ -7,6 +7,7 @@ import type { Template } from '../models/Template';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class GenerateService {
 
@@ -24,7 +25,7 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: Template,
+        requestBody: OmitReadonly<Template>,
         download?: 'false' | 'file' | 'true',
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
@@ -54,7 +55,7 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: Template,
+        requestBody: OmitReadonly<Template>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',

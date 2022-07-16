@@ -7,6 +7,7 @@ import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class LinkedAccountsService {
 
@@ -49,7 +50,7 @@ export class LinkedAccountsService {
     public static addDeliveryAccount({
         requestBody,
     }: {
-        requestBody: DeliveryAccount,
+        requestBody: OmitReadonly<DeliveryAccount>,
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -102,7 +103,7 @@ export class LinkedAccountsService {
          * A unique integer value identifying this delivery account.
          */
         id: number,
-        requestBody: UpdateDeliveryAccount,
+        requestBody: OmitReadonly<UpdateDeliveryAccount>,
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'PUT',

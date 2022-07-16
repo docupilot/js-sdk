@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import FormData from 'form-data';
-import fetch, { Headers, RequestInit, Response } from 'node-fetch';
+import fetch, { Headers } from 'node-fetch';
+import type { RequestInit, Response } from 'node-fetch';
+import type { AbortSignal } from 'node-fetch/externals';
 
 import { ApiError } from './ApiError';
 import type { ApiRequestOptions } from './ApiRequestOptions';
@@ -180,7 +182,7 @@ const getHeaders = async (config: OpenAPIConfig, options: ApiRequestOptions): Pr
 };
 
 const getRequestBody = (options: ApiRequestOptions): any => {
-    if (options.body) {
+    if (options.body !== undefined) {
         if (options.mediaType?.includes('/json')) {
             return JSON.stringify(options.body)
         } else if (isString(options.body) || isBlob(options.body) || isFormData(options.body)) {
@@ -206,7 +208,7 @@ export const sendRequest = async (
         headers,
         method: options.method,
         body: body ?? formData,
-        signal: controller.signal,
+        signal: controller.signal as AbortSignal,
     };
 
     onCancel(() => controller.abort());
