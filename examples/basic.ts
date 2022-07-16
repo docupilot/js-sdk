@@ -1,4 +1,4 @@
-import Docupilot from '../index';
+import Docupilot from '../src';
 
 async function run() {
   const Client = await Docupilot.authorize();
