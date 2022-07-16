@@ -6,21 +6,6 @@ export type NewTemplate = {
     file: string;
     folder?: number | null;
     title: string;
-    output_type: NewTemplate.output_type;
+    output_type: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     description?: string | null;
-}
-
-export namespace NewTemplate {
-
-    export enum output_type {
-        HTML = 'html',
-        PDF = 'pdf',
-        JPEG = 'jpeg',
-        PNG = 'png',
-        DOCX = 'docx',
-        PPTX = 'pptx',
-        XLSX = 'xlsx',
-    }
-
-
 }

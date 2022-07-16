@@ -11,20 +11,9 @@ export type MergeHistory = {
     data_expired: boolean;
     document_expired: boolean;
     delivery_type: string;
-    status: MergeHistory.status;
+    status: 'pending' | 'success' | 'error';
     readonly created_time: string;
     created_file_name: string;
     message?: Record<string, any> | null;
     mode?: string | null;
-}
-
-export namespace MergeHistory {
-
-    export enum status {
-        PENDING = 'pending',
-        SUCCESS = 'success',
-        ERROR = 'error',
-    }
-
-
 }
