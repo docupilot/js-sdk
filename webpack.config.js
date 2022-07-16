@@ -1,7 +1,7 @@
 const path = require('path');
 
 const config = {
-  entry: './src/index.ts',
+  entry: './src/sideload.ts',
   target: ['web', 'es5'],
   module: {
     rules: [
