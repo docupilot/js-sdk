@@ -1,11 +1,11 @@
-import Docupilot from '../src';
+import { client } from '../src';
 
 async function run() {
-  const Client = await Docupilot.authorize();
-  const user = await Client.UsersService.getMe();
-  console.log(`Docupilot client authenticated as ${user.email}`);
-  console.log(await Client.FoldersService.listFolders({}));
-  console.log(await Client.TemplatesService.listTemplates({}));
+  await client.authenticate();
+  if (await client.isAuthenticated()) {
+    console.log(await client.FoldersService.listFolders({}));
+    console.log(await client.TemplatesService.listTemplates({}));
+  }
 }
 
 run()
