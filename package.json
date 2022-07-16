@@ -5,8 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate.spec.node": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --client node",
-    "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --client xhr",
+    "generate.spec.node": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client node",
+    "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
     "webpack": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack && npm run generate.spec.node"
   },
   "keywords": [],

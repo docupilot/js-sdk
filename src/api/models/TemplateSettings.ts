@@ -16,41 +16,12 @@ export type TemplateSettings = {
     readonly info: (FillablePdfSettings);
     dynamic_images?: Array<DynamicImage> | null;
     output_file_name?: string;
-    output_type?: TemplateSettings.output_type;
+    output_type?: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     password?: string | null;
-    format?: TemplateSettings.format;
-    orientation?: TemplateSettings.orientation;
+    format?: 'A3' | 'A4' | 'A5' | 'Legal' | 'Letter' | 'Tabloid';
+    orientation?: 'portrait' | 'landscape';
     header?: string | null;
     footer?: string | null;
     auto_number?: number | null;
     flatten_pdf?: boolean;
-}
-
-export namespace TemplateSettings {
-
-    export enum output_type {
-        HTML = 'html',
-        PDF = 'pdf',
-        JPEG = 'jpeg',
-        PNG = 'png',
-        DOCX = 'docx',
-        PPTX = 'pptx',
-        XLSX = 'xlsx',
-    }
-
-    export enum format {
-        A3 = 'A3',
-        A4 = 'A4',
-        A5 = 'A5',
-        LEGAL = 'Legal',
-        LETTER = 'Letter',
-        TABLOID = 'Tabloid',
-    }
-
-    export enum orientation {
-        PORTRAIT = 'portrait',
-        LANDSCAPE = 'landscape',
-    }
-
-
 }

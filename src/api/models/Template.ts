@@ -9,30 +9,9 @@ export type Template = {
     preferences?: TemplateSettings;
     title: string;
     description?: string | null;
-    readonly type: Template.type;
+    readonly type: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
     readonly created_time: string;
-    document_status?: Template.document_status;
+    document_status?: 'active' | 'test';
     readonly deleted_time: string | null;
     folder?: number | null;
-}
-
-export namespace Template {
-
-    export enum type {
-        DOCX = 'docx',
-        HTML = 'html',
-        FILLABLE_PDF = 'fillable_pdf',
-        PPTX = 'pptx',
-        XLSX = 'xlsx',
-        G_DOCUMENT = 'g_document',
-        G_PRESENTATION = 'g_presentation',
-        G_SPREADSHEET = 'g_spreadsheet',
-    }
-
-    export enum document_status {
-        ACTIVE = 'active',
-        TEST = 'test',
-    }
-
-
 }

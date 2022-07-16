@@ -12,7 +12,7 @@ export type DocuSignDelivery = {
         email_address: string,
     }>;
     name: string;
-    type?: DocuSignDelivery.type;
+    type?: 'email' | 'webhook' | 'docu_sign' | 'sign_now' | 'zoho_crm' | 'dropbox' | 'google_drive' | 'podio' | 'one_drive' | 'eversign' | 'hellosign' | 'aws_s3';
     subject?: string | null;
     message?: string | null;
     fullname_anchor_tags?: boolean;
@@ -20,24 +20,4 @@ export type DocuSignDelivery = {
     custom_tags?: Record<string, any> | null;
     expire_after?: number | null;
     enable_optional_signers?: boolean;
-}
-
-export namespace DocuSignDelivery {
-
-    export enum type {
-        EMAIL = 'email',
-        WEBHOOK = 'webhook',
-        DOCU_SIGN = 'docu_sign',
-        SIGN_NOW = 'sign_now',
-        ZOHO_CRM = 'zoho_crm',
-        DROPBOX = 'dropbox',
-        GOOGLE_DRIVE = 'google_drive',
-        PODIO = 'podio',
-        ONE_DRIVE = 'one_drive',
-        EVERSIGN = 'eversign',
-        HELLOSIGN = 'hellosign',
-        AWS_S3 = 'aws_s3',
-    }
-
-
 }
