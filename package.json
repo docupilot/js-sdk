@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate.spec.node": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client node",
-    "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
+    "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useUnionTypes --client xhr",
     "webpack": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.spec.node"
   },
   "keywords": [],

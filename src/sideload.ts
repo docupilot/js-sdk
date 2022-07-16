@@ -1,6 +1,7 @@
 import Docupilot from './docupilot';
 
 import * as _API from './api';
+import { ApiRequestOptions } from './api/core/ApiRequestOptions';
 
 class _Docupilot extends Docupilot {
   readonly AuthTokensService = _API.AuthTokensService;
@@ -15,6 +16,13 @@ class _Docupilot extends Docupilot {
   readonly TemplateDeliveryService = _API.TemplateDeliveryService;
   readonly TemplatesService = _API.TemplatesService;
   readonly UsersService = _API.UsersService;
+
+  configureHeadersInterceptor(getHeaders: () => Record<string, string>) {
+    _API.OpenAPI.HEADERS = async (options: ApiRequestOptions) => {
+      const headers = getHeaders();
+      return Object.assign({}, options.headers || {}, headers);
+    };
+  }
 }
 
 export const client = new _Docupilot();
