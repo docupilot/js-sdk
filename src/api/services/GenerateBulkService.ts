@@ -9,6 +9,7 @@ import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class GenerateBulkService {
 
@@ -91,7 +92,7 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: BulkGen,
+        requestBody?: OmitReadonly<BulkGen>,
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -151,7 +152,7 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: BulkGen,
+        requestBody?: OmitReadonly<BulkGen>,
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -179,7 +180,7 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        formData: BulkGenUpload,
+        formData: OmitReadonly<BulkGenUpload>,
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'POST',

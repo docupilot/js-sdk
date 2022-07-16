@@ -6,6 +6,7 @@ import type { AuthToken } from '../models/AuthToken';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class AuthTokensService {
 
@@ -43,7 +44,7 @@ export class AuthTokensService {
     public static createAuthToken({
         requestBody,
     }: {
-        requestBody: AuthToken,
+        requestBody: OmitReadonly<AuthToken>,
     }): CancelablePromise<AuthToken> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -65,7 +66,7 @@ export class AuthTokensService {
          * A unique integer value identifying this auth token.
          */
         id: number,
-        requestBody: AuthToken,
+        requestBody: OmitReadonly<AuthToken>,
     }): CancelablePromise<AuthToken> {
         return __request(OpenAPI, {
             method: 'PUT',

@@ -7,6 +7,7 @@ import type { UserPersonalization } from '../models/UserPersonalization';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class PersonalizationService {
 
@@ -28,7 +29,7 @@ export class PersonalizationService {
     public static updateUserPersonalization({
         requestBody,
     }: {
-        requestBody: UserPersonalization,
+        requestBody: OmitReadonly<UserPersonalization>,
     }): CancelablePromise<User> {
         return __request(OpenAPI, {
             method: 'POST',

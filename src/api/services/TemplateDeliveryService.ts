@@ -8,6 +8,7 @@ import type { TemplateDelivery } from '../models/TemplateDelivery';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
+import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class TemplateDeliveryService {
 
@@ -48,7 +49,7 @@ export class TemplateDeliveryService {
         requestBody,
     }: {
         templateId: number,
-        requestBody?: PolymorphicDelivery,
+        requestBody?: OmitReadonly<PolymorphicDelivery>,
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -101,7 +102,7 @@ export class TemplateDeliveryService {
          */
         id: number,
         templateId: number,
-        requestBody?: PolymorphicDelivery,
+        requestBody?: OmitReadonly<PolymorphicDelivery>,
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -155,7 +156,7 @@ export class TemplateDeliveryService {
          */
         id: number,
         templateId: number,
-        formData: EmailDeliveryAttachment,
+        formData: OmitReadonly<EmailDeliveryAttachment>,
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'POST',
