@@ -1,4 +1,4 @@
-name: QC & Release
+name: Release
 
 on:
   release:
@@ -19,20 +19,27 @@ jobs:
 
       - run: npm i
 
-      - name: Build
-        run: |
-          set -e      # fail with non-zero exit code on error
-          tsc
-          tar --exclude="*.tsbuildinfo" --exclude="examples" -czvf build.tar.gz -C build .
-          echo 'created build.tar.gz'
+      - name: Compile to es5 (web)
+        run: npm run webpack
 
-      - name: Upload Release Asset
-        id: upload-release-asset
+      - name: Upload Release Asset (Production)
+        id: upload-release-asset-production
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_ASSSET_PAT }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build.tar.gz
-          asset_name: docupilot-js-sdk.es5.tar.gz
-          asset_content_type: application/tar+gzip
+          asset_path: ./dist/docupilot-js.es5.min.js
+          asset_name: docupilot-js.es5.min.js
+          asset_content_type: application/javascript
+
+      - name: Upload Release Asset (Development)
+        id: upload-release-asset-development
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_ASSSET_PAT }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./dist/docupilot-js.es5.js
+          asset_name: docupilot-js.es5.js
+          asset_content_type: application/javascript
