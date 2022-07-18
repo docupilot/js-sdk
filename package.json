@@ -5,7 +5,9 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "ts-node examples/basic.ts",
     "generate.spec.node": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client node",
+    "generate.spec.react": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
     "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useUnionTypes --client xhr",
     "webpack": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.spec.node"
   },
@@ -17,13 +19,11 @@
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.7",
     "openapi-typescript-codegen": "file:../opensource/openapi-typescript-codegen",
+    "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0"
-  },
-  "dependencies": {
-    "prettier": "^2.2.1"
   }
 }
