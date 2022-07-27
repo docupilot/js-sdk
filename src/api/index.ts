@@ -33,6 +33,7 @@ export type { FillablePdfSettings } from './models/FillablePdfSettings';
 export type { Folder } from './models/Folder';
 export type { ForbiddenError } from './models/ForbiddenError';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
+export type { GoogleDriveFolder } from './models/GoogleDriveFolder';
 export type { HelloSignDelivery } from './models/HelloSignDelivery';
 export type { MergeHistory } from './models/MergeHistory';
 export type { Meta } from './models/Meta';
