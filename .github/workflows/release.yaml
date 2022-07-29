@@ -2,7 +2,7 @@ name: Release
 
 on:
   release:
-    types: [published]
+    types: [ published ]
 
 jobs:
   publish_release_artifacts:
@@ -10,6 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - uses: actions/setup-node@v2
         id: setup-node
@@ -17,7 +19,13 @@ jobs:
           cache: 'npm'
           node-version: '14.18.2'
 
-      - run: npm i
+      - name: install
+        run: |
+          cd openapi-typescript-codegen
+          npm i
+          npm run build
+          cd ../
+          npm i
 
       - name: Compile to es5 (web)
         run: npm run webpack

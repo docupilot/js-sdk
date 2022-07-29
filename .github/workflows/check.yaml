@@ -2,10 +2,10 @@ name: QC
 
 on:
   pull_request:
-    branches: ['**']
-    types: [synchronize, opened, reopened, ready_for_review]
+    branches: [ '**' ]
+    types: [ synchronize, opened, reopened, ready_for_review ]
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   lint:
@@ -14,6 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - uses: actions/setup-node@v2
         id: setup-node
@@ -21,7 +23,13 @@ jobs:
           cache: 'npm'
           node-version: '14.18.2'
 
-      - run: npm i
+      - name: install
+        run: |
+          cd openapi-typescript-codegen
+          npm i
+          npm run build
+          cd ../
+          npm i
 
       - name: lint
         run: ./node_modules/.bin/prettier --check **/*.ts
