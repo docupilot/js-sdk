@@ -1,0 +1,3 @@
+[submodule "openapi-typescript-codegen"]
+	path = openapi-typescript-codegen
+	url = git@github.com:tiholic/openapi-typescript-codegen.git

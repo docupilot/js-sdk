@@ -18,7 +18,7 @@
     "@types/node-fetch": "^2.6.2",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.7",
-    "openapi-typescript-codegen": "file:../opensource/openapi-typescript-codegen",
+    "openapi-typescript-codegen": "file:openapi-typescript-codegen",
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
     "ts-node": "^10.9.1",

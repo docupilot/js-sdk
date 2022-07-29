@@ -5,8 +5,15 @@ OpenAPI Spec obtained from the api docs.
 
 #### installing "openapi-typescript-codegen"
 
-If "openapi-typescript-codegen" dependency is pointing to a local path, clone [tiholic/openapi-typescript-codegen](https://github.com/tiholic/openapi-typescript-codegen)
-into that location and switch to desired branch
+`openapi-typescript-codegen` is added as a submodule.
+Run `git submodule update --init` to clone all submodules.
+
+Setup `openapi-typescript-codegen` by running: 
+```bash
+cd openapi-typescript-codegen
+npm run build
+```
+and run `npm i` to set-up the project
 
 #### Generation from Spec
 
