@@ -14,7 +14,7 @@ Creating a docupilot client
 ```ts
 import Docupilot from 'docupilot-sdk';
 
-const client = Docupilot.authorize('<your api token>');
+const client = Docupilot.authorize('<your api key>', '<your api secret>');
 ```
 
 #### Trying out examples

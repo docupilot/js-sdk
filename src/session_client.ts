@@ -3,7 +3,7 @@ import Docupilot from './docupilot';
 import * as _API from './api';
 import { ApiRequestOptions } from './api/core/ApiRequestOptions';
 
-class _Docupilot extends Docupilot {
+export class DocupilotSessionClient extends Docupilot {
   readonly AuthTokensService = _API.AuthTokensService;
   readonly FoldersService = _API.FoldersService;
   readonly GeneralService = _API.GeneralService;
@@ -24,5 +24,3 @@ class _Docupilot extends Docupilot {
     };
   }
 }
-
-export const client = new _Docupilot();
