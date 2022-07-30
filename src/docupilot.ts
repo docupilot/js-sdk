@@ -18,11 +18,11 @@ export default class Docupilot {
     }
   }
 
-  async authenticate(
+  authenticate(
     access_key: string = process.env.DOCUPILOT_ACCESS_KEY as string,
     access_secret: string = process.env.DOCUPILOT_ACCESS_SECRET as string,
     host: string = process.env.DOCUPILOT_HOST as string,
-  ) {
+  ): void {
     _API.OpenAPI.BASE = (host ?? 'https://api.docupilot.app').replace(
       /\/+$/g,
       '',
