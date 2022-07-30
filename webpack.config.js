@@ -16,8 +16,8 @@ const config = {
     extensions: ['.ts'],
   },
   output: {
-    filename: 'docupilot-js.es5.min.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: 'docupilot-js-sdk.min.js',
+    path: path.resolve(__dirname, 'dist', 'web'),
     libraryTarget: 'var',
     library: 'DocupilotAPI'
   },
@@ -26,7 +26,7 @@ const config = {
 module.exports = (env, argv) => {
   if (argv.mode === 'development') {
     config.devtool = 'inline-source-map';
-    config.output.filename = 'docupilot-js.es5.js';
+    config.output.filename = 'docupilot-js-sdk.js';
   }
   return config;
 };

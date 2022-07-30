@@ -1,17 +1,38 @@
 {
   "name": "docupilot-js",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
+  "description": "interact with docupilot.app APIs",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "example": "ts-node examples/basic.ts",
     "generate.spec.node": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client node",
     "generate.spec.react": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
     "generate.spec.browser": "./node_modules/.bin/openapi --input openapi.yaml --output ./src/api --useUnionTypes --client xhr",
-    "webpack": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.spec.node"
+    "build": "npm run clean:dist && npm run build:web && npm run build:esm && npm run build:cjs",
+    "clean:dist": "rm -rf dist/",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
+    "build:web": "npm run generate.spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.spec.react"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flackonInc/docupilot-js-sdk"
+  },
+  "keywords": [
+    "docupilot.app",
+    "docupilot apis",
+    "doc gen apis",
+    "generate word document",
+    "generate pdf",
+    "generate powerpoint",
+    "generate excel",
+    "fill pdf forms"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
