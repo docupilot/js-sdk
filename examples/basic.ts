@@ -1,6 +1,7 @@
-import { client } from '../src';
+import { DocupilotTokenClient } from '../src';
 
 async function run() {
+  const client = new DocupilotTokenClient();
   await client.authenticate();
   const is_authenticated = await client.isAuthenticated();
   console.log('is_authenticated', is_authenticated);
