@@ -52,6 +52,7 @@ export type { SignNowDelivery } from './models/SignNowDelivery';
 export type { SubscriptionMeta } from './models/SubscriptionMeta';
 export type { Template } from './models/Template';
 export type { TemplateDelivery } from './models/TemplateDelivery';
+export type { TemplateSchema } from './models/TemplateSchema';
 export type { TemplateSettings } from './models/TemplateSettings';
 export type { Timezone } from './models/Timezone';
 export type { UnauthenticatedError } from './models/UnauthenticatedError';

@@ -6,6 +6,7 @@ import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
 import type { Template } from '../models/Template';
+import type { TemplateSchema } from '../models/TemplateSchema';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -272,7 +273,7 @@ export class TemplatesService {
 
     /**
      * Get template schema
-     * @returns Template
+     * @returns TemplateSchema
      * @throws ApiError
      */
     public static getTemplateSchema({
@@ -282,7 +283,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<TemplateSchema> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{id}/schema/',
