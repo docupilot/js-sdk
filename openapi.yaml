@@ -1712,7 +1712,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/TemplateSchema'
           description: ''
         '401':
           content:
@@ -4033,6 +4033,35 @@ components:
           readOnly: true
       required:
       - id
+      - name
+      - type
+      description: ''
+    TemplateSchema:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          enum:
+          - string
+          - array
+          - object
+          - generic
+          type: string
+        generics:
+          enum:
+          - string
+          - array
+          - object
+          - generic
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateSchema'
+      required:
+      - fields
+      - generics
       - name
       - type
       description: ''
