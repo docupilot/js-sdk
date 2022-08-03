@@ -19,6 +19,7 @@ export type { ChangePassword } from './models/ChangePassword';
 export type { ChargebeeSubscription } from './models/ChargebeeSubscription';
 export type { ChildTemplate } from './models/ChildTemplate';
 export type { CopyTemplate } from './models/CopyTemplate';
+export type { DeleteAccount } from './models/DeleteAccount';
 export type { DeliveryAccount } from './models/DeliveryAccount';
 export type { DocumentMergeLink } from './models/DocumentMergeLink';
 export type { DocuSignDelivery } from './models/DocuSignDelivery';
