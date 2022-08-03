@@ -18,15 +18,15 @@ export class GenerateService {
      */
     public static generateDocument({
         id,
-        requestBody,
         download,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: OmitReadonly<Template>,
         download?: 'false' | 'file' | 'true',
+        requestBody?: any,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',

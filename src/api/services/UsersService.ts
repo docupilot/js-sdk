@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChangePassword } from '../models/ChangePassword';
+import type { DeleteAccount } from '../models/DeleteAccount';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -23,6 +24,24 @@ export class UsersService {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/accounts/v2/users/change_password/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Delete a user, org and other related data permanently
+     * @returns void
+     * @throws ApiError
+     */
+    public static deleteAccount({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<DeleteAccount>,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/users/delete_account/',
             body: requestBody,
             mediaType: 'application/json',
         });
