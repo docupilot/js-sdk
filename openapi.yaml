@@ -3093,6 +3093,9 @@ components:
         sub_type:
           type: string
           readOnly: true
+        used_by:
+          type: integer
+          readOnly: true
         name:
           type: string
           readOnly: true
@@ -3111,6 +3114,7 @@ components:
       - name
       - sub_type
       - type
+      - used_by
     DocuSignDelivery:
       type: object
       properties:
@@ -4232,6 +4236,9 @@ components:
         sub_type:
           type: string
           readOnly: true
+        used_by:
+          type: integer
+          readOnly: true
         name:
           type: string
           readOnly: true
@@ -4250,6 +4257,7 @@ components:
       - name
       - sub_type
       - type
+      - used_by
     User:
       type: object
       properties:
@@ -4258,7 +4266,7 @@ components:
           readOnly: true
         first_name:
           type: string
-          maxLength: 30
+          maxLength: 150
         last_name:
           type: string
           maxLength: 150
