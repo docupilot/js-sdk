@@ -51,7 +51,7 @@ jobs:
           cd ../
 
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm i
+        run: npm ci
 
       - name: lint
         run: ./node_modules/.bin/prettier --check **/*.ts

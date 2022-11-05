@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION: ${{ github.event.release.tag_name }}
+    permissions:
+      packages: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v2
@@ -20,6 +23,7 @@ jobs:
         with:
           cache: 'npm'
           node-version: '15.14.0'
+          registry-url: https://npm.pkg.github.com/
 
       - name: replace_version
         run: |
@@ -54,22 +58,9 @@ jobs:
           cd ../
 
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
-        run: npm i
+        run: npm ci
 
-      - name: build and pack
-        run: |
-          set -e      # fail with non-zero exit code on error
-          npm run build
-          npm pack
-          mv $(ls | grep .tgz) docupilot-js-sdk.tgz
-
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
+      - run: npm run build
+      - run: npm publish
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_ASSSET_PAT }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./docupilot-js-sdk.tgz
-          asset_name: docupilot-js-sdk.tgz
-          asset_content_type: application/x-gtar
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
