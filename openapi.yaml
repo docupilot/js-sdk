@@ -12,22 +12,22 @@ paths:
     get:
       operationId: list_auth_tokens
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
       tags:
-      - auth_tokens
+        - auth_tokens
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -52,7 +52,7 @@ paths:
     post:
       operationId: create_auth_token
       tags:
-      - auth_tokens
+        - auth_tokens
       requestBody:
         content:
           application/json:
@@ -66,7 +66,7 @@ paths:
               $ref: '#/components/schemas/AuthToken'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -96,14 +96,14 @@ paths:
     put:
       operationId: update_auth_token
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this auth token.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this auth token.
+          required: true
       tags:
-      - auth_tokens
+        - auth_tokens
       requestBody:
         content:
           application/json:
@@ -117,7 +117,7 @@ paths:
               $ref: '#/components/schemas/AuthToken'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -152,16 +152,16 @@ paths:
     delete:
       operationId: delete_auth_token
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this auth token.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this auth token.
+          required: true
       tags:
-      - auth_tokens
+        - auth_tokens
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -193,10 +193,10 @@ paths:
     get:
       operationId: get_subscription_details
       tags:
-      - subscription
+        - subscription
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -220,14 +220,14 @@ paths:
     get:
       operationId: get_chargebee_hosted_page
       parameters:
-      - in: query
-        name: plan_id
-        schema:
-          type: string
+        - in: query
+          name: plan_id
+          schema:
+            type: string
       tags:
-      - subscription
+        - subscription
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -252,9 +252,9 @@ paths:
     get:
       operationId: get_chargebee_portal_session
       tags:
-      - subscription
+        - subscription
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -278,7 +278,7 @@ paths:
     put:
       operationId: change_password
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
@@ -292,7 +292,7 @@ paths:
               $ref: '#/components/schemas/ChangePassword'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -313,7 +313,7 @@ paths:
       operationId: delete_account
       summary: Delete a user, org and other related data permanently
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
@@ -327,7 +327,7 @@ paths:
               $ref: '#/components/schemas/DeleteAccount'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -348,10 +348,10 @@ paths:
       operationId: get_me
       summary: get logged in user details
       tags:
-      - users
+        - users
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -369,7 +369,7 @@ paths:
       operationId: update_me
       summary: update logged in user details
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
@@ -382,8 +382,8 @@ paths:
             schema:
               $ref: '#/components/schemas/User'
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -408,17 +408,17 @@ paths:
       operationId: list_folders
       summary: Get list of folders
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
       tags:
-      - folders
+        - folders
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -444,7 +444,7 @@ paths:
       operationId: create_folder
       summary: Create a folder
       tags:
-      - folders
+        - folders
       requestBody:
         content:
           application/json:
@@ -458,8 +458,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
@@ -490,14 +490,14 @@ paths:
       operationId: update_folder
       summary: Updates a folder
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this folder.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this folder.
+          required: true
       tags:
-      - folders
+        - folders
       requestBody:
         content:
           application/json:
@@ -511,8 +511,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -549,17 +549,17 @@ paths:
       description: This operation moves all templates under this folder to home directory.
       summary: Delete a folder.
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this folder.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this folder.
+          required: true
       tags:
-      - folders
+        - folders
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -592,47 +592,47 @@ paths:
       operationId: get_created_documents_history
       summary: Get created documents history
       parameters:
-      - in: query
-        name: document
-        schema:
-          type: integer
-      - in: query
-        name: end_date
-        schema:
-          type: string
-          format: date-time
-        description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: query
-        name: start_date
-        schema:
-          type: string
-          format: date-time
-        description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
-      - in: query
-        name: status
-        schema:
-          type: string
-          enum:
-          - error
-          - pending
-          - success
+        - in: query
+          name: document
+          schema:
+            type: integer
+        - in: query
+          name: end_date
+          schema:
+            type: string
+            format: date-time
+          description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - in: query
+          name: start_date
+          schema:
+            type: string
+            format: date-time
+          description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - error
+              - pending
+              - success
       tags:
-      - history
+        - history
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -657,16 +657,16 @@ paths:
       operationId: download_created_document
       summary: download generated document if available
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this merge history.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this merge history.
+          required: true
       tags:
-      - history
+        - history
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -718,37 +718,37 @@ paths:
       operationId: list_delivery_accounts
       summary: Get list of linked accounts
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - aws_s3
-          - docu_sign
-          - dropbox
-          - eversign
-          - google_drive
-          - hellosign
-          - one_drive
-          - podio
-          - sign_now
-          - zoho_crm
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - aws_s3
+              - docu_sign
+              - dropbox
+              - eversign
+              - google_drive
+              - hellosign
+              - one_drive
+              - podio
+              - sign_now
+              - zoho_crm
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -774,7 +774,7 @@ paths:
       operationId: add_delivery_account
       summary: Create linked account
       tags:
-      - linked_accounts
+        - linked_accounts
       requestBody:
         content:
           application/json:
@@ -788,7 +788,7 @@ paths:
               $ref: '#/components/schemas/DeliveryAccount'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -817,25 +817,27 @@ paths:
   /api/v2/linked_accounts/{integrator_type}/invoke/:
     get:
       operationId: invoke_integrator
-      description: Redirects to oauth endpoint to add a new linked account of given
+      description:
+        Redirects to oauth endpoint to add a new linked account of given
         'integrator_type'
       parameters:
-      - in: query
-        name: environment
-        schema:
-          type: string
-        description: 'sub-type of integrator. For example: sandbox or production for
-          docu_sign'
-      - in: path
-        name: integrator_type
-        schema:
-          type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
-        required: true
+        - in: query
+          name: environment
+          schema:
+            type: string
+          description:
+            'sub-type of integrator. For example: sandbox or production for
+            docu_sign'
+        - in: path
+          name: integrator_type
+          schema:
+            type: string
+            pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
+          required: true
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '302':
           description: No response body
@@ -862,14 +864,14 @@ paths:
       operationId: update_delivery_account
       summary: Refresh linked account
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
       tags:
-      - linked_accounts
+        - linked_accounts
       requestBody:
         content:
           application/json:
@@ -883,7 +885,7 @@ paths:
               $ref: '#/components/schemas/UpdateDeliveryAccount'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -919,16 +921,16 @@ paths:
       operationId: revoke_delivery_account
       summary: Revoke linked account
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -959,46 +961,47 @@ paths:
   /api/v2/linked_accounts/{id}/google_drive_folders/:
     get:
       operationId: list_google_drive_folders
-      description: List's google drive folders if current linked account is a google
+      description:
+        List's google drive folders if current linked account is a google
         drive account
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - aws_s3
-          - docu_sign
-          - dropbox
-          - eversign
-          - google_drive
-          - hellosign
-          - one_drive
-          - podio
-          - sign_now
-          - zoho_crm
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - aws_s3
+              - docu_sign
+              - dropbox
+              - eversign
+              - google_drive
+              - hellosign
+              - one_drive
+              - podio
+              - sign_now
+              - zoho_crm
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1025,16 +1028,16 @@ paths:
       operationId: reconnect_account
       description: Redirects to oauth endpoint for re-connecting an account
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery account.
+          required: true
       tags:
-      - linked_accounts
+        - linked_accounts
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '302':
           description: No response body
@@ -1060,10 +1063,10 @@ paths:
     get:
       operationId: get_user_personalization
       tags:
-      - personalization
+        - personalization
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1087,7 +1090,7 @@ paths:
     post:
       operationId: update_user_personalization
       tags:
-      - personalization
+        - personalization
       requestBody:
         content:
           application/json:
@@ -1101,8 +1104,8 @@ paths:
               $ref: '#/components/schemas/UserPersonalization'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1127,65 +1130,65 @@ paths:
       operationId: list_templates
       summary: Get list of templates
       parameters:
-      - in: query
-        name: folder
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - in: query
-        name: output_type
-        schema:
-          type: string
-          enum:
-          - docx
-          - html
-          - jpeg
-          - pdf
-          - png
-          - pptx
-          - xlsx
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: status
-        schema:
-          type: string
-          enum:
-          - active
-          - test
-      - in: query
-        name: type
-        schema:
-          type: string
-          enum:
-          - docx
-          - fillable_pdf
-          - g_document
-          - g_presentation
-          - g_spreadsheet
-          - html
-          - pptx
-          - xlsx
+        - in: query
+          name: folder
+          schema:
+            type: integer
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - in: query
+          name: output_type
+          schema:
+            type: string
+            enum:
+              - docx
+              - html
+              - jpeg
+              - pdf
+              - png
+              - pptx
+              - xlsx
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - name: search
+          required: false
+          in: query
+          description: A search term.
+          schema:
+            type: string
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - active
+              - test
+        - in: query
+          name: type
+          schema:
+            type: string
+            enum:
+              - docx
+              - fillable_pdf
+              - g_document
+              - g_presentation
+              - g_spreadsheet
+              - html
+              - pptx
+              - xlsx
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1209,7 +1212,7 @@ paths:
       operationId: create_template
       summary: Create template
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           multipart/form-data:
@@ -1217,8 +1220,8 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
@@ -1249,17 +1252,17 @@ paths:
       operationId: get_template
       summary: Get one template
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1289,14 +1292,14 @@ paths:
       operationId: update_template
       summary: Update template
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           application/json:
@@ -1310,8 +1313,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1347,22 +1350,22 @@ paths:
       operationId: update_template_content
       summary: Update template content
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1398,17 +1401,17 @@ paths:
       operationId: trash_template
       summary: Move template to trash
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -1441,14 +1444,14 @@ paths:
       operationId: copy_template
       summary: Copy template including preferences, deliveries
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           application/json:
@@ -1462,8 +1465,8 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
@@ -1500,17 +1503,17 @@ paths:
       operationId: download_template_file
       summary: Download template file
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1562,22 +1565,22 @@ paths:
       operationId: generate_document
       summary: Generate document from template
       parameters:
-      - in: query
-        name: download
-        schema:
-          type: string
-          enum:
-          - 'false'
-          - file
-          - 'true'
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: query
+          name: download
+          schema:
+            type: string
+            enum:
+              - 'false'
+              - file
+              - 'true'
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - generate
+        - generate
       requestBody:
         content:
           application/json:
@@ -1587,8 +1590,8 @@ paths:
           multipart/form-data:
             schema: {}
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1625,17 +1628,17 @@ paths:
       operationId: delete_template_permanently
       summary: Delete a template permanently from trash
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -1668,14 +1671,14 @@ paths:
       operationId: restore_template_from_trash
       summary: Restore a template from trash
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       requestBody:
         content:
           application/json:
@@ -1689,8 +1692,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1727,17 +1730,17 @@ paths:
       operationId: get_template_schema
       summary: Get template schema
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1768,14 +1771,14 @@ paths:
       operationId: test_document_generation
       summary: Test document generation
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - generate
+        - generate
       requestBody:
         content:
           application/json:
@@ -1789,7 +1792,7 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1826,17 +1829,17 @@ paths:
       operationId: get_test_data
       summary: Get test data used for testing template
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this document.
+          required: true
       tags:
-      - generate
+        - generate
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1867,23 +1870,23 @@ paths:
       operationId: list_template_deliveries
       summary: Get deliveries configured under this template
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -1909,14 +1912,14 @@ paths:
       operationId: create_template_delivery
       summary: Create delivery
       parameters:
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       requestBody:
         content:
           application/json:
@@ -1929,8 +1932,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
@@ -1967,23 +1970,23 @@ paths:
       operationId: retrieve_template_delivery
       summary: Get delivery
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2013,20 +2016,20 @@ paths:
       operationId: update_template_delivery
       summary: Update delivery
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       requestBody:
         content:
           application/json:
@@ -2039,8 +2042,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2076,23 +2079,23 @@ paths:
       operationId: delete_template_delivery
       summary: Delete delivery
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -2125,20 +2128,20 @@ paths:
       operationId: upload_delivery_attachments
       summary: upload email delivery attachments
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       requestBody:
         content:
           multipart/form-data:
@@ -2146,8 +2149,8 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2184,29 +2187,29 @@ paths:
       operationId: download_delivery_attachment
       summary: download delivery attachment
       parameters:
-      - in: path
-        name: attachment_id
-        schema:
-          type: string
-          pattern: ^\d+$
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: attachment_id
+          schema:
+            type: string
+            pattern: ^\d+$
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2236,29 +2239,29 @@ paths:
       operationId: delete_delivery_attachment
       summary: delete email delivery attachment
       parameters:
-      - in: path
-        name: attachment_id
-        schema:
-          type: string
-          pattern: ^\d+$
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: attachment_id
+          schema:
+            type: string
+            pattern: ^\d+$
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this delivery.
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - template_delivery
+        - template_delivery
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -2291,29 +2294,29 @@ paths:
       operationId: list_bulk_generation_tasks
       summary: List bulk generation tasks
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          description: A page number within the paginated result set.
+          schema:
+            type: integer
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - generate_bulk
+        - generate_bulk
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2338,25 +2341,25 @@ paths:
       operationId: get_bulk_generation_task
       summary: Get bulk generation task
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
       tags:
-      - generate_bulk
+        - generate_bulk
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2387,22 +2390,22 @@ paths:
       operationId: cancel_bulk_generation_task
       summary: Cancel a bulk generation task
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
       tags:
-      - generate_bulk
+        - generate_bulk
       requestBody:
         content:
           application/json:
@@ -2415,8 +2418,8 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2453,25 +2456,25 @@ paths:
       operationId: get_bulk_generation_draft
       summary: Get a task saved as draft
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
       tags:
-      - generate_bulk
+        - generate_bulk
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2502,22 +2505,22 @@ paths:
       operationId: trigger_bulk_generation_draft
       summary: Trigger a bulk generation task
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+            format: int32
+          description: Task id
+          required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
       tags:
-      - generate_bulk
+        - generate_bulk
       requestBody:
         content:
           application/json:
@@ -2530,8 +2533,8 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2569,15 +2572,15 @@ paths:
       description: This will create a task in DRAFT mode.
       summary: Upload a new csv for bulk generate.
       parameters:
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          description: Template id
+          required: true
       tags:
-      - generate_bulk
+        - generate_bulk
       requestBody:
         content:
           multipart/form-data:
@@ -2585,8 +2588,8 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '201':
           content:
@@ -2624,16 +2627,16 @@ paths:
       description: URL to create document will be {host}/{path}
       summary: Get document create link path
       parameters:
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        required: true
+        - in: path
+          name: template_id
+          schema:
+            type: integer
+            format: int32
+          required: true
       tags:
-      - generate
+        - generate
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2658,14 +2661,15 @@ paths:
   /api/v2/templates/all/:
     get:
       operationId: list_all_templates
-      description: Will return all templates without pagination, excluding templates
+      description:
+        Will return all templates without pagination, excluding templates
         in trashed
       summary: List all templates
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2690,10 +2694,10 @@ paths:
       operationId: list_trashed_templates
       summary: List all templates in trash.
       tags:
-      - templates
+        - templates
       security:
-      - SessionAuthentication: []
-      - tokenAuth: []
+        - SessionAuthentication: []
+        - tokenAuth: []
       responses:
         '200':
           content:
@@ -2717,9 +2721,9 @@ paths:
     get:
       operationId: list_banner_notifications
       tags:
-      - general
+        - general
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2743,9 +2747,9 @@ paths:
     get:
       operationId: get_app_meta
       tags:
-      - general
+        - general
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2769,9 +2773,9 @@ paths:
     get:
       operationId: list_subscription_plans
       tags:
-      - general
+        - general
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2797,9 +2801,9 @@ paths:
     get:
       operationId: list_timezones
       tags:
-      - general
+        - general
       security:
-      - SessionAuthentication: []
+        - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2833,9 +2837,9 @@ components:
         max_total_size:
           type: integer
       required:
-      - allowed_types
-      - max_files
-      - max_total_size
+        - allowed_types
+        - max_files
+        - max_total_size
       description: ''
     AuthToken:
       type: object
@@ -2850,9 +2854,9 @@ components:
           type: string
           maxLength: 255
       required:
-      - id
-      - name
-      - token
+        - id
+        - name
+        - token
       description: ''
     BannerNotification:
       type: object
@@ -2864,9 +2868,9 @@ components:
         action:
           $ref: '#/components/schemas/BannerNotificationAction'
       required:
-      - action
-      - content
-      - id
+        - action
+        - content
+        - id
       description: ''
     BannerNotificationAction:
       type: object
@@ -2877,8 +2881,8 @@ components:
           type: object
           additionalProperties: {}
       required:
-      - attributes
-      - text
+        - attributes
+        - text
       description: ''
     BulkGen:
       type: object
@@ -2896,12 +2900,12 @@ components:
           readOnly: true
         status:
           enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
           type: integer
           minimum: 0
           maximum: 32767
@@ -2924,9 +2928,9 @@ components:
           minimum: -2147483648
           nullable: true
       required:
-      - errors
-      - file_name
-      - id
+        - errors
+        - file_name
+        - id
       description: ''
     BulkGenData:
       type: object
@@ -2939,9 +2943,9 @@ components:
         row_count:
           type: integer
       required:
-      - data
-      - id
-      - row_count
+        - data
+        - id
+        - row_count
       description: ''
     BulkGenTask:
       type: object
@@ -2958,7 +2962,7 @@ components:
           type: string
           format: binary
       required:
-      - file
+        - file
       description: ''
     BulkGenerateMeta:
       type: object
@@ -2966,7 +2970,7 @@ components:
         max_test_rows:
           type: integer
       required:
-      - max_test_rows
+        - max_test_rows
       description: ''
     ChangePassword:
       type: object
@@ -2978,8 +2982,8 @@ components:
           type: string
           writeOnly: true
       required:
-      - current_password
-      - new_password
+        - current_password
+        - new_password
       description: ''
     ChargebeeSubscription:
       type: object
@@ -2988,6 +2992,16 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        status:
+          enum:
+            - a
+            - t
+            - e
+            - c
+          type: string
+        trial_end:
+          type: string
+          format: date-time
         billing_period_unit:
           type: string
           nullable: true
@@ -3009,8 +3023,8 @@ components:
           minimum: -9223372036854775808
           format: int64
       required:
-      - current_term_end
-      - current_term_start
+        - current_term_end
+        - current_term_start
       description: ''
     ChildTemplate:
       type: object
@@ -3027,14 +3041,14 @@ components:
           maxLength: 255
         type:
           enum:
-          - docx
-          - html
-          - fillable_pdf
-          - pptx
-          - xlsx
-          - g_document
-          - g_presentation
-          - g_spreadsheet
+            - docx
+            - html
+            - fillable_pdf
+            - pptx
+            - xlsx
+            - g_document
+            - g_presentation
+            - g_spreadsheet
           type: string
         created_time:
           type: string
@@ -3042,8 +3056,8 @@ components:
           readOnly: true
         document_status:
           enum:
-          - active
-          - test
+            - active
+            - test
           type: string
         deleted_time:
           type: string
@@ -3055,10 +3069,10 @@ components:
           type: integer
           nullable: true
       required:
-      - created_by
-      - created_time
-      - id
-      - title
+        - created_by
+        - created_time
+        - id
+        - title
       description: ''
     CopyTemplate:
       type: object
@@ -3067,7 +3081,7 @@ components:
           type: string
           maxLength: 50
       required:
-      - title
+        - title
       description: ''
     DeleteAccount:
       type: object
@@ -3076,7 +3090,7 @@ components:
           type: string
           writeOnly: true
       required:
-      - password
+        - password
       description: ''
     DeliveryAccount:
       type: object
@@ -3087,8 +3101,8 @@ components:
           readOnly: true
         type:
           enum:
-          - hellosign
-          - aws_s3
+            - hellosign
+            - aws_s3
           type: string
         sub_type:
           type: string
@@ -3108,13 +3122,13 @@ components:
           type: boolean
           readOnly: true
       required:
-      - credentials
-      - id
-      - is_expired
-      - name
-      - sub_type
-      - type
-      - used_by
+        - credentials
+        - id
+        - is_expired
+        - name
+        - sub_type
+        - type
+        - used_by
     DocuSignDelivery:
       type: object
       properties:
@@ -3135,10 +3149,10 @@ components:
               recipient_type:
                 type: string
                 enum:
-                - signer
-                - agent
-                - cc
-                - editor
+                  - signer
+                  - agent
+                  - cc
+                  - editor
               name:
                 type: string
                 minLength: 1
@@ -3146,26 +3160,26 @@ components:
                 type: string
                 format: email
             required:
-            - recipient_type
-            - name
-            - email_address
+              - recipient_type
+              - name
+              - email_address
         name:
           type: string
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         subject:
           type: string
@@ -3189,9 +3203,9 @@ components:
         enable_optional_signers:
           type: boolean
       required:
-      - id
-      - name
-      - signers
+        - id
+        - name
+        - signers
       description: ''
     DocumentMergeLink:
       type: object
@@ -3200,7 +3214,7 @@ components:
           type: string
           readOnly: true
       required:
-      - path
+        - path
       description: ''
     DropboxDelivery:
       type: object
@@ -3216,24 +3230,24 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         folder:
           type: string
       required:
-      - id
-      - name
+        - id
+        - name
       description: ''
     DynamicImage:
       type: object
@@ -3257,11 +3271,11 @@ components:
           type: number
           format: double
       required:
-      - height
-      - left
-      - token
-      - top
-      - width
+        - height
+        - left
+        - token
+        - top
+        - width
       description: ''
     EmailDelivery:
       type: object
@@ -3279,18 +3293,18 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         from_email:
           type: string
@@ -3322,11 +3336,11 @@ components:
         body:
           type: string
       required:
-      - attachments
-      - from_email
-      - id
-      - name
-      - to_email
+        - attachments
+        - from_email
+        - id
+        - name
+        - to_email
       description: ''
     EmailDeliveryAttachment:
       type: object
@@ -3337,7 +3351,7 @@ components:
             type: string
             format: binary
       required:
-      - attachments
+        - attachments
       description: ''
     EversignDelivery:
       type: object
@@ -3365,8 +3379,8 @@ components:
               order:
                 type: string
             required:
-            - name
-            - email
+              - name
+              - email
         recipients:
           type: array
           minItems: 1
@@ -3380,26 +3394,26 @@ components:
                 type: string
                 format: email
             required:
-            - name
-            - email
+              - name
+              - email
           nullable: true
         name:
           type: string
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         title:
           type: string
@@ -3421,9 +3435,9 @@ components:
         enable_optional_signers:
           type: boolean
       required:
-      - id
-      - name
-      - signers
+        - id
+        - name
+        - signers
       description: ''
     File:
       type: object
@@ -3447,11 +3461,11 @@ components:
           readOnly: true
           nullable: true
       required:
-      - id
-      - name
-      - path
-      - size
-      - tag
+        - id
+        - name
+        - path
+        - size
+        - tag
       description: ''
     FileUploadMeta:
       type: object
@@ -3459,7 +3473,7 @@ components:
         email_attachments:
           $ref: '#/components/schemas/AttachmentsConfig'
       required:
-      - email_attachments
+        - email_attachments
       description: ''
     FillablePdfSettings:
       type: object
@@ -3480,9 +3494,9 @@ components:
           writeOnly: true
           nullable: true
       required:
-      - height
-      - no_of_pages
-      - width
+        - height
+        - no_of_pages
+        - width
       description: ''
     Folder:
       type: object
@@ -3494,8 +3508,8 @@ components:
           type: string
           maxLength: 50
       required:
-      - id
-      - name
+        - id
+        - name
       description: ''
     ForbiddenError:
       type: object
@@ -3503,7 +3517,7 @@ components:
         detail:
           type: string
       required:
-      - detail
+        - detail
       description: ''
     GoogleDriveDelivery:
       type: object
@@ -3519,18 +3533,18 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         folder:
           type: string
@@ -3539,8 +3553,8 @@ components:
           nullable: true
           maxLength: 100
       required:
-      - id
-      - name
+        - id
+        - name
       description: ''
     GoogleDriveFolder:
       type: object
@@ -3550,8 +3564,8 @@ components:
         name:
           type: string
       required:
-      - id
-      - name
+        - id
+        - name
       description: ''
     HelloSignDelivery:
       type: object
@@ -3575,25 +3589,25 @@ components:
                 type: string
                 format: email
             required:
-            - name
-            - email_address
+              - name
+              - email_address
         name:
           type: string
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         title:
           type: string
@@ -3619,9 +3633,9 @@ components:
         enable_optional_signers:
           type: boolean
       required:
-      - id
-      - name
-      - signers
+        - id
+        - name
+        - signers
       description: ''
     MergeHistory:
       type: object
@@ -3631,7 +3645,7 @@ components:
           readOnly: true
         template:
           allOf:
-          - $ref: '#/components/schemas/ChildTemplate'
+            - $ref: '#/components/schemas/ChildTemplate'
           readOnly: true
         data:
           type: object
@@ -3645,9 +3659,9 @@ components:
           maxLength: 255
         status:
           enum:
-          - pending
-          - success
-          - error
+            - pending
+            - success
+            - error
           type: string
         created_time:
           type: string
@@ -3665,15 +3679,15 @@ components:
           nullable: true
           maxLength: 255
       required:
-      - created_file_name
-      - created_time
-      - data
-      - data_expired
-      - delivery_type
-      - document_expired
-      - id
-      - status
-      - template
+        - created_file_name
+        - created_time
+        - data
+        - data_expired
+        - delivery_type
+        - document_expired
+        - id
+        - status
+        - template
       description: ''
     Meta:
       type: object
@@ -3685,9 +3699,9 @@ components:
         batch_process_max_allowed_test_rows:
           $ref: '#/components/schemas/BulkGenerateMeta'
       required:
-      - batch_process_max_allowed_test_rows
-      - file_uploads
-      - subscription
+        - batch_process_max_allowed_test_rows
+        - file_uploads
+        - subscription
       description: ''
     NewTemplate:
       type: object
@@ -3704,29 +3718,29 @@ components:
           maxLength: 50
         output_type:
           enum:
-          - html
-          - pdf
-          - jpeg
-          - png
-          - docx
-          - pptx
-          - xlsx
+            - html
+            - pdf
+            - jpeg
+            - png
+            - docx
+            - pptx
+            - xlsx
           type: string
         description:
           type: string
           nullable: true
           maxLength: 255
       required:
-      - file
-      - output_type
-      - title
+        - file
+        - output_type
+        - title
     NotFoundError:
       type: object
       properties:
         detail:
           type: string
       required:
-      - detail
+        - detail
       description: ''
     OneDriveDelivery:
       type: object
@@ -3742,24 +3756,24 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         folder:
           type: string
       required:
-      - id
-      - name
+        - id
+        - name
       description: ''
     Organization:
       type: object
@@ -3772,7 +3786,7 @@ components:
           nullable: true
           maxLength: 255
       required:
-      - id
+        - id
       description: ''
     PaginatedBulkGenList:
       type: object
@@ -3855,28 +3869,29 @@ components:
           readOnly: true
         billing_period_unit:
           enum:
-          - year
-          - month
+            - year
+            - month
           type: string
           readOnly: true
       required:
-      - billing_period_unit
-      - documents_allowed
-      - plan_id
-      - price
+        - billing_period_unit
+        - documents_allowed
+        - plan_id
+        - price
       description: ''
     PolymorphicDelivery:
       oneOf:
-      - $ref: '#/components/schemas/EmailDelivery'
-      - $ref: '#/components/schemas/WebhookDelivery'
-      - $ref: '#/components/schemas/DropboxDelivery'
-      - $ref: '#/components/schemas/OneDriveDelivery'
-      - $ref: '#/components/schemas/SignNowDelivery'
-      - $ref: '#/components/schemas/GoogleDriveDelivery'
-      - $ref: '#/components/schemas/S3Delivery'
-      - $ref: '#/components/schemas/HelloSignDelivery'
-      - $ref: '#/components/schemas/DocuSignDelivery'
-      - $ref: '#/components/schemas/EversignDelivery'
+        - $ref: '#/components/schemas/EmailDelivery'
+        - $ref: '#/components/schemas/WebhookDelivery'
+        - $ref: '#/components/schemas/DropboxDelivery'
+        - $ref: '#/components/schemas/OneDriveDelivery'
+        - $ref: '#/components/schemas/SignNowDelivery'
+        - $ref: '#/components/schemas/GoogleDriveDelivery'
+        - $ref: '#/components/schemas/S3Delivery'
+        - $ref: '#/components/schemas/HelloSignDelivery'
+        - $ref: '#/components/schemas/DocuSignDelivery'
+        - $ref: '#/components/schemas/EversignDelivery'
+        - $ref: '#/components/schemas/SignableDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -3890,6 +3905,7 @@ components:
           hellosign: '#/components/schemas/HelloSignDelivery'
           docu_sign: '#/components/schemas/DocuSignDelivery'
           eversign: '#/components/schemas/EversignDelivery'
+          signable: '#/components/schemas/SignableDelivery'
     S3Delivery:
       type: object
       properties:
@@ -3904,18 +3920,18 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         bucket:
           type: string
@@ -3925,9 +3941,9 @@ components:
           nullable: true
           maxLength: 2000
       required:
-      - bucket
-      - id
-      - name
+        - bucket
+        - id
+        - name
       description: ''
     SignNowDelivery:
       type: object
@@ -3953,25 +3969,25 @@ components:
                 type: string
                 format: email
             required:
-            - role
-            - email
+              - role
+              - email
         name:
           type: string
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         subject:
           type: string
@@ -3990,9 +4006,79 @@ components:
         enable_optional_signers:
           type: boolean
       required:
-      - id
-      - name
-      - signers
+        - id
+        - name
+        - signers
+      description: ''
+    SignableDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+          nullable: true
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              party_name:
+                type: string
+                minLength: 1
+              party_email:
+                type: string
+                format: email
+              party_role:
+                type: string
+                enum:
+                  - signer
+                  - copy
+            required:
+              - party_name
+              - party_email
+              - party_role
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
+          type: string
+        title:
+          type: string
+          nullable: true
+        parties:
+          type: object
+          additionalProperties: {}
+        expire_after:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+        remind_after:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+      required:
+        - id
+        - name
+        - parties
+        - signers
       description: ''
     SubscriptionMeta:
       type: object
@@ -4001,7 +4087,7 @@ components:
           type: object
           additionalProperties: {}
       required:
-      - offers
+        - offers
       description: ''
     Template:
       type: object
@@ -4020,14 +4106,14 @@ components:
           maxLength: 255
         type:
           enum:
-          - docx
-          - html
-          - fillable_pdf
-          - pptx
-          - xlsx
-          - g_document
-          - g_presentation
-          - g_spreadsheet
+            - docx
+            - html
+            - fillable_pdf
+            - pptx
+            - xlsx
+            - g_document
+            - g_presentation
+            - g_spreadsheet
           type: string
           readOnly: true
         created_time:
@@ -4036,8 +4122,8 @@ components:
           readOnly: true
         document_status:
           enum:
-          - active
-          - test
+            - active
+            - test
           type: string
         deleted_time:
           type: string
@@ -4048,11 +4134,11 @@ components:
           type: integer
           nullable: true
       required:
-      - created_time
-      - deleted_time
-      - id
-      - title
-      - type
+        - created_time
+        - deleted_time
+        - id
+        - title
+        - type
       description: ''
     TemplateDelivery:
       type: object
@@ -4065,24 +4151,24 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
           readOnly: true
       required:
-      - id
-      - name
-      - type
+        - id
+        - name
+        - type
       description: ''
     TemplateSchema:
       type: object
@@ -4091,27 +4177,27 @@ components:
           type: string
         type:
           enum:
-          - string
-          - array
-          - object
-          - generic
+            - string
+            - array
+            - object
+            - generic
           type: string
         generics:
           enum:
-          - string
-          - array
-          - object
-          - generic
+            - string
+            - array
+            - object
+            - generic
           type: string
         fields:
           type: array
           items:
             $ref: '#/components/schemas/TemplateSchema'
       required:
-      - fields
-      - generics
-      - name
-      - type
+        - fields
+        - generics
+        - name
+        - type
       description: ''
     TemplateSettings:
       type: object
@@ -4145,7 +4231,7 @@ components:
           type: string
         info:
           allOf:
-          - $ref: '#/components/schemas/FillablePdfSettings'
+            - $ref: '#/components/schemas/FillablePdfSettings'
           readOnly: true
         dynamic_images:
           type: array
@@ -4157,13 +4243,13 @@ components:
           maxLength: 255
         output_type:
           enum:
-          - html
-          - pdf
-          - jpeg
-          - png
-          - docx
-          - pptx
-          - xlsx
+            - html
+            - pdf
+            - jpeg
+            - png
+            - docx
+            - pptx
+            - xlsx
           type: string
         password:
           type: string
@@ -4171,17 +4257,17 @@ components:
           maxLength: 255
         format:
           enum:
-          - A3
-          - A4
-          - A5
-          - Legal
-          - Letter
-          - Tabloid
+            - A3
+            - A4
+            - A5
+            - Legal
+            - Letter
+            - Tabloid
           type: string
         orientation:
           enum:
-          - portrait
-          - landscape
+            - portrait
+            - landscape
           type: string
         header:
           type: string
@@ -4198,7 +4284,7 @@ components:
         flatten_pdf:
           type: boolean
       required:
-      - info
+        - info
       description: ''
     Timezone:
       type: object
@@ -4210,8 +4296,8 @@ components:
           type: string
           readOnly: true
       required:
-      - name
-      - tz
+        - name
+        - tz
       description: ''
     UnauthenticatedError:
       type: object
@@ -4219,7 +4305,7 @@ components:
         detail:
           type: string
       required:
-      - detail
+        - detail
       description: ''
     UpdateDeliveryAccount:
       type: object
@@ -4230,8 +4316,8 @@ components:
           readOnly: true
         type:
           enum:
-          - hellosign
-          - aws_s3
+            - hellosign
+            - aws_s3
           type: string
         sub_type:
           type: string
@@ -4251,13 +4337,13 @@ components:
           type: boolean
           readOnly: true
       required:
-      - credentials
-      - id
-      - is_expired
-      - name
-      - sub_type
-      - type
-      - used_by
+        - credentials
+        - id
+        - is_expired
+        - name
+        - sub_type
+        - type
+        - used_by
     User:
       type: object
       properties:
@@ -4276,137 +4362,137 @@ components:
           readOnly: true
         timezone:
           enum:
-          - Pacific/Midway
-          - America/Adak
-          - Pacific/Honolulu
-          - Pacific/Marquesas
-          - America/Anchorage
-          - America/Tijuana
-          - America/Los_Angeles
-          - America/Phoenix
-          - America/Chihuahua
-          - America/Denver
-          - America/Belize
-          - America/Chicago
-          - Pacific/Easter
-          - America/Mexico_City
-          - America/Regina
-          - America/Bogota
-          - America/Cancun
-          - America/New_York
-          - America/Port-au-Prince
-          - America/Havana
-          - America/Indiana/Indianapolis
-          - America/Asuncion
-          - America/Halifax
-          - America/Caracas
-          - America/Cuiaba
-          - America/Manaus
-          - America/Santiago
-          - America/Grand_Turk
-          - America/St_Johns
-          - America/Fortaleza
-          - America/Sao_Paulo
-          - America/Cayenne
-          - America/Buenos_Aires
-          - America/Godthab
-          - America/Montevideo
-          - America/Miquelon
-          - America/Bahia
-          - America/Noronha
-          - Atlantic/Azores
-          - Atlantic/Cape_Verde
-          - Africa/Casablanca
-          - Europe/London
-          - Africa/Monrovia
-          - Europe/Amsterdam
-          - Europe/Belgrade
-          - Europe/Brussels
-          - Europe/Warsaw
-          - Africa/Algiers
-          - Africa/Windhoek
-          - Asia/Amman
-          - Europe/Athens
-          - Asia/Beirut
-          - Africa/Cairo
-          - Asia/Damascus
-          - Asia/Gaza
-          - Africa/Harare
-          - Europe/Helsinki
-          - Asia/Jerusalem
-          - Europe/Kaliningrad
-          - Africa/Tripoli
-          - Asia/Baghdad
-          - Asia/Istanbul
-          - Asia/Kuwait
-          - Europe/Minsk
-          - Europe/Moscow
-          - Africa/Nairobi
-          - Asia/Tehran
-          - Asia/Muscat
-          - Europe/Astrakhan
-          - Asia/Baku
-          - Europe/Samara
-          - Indian/Mauritius
-          - Asia/Tbilisi
-          - Asia/Yerevan
-          - Asia/Kabul
-          - Asia/Tashkent
-          - Asia/Yekaterinburg
-          - Asia/Karachi
-          - Asia/Kolkata
-          - Asia/Colombo
-          - Asia/Katmandu
-          - Asia/Almaty
-          - Asia/Dhaka
-          - Asia/Rangoon
-          - Asia/Novosibirsk
-          - Asia/Bangkok
-          - Asia/Barnaul
-          - Asia/Hovd
-          - Asia/Krasnoyarsk
-          - Asia/Tomsk
-          - Asia/Chongqing
-          - Asia/Irkutsk
-          - Asia/Kuala_Lumpur
-          - Australia/Perth
-          - Asia/Taipei
-          - Asia/Ulaanbaatar
-          - Asia/Pyongyang
-          - Australia/Eucla
-          - Asia/Chita
-          - Asia/Tokyo
-          - Asia/Seoul
-          - Asia/Yakutsk
-          - Australia/Adelaide
-          - Australia/Darwin
-          - Australia/Brisbane
-          - Australia/Canberra
-          - Pacific/Guam
-          - Australia/Hobart
-          - Asia/Vladivostok
-          - Australia/Lord_Howe
-          - Pacific/Bougainville
-          - Asia/Srednekolymsk
-          - Asia/Magadan
-          - Pacific/Norfolk
-          - Asia/Sakhalin
-          - Pacific/Guadalcanal
-          - Asia/Anadyr
-          - Pacific/Auckland
-          - Pacific/Fiji
-          - Pacific/Chatham
-          - Pacific/Tongatapu
-          - Pacific/Apia
-          - Pacific/Kiritimati
-          - null
+            - Pacific/Midway
+            - America/Adak
+            - Pacific/Honolulu
+            - Pacific/Marquesas
+            - America/Anchorage
+            - America/Tijuana
+            - America/Los_Angeles
+            - America/Phoenix
+            - America/Chihuahua
+            - America/Denver
+            - America/Belize
+            - America/Chicago
+            - Pacific/Easter
+            - America/Mexico_City
+            - America/Regina
+            - America/Bogota
+            - America/Cancun
+            - America/New_York
+            - America/Port-au-Prince
+            - America/Havana
+            - America/Indiana/Indianapolis
+            - America/Asuncion
+            - America/Halifax
+            - America/Caracas
+            - America/Cuiaba
+            - America/Manaus
+            - America/Santiago
+            - America/Grand_Turk
+            - America/St_Johns
+            - America/Fortaleza
+            - America/Sao_Paulo
+            - America/Cayenne
+            - America/Buenos_Aires
+            - America/Godthab
+            - America/Montevideo
+            - America/Miquelon
+            - America/Bahia
+            - America/Noronha
+            - Atlantic/Azores
+            - Atlantic/Cape_Verde
+            - Africa/Casablanca
+            - Europe/London
+            - Africa/Monrovia
+            - Europe/Amsterdam
+            - Europe/Belgrade
+            - Europe/Brussels
+            - Europe/Warsaw
+            - Africa/Algiers
+            - Africa/Windhoek
+            - Asia/Amman
+            - Europe/Athens
+            - Asia/Beirut
+            - Africa/Cairo
+            - Asia/Damascus
+            - Asia/Gaza
+            - Africa/Harare
+            - Europe/Helsinki
+            - Asia/Jerusalem
+            - Europe/Kaliningrad
+            - Africa/Tripoli
+            - Asia/Baghdad
+            - Asia/Istanbul
+            - Asia/Kuwait
+            - Europe/Minsk
+            - Europe/Moscow
+            - Africa/Nairobi
+            - Asia/Tehran
+            - Asia/Muscat
+            - Europe/Astrakhan
+            - Asia/Baku
+            - Europe/Samara
+            - Indian/Mauritius
+            - Asia/Tbilisi
+            - Asia/Yerevan
+            - Asia/Kabul
+            - Asia/Tashkent
+            - Asia/Yekaterinburg
+            - Asia/Karachi
+            - Asia/Kolkata
+            - Asia/Colombo
+            - Asia/Katmandu
+            - Asia/Almaty
+            - Asia/Dhaka
+            - Asia/Rangoon
+            - Asia/Novosibirsk
+            - Asia/Bangkok
+            - Asia/Barnaul
+            - Asia/Hovd
+            - Asia/Krasnoyarsk
+            - Asia/Tomsk
+            - Asia/Chongqing
+            - Asia/Irkutsk
+            - Asia/Kuala_Lumpur
+            - Australia/Perth
+            - Asia/Taipei
+            - Asia/Ulaanbaatar
+            - Asia/Pyongyang
+            - Australia/Eucla
+            - Asia/Chita
+            - Asia/Tokyo
+            - Asia/Seoul
+            - Asia/Yakutsk
+            - Australia/Adelaide
+            - Australia/Darwin
+            - Australia/Brisbane
+            - Australia/Canberra
+            - Pacific/Guam
+            - Australia/Hobart
+            - Asia/Vladivostok
+            - Australia/Lord_Howe
+            - Pacific/Bougainville
+            - Asia/Srednekolymsk
+            - Asia/Magadan
+            - Pacific/Norfolk
+            - Asia/Sakhalin
+            - Pacific/Guadalcanal
+            - Asia/Anadyr
+            - Pacific/Auckland
+            - Pacific/Fiji
+            - Pacific/Chatham
+            - Pacific/Tongatapu
+            - Pacific/Apia
+            - Pacific/Kiritimati
+            - null
           type: string
           nullable: true
         organization:
           $ref: '#/components/schemas/Organization'
       required:
-      - email
-      - id
+        - email
+        - id
       description: ''
     UserPersonalization:
       type: object
@@ -4421,9 +4507,9 @@ components:
           additionalProperties: {}
           readOnly: true
       required:
-      - key
-      - parsed_value
-      - value
+        - key
+        - parsed_value
+        - value
       description: ''
     ValidationError:
       type: object
@@ -4439,8 +4525,8 @@ components:
           items:
             type: string
       required:
-      - errors
-      - non_field_errors
+        - errors
+        - non_field_errors
       description: ''
     WebhookDelivery:
       type: object
@@ -4453,18 +4539,18 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
-          - webhook
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
+            - email
+            - webhook
+            - docu_sign
+            - sign_now
+            - zoho_crm
+            - dropbox
+            - google_drive
+            - podio
+            - one_drive
+            - eversign
+            - hellosign
+            - aws_s3
           type: string
         url:
           type: string
@@ -4478,9 +4564,9 @@ components:
           additionalProperties: {}
           nullable: true
       required:
-      - id
-      - name
-      - url
+        - id
+        - name
+        - url
       description: ''
   securitySchemes:
     SessionAuthentication:

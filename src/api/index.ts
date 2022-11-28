@@ -49,6 +49,7 @@ export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
 export type { S3Delivery } from './models/S3Delivery';
+export type { SignableDelivery } from './models/SignableDelivery';
 export type { SignNowDelivery } from './models/SignNowDelivery';
 export type { SubscriptionMeta } from './models/SubscriptionMeta';
 export type { Template } from './models/Template';
