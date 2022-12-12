@@ -744,6 +744,7 @@ paths:
               - one_drive
               - podio
               - sign_now
+              - signable
               - zoho_crm
       tags:
         - linked_accounts
@@ -997,6 +998,7 @@ paths:
               - one_drive
               - podio
               - sign_now
+              - signable
               - zoho_crm
       tags:
         - linked_accounts
@@ -3103,6 +3105,7 @@ components:
           enum:
             - hellosign
             - aws_s3
+            - signable
           type: string
         sub_type:
           type: string
@@ -3180,6 +3183,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         subject:
           type: string
@@ -3242,6 +3246,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         folder:
           type: string
@@ -3305,6 +3310,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         from_email:
           type: string
@@ -3414,6 +3420,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         title:
           type: string
@@ -3545,6 +3552,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         folder:
           type: string
@@ -3608,6 +3616,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         title:
           type: string
@@ -3768,6 +3777,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         folder:
           type: string
@@ -3932,6 +3942,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         bucket:
           type: string
@@ -3988,6 +3999,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         subject:
           type: string
@@ -4057,6 +4069,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         title:
           type: string
@@ -4163,6 +4176,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
           readOnly: true
       required:
@@ -4318,6 +4332,7 @@ components:
           enum:
             - hellosign
             - aws_s3
+            - signable
           type: string
         sub_type:
           type: string
@@ -4551,6 +4566,7 @@ components:
             - eversign
             - hellosign
             - aws_s3
+            - signable
           type: string
         url:
           type: string
