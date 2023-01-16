@@ -5,15 +5,16 @@
 export type SignableDelivery = {
     readonly id: number;
     account?: number | null;
-    signers: Array<{
+    parties: Array<{
         party_name: string;
         party_email: string;
         party_role: 'signer' | 'copy';
     }>;
     name: string;
     type?: 'signable';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     title?: string | null;
-    parties: Record<string, any>;
     expire_after?: number | null;
     remind_after?: number | null;
 };

@@ -12,6 +12,8 @@ export type SignNowDelivery = {
     }>;
     name: string;
     type?: 'sign_now';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     subject?: string | null;
     message?: string | null;
     cc?: Array<string> | null;

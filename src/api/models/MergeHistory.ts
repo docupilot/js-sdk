@@ -16,5 +16,7 @@ export type MergeHistory = {
     created_file_name: string;
     message?: Record<string, any> | null;
     mode?: string | null;
+    callback_status?: 'success' | 'fail' | null;
+    callback_failure_message?: string | null;
 };
 

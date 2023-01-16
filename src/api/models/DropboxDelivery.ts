@@ -7,6 +7,8 @@ export type DropboxDelivery = {
     account?: number | null;
     name: string;
     type?: 'dropbox';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     folder?: string;
 };
 
