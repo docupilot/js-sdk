@@ -22,6 +22,7 @@ export class GenerateBulkService {
         templateId,
         ordering,
         page,
+        status,
     }: {
         templateId: number,
         /**
@@ -32,6 +33,7 @@ export class GenerateBulkService {
          * A page number within the paginated result set.
          */
         page?: number,
+        status?: 0 | 1 | 2 | 3 | 4 | 5,
     }): CancelablePromise<PaginatedBulkGenList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -42,6 +44,7 @@ export class GenerateBulkService {
             query: {
                 'ordering': ordering,
                 'page': page,
+                'status': status,
             },
         });
     }

@@ -7,6 +7,8 @@ export type OneDriveDelivery = {
     account?: number | null;
     name: string;
     type?: 'one_drive';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     folder?: string;
 };
 

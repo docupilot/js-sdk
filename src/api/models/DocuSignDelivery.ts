@@ -13,6 +13,8 @@ export type DocuSignDelivery = {
     }>;
     name: string;
     type?: 'docu_sign';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     subject?: string | null;
     message?: string | null;
     fullname_anchor_tags?: boolean;

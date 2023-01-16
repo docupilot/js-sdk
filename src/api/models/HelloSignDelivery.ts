@@ -11,6 +11,8 @@ export type HelloSignDelivery = {
     }>;
     name: string;
     type?: 'hellosign';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     title?: string | null;
     subject?: string | null;
     message?: string | null;

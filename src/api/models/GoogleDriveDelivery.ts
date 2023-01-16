@@ -7,6 +7,8 @@ export type GoogleDriveDelivery = {
     account?: number | null;
     name: string;
     type?: 'google_drive';
+    success_callback_url?: string | null;
+    failure_email_recipients?: string | null;
     folder?: string;
     folder_id?: string | null;
 };
