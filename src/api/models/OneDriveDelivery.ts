@@ -4,7 +4,7 @@
 
 export type OneDriveDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     name: string;
     type?: 'one_drive';
     success_callback_url?: string | null;

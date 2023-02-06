@@ -4,7 +4,7 @@
 
 export type EversignDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     signers: Array<{
         pin?: string;
         name: string;

@@ -4,7 +4,7 @@
 
 export type SignableDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     parties: Array<{
         party_name: string;
         party_email: string;

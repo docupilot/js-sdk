@@ -4,7 +4,7 @@
 
 export type S3Delivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     name: string;
     type?: 'aws_s3';
     success_callback_url?: string | null;

@@ -4,7 +4,7 @@
 
 export type SignNowDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     signers: Array<{
         order?: string;
         role: string;

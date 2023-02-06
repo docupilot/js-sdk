@@ -4,7 +4,7 @@
 
 export type DocuSignDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     signers: Array<{
         order?: string;
         recipient_type: 'signer' | 'agent' | 'cc' | 'editor';

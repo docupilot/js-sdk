@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GoogleDriveFolder = {
-    id: number;
-    name: string;
+export type GoogleDrivePickerPayload = {
+    payload: string;
 };
 
