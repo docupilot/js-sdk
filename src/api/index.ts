@@ -34,7 +34,7 @@ export type { FillablePdfSettings } from './models/FillablePdfSettings';
 export type { Folder } from './models/Folder';
 export type { ForbiddenError } from './models/ForbiddenError';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
-export type { GoogleDriveFolder } from './models/GoogleDriveFolder';
+export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload';
 export type { HelloSignDelivery } from './models/HelloSignDelivery';
 export type { MergeHistory } from './models/MergeHistory';
 export type { Meta } from './models/Meta';
@@ -61,6 +61,7 @@ export type { UnauthenticatedError } from './models/UnauthenticatedError';
 export type { UpdateDeliveryAccount } from './models/UpdateDeliveryAccount';
 export type { User } from './models/User';
 export type { UserPersonalization } from './models/UserPersonalization';
+export type { UserPersonalizationListViewTemplate } from './models/UserPersonalizationListViewTemplate';
 export type { ValidationError } from './models/ValidationError';
 export type { WebhookDelivery } from './models/WebhookDelivery';
 

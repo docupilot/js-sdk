@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DeliveryAccount } from '../models/DeliveryAccount';
-import type { GoogleDriveFolder } from '../models/GoogleDriveFolder';
+import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -140,40 +140,23 @@ export class LinkedAccountsService {
     }
 
     /**
-     * List's google drive folders if current linked account is a google drive account
-     * @returns GoogleDriveFolder
+     * Get google picker payload
+     * @returns GoogleDrivePickerPayload
      * @throws ApiError
      */
-    public static listGoogleDriveFolders({
+    public static getGooglePickerPayload({
         id,
-        ordering,
-        search,
-        type,
     }: {
         /**
          * A unique integer value identifying this delivery account.
          */
         id: number,
-        /**
-         * Which field to use when ordering the results.
-         */
-        ordering?: string,
-        /**
-         * A search term.
-         */
-        search?: string,
-        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'zoho_crm',
-    }): CancelablePromise<Array<GoogleDriveFolder>> {
+    }): CancelablePromise<GoogleDrivePickerPayload> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/google_drive_folders/',
+            url: '/api/v2/linked_accounts/{id}/google_picker_payload/',
             path: {
                 'id': id,
-            },
-            query: {
-                'ordering': ordering,
-                'search': search,
-                'type': type,
             },
         });
     }

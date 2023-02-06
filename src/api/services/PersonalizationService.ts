@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { User } from '../models/User';
 import type { UserPersonalization } from '../models/UserPersonalization';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -12,10 +11,10 @@ import { OmitReadonly } from '../core/utils/OmitReadonly';
 export class PersonalizationService {
 
     /**
-     * @returns any
+     * @returns UserPersonalization
      * @throws ApiError
      */
-    public static getUserPersonalization(): CancelablePromise<Record<string, any>> {
+    public static getUserPersonalization(): CancelablePromise<Array<UserPersonalization>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/personalization/',
@@ -23,14 +22,14 @@ export class PersonalizationService {
     }
 
     /**
-     * @returns User
+     * @returns any
      * @throws ApiError
      */
     public static updateUserPersonalization({
         requestBody,
     }: {
-        requestBody: OmitReadonly<UserPersonalization>,
-    }): CancelablePromise<User> {
+        requestBody?: OmitReadonly<UserPersonalization>,
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/personalization/',

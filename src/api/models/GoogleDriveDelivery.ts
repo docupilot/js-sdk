@@ -4,7 +4,7 @@
 
 export type GoogleDriveDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     name: string;
     type?: 'google_drive';
     success_callback_url?: string | null;

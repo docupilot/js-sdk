@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { UserPersonalizationListViewTemplate } from './UserPersonalizationListViewTemplate';
+
 export type UserPersonalization = {
-    key: string;
-    value: string;
-    readonly parsed_value: Record<string, any>;
+    ui_version?: 1 | 2;
+    'list_view:templates'?: UserPersonalizationListViewTemplate;
+    'tp:freshchat:restoreId'?: string;
 };
 

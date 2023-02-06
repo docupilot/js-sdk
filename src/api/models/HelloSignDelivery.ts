@@ -4,7 +4,7 @@
 
 export type HelloSignDelivery = {
     readonly id: number;
-    account?: number | null;
+    account: number;
     signers: Array<{
         name: string;
         email_address: string;
