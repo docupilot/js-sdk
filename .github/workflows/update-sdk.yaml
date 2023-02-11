@@ -1,0 +1,85 @@
+name: Update SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      title_suffix:
+        description: "What is today's date? Ex: Feb 11"
+        type: string
+        required: true
+      branch:
+        description: 'Branch of flackonInc/docupilot-appserver which openapi.yaml should be downloaded'
+        type: string
+        default: 'main'
+        required: true
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-node@v2
+        id: setup-node
+        with:
+          cache: 'npm'
+          node-version: '15.14.0'
+
+      - name: Cache node_modules
+        id: cache-dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('package-lock.json') }}
+
+      - name: Cache node_modules
+        id: cache-openapi-typescript-codegen-dependencies
+        uses: actions/cache@v2
+        with:
+          path: openapi-typescript-codegen/node_modules
+          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('openapi-typescript-codegen/package-lock.json') }}
+
+      - if: steps.cache-openapi-typescript-codegen-dependencies.outputs.cache-hit != 'true'
+        name: install codegen dependencies
+        run: |
+          cd openapi-typescript-codegen
+          npm i
+          cd ../
+
+      - name: codegen build
+        run: |
+          cd openapi-typescript-codegen
+          npm run build
+          cd ../
+
+      - if: steps.cache-dependencies.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: update openapi yaml
+        run: |
+          curl \
+          -H "Accept: application/vnd.github.raw" \
+          -H "Authorization: Bearer ${{ secrets.PRIVATE_DEPENDENCIES_PAT }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/flackonInc/docupilot-appserver/contents/openapi.yaml?ref=${{ inputs.branch }} \
+          -o openapi.yaml
+
+      - run: git diff
+
+      - run: echo $(git diff)
+
+      - name: update sdk
+        run: npm run generate.spec.react
+
+      - name: Create Pull Request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          reviewers: tiholic, ravalikab
+          assignees: tiholic, ravalikab
+          title: SDK Update - ${{ inputs.title_suffix }}
+          body: "Changes created by [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          delete-branch: true
+          branch: automatic/update
