@@ -138,6 +138,38 @@ export class GenerateBulkService {
     }
 
     /**
+     * save a template mapping
+     * @returns void
+     * @throws ApiError
+     */
+    public static saveBulkGenerationDraft({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /**
+         * Task id
+         */
+        id: number,
+        /**
+         * Template id
+         */
+        templateId: number,
+        requestBody?: Record<string, any>,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * Trigger a bulk generation task
      * @returns BulkGen
      * @throws ApiError
@@ -155,7 +187,7 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: OmitReadonly<BulkGen>,
+        requestBody?: Record<string, any>,
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
