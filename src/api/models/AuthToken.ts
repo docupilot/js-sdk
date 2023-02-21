@@ -7,7 +7,7 @@ export type AuthToken = {
     readonly token: string;
     name: string;
     readonly created_time: string;
-    readonly last_used_time: string;
+    readonly last_used_time: string | null;
     active?: boolean;
 };
 

@@ -6,6 +6,10 @@ import type { Organization } from './Organization';
 
 export type User = {
     readonly id: number;
+    /**
+     * globally unique identifier for user
+     */
+    readonly guid: string;
     first_name?: string;
     last_name?: string;
     readonly email: string;

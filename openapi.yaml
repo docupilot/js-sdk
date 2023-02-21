@@ -2917,6 +2917,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         active:
           type: boolean
           default: true
@@ -3839,9 +3840,12 @@ components:
           $ref: '#/components/schemas/SubscriptionMeta'
         batch_process_max_allowed_test_rows:
           $ref: '#/components/schemas/BulkGenerateMeta'
+        iam:
+          type: string
       required:
       - batch_process_max_allowed_test_rows
       - file_uploads
+      - iam
       - subscription
       description: ''
     NewTemplate:
@@ -4529,6 +4533,11 @@ components:
         id:
           type: integer
           readOnly: true
+        guid:
+          type: string
+          format: uuid
+          readOnly: true
+          description: globally unique identifier for user
         first_name:
           type: string
           maxLength: 150
@@ -4671,6 +4680,7 @@ components:
           $ref: '#/components/schemas/Organization'
       required:
       - email
+      - guid
       - id
       description: ''
     UserPersonalization:
