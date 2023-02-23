@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChangePassword } from '../models/ChangePassword';
-import type { DeleteAccount } from '../models/DeleteAccount';
+import type { DeleteWorkspace } from '../models/DeleteWorkspace';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -30,20 +30,32 @@ export class UsersService {
     }
 
     /**
-     * Delete a user, org and other related data permanently
-     * @returns void
+     * Delete a workspace and other related data permanently
+     * @returns any No response body
      * @throws ApiError
      */
-    public static deleteAccount({
+    public static deleteWorkspace({
         requestBody,
     }: {
-        requestBody: OmitReadonly<DeleteAccount>,
-    }): CancelablePromise<void> {
+        requestBody: OmitReadonly<DeleteWorkspace>,
+    }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/users/delete_account/',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Initiate a re-authorization sequence that would verify authenticity of logged-in userin order to allow performing high security operations like delete workspace
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static initiateAuthorizationSequence(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/users/initiate_authorization_sequence/',
         });
     }
 

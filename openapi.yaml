@@ -310,26 +310,57 @@ paths:
           description: ''
   /accounts/v2/users/delete_account/:
     post:
-      operationId: delete_account
-      summary: Delete a user, org and other related data permanently
+      operationId: delete_workspace
+      summary: Delete a workspace and other related data permanently
       tags:
       - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeleteAccount'
+              $ref: '#/components/schemas/DeleteWorkspace'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/DeleteAccount'
+              $ref: '#/components/schemas/DeleteWorkspace'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/DeleteAccount'
+              $ref: '#/components/schemas/DeleteWorkspace'
         required: true
       security:
       - SessionAuthentication: []
       responses:
-        '204':
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/users/initiate_authorization_sequence/:
+    post:
+      operationId: initiate_authorization_sequence
+      summary: Initiate a re-authorization sequence that would verify authenticity
+        of logged-in userin order to allow performing high security operations like
+        delete workspace
+      tags:
+      - users
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
           description: No response body
         '400':
           content:
@@ -3157,14 +3188,14 @@ components:
       required:
       - title
       description: ''
-    DeleteAccount:
+    DeleteWorkspace:
       type: object
       properties:
-        password:
+        otp:
           type: string
           writeOnly: true
       required:
-      - password
+      - otp
       description: ''
     DeliveryAccount:
       type: object
