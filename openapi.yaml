@@ -434,6 +434,227 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
+  /accounts/v2/workspaces/:
+    get:
+      operationId: list_workspaces
+      summary: Get list of Workspaces
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - workspaces
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWorkspaceList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_workspace
+      summary: Create Workspace
+      tags:
+      - workspaces
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/workspaces/current/:
+    get:
+      operationId: get_current_workspace
+      summary: get current workspace details
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - workspaces
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    put:
+      operationId: update_current_workspace
+      summary: update current workspace details
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - workspaces
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Workspace'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/workspaces/current/delete/:
+    post:
+      operationId: delete_current_workspace
+      summary: Delete a workspace and other related data permanently
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - workspaces
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCurrentWorkspace'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DeleteCurrentWorkspace'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DeleteCurrentWorkspace'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/folders/:
     get:
       operationId: list_folders
@@ -3188,6 +3409,15 @@ components:
       required:
       - title
       description: ''
+    DeleteCurrentWorkspace:
+      type: object
+      properties:
+        otp:
+          type: string
+          writeOnly: true
+      required:
+      - otp
+      description: ''
     DeleteWorkspace:
       type: object
       properties:
@@ -3268,6 +3498,15 @@ components:
             - recipient_type
             - name
             - email_address
+        custom_tags:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                type: object
+          nullable: true
         name:
           type: string
           maxLength: 255
@@ -3306,10 +3545,6 @@ components:
           type: boolean
         sequenced_signing:
           type: boolean
-        custom_tags:
-          type: object
-          additionalProperties: {}
-          nullable: true
         expire_after:
           type: integer
           maximum: 2147483647
@@ -3810,6 +4045,7 @@ components:
           allOf:
           - $ref: '#/components/schemas/ChildTemplate'
           readOnly: true
+          nullable: true
         data:
           type: object
           additionalProperties: {}
@@ -3867,8 +4103,6 @@ components:
       properties:
         file_uploads:
           $ref: '#/components/schemas/FileUploadMeta'
-        subscription:
-          $ref: '#/components/schemas/SubscriptionMeta'
         batch_process_max_allowed_test_rows:
           $ref: '#/components/schemas/BulkGenerateMeta'
         iam:
@@ -3877,7 +4111,6 @@ components:
       - batch_process_max_allowed_test_rows
       - file_uploads
       - iam
-      - subscription
       description: ''
     NewTemplate:
       type: object
@@ -4034,6 +4267,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+    PaginatedWorkspaceList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
     PatchedUpdateNewTemplate:
       type: object
       description: ''
@@ -4291,15 +4544,6 @@ components:
       - id
       - name
       - parties
-      description: ''
-    SubscriptionMeta:
-      type: object
-      properties:
-        offers:
-          type: object
-          additionalProperties: {}
-      required:
-      - offers
       description: ''
     Template:
       type: object
@@ -4805,6 +5049,24 @@ components:
       - id
       - name
       - url
+      description: ''
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        org_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        unique_key:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - id
+      - unique_key
       description: ''
   securitySchemes:
     SessionAuthentication:

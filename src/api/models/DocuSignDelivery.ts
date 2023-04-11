@@ -11,6 +11,7 @@ export type DocuSignDelivery = {
         name: string;
         email_address: string;
     }>;
+    custom_tags?: Record<string, Record<string, Array<any>>> | null;
     name: string;
     type?: 'docu_sign';
     success_callback_url?: string | null;
@@ -19,7 +20,6 @@ export type DocuSignDelivery = {
     message?: string | null;
     fullname_anchor_tags?: boolean;
     sequenced_signing?: boolean;
-    custom_tags?: Record<string, any> | null;
     expire_after?: number | null;
     enable_optional_signers?: boolean;
 };
