@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SubscriptionMeta = {
-    offers: Record<string, any>;
+export type DeleteCurrentWorkspace = {
+    otp: string;
 };
 
