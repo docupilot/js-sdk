@@ -29,6 +29,7 @@ export type { DynamicImage } from './models/DynamicImage';
 export type { EmailDelivery } from './models/EmailDelivery';
 export type { EmailDeliveryAttachment } from './models/EmailDeliveryAttachment';
 export type { EversignDelivery } from './models/EversignDelivery';
+export type { ExportMergeHistory } from './models/ExportMergeHistory';
 export type { File } from './models/File';
 export type { FileUploadMeta } from './models/FileUploadMeta';
 export type { FillablePdfSettings } from './models/FillablePdfSettings';
