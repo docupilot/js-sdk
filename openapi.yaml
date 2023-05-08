@@ -12,6 +12,12 @@ paths:
     get:
       operationId: list_auth_tokens
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - name: ordering
         required: false
         in: query
@@ -51,6 +57,13 @@ paths:
           description: ''
     post:
       operationId: create_auth_token
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - auth_tokens
       requestBody:
@@ -96,6 +109,12 @@ paths:
     put:
       operationId: update_auth_token
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -152,6 +171,12 @@ paths:
     delete:
       operationId: delete_auth_token
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -192,6 +217,13 @@ paths:
   /accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - subscription
       security:
@@ -220,6 +252,12 @@ paths:
     get:
       operationId: get_chargebee_hosted_page
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: query
         name: plan_id
         schema:
@@ -251,6 +289,13 @@ paths:
   /accounts/v2/subscription/portal_session/:
     get:
       operationId: get_chargebee_portal_session
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - subscription
       security:
@@ -311,7 +356,7 @@ paths:
   /accounts/v2/users/delete_account/:
     post:
       operationId: delete_workspace
-      summary: Delete a workspace and other related data permanently
+      summary: Delete a workspace and other related data permanently (method is deprecated)
       tags:
       - users
       requestBody:
@@ -660,6 +705,12 @@ paths:
       operationId: list_folders
       summary: Get list of folders
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - name: ordering
         required: false
         in: query
@@ -695,6 +746,13 @@ paths:
     post:
       operationId: create_folder
       summary: Create a folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - folders
       requestBody:
@@ -742,6 +800,12 @@ paths:
       operationId: update_folder
       summary: Updates a folder
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -801,6 +865,12 @@ paths:
       description: This operation moves all templates under this folder to home directory.
       summary: Delete a folder.
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -844,10 +914,12 @@ paths:
       operationId: get_created_documents_history
       summary: Get created documents history
       parameters:
-      - in: query
-        name: document
+      - in: header
+        name: X-Workspace
         schema:
-          type: integer
+          type: string
+        description: Organization unique_key
+        required: true
       - in: query
         name: end_date
         schema:
@@ -880,6 +952,10 @@ paths:
           - error
           - pending
           - success
+      - in: query
+        name: template
+        schema:
+          type: integer
       tags:
       - history
       security:
@@ -909,6 +985,12 @@ paths:
       operationId: download_created_document
       summary: download generated document if available
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -965,11 +1047,245 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/history/{id}/retry_delivery/:
+    post:
+      operationId: retry_delivery
+      summary: retry failed documents delivery
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this merge history.
+        required: true
+      tags:
+      - history
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeHistory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MergeHistory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MergeHistory'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeHistory'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/history/export/:
+    get:
+      operationId: get_created_export_merge_history
+      summary: Get created export history
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - history
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportMergeHistory'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_export_history_task
+      summary: Create export history task
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - history
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportMergeHistory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ExportMergeHistory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ExportMergeHistory'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportMergeHistory'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/history/export/{id}/download/:
+    get:
+      operationId: download_created_export_document
+      summary: download generated export document if available
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this export merge history
+          task.
+        required: true
+      tags:
+      - history
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/:
     get:
       operationId: list_delivery_accounts
       summary: Get list of linked accounts
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - name: ordering
         required: false
         in: query
@@ -1026,6 +1342,13 @@ paths:
     post:
       operationId: add_delivery_account
       summary: Create linked account
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - linked_accounts
       requestBody:
@@ -1073,6 +1396,12 @@ paths:
       description: Redirects to oauth endpoint to add a new linked account of given
         'integrator_type'
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: query
         name: environment
         schema:
@@ -1115,6 +1444,12 @@ paths:
       operationId: update_delivery_account
       summary: Refresh linked account
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1172,6 +1507,12 @@ paths:
       operationId: revoke_delivery_account
       summary: Revoke linked account
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1214,6 +1555,12 @@ paths:
       operationId: get_google_picker_payload
       description: Get google picker payload
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1260,6 +1607,12 @@ paths:
       operationId: reconnect_account
       description: Redirects to oauth endpoint for re-connecting an account
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1361,6 +1714,12 @@ paths:
       operationId: list_templates
       summary: Get list of templates
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: query
         name: folder
         schema:
@@ -1442,6 +1801,13 @@ paths:
     post:
       operationId: create_template
       summary: Create template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - templates
       requestBody:
@@ -1483,6 +1849,12 @@ paths:
       operationId: get_template
       summary: Get one template
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1523,6 +1895,12 @@ paths:
       operationId: update_template
       summary: Update template
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1581,6 +1959,12 @@ paths:
       operationId: update_template_content
       summary: Update template content
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1632,6 +2016,12 @@ paths:
       operationId: trash_template
       summary: Move template to trash
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1675,6 +2065,12 @@ paths:
       operationId: copy_template
       summary: Copy template including preferences, deliveries
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1734,6 +2130,12 @@ paths:
       operationId: download_template_file
       summary: Download template file
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1796,6 +2198,12 @@ paths:
       operationId: generate_document
       summary: Generate document from template
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: query
         name: download
         schema:
@@ -1859,6 +2267,12 @@ paths:
       operationId: delete_template_permanently
       summary: Delete a template permanently from trash
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1902,6 +2316,12 @@ paths:
       operationId: restore_template_from_trash
       summary: Restore a template from trash
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -1961,6 +2381,12 @@ paths:
       operationId: get_template_schema
       summary: Get template schema
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2002,6 +2428,12 @@ paths:
       operationId: test_document_generation
       summary: Test document generation
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2060,6 +2492,12 @@ paths:
       operationId: get_test_data
       summary: Get test data used for testing template
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2101,6 +2539,12 @@ paths:
       operationId: list_template_deliveries
       summary: Get deliveries configured under this template
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - name: ordering
         required: false
         in: query
@@ -2143,6 +2587,12 @@ paths:
       operationId: create_template_delivery
       summary: Create delivery
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: template_id
         schema:
@@ -2201,6 +2651,12 @@ paths:
       operationId: retrieve_template_delivery
       summary: Get delivery
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2247,6 +2703,12 @@ paths:
       operationId: update_template_delivery
       summary: Update delivery
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2310,6 +2772,12 @@ paths:
       operationId: delete_template_delivery
       summary: Delete delivery
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2359,6 +2827,12 @@ paths:
       operationId: upload_delivery_attachments
       summary: upload email delivery attachments
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2418,6 +2892,12 @@ paths:
       operationId: download_delivery_attachment
       summary: download delivery attachment
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: attachment_id
         schema:
@@ -2470,6 +2950,12 @@ paths:
       operationId: delete_delivery_attachment
       summary: delete email delivery attachment
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: attachment_id
         schema:
@@ -2525,6 +3011,12 @@ paths:
       operationId: list_bulk_generation_tasks
       summary: List bulk generation tasks
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - name: ordering
         required: false
         in: query
@@ -2583,6 +3075,12 @@ paths:
       operationId: get_bulk_generation_task
       summary: Get bulk generation task
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2632,6 +3130,12 @@ paths:
       operationId: cancel_bulk_generation_task
       summary: Cancel a bulk generation task
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2698,6 +3202,12 @@ paths:
       operationId: get_bulk_generation_draft
       summary: Get a task saved as draft
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2746,6 +3256,12 @@ paths:
       operationId: save_bulk_generation_draft
       summary: save a template mapping
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2811,6 +3327,12 @@ paths:
       operationId: trigger_bulk_generation_draft
       summary: Trigger a bulk generation task
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: id
         schema:
@@ -2881,6 +3403,12 @@ paths:
       description: This will create a task in DRAFT mode.
       summary: Upload a new csv for bulk generate.
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: template_id
         schema:
@@ -2936,6 +3464,12 @@ paths:
       description: URL to create document will be {host}/{path}
       summary: Get document create link path
       parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       - in: path
         name: template_id
         schema:
@@ -2973,6 +3507,13 @@ paths:
       description: Will return all templates without pagination, excluding templates
         in trashed
       summary: List all templates
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - templates
       security:
@@ -3001,6 +3542,13 @@ paths:
     get:
       operationId: list_trashed_templates
       summary: List all templates in trash.
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - templates
       security:
@@ -3819,6 +4367,33 @@ components:
       - id
       - name
       - signers
+      description: ''
+    ExportMergeHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        from_date:
+          type: string
+          format: date
+        to_date:
+          type: string
+          format: date
+        status:
+          enum:
+          - pending
+          - success
+          - error
+          type: string
+      required:
+      - from_date
+      - id
+      - name
+      - to_date
       description: ''
     File:
       type: object

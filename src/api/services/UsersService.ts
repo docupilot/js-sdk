@@ -30,7 +30,7 @@ export class UsersService {
     }
 
     /**
-     * Delete a workspace and other related data permanently
+     * Delete a workspace and other related data permanently (method is deprecated)
      * @returns any No response body
      * @throws ApiError
      */
