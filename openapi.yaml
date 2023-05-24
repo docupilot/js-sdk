@@ -700,6 +700,90 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/workspaces/retention_preference/:
+    get:
+      operationId: get_workspace_data_retention_preference
+      summary: get workspace data retention preference
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - workspaces
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetentionPreference'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    put:
+      operationId: update_workspace_data_retention_preference
+      summary: update workspace data retention preference
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - workspaces
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetentionPreference'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RetentionPreference'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RetentionPreference'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetentionPreference'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/folders/:
     get:
       operationId: list_folders
@@ -4595,7 +4679,6 @@ components:
           items:
             type: string
             maxLength: 1000
-          nullable: true
         use_text_tags:
           type: boolean
         hide_text_tags:
@@ -4920,6 +5003,18 @@ components:
           docu_sign: '#/components/schemas/DocuSignDelivery'
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
+    RetentionPreference:
+      type: object
+      properties:
+        merge_data_expiry:
+          type: integer
+          maximum: 30
+          minimum: 1
+        generated_document_expiry:
+          type: integer
+          maximum: 30
+          minimum: 1
+      description: ''
     S3Delivery:
       type: object
       properties:

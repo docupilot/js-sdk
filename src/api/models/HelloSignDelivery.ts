@@ -16,7 +16,7 @@ export type HelloSignDelivery = {
     title?: string | null;
     subject?: string | null;
     message?: string | null;
-    cc?: Array<string> | null;
+    cc?: Array<string>;
     use_text_tags?: boolean;
     hide_text_tags?: boolean;
     sequenced_signing?: boolean;

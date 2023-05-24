@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { DeleteCurrentWorkspace } from '../models/DeleteCurrentWorkspace';
 import type { PaginatedWorkspaceList } from '../models/PaginatedWorkspaceList';
+import type { RetentionPreference } from '../models/RetentionPreference';
 import type { Workspace } from '../models/Workspace';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -107,6 +108,36 @@ export class WorkspacesService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/workspaces/current/delete/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * get workspace data retention preference
+     * @returns RetentionPreference
+     * @throws ApiError
+     */
+    public static getWorkspaceDataRetentionPreference(): CancelablePromise<RetentionPreference> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/workspaces/retention_preference/',
+        });
+    }
+
+    /**
+     * update workspace data retention preference
+     * @returns RetentionPreference
+     * @throws ApiError
+     */
+    public static updateWorkspaceDataRetentionPreference({
+        requestBody,
+    }: {
+        requestBody?: OmitReadonly<RetentionPreference>,
+    }): CancelablePromise<RetentionPreference> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/accounts/v2/workspaces/retention_preference/',
             body: requestBody,
             mediaType: 'application/json',
         });
