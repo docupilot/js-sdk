@@ -299,7 +299,7 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static listAllTemplates(): CancelablePromise<Template> {
+    public static listAllTemplates(): CancelablePromise<Array<Template>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/all/',
