@@ -3608,7 +3608,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
           description: ''
         '401':
           content:
