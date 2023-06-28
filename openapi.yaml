@@ -214,6 +214,329 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/invitations/:
+    get:
+      operationId: list_invitation
+      summary: Get list of Invitation
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - invitations
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedInvitationList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_invitation
+      summary: Create Invitation
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - invitations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Invitation'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/invitations/{invite_key}/:
+    get:
+      operationId: retrieve_invitation
+      summary: Get Invitation
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_invitation
+      summary: Delete Invitation
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/invitations/{invite_key}/accept_invitation/:
+    get:
+      operationId: invitations_accept_invitation_retrieve
+      parameters:
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    post:
+      operationId: accept_invitation
+      summary: Accept invitation
+      parameters:
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/invitations/{invite_key}/resend_invitation/:
+    post:
+      operationId: resend_invitation
+      summary: Resend invitation
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -228,7 +551,6 @@ paths:
       - subscription
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -434,44 +756,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-    put:
-      operationId: update_me
-      summary: update logged in user details
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/User'
-      security:
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -1731,6 +2015,13 @@ paths:
   /api/v2/personalization/:
     get:
       operationId: get_user_personalization
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - personalization
       security:
@@ -1758,6 +2049,13 @@ paths:
           description: ''
     post:
       operationId: update_user_personalization
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - personalization
       requestBody:
@@ -4091,6 +4389,10 @@ components:
         is_expired:
           type: boolean
           readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - credentials
       - id
@@ -4098,6 +4400,7 @@ components:
       - name
       - sub_type
       - type
+      - updated_at
       - used_by
     DocuSignDelivery:
       type: object
@@ -4695,6 +4998,60 @@ components:
       - name
       - signers
       description: ''
+    Invitation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        workspace:
+          type: string
+          nullable: true
+          readOnly: true
+        sender:
+          type: string
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        role:
+          enum:
+          - manager
+          - member
+          - billing_manager
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+        accepted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        is_accepted:
+          type: boolean
+          readOnly: true
+        invite_key:
+          type: string
+          readOnly: true
+      required:
+      - accepted_at
+      - created_at
+      - email
+      - expires_at
+      - id
+      - invite_key
+      - is_accepted
+      - role
+      - sender
+      - workspace
+      description: ''
     MergeHistory:
       type: object
       properties:
@@ -4854,19 +5211,6 @@ components:
       - id
       - name
       description: ''
-    Organization:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          nullable: true
-          maxLength: 255
-      required:
-      - id
-      description: ''
     PaginatedBulkGenList:
       type: object
       properties:
@@ -4887,6 +5231,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulkGen'
+    PaginatedInvitationList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invitation'
     PaginatedMergeHistoryList:
       type: object
       properties:
@@ -5466,6 +5830,10 @@ components:
         is_expired:
           type: boolean
           readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - credentials
       - id
@@ -5473,6 +5841,7 @@ components:
       - name
       - sub_type
       - type
+      - updated_at
       - used_by
     User:
       type: object
@@ -5494,7 +5863,7 @@ components:
         email:
           type: string
           format: email
-          readOnly: true
+          maxLength: 255
         timezone:
           enum:
           - Pacific/Midway
@@ -5623,8 +5992,6 @@ components:
           - null
           type: string
           nullable: true
-        organization:
-          $ref: '#/components/schemas/Organization'
       required:
       - email
       - guid
@@ -5736,8 +6103,12 @@ components:
           type: string
           readOnly: true
           nullable: true
+        role:
+          type: string
+          readOnly: true
       required:
       - id
+      - role
       - unique_key
       description: ''
   securitySchemes:
