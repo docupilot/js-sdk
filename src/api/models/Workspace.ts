@@ -6,5 +6,6 @@ export type Workspace = {
     readonly id: number;
     org_name?: string | null;
     readonly unique_key: string | null;
+    readonly role: string;
 };
 

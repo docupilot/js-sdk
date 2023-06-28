@@ -71,22 +71,4 @@ export class UsersService {
         });
     }
 
-    /**
-     * update logged in user details
-     * @returns User
-     * @throws ApiError
-     */
-    public static updateMe({
-        requestBody,
-    }: {
-        requestBody?: OmitReadonly<User>,
-    }): CancelablePromise<User> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/accounts/v2/users/me/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
 }

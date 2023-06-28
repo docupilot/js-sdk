@@ -10,5 +10,6 @@ export type UpdateDeliveryAccount = {
     readonly name: string | null;
     credentials: Record<string, any>;
     readonly is_expired: boolean;
+    readonly updated_at: string;
 };
 
