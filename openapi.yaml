@@ -1681,6 +1681,7 @@ paths:
           - podio
           - sign_now
           - signable
+          - yousign
           - zoho_crm
       tags:
       - linked_accounts
@@ -4371,6 +4372,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         sub_type:
           type: string
@@ -4462,6 +4464,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -4530,6 +4533,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -4604,6 +4608,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -4627,13 +4632,11 @@ components:
           items:
             type: string
             maxLength: 200
-          nullable: true
         bcc:
           type: array
           items:
             type: string
             maxLength: 200
-          nullable: true
         headers:
           type: object
           additionalProperties: {}
@@ -4722,6 +4725,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -4804,7 +4808,6 @@ components:
         size:
           type: integer
           readOnly: true
-          nullable: true
       required:
       - id
       - name
@@ -4890,6 +4893,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -4960,6 +4964,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -5194,6 +5199,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -5355,6 +5361,7 @@ components:
       - $ref: '#/components/schemas/DocuSignDelivery'
       - $ref: '#/components/schemas/EversignDelivery'
       - $ref: '#/components/schemas/SignableDelivery'
+      - $ref: '#/components/schemas/YouSignDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -5369,6 +5376,7 @@ components:
           docu_sign: '#/components/schemas/DocuSignDelivery'
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
+          yousign: '#/components/schemas/YouSignDelivery'
     RetentionPreference:
       type: object
       properties:
@@ -5407,6 +5415,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -5473,6 +5482,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -5552,6 +5562,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -5656,6 +5667,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
           readOnly: true
       required:
@@ -5812,6 +5824,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         sub_type:
           type: string
@@ -6063,6 +6076,7 @@ components:
           - hellosign
           - aws_s3
           - signable
+          - yousign
           type: string
         success_callback_url:
           type: string
@@ -6110,6 +6124,218 @@ components:
       - id
       - role
       - unique_key
+      description: ''
+    YouSignDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        account:
+          type: integer
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              first_name:
+                type: string
+                minLength: 2
+              last_name:
+                type: string
+                minLength: 2
+              email:
+                type: string
+                format: email
+              phone_number:
+                type: string
+              locale:
+                type: string
+                minLength: 2
+                enum:
+                - en
+                - fr
+                - de
+                - it
+                - nl
+                - es
+                - pl
+              success_url:
+                type: string
+                format: uri
+              error_url:
+                type: string
+                format: uri
+              signature_authentication_mode:
+                type: string
+                enum:
+                - otp_email
+                - otp_sms
+                - no_otp
+              signature_level:
+                type: string
+                enum:
+                - electronic_signature
+                - advanced_electronic_signature
+                - electronic_signature_with_qualified_certificate
+                - qualified_electronic_signature_mode_1
+              order:
+                type: number
+            required:
+            - first_name
+            - last_name
+            - email
+            - locale
+            - signature_level
+            - signature_authentication_mode
+        approvers:
+          type: array
+          items:
+            type: object
+            properties:
+              locale:
+                type: string
+                minLength: 2
+                enum:
+                - en
+                - fr
+                - de
+                - it
+                - nl
+                - es
+                - pl
+              first_name:
+                type: string
+                minLength: 2
+              last_name:
+                type: string
+                minLength: 2
+              email:
+                type: string
+                format: email
+              phone_number:
+                type: string
+            required:
+            - locale
+            - first_name
+            - last_name
+            - email
+          nullable: true
+        followers:
+          type: array
+          items:
+            type: object
+            properties:
+              locale:
+                type: string
+                minLength: 2
+                enum:
+                - en
+                - fr
+                - de
+                - it
+                - nl
+                - es
+                - pl
+              email:
+                type: string
+                format: email
+            required:
+            - locale
+            - email
+          nullable: true
+        reminder_settings:
+          type: object
+          properties:
+            interval_in_days:
+              type: number
+              enum:
+              - 1
+              - 2
+              - 7
+              - 14
+            max_occurrences:
+              type: number
+              minimum: 1
+              maximum: 10
+          required:
+          - interval_in_days
+          - max_occurrences
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - email
+          - webhook
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        failure_email_recipients:
+          type: string
+          format: email
+          nullable: true
+          maxLength: 255
+        title:
+          type: string
+          maxLength: 256
+        email_custom_note:
+          type: string
+          nullable: true
+        delivery_mode:
+          enum:
+          - email
+          type: string
+        ordered_signers:
+          type: boolean
+        timezone:
+          type: string
+          nullable: true
+          maxLength: 100
+        expiration_date:
+          type: string
+          format: date
+          nullable: true
+        branding_id:
+          type: string
+          nullable: true
+          maxLength: 256
+        custom_experience_id:
+          type: string
+          nullable: true
+          maxLength: 256
+        workspace_id:
+          type: string
+          nullable: true
+          maxLength: 256
+        audit_trail_locale:
+          type: string
+          nullable: true
+          maxLength: 256
+        enable_optional_signers:
+          type: boolean
+      required:
+      - account
+      - id
+      - name
+      - signers
+      - title
       description: ''
   securitySchemes:
     SessionAuthentication:

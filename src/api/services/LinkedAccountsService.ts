@@ -30,7 +30,7 @@ export class LinkedAccountsService {
          * A search term.
          */
         search?: string,
-        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'zoho_crm',
+        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'yousign' | 'zoho_crm',
     }): CancelablePromise<Array<DeliveryAccount>> {
         return __request(OpenAPI, {
             method: 'GET',
