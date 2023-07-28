@@ -69,6 +69,7 @@ export type { UserPersonalizationListViewTemplate } from './models/UserPersonali
 export type { ValidationError } from './models/ValidationError';
 export type { WebhookDelivery } from './models/WebhookDelivery';
 export type { Workspace } from './models/Workspace';
+export type { YouSignDelivery } from './models/YouSignDelivery';
 
 export { AuthTokensService } from './services/AuthTokensService';
 export { FoldersService } from './services/FoldersService';

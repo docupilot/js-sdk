@@ -13,8 +13,8 @@ export type EmailDelivery = {
     failure_email_recipients?: string | null;
     from_email: string;
     to_email: Array<string>;
-    cc?: Array<string> | null;
-    bcc?: Array<string> | null;
+    cc?: Array<string>;
+    bcc?: Array<string>;
     headers?: Record<string, any> | null;
     subject?: string;
     body?: string;

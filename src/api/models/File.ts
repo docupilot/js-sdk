@@ -7,6 +7,6 @@ export type File = {
     path: string;
     name: string;
     tag: string;
-    readonly size: number | null;
+    readonly size: number;
 };
 
