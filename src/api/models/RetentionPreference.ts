@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type RetentionPreference = {
-    merge_data_expiry?: number;
-    generated_document_expiry?: number;
+    merge_data?: string;
+    generated_document?: string;
 };
 

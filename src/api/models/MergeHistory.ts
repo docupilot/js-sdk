@@ -18,5 +18,6 @@ export type MergeHistory = {
     mode?: string | null;
     callback_status?: 'success' | 'fail' | null;
     callback_failure_message?: string | null;
+    delivery?: number | null;
 };
 

@@ -825,6 +825,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Workspace'
+        required: true
       security:
       - SessionAuthentication: []
       responses:
@@ -909,6 +910,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Workspace'
+        required: true
       security:
       - SessionAuthentication: []
       responses:
@@ -1035,6 +1037,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RetentionPreference'
+            examples:
+              Example1:
+                value:
+                  merge_data: P1D
+                  generated_document: P1D
+                summary: Retention Example 1 Day
+              Example2:
+                value:
+                  merge_data: P1M0DT0H
+                  generated_document: P1M0DT0H
+                summary: Retention Example 1 Month
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/RetentionPreference'
@@ -1049,6 +1062,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RetentionPreference'
+              examples:
+                Example1:
+                  value:
+                    merge_data: P1D
+                    generated_document: P1D
+                  summary: Retention Example 1 Day
+                Example2:
+                  value:
+                    merge_data: P1M0DT0H
+                    generated_document: P1M0DT0H
+                  summary: Retention Example 1 Month
           description: ''
         '400':
           content:
@@ -5109,6 +5133,9 @@ components:
         callback_failure_message:
           type: string
           nullable: true
+        delivery:
+          type: integer
+          nullable: true
       required:
       - created_file_name
       - created_time
@@ -5380,14 +5407,10 @@ components:
     RetentionPreference:
       type: object
       properties:
-        merge_data_expiry:
-          type: integer
-          maximum: 30
-          minimum: 1
-        generated_document_expiry:
-          type: integer
-          maximum: 30
-          minimum: 1
+        merge_data:
+          type: string
+        generated_document:
+          type: string
       description: ''
     S3Delivery:
       type: object
@@ -6111,7 +6134,6 @@ components:
           readOnly: true
         org_name:
           type: string
-          nullable: true
           maxLength: 255
         unique_key:
           type: string
@@ -6120,9 +6142,140 @@ components:
         role:
           type: string
           readOnly: true
+        timezone:
+          enum:
+          - Pacific/Midway
+          - America/Adak
+          - Pacific/Honolulu
+          - Pacific/Marquesas
+          - America/Anchorage
+          - America/Tijuana
+          - America/Los_Angeles
+          - America/Phoenix
+          - America/Chihuahua
+          - America/Denver
+          - America/Belize
+          - America/Chicago
+          - Pacific/Easter
+          - America/Mexico_City
+          - America/Regina
+          - America/Bogota
+          - America/Cancun
+          - America/New_York
+          - America/Port-au-Prince
+          - America/Havana
+          - America/Indiana/Indianapolis
+          - America/Asuncion
+          - America/Halifax
+          - America/Caracas
+          - America/Cuiaba
+          - America/Manaus
+          - America/Santiago
+          - America/Grand_Turk
+          - America/St_Johns
+          - America/Fortaleza
+          - America/Sao_Paulo
+          - America/Cayenne
+          - America/Buenos_Aires
+          - America/Godthab
+          - America/Montevideo
+          - America/Miquelon
+          - America/Bahia
+          - America/Noronha
+          - Atlantic/Azores
+          - Atlantic/Cape_Verde
+          - Africa/Casablanca
+          - Europe/London
+          - Africa/Monrovia
+          - Europe/Amsterdam
+          - Europe/Belgrade
+          - Europe/Brussels
+          - Europe/Warsaw
+          - Africa/Algiers
+          - Africa/Windhoek
+          - Asia/Amman
+          - Europe/Athens
+          - Asia/Beirut
+          - Africa/Cairo
+          - Asia/Damascus
+          - Asia/Gaza
+          - Africa/Harare
+          - Europe/Helsinki
+          - Asia/Jerusalem
+          - Europe/Kaliningrad
+          - Africa/Tripoli
+          - Asia/Baghdad
+          - Asia/Istanbul
+          - Asia/Kuwait
+          - Europe/Minsk
+          - Europe/Moscow
+          - Africa/Nairobi
+          - Asia/Tehran
+          - Asia/Muscat
+          - Europe/Astrakhan
+          - Asia/Baku
+          - Europe/Samara
+          - Indian/Mauritius
+          - Asia/Tbilisi
+          - Asia/Yerevan
+          - Asia/Kabul
+          - Asia/Tashkent
+          - Asia/Yekaterinburg
+          - Asia/Karachi
+          - Asia/Kolkata
+          - Asia/Colombo
+          - Asia/Katmandu
+          - Asia/Almaty
+          - Asia/Dhaka
+          - Asia/Rangoon
+          - Asia/Novosibirsk
+          - Asia/Bangkok
+          - Asia/Barnaul
+          - Asia/Hovd
+          - Asia/Krasnoyarsk
+          - Asia/Tomsk
+          - Asia/Chongqing
+          - Asia/Irkutsk
+          - Asia/Kuala_Lumpur
+          - Australia/Perth
+          - Asia/Taipei
+          - Asia/Ulaanbaatar
+          - Asia/Pyongyang
+          - Australia/Eucla
+          - Asia/Chita
+          - Asia/Tokyo
+          - Asia/Seoul
+          - Asia/Yakutsk
+          - Australia/Adelaide
+          - Australia/Darwin
+          - Australia/Brisbane
+          - Australia/Canberra
+          - Pacific/Guam
+          - Australia/Hobart
+          - Asia/Vladivostok
+          - Australia/Lord_Howe
+          - Pacific/Bougainville
+          - Asia/Srednekolymsk
+          - Asia/Magadan
+          - Pacific/Norfolk
+          - Asia/Sakhalin
+          - Pacific/Guadalcanal
+          - Asia/Anadyr
+          - Pacific/Auckland
+          - Pacific/Fiji
+          - Pacific/Chatham
+          - Pacific/Tongatapu
+          - Pacific/Apia
+          - Pacific/Kiritimati
+          - null
+          type: string
+          readOnly: true
+          nullable: true
       required:
       - id
+      - org_name
       - role
+      - timezone
       - unique_key
       description: ''
     YouSignDelivery:

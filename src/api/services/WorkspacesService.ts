@@ -55,7 +55,7 @@ export class WorkspacesService {
     public static createWorkspace({
         requestBody,
     }: {
-        requestBody?: OmitReadonly<Workspace>,
+        requestBody: OmitReadonly<Workspace>,
     }): CancelablePromise<Workspace> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -85,7 +85,7 @@ export class WorkspacesService {
     public static updateCurrentWorkspace({
         requestBody,
     }: {
-        requestBody?: OmitReadonly<Workspace>,
+        requestBody: OmitReadonly<Workspace>,
     }): CancelablePromise<Workspace> {
         return __request(OpenAPI, {
             method: 'PUT',
