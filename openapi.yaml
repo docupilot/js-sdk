@@ -2669,6 +2669,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{id}/inline_image/:
+    post:
+      operationId: upload_inline_image_of_template
+      summary: Upload inline image of template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadTemplateImage'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{id}/permanent_delete/:
     delete:
       operationId: delete_template_permanently
@@ -2811,6 +2865,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TemplateSchema'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/schema/detail/:
+    get:
+      operationId: get_detailed_template_schema
+      summary: Get template split schema
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
           description: ''
         '401':
           content:
@@ -5035,7 +5135,6 @@ components:
           readOnly: true
         workspace:
           type: string
-          nullable: true
           readOnly: true
         sender:
           type: string
@@ -5879,6 +5978,15 @@ components:
       - type
       - updated_at
       - used_by
+    UploadTemplateImage:
+      type: object
+      properties:
+        upload:
+          type: string
+          format: binary
+      required:
+      - upload
+      description: ''
     User:
       type: object
       properties:
@@ -5942,6 +6050,7 @@ components:
           - America/Noronha
           - Atlantic/Azores
           - Atlantic/Cape_Verde
+          - UTC
           - Africa/Casablanca
           - Europe/London
           - Africa/Monrovia
@@ -6025,9 +6134,7 @@ components:
           - Pacific/Tongatapu
           - Pacific/Apia
           - Pacific/Kiritimati
-          - null
           type: string
-          nullable: true
       required:
       - email
       - guid
@@ -6138,7 +6245,6 @@ components:
         unique_key:
           type: string
           readOnly: true
-          nullable: true
         role:
           type: string
           readOnly: true
@@ -6184,6 +6290,7 @@ components:
           - America/Noronha
           - Atlantic/Azores
           - Atlantic/Cape_Verde
+          - UTC
           - Africa/Casablanca
           - Europe/London
           - Africa/Monrovia
@@ -6267,10 +6374,8 @@ components:
           - Pacific/Tongatapu
           - Pacific/Apia
           - Pacific/Kiritimati
-          - null
           type: string
           readOnly: true
-          nullable: true
       required:
       - id
       - org_name
@@ -6465,10 +6570,6 @@ components:
           type: string
           format: date
           nullable: true
-        branding_id:
-          type: string
-          nullable: true
-          maxLength: 256
         custom_experience_id:
           type: string
           nullable: true

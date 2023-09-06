@@ -7,6 +7,7 @@ import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
 import type { Template } from '../models/Template';
 import type { TemplateSchema } from '../models/TemplateSchema';
+import type { UploadTemplateImage } from '../models/UploadTemplateImage';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -224,6 +225,32 @@ export class TemplatesService {
     }
 
     /**
+     * Upload inline image of template
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static uploadInlineImageOfTemplate({
+        id,
+        formData,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+        formData: OmitReadonly<UploadTemplateImage>,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{id}/inline_image/',
+            path: {
+                'id': id,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
+        });
+    }
+
+    /**
      * Delete a template permanently from trash
      * @returns void
      * @throws ApiError
@@ -287,6 +314,28 @@ export class TemplatesService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{id}/schema/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get template split schema
+     * @returns Template
+     * @throws ApiError
+     */
+    public static getDetailedTemplateSchema({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{id}/schema/detail/',
             path: {
                 'id': id,
             },
