@@ -42,7 +42,6 @@ export type YouSignDelivery = {
     ordered_signers?: boolean;
     timezone?: string | null;
     expiration_date?: string | null;
-    branding_id?: string | null;
     custom_experience_id?: string | null;
     workspace_id?: string | null;
     audit_trail_locale?: string | null;

@@ -63,6 +63,7 @@ export type { TemplateSettings } from './models/TemplateSettings';
 export type { Timezone } from './models/Timezone';
 export type { UnauthenticatedError } from './models/UnauthenticatedError';
 export type { UpdateDeliveryAccount } from './models/UpdateDeliveryAccount';
+export type { UploadTemplateImage } from './models/UploadTemplateImage';
 export type { User } from './models/User';
 export type { UserPersonalization } from './models/UserPersonalization';
 export type { UserPersonalizationListViewTemplate } from './models/UserPersonalizationListViewTemplate';
