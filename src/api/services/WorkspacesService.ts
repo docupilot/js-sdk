@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DeleteCurrentWorkspace } from '../models/DeleteCurrentWorkspace';
-import type { PaginatedWorkspaceList } from '../models/PaginatedWorkspaceList';
 import type { RetentionPreference } from '../models/RetentionPreference';
 import type { Workspace } from '../models/Workspace';
 
@@ -15,12 +14,11 @@ export class WorkspacesService {
 
     /**
      * Get list of Workspaces
-     * @returns PaginatedWorkspaceList
+     * @returns Workspace
      * @throws ApiError
      */
     public static listWorkspaces({
         ordering,
-        page,
         search,
     }: {
         /**
@@ -28,20 +26,15 @@ export class WorkspacesService {
          */
         ordering?: string,
         /**
-         * A page number within the paginated result set.
-         */
-        page?: number,
-        /**
          * A search term.
          */
         search?: string,
-    }): CancelablePromise<PaginatedWorkspaceList> {
+    }): CancelablePromise<Array<Workspace>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/workspaces/',
             query: {
                 'ordering': ordering,
-                'page': page,
                 'search': search,
             },
         });

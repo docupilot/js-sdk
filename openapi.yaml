@@ -225,18 +225,16 @@ paths:
           type: string
         description: Organization unique_key
         required: true
+      - in: query
+        name: is_accepted
+        schema:
+          type: boolean
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
       - name: search
         required: false
         in: query
@@ -252,7 +250,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedInvitationList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invitation'
           description: ''
         '401':
           content:
@@ -318,50 +318,6 @@ paths:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/v2/invitations/{invite_key}/:
-    get:
-      operationId: retrieve_invitation
-      summary: Get Invitation
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: invite_key
-        schema:
-          type: string
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
     delete:
       operationId: delete_invitation
       summary: Delete Invitation
@@ -479,6 +435,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/invitations/{invite_key}/get_by_key/:
+    get:
+      operationId: retrieve_invitation_by_key
+      summary: Get Invitation
+      parameters:
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
           description: ''
         '404':
           content:
@@ -774,12 +755,6 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
       - name: search
         required: false
         in: query
@@ -795,7 +770,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedWorkspaceList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
           description: ''
         '401':
           content:
@@ -5130,9 +5107,6 @@ components:
     Invitation:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         workspace:
           type: string
           readOnly: true
@@ -5173,7 +5147,6 @@ components:
       - created_at
       - email
       - expires_at
-      - id
       - invite_key
       - is_accepted
       - role
@@ -5363,26 +5336,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulkGen'
-    PaginatedInvitationList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Invitation'
     PaginatedMergeHistoryList:
       type: object
       properties:
@@ -5423,26 +5376,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
-    PaginatedWorkspaceList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Workspace'
     PatchedUpdateNewTemplate:
       type: object
       description: ''
@@ -6376,9 +6309,14 @@ components:
           - Pacific/Kiritimati
           type: string
           readOnly: true
+        plan_id:
+          type: string
+          nullable: true
+          readOnly: true
       required:
       - id
       - org_name
+      - plan_id
       - role
       - timezone
       - unique_key

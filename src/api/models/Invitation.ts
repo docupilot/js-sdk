@@ -3,7 +3,6 @@
 /* eslint-disable */
 
 export type Invitation = {
-    readonly id: number;
     readonly workspace: string;
     readonly sender: string;
     email: string;

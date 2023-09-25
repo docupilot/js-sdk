@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Invitation } from '../models/Invitation';
-import type { PaginatedInvitationList } from '../models/PaginatedInvitationList';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -13,33 +12,30 @@ export class InvitationsService {
 
     /**
      * Get list of Invitation
-     * @returns PaginatedInvitationList
+     * @returns Invitation
      * @throws ApiError
      */
     public static listInvitation({
+        isAccepted,
         ordering,
-        page,
         search,
     }: {
+        isAccepted?: boolean,
         /**
          * Which field to use when ordering the results.
          */
         ordering?: string,
         /**
-         * A page number within the paginated result set.
-         */
-        page?: number,
-        /**
          * A search term.
          */
         search?: string,
-    }): CancelablePromise<PaginatedInvitationList> {
+    }): CancelablePromise<Array<Invitation>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/invitations/',
             query: {
+                'is_accepted': isAccepted,
                 'ordering': ordering,
-                'page': page,
                 'search': search,
             },
         });
@@ -60,25 +56,6 @@ export class InvitationsService {
             url: '/accounts/v2/invitations/',
             body: requestBody,
             mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Get Invitation
-     * @returns Invitation
-     * @throws ApiError
-     */
-    public static retrieveInvitation({
-        inviteKey,
-    }: {
-        inviteKey: string,
-    }): CancelablePromise<Invitation> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/invitations/{invite_key}/',
-            path: {
-                'invite_key': inviteKey,
-            },
         });
     }
 
@@ -132,6 +109,25 @@ export class InvitationsService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/invitations/{invite_key}/accept_invitation/',
+            path: {
+                'invite_key': inviteKey,
+            },
+        });
+    }
+
+    /**
+     * Get Invitation
+     * @returns Invitation
+     * @throws ApiError
+     */
+    public static retrieveInvitationByKey({
+        inviteKey,
+    }: {
+        inviteKey: string,
+    }): CancelablePromise<Invitation> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/invitations/{invite_key}/get_by_key/',
             path: {
                 'invite_key': inviteKey,
             },
