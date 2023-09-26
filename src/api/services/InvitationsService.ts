@@ -60,62 +60,6 @@ export class InvitationsService {
     }
 
     /**
-     * Delete Invitation
-     * @returns void
-     * @throws ApiError
-     */
-    public static deleteInvitation({
-        inviteKey,
-    }: {
-        inviteKey: string,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/accounts/v2/invitations/{invite_key}/',
-            path: {
-                'invite_key': inviteKey,
-            },
-        });
-    }
-
-    /**
-     * @returns Invitation
-     * @throws ApiError
-     */
-    public static invitationsAcceptInvitationRetrieve({
-        inviteKey,
-    }: {
-        inviteKey: string,
-    }): CancelablePromise<Invitation> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/invitations/{invite_key}/accept_invitation/',
-            path: {
-                'invite_key': inviteKey,
-            },
-        });
-    }
-
-    /**
-     * Accept invitation
-     * @returns any No response body
-     * @throws ApiError
-     */
-    public static acceptInvitation({
-        inviteKey,
-    }: {
-        inviteKey: string,
-    }): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/accounts/v2/invitations/{invite_key}/accept_invitation/',
-            path: {
-                'invite_key': inviteKey,
-            },
-        });
-    }
-
-    /**
      * Get Invitation
      * @returns Invitation
      * @throws ApiError
@@ -135,20 +79,88 @@ export class InvitationsService {
     }
 
     /**
+     * Delete Invitation
+     * @returns void
+     * @throws ApiError
+     */
+    public static deleteInvitation({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this invitation.
+         */
+        id: number,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/accounts/v2/invitations/{id}/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * @returns Invitation
+     * @throws ApiError
+     */
+    public static invitationsAcceptInvitationRetrieve({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this invitation.
+         */
+        id: number,
+    }): CancelablePromise<Invitation> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/invitations/{id}/accept_invitation/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Accept invitation
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static acceptInvitation({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this invitation.
+         */
+        id: number,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/invitations/{id}/accept_invitation/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
      * Resend invitation
      * @returns Invitation
      * @throws ApiError
      */
     public static resendInvitation({
-        inviteKey,
+        id,
     }: {
-        inviteKey: string,
+        /**
+         * A unique integer value identifying this invitation.
+         */
+        id: number,
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/invitations/{invite_key}/resend_invitation/',
+            url: '/accounts/v2/invitations/{id}/resend_invitation/',
             path: {
-                'invite_key': inviteKey,
+                'id': id,
             },
         });
     }

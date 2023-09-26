@@ -317,7 +317,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/invitations/{invite_key}/:
+  /accounts/v2/invitations/{invite_key}/get_by_key/:
+    get:
+      operationId: retrieve_invitation_by_key
+      summary: Get Invitation
+      parameters:
+      - in: path
+        name: invite_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - invitations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/invitations/{id}/:
     delete:
       operationId: delete_invitation
       summary: Delete Invitation
@@ -329,9 +354,10 @@ paths:
         description: Organization unique_key
         required: true
       - in: path
-        name: invite_key
+        name: id
         schema:
-          type: string
+          type: integer
+        description: A unique integer value identifying this invitation.
         required: true
       tags:
       - invitations
@@ -364,14 +390,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/invitations/{invite_key}/accept_invitation/:
+  /accounts/v2/invitations/{id}/accept_invitation/:
     get:
       operationId: invitations_accept_invitation_retrieve
       parameters:
       - in: path
-        name: invite_key
+        name: id
         schema:
-          type: string
+          type: integer
+        description: A unique integer value identifying this invitation.
         required: true
       tags:
       - invitations
@@ -407,9 +434,10 @@ paths:
       summary: Accept invitation
       parameters:
       - in: path
-        name: invite_key
+        name: id
         schema:
-          type: string
+          type: integer
+        description: A unique integer value identifying this invitation.
         required: true
       tags:
       - invitations
@@ -442,32 +470,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/invitations/{invite_key}/get_by_key/:
-    get:
-      operationId: retrieve_invitation_by_key
-      summary: Get Invitation
-      parameters:
-      - in: path
-        name: invite_key
-        schema:
-          type: string
-        required: true
-      tags:
-      - invitations
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /accounts/v2/invitations/{invite_key}/resend_invitation/:
+  /accounts/v2/invitations/{id}/resend_invitation/:
     post:
       operationId: resend_invitation
       summary: Resend invitation
@@ -479,9 +482,10 @@ paths:
         description: Organization unique_key
         required: true
       - in: path
-        name: invite_key
+        name: id
         schema:
-          type: string
+          type: integer
+        description: A unique integer value identifying this invitation.
         required: true
       tags:
       - invitations
@@ -621,6 +625,165 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/team/:
+    get:
+      operationId: list_all_team_members
+      summary: List all team members
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - team
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/team/{id}/:
+    patch:
+      operationId: update_team_member
+      summary: Partial Update team member
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTeam'
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_team_member
+      summary: Delete team member
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - team
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /accounts/v2/users/change_password/:
     put:
@@ -2013,6 +2176,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/permissions/global/:
+    get:
+      operationId: get_global_permissions
+      description: Returns permission for each role
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - permissions
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /api/v2/personalization/:
     get:
@@ -5107,6 +5300,9 @@ components:
     Invitation:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         workspace:
           type: string
           readOnly: true
@@ -5147,6 +5343,7 @@ components:
       - created_at
       - email
       - expires_at
+      - id
       - invite_key
       - is_accepted
       - role
@@ -5376,6 +5573,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+    PatchedTeam:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        role:
+          enum:
+          - owner
+          - manager
+          - member
+          - billing_manager
+          type: string
+        is_deleted:
+          type: boolean
+      description: ''
     PatchedUpdateNewTemplate:
       type: object
       description: ''
@@ -5646,6 +5863,29 @@ components:
       - id
       - name
       - parties
+      description: ''
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        role:
+          enum:
+          - owner
+          - manager
+          - member
+          - billing_manager
+          type: string
+        is_deleted:
+          type: boolean
+      required:
+      - id
+      - user
       description: ''
     Template:
       type: object
@@ -6313,10 +6553,14 @@ components:
           type: string
           nullable: true
           readOnly: true
+        plan_status:
+          type: string
+          readOnly: true
       required:
       - id
       - org_name
       - plan_id
+      - plan_status
       - role
       - timezone
       - unique_key
