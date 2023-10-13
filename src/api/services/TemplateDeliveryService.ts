@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { EmailDeliveryAttachment } from '../models/EmailDeliveryAttachment';
+import type { PatchedPolymorphicDelivery } from '../models/PatchedPolymorphicDelivery';
 import type { PolymorphicDelivery } from '../models/PolymorphicDelivery';
 import type { TemplateDelivery } from '../models/TemplateDelivery';
 
@@ -106,6 +107,35 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'PUT',
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * partial update delivery
+     * @returns PolymorphicDelivery
+     * @throws ApiError
+     */
+    public static partialUpdateDelivery({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this delivery.
+         */
+        id: number,
+        templateId: string,
+        requestBody?: OmitReadonly<PatchedPolymorphicDelivery>,
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
             url: '/api/v2/templates/{template_id}/deliveries/{id}/',
             path: {
                 'id': id,

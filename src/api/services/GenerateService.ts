@@ -50,18 +50,23 @@ export class GenerateService {
     public static testDocumentGeneration({
         id,
         requestBody,
+        outputType,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
         requestBody: OmitReadonly<Template>,
+        outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/templates/{id}/test/',
             path: {
                 'id': id,
+            },
+            query: {
+                'output_type': outputType,
             },
             body: requestBody,
             mediaType: 'application/json',

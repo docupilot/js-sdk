@@ -101,10 +101,11 @@ export class InvitationsService {
     }
 
     /**
+     * retrieve invitation for accept
      * @returns Invitation
      * @throws ApiError
      */
-    public static invitationsAcceptInvitationRetrieve({
+    public static retrieveInvitationForAccept({
         id,
     }: {
         /**

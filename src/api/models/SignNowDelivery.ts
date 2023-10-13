@@ -16,7 +16,7 @@ export type SignNowDelivery = {
     failure_email_recipients?: string | null;
     subject?: string | null;
     message?: string | null;
-    cc?: Array<string> | null;
+    cc?: Array<string>;
     sequenced_signing?: boolean;
     enable_optional_signers?: boolean;
 };
