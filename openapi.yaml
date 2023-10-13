@@ -392,7 +392,8 @@ paths:
           description: ''
   /accounts/v2/invitations/{id}/accept_invitation/:
     get:
-      operationId: invitations_accept_invitation_retrieve
+      operationId: retrieve_invitation_for_accept
+      summary: retrieve invitation for accept
       parameters:
       - in: path
         name: id
@@ -3117,6 +3118,17 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: output_type
+        schema:
+          type: string
+          enum:
+          - docx
+          - html
+          - pdf
+          - png
+          - pptx
+          - xlsx
       tags:
       - generate
       requestBody:
@@ -3411,6 +3423,74 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: partial_update_delivery
+      summary: partial update delivery
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - template_delivery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPolymorphicDelivery'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPolymorphicDelivery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPolymorphicDelivery'
       security:
       - SessionAuthentication: []
       - tokenAuth: []
@@ -4724,13 +4804,23 @@ components:
               name:
                 type: string
                 minLength: 1
+              is_email_delivery:
+                type: boolean
+              is_sms_delivery:
+                type: boolean
               email_address:
                 type: string
                 format: email
+                minLength: 2
+              country_code:
+                type: string
+              phone_number:
+                type: string
             required:
             - recipient_type
             - name
-            - email_address
+            - is_email_delivery
+            - is_sms_delivery
         custom_tags:
           type: object
           additionalProperties:
@@ -4786,6 +4876,11 @@ components:
           nullable: true
         enable_optional_signers:
           type: boolean
+        api_version:
+          enum:
+          - '2.0'
+          - '2.1'
+          type: string
       required:
       - account
       - id
@@ -4987,7 +5082,7 @@ components:
             - email
         recipients:
           type: array
-          minItems: 1
+          minItems: 0
           items:
             type: object
             properties:
@@ -5573,6 +5668,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+    PatchedPolymorphicDelivery:
+      oneOf:
+      - $ref: '#/components/schemas/EmailDelivery'
+      - $ref: '#/components/schemas/WebhookDelivery'
+      - $ref: '#/components/schemas/DropboxDelivery'
+      - $ref: '#/components/schemas/OneDriveDelivery'
+      - $ref: '#/components/schemas/SignNowDelivery'
+      - $ref: '#/components/schemas/GoogleDriveDelivery'
+      - $ref: '#/components/schemas/S3Delivery'
+      - $ref: '#/components/schemas/HelloSignDelivery'
+      - $ref: '#/components/schemas/DocuSignDelivery'
+      - $ref: '#/components/schemas/EversignDelivery'
+      - $ref: '#/components/schemas/SignableDelivery'
+      - $ref: '#/components/schemas/YouSignDelivery'
+      discriminator:
+        propertyName: type
+        mapping:
+          email: '#/components/schemas/EmailDelivery'
+          webhook: '#/components/schemas/WebhookDelivery'
+          dropbox: '#/components/schemas/DropboxDelivery'
+          one_drive: '#/components/schemas/OneDriveDelivery'
+          sign_now: '#/components/schemas/SignNowDelivery'
+          google_drive: '#/components/schemas/GoogleDriveDelivery'
+          aws_s3: '#/components/schemas/S3Delivery'
+          hellosign: '#/components/schemas/HelloSignDelivery'
+          docu_sign: '#/components/schemas/DocuSignDelivery'
+          eversign: '#/components/schemas/EversignDelivery'
+          signable: '#/components/schemas/SignableDelivery'
+          yousign: '#/components/schemas/YouSignDelivery'
     PatchedTeam:
       type: object
       properties:
@@ -5776,7 +5900,6 @@ components:
           items:
             type: string
             maxLength: 1000
-          nullable: true
         sequenced_signing:
           type: boolean
         enable_optional_signers:

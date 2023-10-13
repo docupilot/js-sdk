@@ -9,7 +9,11 @@ export type DocuSignDelivery = {
         order?: string;
         recipient_type: 'signer' | 'agent' | 'cc' | 'editor';
         name: string;
-        email_address: string;
+        is_email_delivery: boolean;
+        is_sms_delivery: boolean;
+        email_address?: string;
+        country_code?: string;
+        phone_number?: string;
     }>;
     custom_tags?: Record<string, Record<string, Array<any>>> | null;
     name: string;
@@ -22,5 +26,6 @@ export type DocuSignDelivery = {
     sequenced_signing?: boolean;
     expire_after?: number | null;
     enable_optional_signers?: boolean;
+    api_version?: '2.0' | '2.1';
 };
 
