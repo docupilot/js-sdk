@@ -3720,17 +3720,6 @@ paths:
         required: true
       tags:
       - template_delivery
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PolymorphicDelivery'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PolymorphicDelivery'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PolymorphicDelivery'
       security:
       - SessionAuthentication: []
       - tokenAuth: []
