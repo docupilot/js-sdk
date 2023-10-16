@@ -3457,74 +3457,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-    patch:
-      operationId: partial_update_delivery
-      summary: partial update delivery
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery.
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - template_delivery
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPolymorphicDelivery'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedPolymorphicDelivery'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedPolymorphicDelivery'
-      security:
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PolymorphicDelivery'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
     delete:
       operationId: delete_template_delivery
       summary: Delete delivery
@@ -3739,6 +3671,76 @@ paths:
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/deliveries/{id}/upgrade_docusign/:
+    post:
+      operationId: upgrade_docusign_delivery
+      summary: Upgrade docusign delivery api version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        required: true
+      tags:
+      - template_delivery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PolymorphicDelivery'
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolymorphicDelivery'
+          description: ''
         '400':
           content:
             application/json:
@@ -4881,8 +4883,10 @@ components:
           - '2.0'
           - '2.1'
           type: string
+          readOnly: true
       required:
       - account
+      - api_version
       - id
       - name
       - signers
@@ -5668,35 +5672,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
-    PatchedPolymorphicDelivery:
-      oneOf:
-      - $ref: '#/components/schemas/EmailDelivery'
-      - $ref: '#/components/schemas/WebhookDelivery'
-      - $ref: '#/components/schemas/DropboxDelivery'
-      - $ref: '#/components/schemas/OneDriveDelivery'
-      - $ref: '#/components/schemas/SignNowDelivery'
-      - $ref: '#/components/schemas/GoogleDriveDelivery'
-      - $ref: '#/components/schemas/S3Delivery'
-      - $ref: '#/components/schemas/HelloSignDelivery'
-      - $ref: '#/components/schemas/DocuSignDelivery'
-      - $ref: '#/components/schemas/EversignDelivery'
-      - $ref: '#/components/schemas/SignableDelivery'
-      - $ref: '#/components/schemas/YouSignDelivery'
-      discriminator:
-        propertyName: type
-        mapping:
-          email: '#/components/schemas/EmailDelivery'
-          webhook: '#/components/schemas/WebhookDelivery'
-          dropbox: '#/components/schemas/DropboxDelivery'
-          one_drive: '#/components/schemas/OneDriveDelivery'
-          sign_now: '#/components/schemas/SignNowDelivery'
-          google_drive: '#/components/schemas/GoogleDriveDelivery'
-          aws_s3: '#/components/schemas/S3Delivery'
-          hellosign: '#/components/schemas/HelloSignDelivery'
-          docu_sign: '#/components/schemas/DocuSignDelivery'
-          eversign: '#/components/schemas/EversignDelivery'
-          signable: '#/components/schemas/SignableDelivery'
-          yousign: '#/components/schemas/YouSignDelivery'
     PatchedTeam:
       type: object
       properties:

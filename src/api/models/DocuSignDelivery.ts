@@ -26,6 +26,6 @@ export type DocuSignDelivery = {
     sequenced_signing?: boolean;
     expire_after?: number | null;
     enable_optional_signers?: boolean;
-    api_version?: '2.0' | '2.1';
+    readonly api_version: '2.0' | '2.1';
 };
 
