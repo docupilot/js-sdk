@@ -47,7 +47,6 @@ export type { OneDriveDelivery } from './models/OneDriveDelivery';
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
-export type { PatchedPolymorphicDelivery } from './models/PatchedPolymorphicDelivery';
 export type { PatchedTeam } from './models/PatchedTeam';
 export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate';
 export type { Plan } from './models/Plan';

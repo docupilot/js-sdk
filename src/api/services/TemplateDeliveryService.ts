@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { EmailDeliveryAttachment } from '../models/EmailDeliveryAttachment';
-import type { PatchedPolymorphicDelivery } from '../models/PatchedPolymorphicDelivery';
 import type { PolymorphicDelivery } from '../models/PolymorphicDelivery';
 import type { TemplateDelivery } from '../models/TemplateDelivery';
 
@@ -107,35 +106,6 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
-            path: {
-                'id': id,
-                'template_id': templateId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * partial update delivery
-     * @returns PolymorphicDelivery
-     * @throws ApiError
-     */
-    public static partialUpdateDelivery({
-        id,
-        templateId,
-        requestBody,
-    }: {
-        /**
-         * A unique integer value identifying this delivery.
-         */
-        id: number,
-        templateId: string,
-        requestBody?: OmitReadonly<PatchedPolymorphicDelivery>,
-    }): CancelablePromise<PolymorphicDelivery> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
             url: '/api/v2/templates/{template_id}/deliveries/{id}/',
             path: {
                 'id': id,
@@ -253,6 +223,35 @@ export class TemplateDeliveryService {
                 'id': id,
                 'template_id': templateId,
             },
+        });
+    }
+
+    /**
+     * Upgrade docusign delivery api version
+     * @returns PolymorphicDelivery
+     * @throws ApiError
+     */
+    public static upgradeDocusignDelivery({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this delivery.
+         */
+        id: number,
+        templateId: number,
+        requestBody?: OmitReadonly<PolymorphicDelivery>,
+    }): CancelablePromise<PolymorphicDelivery> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{template_id}/deliveries/{id}/upgrade_docusign/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
