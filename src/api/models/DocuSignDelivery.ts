@@ -5,16 +5,6 @@
 export type DocuSignDelivery = {
     readonly id: number;
     account: number;
-    signers: Array<{
-        order?: string;
-        recipient_type: 'signer' | 'agent' | 'cc' | 'editor';
-        name: string;
-        is_email_delivery: boolean;
-        is_sms_delivery: boolean;
-        email_address?: string;
-        country_code?: string;
-        phone_number?: string;
-    }>;
     custom_tags?: Record<string, Record<string, Array<any>>> | null;
     name: string;
     type?: 'docu_sign';
@@ -22,6 +12,7 @@ export type DocuSignDelivery = {
     failure_email_recipients?: string | null;
     subject?: string | null;
     message?: string | null;
+    signers: Record<string, any>;
     fullname_anchor_tags?: boolean;
     sequenced_signing?: boolean;
     expire_after?: number | null;
