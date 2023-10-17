@@ -234,14 +234,12 @@ export class TemplateDeliveryService {
     public static upgradeDocusignDelivery({
         id,
         templateId,
-        requestBody,
     }: {
         /**
          * A unique integer value identifying this delivery.
          */
         id: number,
         templateId: number,
-        requestBody?: OmitReadonly<PolymorphicDelivery>,
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -250,8 +248,6 @@ export class TemplateDeliveryService {
                 'id': id,
                 'template_id': templateId,
             },
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 
