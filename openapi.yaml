@@ -1328,6 +1328,291 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /api/v2/folders/{folder_id}/permissions/:
+    get:
+      operationId: list_folder_sharing
+      summary: Get all shared permissions for specific folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_folder_sharing_permission
+      summary: Create folder sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/FolderSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FolderSharing'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/folders/{folder_id}/permissions/{id}/:
+    get:
+      operationId: get_folder_sharing
+      summary: Get specific permission details for given folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this folder sharing setting.
+        required: true
+      tags:
+      - folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_folder_sharing_permission_content
+      summary: Update folder content partially
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this folder sharing setting.
+        required: true
+      tags:
+      - folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateFolderSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateFolderSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateFolderSharing'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: revoke_folder_sharing_permission
+      summary: Revoke folder sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this folder sharing setting.
+        required: true
+      tags:
+      - folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/folders/{id}/:
     put:
       operationId: update_folder
@@ -1441,6 +1726,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/folders/sharing/:
+    get:
+      operationId: folders_sharing_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharingInfoFolder'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /api/v2/history/:
     get:
@@ -4249,6 +4567,291 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /api/v2/templates/{template_id}/permissions/:
+    get:
+      operationId: list_template_sharing
+      summary: Get all shared permissions for specific template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_template_sharing_permission
+      summary: Create template sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TemplateSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TemplateSharing'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/permissions/{id}/:
+    get:
+      operationId: get_template_sharing
+      summary: Get specific permission details for given template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this template sharing setting.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_template_sharing_permission_content
+      summary: Update template content partially
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this template sharing setting.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateTemplateSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateTemplateSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateTemplateSharing'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: revoke_template_sharing_permission
+      summary: Revoke template sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this template sharing setting.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/all/:
     get:
       operationId: list_all_templates
@@ -4275,6 +4878,39 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/templates/sharing/:
+    get:
+      operationId: templates_sharing_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharingInfoTemplate'
           description: ''
         '401':
           content:
@@ -4771,6 +5407,7 @@ components:
       - used_by
     DocuSignDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -4847,7 +5484,6 @@ components:
       - id
       - name
       - signers
-      description: ''
     DocumentMergeLink:
       type: object
       properties:
@@ -4859,6 +5495,7 @@ components:
       description: ''
     DropboxDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -4900,7 +5537,6 @@ components:
       - account
       - id
       - name
-      description: ''
     DynamicImage:
       type: object
       properties:
@@ -4931,6 +5567,7 @@ components:
       description: ''
     EmailDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5002,7 +5639,6 @@ components:
       - id
       - name
       - to_email
-      description: ''
     EmailDeliveryAttachment:
       type: object
       properties:
@@ -5016,6 +5652,7 @@ components:
       description: ''
     EversignDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5110,9 +5747,9 @@ components:
       - id
       - name
       - signers
-      description: ''
     ExportMergeHistory:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5137,9 +5774,9 @@ components:
       - id
       - name
       - to_date
-      description: ''
     File:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5164,7 +5801,6 @@ components:
       - path
       - size
       - tag
-      description: ''
     FileUploadMeta:
       type: object
       properties:
@@ -5198,6 +5834,7 @@ components:
       description: ''
     Folder:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5208,7 +5845,23 @@ components:
       required:
       - id
       - name
+    FolderSharing:
+      type: object
       description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - read
+          - write
+          type: string
+        user:
+          type: integer
+      required:
+      - id
+      - user
     ForbiddenError:
       type: object
       properties:
@@ -5219,6 +5872,7 @@ components:
       description: ''
     GoogleDriveDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5264,7 +5918,6 @@ components:
       - account
       - id
       - name
-      description: ''
     GoogleDrivePickerPayload:
       type: object
       properties:
@@ -5275,6 +5928,7 @@ components:
       description: ''
     HelloSignDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5352,7 +6006,6 @@ components:
       - id
       - name
       - signers
-      description: ''
     Invitation:
       type: object
       properties:
@@ -5527,6 +6180,7 @@ components:
       description: ''
     OneDriveDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5568,7 +6222,6 @@ components:
       - account
       - id
       - name
-      description: ''
     PaginatedBulkGenList:
       type: object
       properties:
@@ -5649,6 +6302,21 @@ components:
         is_deleted:
           type: boolean
       description: ''
+    PatchedUpdateFolderSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - read
+          - write
+          type: string
+        user:
+          type: integer
+          readOnly: true
     PatchedUpdateNewTemplate:
       type: object
       description: ''
@@ -5656,6 +6324,21 @@ components:
         file:
           type: string
           format: binary
+    PatchedUpdateTemplateSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - read
+          - write
+          type: string
+        user:
+          type: integer
+          readOnly: true
     Plan:
       type: object
       properties:
@@ -5719,6 +6402,7 @@ components:
       description: ''
     S3Delivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5766,9 +6450,35 @@ components:
       - bucket
       - id
       - name
+    SharingInfoFolder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_shared:
+          type: boolean
+          readOnly: true
+      required:
+      - id
+      - is_shared
+      description: ''
+    SharingInfoTemplate:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_shared:
+          type: boolean
+          readOnly: true
+      required:
+      - id
+      - is_shared
       description: ''
     SignNowDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5841,9 +6551,9 @@ components:
       - id
       - name
       - signers
-      description: ''
     SignableDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5918,7 +6628,6 @@ components:
       - id
       - name
       - parties
-      description: ''
     Team:
       type: object
       properties:
@@ -5944,6 +6653,7 @@ components:
       description: ''
     Template:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5992,7 +6702,6 @@ components:
       - id
       - title
       - type
-      description: ''
     TemplateDelivery:
       type: object
       properties:
@@ -6141,6 +6850,23 @@ components:
       required:
       - info
       description: ''
+    TemplateSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - read
+          - write
+          type: string
+        user:
+          type: integer
+      required:
+      - id
+      - user
     Timezone:
       type: object
       properties:
@@ -6412,6 +7138,7 @@ components:
       description: ''
     WebhookDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -6460,7 +7187,6 @@ components:
       - id
       - name
       - url
-      description: ''
     Workspace:
       type: object
       properties:
@@ -6622,6 +7348,7 @@ components:
       description: ''
     YouSignDelivery:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -6827,7 +7554,6 @@ components:
       - name
       - signers
       - title
-      description: ''
   securitySchemes:
     SessionAuthentication:
       type: apiKey
