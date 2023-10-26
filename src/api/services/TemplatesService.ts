@@ -5,8 +5,11 @@ import type { CopyTemplate } from '../models/CopyTemplate';
 import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
+import type { PatchedUpdateTemplateSharing } from '../models/PatchedUpdateTemplateSharing';
+import type { SharingInfoTemplate } from '../models/SharingInfoTemplate';
 import type { Template } from '../models/Template';
 import type { TemplateSchema } from '../models/TemplateSchema';
+import type { TemplateSharing } from '../models/TemplateSharing';
 import type { UploadTemplateImage } from '../models/UploadTemplateImage';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -343,6 +346,141 @@ export class TemplatesService {
     }
 
     /**
+     * Get all shared permissions for specific template
+     * @returns TemplateSharing
+     * @throws ApiError
+     */
+    public static listTemplateSharing({
+        templateId,
+        ordering,
+        search,
+    }: {
+        templateId: number,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<Array<TemplateSharing>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{template_id}/permissions/',
+            path: {
+                'template_id': templateId,
+            },
+            query: {
+                'ordering': ordering,
+                'search': search,
+            },
+        });
+    }
+
+    /**
+     * Create template sharing permission
+     * @returns TemplateSharing
+     * @throws ApiError
+     */
+    public static createTemplateSharingPermission({
+        templateId,
+        requestBody,
+    }: {
+        templateId: number,
+        requestBody: OmitReadonly<TemplateSharing>,
+    }): CancelablePromise<TemplateSharing> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{template_id}/permissions/',
+            path: {
+                'template_id': templateId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get specific permission details for given template
+     * @returns TemplateSharing
+     * @throws ApiError
+     */
+    public static getTemplateSharing({
+        id,
+        templateId,
+    }: {
+        /**
+         * A unique integer value identifying this template sharing setting.
+         */
+        id: number,
+        templateId: number,
+    }): CancelablePromise<TemplateSharing> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{template_id}/permissions/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+        });
+    }
+
+    /**
+     * Update template content partially
+     * @returns TemplateSharing
+     * @throws ApiError
+     */
+    public static updateTemplateSharingPermissionContent({
+        id,
+        templateId,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this template sharing setting.
+         */
+        id: number,
+        templateId: number,
+        requestBody?: OmitReadonly<PatchedUpdateTemplateSharing>,
+    }): CancelablePromise<TemplateSharing> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/v2/templates/{template_id}/permissions/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Revoke template sharing permission
+     * @returns void
+     * @throws ApiError
+     */
+    public static revokeTemplateSharingPermission({
+        id,
+        templateId,
+    }: {
+        /**
+         * A unique integer value identifying this template sharing setting.
+         */
+        id: number,
+        templateId: number,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v2/templates/{template_id}/permissions/{id}/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+        });
+    }
+
+    /**
      * List all templates
      * Will return all templates without pagination, excluding templates in trashed
      * @returns Template
@@ -352,6 +490,17 @@ export class TemplatesService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/all/',
+        });
+    }
+
+    /**
+     * @returns SharingInfoTemplate
+     * @throws ApiError
+     */
+    public static templatesSharingRetrieve(): CancelablePromise<SharingInfoTemplate> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/sharing/',
         });
     }
 
