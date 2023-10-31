@@ -8,6 +8,7 @@ import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplat
 import type { PatchedUpdateTemplateSharing } from '../models/PatchedUpdateTemplateSharing';
 import type { SharingInfoTemplate } from '../models/SharingInfoTemplate';
 import type { Template } from '../models/Template';
+import type { TemplateCount } from '../models/TemplateCount';
 import type { TemplateSchema } from '../models/TemplateSchema';
 import type { TemplateSharing } from '../models/TemplateSharing';
 import type { UploadTemplateImage } from '../models/UploadTemplateImage';
@@ -494,13 +495,35 @@ export class TemplatesService {
     }
 
     /**
+     * Get the count of templates created by the user.
+     * @returns TemplateCount
+     * @throws ApiError
+     */
+    public static getUserCreatedTemplatesCount({
+        ownerId,
+    }: {
+        /**
+         * Owner Id of resource
+         */
+        ownerId: string,
+    }): CancelablePromise<TemplateCount> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/count/',
+            query: {
+                'owner_id': ownerId,
+            },
+        });
+    }
+
+    /**
      * @returns SharingInfoTemplate
      * @throws ApiError
      */
-    public static templatesSharingRetrieve(): CancelablePromise<SharingInfoTemplate> {
+    public static templatesSharingStatusRetrieve(): CancelablePromise<SharingInfoTemplate> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/sharing/',
+            url: '/api/v2/templates/sharing_status/',
         });
     }
 
