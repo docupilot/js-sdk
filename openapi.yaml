@@ -741,7 +741,7 @@ paths:
           description: ''
     delete:
       operationId: delete_team_member
-      summary: Delete team member
+      summary: delete team member
       parameters:
       - in: header
         name: X-Workspace
@@ -754,6 +754,10 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: transfer_ownership_member_id
+        schema:
+          type: string
       tags:
       - team
       security:
@@ -6534,10 +6538,6 @@ components:
           type: string
           nullable: true
           maxLength: 2000
-        region:
-          type: string
-          nullable: true
-          maxLength: 50
       required:
       - account
       - bucket

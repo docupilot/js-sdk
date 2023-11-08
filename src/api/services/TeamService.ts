@@ -63,20 +63,25 @@ export class TeamService {
     }
 
     /**
-     * Delete team member
+     * delete team member
      * @returns void
      * @throws ApiError
      */
     public static deleteTeamMember({
         id,
+        transferOwnershipMemberId,
     }: {
         id: string,
+        transferOwnershipMemberId?: string,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/accounts/v2/team/{id}/',
             path: {
                 'id': id,
+            },
+            query: {
+                'transfer_ownership_member_id': transferOwnershipMemberId,
             },
         });
     }
