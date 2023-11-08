@@ -11,6 +11,5 @@ export type S3Delivery = {
     failure_email_recipients?: string | null;
     bucket: string;
     key_prefix?: string | null;
-    region?: string | null;
 };
 
