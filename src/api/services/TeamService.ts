@@ -69,10 +69,10 @@ export class TeamService {
      */
     public static deleteTeamMember({
         id,
-        transferOwnershipMemberId,
+        transferTo,
     }: {
         id: string,
-        transferOwnershipMemberId?: string,
+        transferTo?: string,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -81,7 +81,7 @@ export class TeamService {
                 'id': id,
             },
             query: {
-                'transfer_ownership_member_id': transferOwnershipMemberId,
+                'transfer_to': transferTo,
             },
         });
     }
