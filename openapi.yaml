@@ -755,7 +755,7 @@ paths:
           type: string
         required: true
       - in: query
-        name: transfer_ownership_member_id
+        name: transfer_to
         schema:
           type: string
       tags:
@@ -6538,6 +6538,10 @@ components:
           type: string
           nullable: true
           maxLength: 2000
+        region:
+          type: string
+          nullable: true
+          maxLength: 50
       required:
       - account
       - bucket
