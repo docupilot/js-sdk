@@ -5226,6 +5226,7 @@ components:
       description: ''
     BulkGen:
       type: object
+      description: ''
       properties:
         id:
           type: integer
@@ -5267,11 +5268,24 @@ components:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
       required:
+      - created_by
       - errors
       - file_name
       - id
-      description: ''
+      - updated_by
+      - updated_time
     BulkGenData:
       type: object
       properties:
@@ -5398,6 +5412,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
         document_status:
           enum:
           - active
@@ -5409,6 +5427,11 @@ components:
           nullable: true
         created_by:
           type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
         folder:
           type: integer
           nullable: true
@@ -5417,6 +5440,8 @@ components:
       - created_time
       - id
       - title
+      - updated_by
+      - updated_time
       description: ''
     CopyTemplate:
       type: object
@@ -5926,9 +5951,28 @@ components:
         name:
           type: string
           maxLength: 50
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
       required:
+      - created_by
+      - created_time
       - id
       - name
+      - updated_by
+      - updated_time
     FolderCount:
       type: object
       properties:
@@ -6116,7 +6160,7 @@ components:
           maxLength: 254
         role:
           enum:
-          - owner
+          - admin
           - manager
           - member
           - billing_manager
@@ -6388,6 +6432,7 @@ components:
         role:
           enum:
           - owner
+          - admin
           - manager
           - member
           - billing_manager
@@ -6738,6 +6783,7 @@ components:
         role:
           enum:
           - owner
+          - admin
           - manager
           - member
           - billing_manager
@@ -6780,6 +6826,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
         document_status:
           enum:
           - active
@@ -6790,15 +6840,25 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
         folder:
           type: integer
           nullable: true
       required:
+      - created_by
       - created_time
       - deleted_time
       - id
       - title
       - type
+      - updated_by
+      - updated_time
     TemplateCount:
       type: object
       properties:
