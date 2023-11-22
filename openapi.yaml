@@ -446,7 +446,11 @@ paths:
       - SessionAuthentication: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptInvite'
+          description: ''
         '400':
           content:
             application/json:
@@ -5153,6 +5157,14 @@ paths:
           description: ''
 components:
   schemas:
+    AcceptInvite:
+      type: object
+      properties:
+        workspace_unique_key:
+          type: string
+      required:
+      - workspace_unique_key
+      description: ''
     AttachmentsConfig:
       type: object
       properties:

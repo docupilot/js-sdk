@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AcceptInvite } from '../models/AcceptInvite';
 import type { Invitation } from '../models/Invitation';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -124,7 +125,7 @@ export class InvitationsService {
 
     /**
      * Accept invitation
-     * @returns any No response body
+     * @returns AcceptInvite
      * @throws ApiError
      */
     public static acceptInvitation({
@@ -134,7 +135,7 @@ export class InvitationsService {
          * A unique integer value identifying this invitation.
          */
         id: number,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<AcceptInvite> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/invitations/{id}/accept_invitation/',
