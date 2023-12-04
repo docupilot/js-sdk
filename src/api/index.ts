@@ -11,6 +11,8 @@ export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
 export type { BannerNotification } from './models/BannerNotification';
 export type { BannerNotificationAction } from './models/BannerNotificationAction';
+export type { BoxDriveDelivery } from './models/BoxDriveDelivery';
+export type { BoxDrivePickerPayload } from './models/BoxDrivePickerPayload';
 export type { BulkGen } from './models/BulkGen';
 export type { BulkGenData } from './models/BulkGenData';
 export type { BulkGenerateMeta } from './models/BulkGenerateMeta';
