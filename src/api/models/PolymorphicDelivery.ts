@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { BoxDriveDelivery } from './BoxDriveDelivery';
 import type { DocuSignDelivery } from './DocuSignDelivery';
 import type { DropboxDelivery } from './DropboxDelivery';
 import type { EmailDelivery } from './EmailDelivery';
@@ -15,5 +16,5 @@ import type { SignNowDelivery } from './SignNowDelivery';
 import type { WebhookDelivery } from './WebhookDelivery';
 import type { YouSignDelivery } from './YouSignDelivery';
 
-export type PolymorphicDelivery = (EmailDelivery | WebhookDelivery | DropboxDelivery | OneDriveDelivery | SignNowDelivery | GoogleDriveDelivery | S3Delivery | HelloSignDelivery | DocuSignDelivery | EversignDelivery | SignableDelivery | YouSignDelivery);
+export type PolymorphicDelivery = (EmailDelivery | WebhookDelivery | DropboxDelivery | OneDriveDelivery | SignNowDelivery | GoogleDriveDelivery | S3Delivery | HelloSignDelivery | DocuSignDelivery | EversignDelivery | SignableDelivery | YouSignDelivery | BoxDriveDelivery);
 
