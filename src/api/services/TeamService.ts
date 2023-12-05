@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PatchedTeam } from '../models/PatchedTeam';
-import type { Team } from '../models/Team';
+import type { PatchedTeamMember } from '../models/PatchedTeamMember';
+import type { TeamMember } from '../models/TeamMember';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -13,7 +13,7 @@ export class TeamService {
 
     /**
      * List all team members
-     * @returns Team
+     * @returns TeamMember
      * @throws ApiError
      */
     public static listAllTeamMembers({
@@ -28,7 +28,7 @@ export class TeamService {
          * A search term.
          */
         search?: string,
-    }): CancelablePromise<Array<Team>> {
+    }): CancelablePromise<Array<TeamMember>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/team/',
@@ -41,7 +41,7 @@ export class TeamService {
 
     /**
      * Partial Update team member
-     * @returns Team
+     * @returns TeamMember
      * @throws ApiError
      */
     public static updateTeamMember({
@@ -49,8 +49,8 @@ export class TeamService {
         requestBody,
     }: {
         id: string,
-        requestBody?: OmitReadonly<PatchedTeam>,
-    }): CancelablePromise<Team> {
+        requestBody?: OmitReadonly<PatchedTeamMember>,
+    }): CancelablePromise<TeamMember> {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/accounts/v2/team/{id}/',
