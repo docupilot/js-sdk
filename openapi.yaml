@@ -666,7 +666,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Team'
+                  $ref: '#/components/schemas/TeamMember'
           description: ''
         '401':
           content:
@@ -702,13 +702,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedTeam'
+              $ref: '#/components/schemas/PatchedTeamMember'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedTeam'
+              $ref: '#/components/schemas/PatchedTeamMember'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedTeam'
+              $ref: '#/components/schemas/PatchedTeamMember'
       security:
       - SessionAuthentication: []
       - tokenAuth: []
@@ -717,7 +717,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Team'
+                $ref: '#/components/schemas/TeamMember'
           description: ''
         '400':
           content:
@@ -2203,7 +2203,6 @@ paths:
           type: string
           enum:
           - aws_s3
-          - box
           - docu_sign
           - dropbox
           - eversign
@@ -2313,7 +2312,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|box$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
         required: true
       tags:
       - linked_accounts
@@ -2427,58 +2426,6 @@ paths:
       responses:
         '204':
           description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{id}/box_drive_picker_payload/:
-    get:
-      operationId: get_box_drive_picker_payload
-      description: Get box drive picker payload
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
-      tags:
-      - linked_accounts
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BoxDrivePickerPayload'
-          description: ''
         '400':
           content:
             application/json:
@@ -5290,63 +5237,6 @@ components:
       - attributes
       - text
       description: ''
-    BoxDriveDelivery:
-      type: object
-      description: ''
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        account:
-          type: integer
-        name:
-          type: string
-          maxLength: 255
-        type:
-          enum:
-          - email
-          - webhook
-          - box_drive
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          type: string
-        success_callback_url:
-          type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
-          nullable: true
-          maxLength: 255
-        folder:
-          type: string
-        folder_id:
-          type: string
-          nullable: true
-          maxLength: 100
-      required:
-      - account
-      - id
-      - name
-    BoxDrivePickerPayload:
-      type: object
-      properties:
-        payload:
-          type: string
-      required:
-      - payload
-      description: ''
     BulkGen:
       type: object
       description: ''
@@ -5662,7 +5552,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -5742,7 +5631,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -5818,7 +5706,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -5936,7 +5823,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6149,7 +6035,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6221,7 +6106,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6460,7 +6344,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6549,7 +6432,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
-    PatchedTeam:
+    PatchedTeamMember:
       type: object
       properties:
         id:
@@ -6645,7 +6528,6 @@ components:
       - $ref: '#/components/schemas/EversignDelivery'
       - $ref: '#/components/schemas/SignableDelivery'
       - $ref: '#/components/schemas/YouSignDelivery'
-      - $ref: '#/components/schemas/BoxDriveDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -6661,7 +6543,6 @@ components:
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
-          box_drive: '#/components/schemas/BoxDriveDelivery'
     RetentionPreference:
       type: object
       properties:
@@ -6686,7 +6567,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6784,7 +6664,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6864,7 +6743,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6905,7 +6783,7 @@ components:
       - id
       - name
       - parties
-    Team:
+    TeamMember:
       type: object
       properties:
         id:
@@ -7015,7 +6893,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7451,7 +7328,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7794,7 +7670,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
