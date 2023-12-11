@@ -2544,6 +2544,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/permissions/folder/:
+    get:
+      operationId: get_folder_permissions
+      description: Returns folder permissions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: query
+        name: ids
+        schema:
+          type: string
+      tags:
+      - permissions
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/permissions/global/:
     get:
       operationId: get_global_permissions
@@ -2555,6 +2589,40 @@ paths:
           type: string
         description: Organization unique_key
         required: true
+      tags:
+      - permissions
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/permissions/template/:
+    get:
+      operationId: get_template_permissions
+      description: Returns template permissions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: query
+        name: ids
+        schema:
+          type: string
       tags:
       - permissions
       security:

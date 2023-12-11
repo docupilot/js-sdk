@@ -9,6 +9,25 @@ import { OmitReadonly } from '../core/utils/OmitReadonly';
 export class PermissionsService {
 
     /**
+     * Returns folder permissions
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static getFolderPermissions({
+        ids,
+    }: {
+        ids?: string,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/permissions/folder/',
+            query: {
+                'ids': ids,
+            },
+        });
+    }
+
+    /**
      * Returns permission for each role
      * @returns any No response body
      * @throws ApiError
@@ -17,6 +36,25 @@ export class PermissionsService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/permissions/global/',
+        });
+    }
+
+    /**
+     * Returns template permissions
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static getTemplatePermissions({
+        ids,
+    }: {
+        ids?: string,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/permissions/template/',
+            query: {
+                'ids': ids,
+            },
         });
     }
 
