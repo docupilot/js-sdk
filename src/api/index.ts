@@ -7,6 +7,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AcceptInvite } from './models/AcceptInvite';
+export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
 export type { BannerNotification } from './models/BannerNotification';
@@ -38,6 +39,7 @@ export type { Folder } from './models/Folder';
 export type { FolderCount } from './models/FolderCount';
 export type { FolderSharing } from './models/FolderSharing';
 export type { ForbiddenError } from './models/ForbiddenError';
+export type { GlobalPermission } from './models/GlobalPermission';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
 export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload';
 export type { HelloSignDelivery } from './models/HelloSignDelivery';
@@ -81,6 +83,7 @@ export type { WebhookDelivery } from './models/WebhookDelivery';
 export type { Workspace } from './models/Workspace';
 export type { YouSignDelivery } from './models/YouSignDelivery';
 
+export { AppendService } from './services/AppendService';
 export { AuthTokensService } from './services/AuthTokensService';
 export { FoldersService } from './services/FoldersService';
 export { GeneralService } from './services/GeneralService';
