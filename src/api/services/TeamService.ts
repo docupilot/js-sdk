@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PatchedTeamMember } from '../models/PatchedTeamMember';
+import type { ChangeRole } from '../models/ChangeRole';
 import type { TeamMember } from '../models/TeamMember';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -40,29 +40,6 @@ export class TeamService {
     }
 
     /**
-     * Partial Update team member
-     * @returns TeamMember
-     * @throws ApiError
-     */
-    public static updateTeamMember({
-        id,
-        requestBody,
-    }: {
-        id: string,
-        requestBody?: OmitReadonly<PatchedTeamMember>,
-    }): CancelablePromise<TeamMember> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/accounts/v2/team/{id}/',
-            path: {
-                'id': id,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * delete team member
      * @returns void
      * @throws ApiError
@@ -83,6 +60,29 @@ export class TeamService {
             query: {
                 'transfer_to': transferTo,
             },
+        });
+    }
+
+    /**
+     * Change role of team member.
+     * @returns TeamMember
+     * @throws ApiError
+     */
+    public static changeRoleOfTeamMember({
+        id,
+        requestBody,
+    }: {
+        id: string,
+        requestBody: OmitReadonly<ChangeRole>,
+    }): CancelablePromise<TeamMember> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/accounts/v2/team/{id}/change_role/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
