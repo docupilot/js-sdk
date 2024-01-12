@@ -20,6 +20,7 @@ export class DocupilotSessionClient extends Docupilot {
   readonly InvitationsService = _API.InvitationsService;
   readonly TeamService = _API.TeamService;
   readonly PermissionsService = _API.PermissionsService;
+  readonly AppendService = _API.AppendService;
 
   configureHeadersInterceptor(getHeaders: () => Record<string, string>) {
     _API.OpenAPI.HEADERS = async (options: ApiRequestOptions) => {
