@@ -10,4 +10,5 @@ export class DocupilotTokenClient extends Docupilot {
   readonly GenerateBulkService = _API.GenerateBulkService;
   readonly TemplateDeliveryService = _API.TemplateDeliveryService;
   readonly UsersService = _API.UsersService;
+  readonly AppendService = _API.AppendService;
 }
