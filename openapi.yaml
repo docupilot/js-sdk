@@ -7265,6 +7265,7 @@ components:
           - Legal
           - Letter
           - Tabloid
+          - Custom
           type: string
         orientation:
           enum:
@@ -7276,6 +7277,18 @@ components:
           nullable: true
         footer:
           type: string
+          nullable: true
+        width:
+          type: number
+          format: double
+          maximum: 180
+          minimum: 0.4
+          nullable: true
+        height:
+          type: number
+          format: double
+          maximum: 250
+          minimum: 0.5
           nullable: true
         auto_number:
           type: integer
