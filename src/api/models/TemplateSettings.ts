@@ -18,10 +18,12 @@ export type TemplateSettings = {
     output_file_name?: string;
     output_type?: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     password?: string | null;
-    format?: 'A3' | 'A4' | 'A5' | 'Legal' | 'Letter' | 'Tabloid';
+    format?: 'A3' | 'A4' | 'A5' | 'Legal' | 'Letter' | 'Tabloid' | 'Custom';
     orientation?: 'portrait' | 'landscape';
     header?: string | null;
     footer?: string | null;
+    width?: number | null;
+    height?: number | null;
     auto_number?: number | null;
     flatten_pdf?: boolean;
 };
