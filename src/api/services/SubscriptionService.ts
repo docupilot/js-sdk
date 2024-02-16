@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
+import type { RenewSubscription } from '../models/RenewSubscription';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -47,6 +48,23 @@ export class SubscriptionService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/portal_session/',
+        });
+    }
+
+    /**
+     * @returns void
+     * @throws ApiError
+     */
+    public static subscriptionRenewRequestCreate({
+        requestBody,
+    }: {
+        requestBody?: OmitReadonly<RenewSubscription>,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/renew_request/',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
