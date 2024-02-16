@@ -27,5 +27,6 @@ export type DocuSignDelivery = {
     expire_after?: number | null;
     enable_optional_signers?: boolean;
     readonly api_version: '2.0' | '2.1';
+    folder_id?: string | null;
 };
 

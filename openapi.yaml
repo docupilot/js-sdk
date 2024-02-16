@@ -631,6 +631,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/renew_request/:
+    post:
+      operationId: subscription_renew_request_create
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewSubscription'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RenewSubscription'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RenewSubscription'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/team/:
     get:
       operationId: list_all_team_members
@@ -1275,6 +1321,14 @@ paths:
           content:
             application/json:
               schema:
+                type: object
+                properties:
+                  file_url:
+                    type: string
+                  file_name:
+                    type: string
+            application/pdf:
+              schema:
                 type: string
                 format: binary
           description: ''
@@ -1283,16 +1337,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
         '403':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/pdf:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
@@ -5732,6 +5795,8 @@ components:
           type: string
           format: date-time
           readOnly: true
+        use_for_images:
+          type: boolean
       required:
       - credentials
       - id
@@ -5846,6 +5911,10 @@ components:
           - '2.1'
           type: string
           readOnly: true
+        folder_id:
+          type: string
+          nullable: true
+          maxLength: 52
       required:
       - account
       - api_version
@@ -6803,6 +6872,13 @@ components:
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
+    RenewSubscription:
+      type: object
+      properties:
+        upgrade_message:
+          type: string
+          maxLength: 200
+      description: ''
     RetentionPreference:
       type: object
       properties:
@@ -7374,6 +7450,8 @@ components:
           type: string
           format: date-time
           readOnly: true
+        use_for_images:
+          type: boolean
       required:
       - credentials
       - id

@@ -11,5 +11,6 @@ export type DeliveryAccount = {
     credentials: Record<string, any>;
     readonly is_expired: boolean;
     readonly updated_at: string;
+    use_for_images?: boolean;
 };
 

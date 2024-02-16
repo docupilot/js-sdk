@@ -58,6 +58,7 @@ export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate
 export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplateSharing';
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
+export type { RenewSubscription } from './models/RenewSubscription';
 export type { RetentionPreference } from './models/RetentionPreference';
 export type { S3Delivery } from './models/S3Delivery';
 export type { SharingInfoFolder } from './models/SharingInfoFolder';
