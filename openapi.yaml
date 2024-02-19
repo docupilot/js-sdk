@@ -6070,6 +6070,8 @@ components:
           maxLength: 255
         body:
           type: string
+        enable_optional_recipients:
+          type: boolean
       required:
       - attachments
       - from_email
