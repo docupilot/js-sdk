@@ -18,5 +18,6 @@ export type EmailDelivery = {
     headers?: Record<string, any> | null;
     subject?: string;
     body?: string;
+    enable_optional_recipients?: boolean;
 };
 
