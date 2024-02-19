@@ -7,6 +7,7 @@ import type { File } from './File';
 export type EmailDelivery = {
     readonly id: number;
     readonly attachments: Array<File>;
+    headers?: Record<string, any>;
     name: string;
     type?: 'email';
     success_callback_url?: string | null;
@@ -15,9 +16,7 @@ export type EmailDelivery = {
     to_email: Array<string>;
     cc?: Array<string>;
     bcc?: Array<string>;
-    headers?: Record<string, any> | null;
     subject?: string;
     body?: string;
-    enable_optional_recipients?: boolean;
 };
 

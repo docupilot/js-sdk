@@ -14,7 +14,7 @@ export type EversignDelivery = {
     recipients?: Array<{
         name: string;
         email: string;
-    }> | null;
+    }>;
     name: string;
     type?: 'eversign';
     success_callback_url?: string | null;
