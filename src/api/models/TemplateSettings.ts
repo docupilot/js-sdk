@@ -26,5 +26,6 @@ export type TemplateSettings = {
     height?: number | null;
     auto_number?: number | null;
     flatten_pdf?: boolean;
+    emulate_mode?: 'print' | 'screen' | null;
 };
 

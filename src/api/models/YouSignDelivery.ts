@@ -23,15 +23,15 @@ export type YouSignDelivery = {
         last_name: string;
         email: string;
         phone_number?: string;
-    }>;
+    }> | null;
     followers?: Array<{
         locale: 'en' | 'fr' | 'de' | 'it' | 'nl' | 'es' | 'pl';
         email: string;
-    }>;
+    }> | null;
     reminder_settings?: {
         interval_in_days: 1 | 2 | 7 | 14;
         max_occurrences: number;
-    };
+    } | null;
     name: string;
     type?: 'yousign';
     success_callback_url?: string | null;

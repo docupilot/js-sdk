@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
-import type { MoveTemplate } from '../models/MoveTemplate';
 import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
@@ -514,24 +513,6 @@ export class TemplatesService {
             query: {
                 'owner_id': ownerId,
             },
-        });
-    }
-
-    /**
-     * Move templates to another folder
-     * @returns Template
-     * @throws ApiError
-     */
-    public static moveTemplatesToAnotherFolder({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<MoveTemplate>,
-    }): CancelablePromise<Template> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/templates/move/',
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 

@@ -47,7 +47,6 @@ export type { HelloSignDelivery } from './models/HelloSignDelivery';
 export type { Invitation } from './models/Invitation';
 export type { MergeHistory } from './models/MergeHistory';
 export type { Meta } from './models/Meta';
-export type { MoveTemplate } from './models/MoveTemplate';
 export type { NewTemplate } from './models/NewTemplate';
 export type { NotFoundError } from './models/NotFoundError';
 export type { OneDriveDelivery } from './models/OneDriveDelivery';
