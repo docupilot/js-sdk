@@ -5230,59 +5230,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/move/:
-    post:
-      operationId: move_templates_to_another_folder
-      description: Move templates to another folder
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MoveTemplate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/MoveTemplate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/MoveTemplate'
-        required: true
-      security:
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /api/v2/templates/sharing_status/:
     get:
       operationId: templates_sharing_status_retrieve
@@ -6067,10 +6014,6 @@ components:
           items:
             $ref: '#/components/schemas/File'
           readOnly: true
-        headers:
-          type: object
-          nullable: false
-          additionalProperties: {}
         name:
           type: string
           maxLength: 255
@@ -6118,11 +6061,17 @@ components:
           items:
             type: string
             maxLength: 200
+        headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         subject:
           type: string
           maxLength: 255
         body:
           type: string
+        enable_optional_recipients:
+          type: boolean
       required:
       - attachments
       - from_email
@@ -6183,6 +6132,7 @@ components:
             required:
             - name
             - email
+          nullable: true
         name:
           type: string
           maxLength: 255
@@ -6690,20 +6640,6 @@ components:
       - batch_process_max_allowed_test_rows
       - file_uploads
       - iam
-      description: ''
-    MoveTemplate:
-      type: object
-      properties:
-        template_ids:
-          type: array
-          items:
-            type: integer
-        new_folder_id:
-          type: integer
-          nullable: true
-      required:
-      - new_folder_id
-      - template_ids
       description: ''
     NewTemplate:
       type: object
@@ -7440,6 +7376,13 @@ components:
           nullable: true
         flatten_pdf:
           type: boolean
+        emulate_mode:
+          enum:
+          - print
+          - screen
+          - null
+          type: string
+          nullable: true
       required:
       - info
       description: ''
@@ -7738,14 +7681,6 @@ components:
         id:
           type: integer
           readOnly: true
-        headers:
-          type: object
-          nullable: false
-          additionalProperties: {}
-        payload:
-          type: object
-          nullable: false
-          additionalProperties: {}
         name:
           type: string
           maxLength: 255
@@ -7778,6 +7713,14 @@ components:
         url:
           type: string
           maxLength: 255
+        headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - id
       - name
@@ -8042,6 +7985,7 @@ components:
             - first_name
             - last_name
             - email
+          nullable: true
         followers:
           type: array
           items:
@@ -8064,6 +8008,7 @@ components:
             required:
             - locale
             - email
+          nullable: true
         reminder_settings:
           type: object
           properties:
@@ -8081,6 +8026,7 @@ components:
           required:
           - interval_in_days
           - max_occurrences
+          nullable: true
         name:
           type: string
           maxLength: 255
