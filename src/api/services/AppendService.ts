@@ -15,9 +15,9 @@ export class AppendService {
      * @throws ApiError
      */
     public static appendFiles({
-        requestBody,
+        formData,
     }: {
-        requestBody: OmitReadonly<AppendFiles>,
+        formData: OmitReadonly<AppendFiles>,
     }): CancelablePromise<{
         file_url?: string;
         file_name?: string;
@@ -25,8 +25,8 @@ export class AppendService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/append/',
-            body: requestBody,
-            mediaType: 'application/json',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
 

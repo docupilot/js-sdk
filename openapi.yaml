@@ -842,81 +842,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/users/change_password/:
-    put:
-      operationId: change_password
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChangePassword'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ChangePassword'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ChangePassword'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-  /accounts/v2/users/delete_account/:
-    post:
-      operationId: delete_workspace
-      summary: Delete a workspace and other related data permanently (method is deprecated)
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteWorkspace'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DeleteWorkspace'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DeleteWorkspace'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -1303,12 +1228,6 @@ paths:
       - append
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AppendFiles'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AppendFiles'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/AppendFiles'
@@ -1331,6 +1250,12 @@ paths:
               schema:
                 type: string
                 format: binary
+          description: ''
+        '413':
+          content:
+            text/html:
+              schema:
+                description: Uploaded File Is Too Large.
           description: ''
         '400':
           content:
@@ -5230,6 +5155,59 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /api/v2/templates/move/:
+    post:
+      operationId: move_templates_to_another_folder
+      description: Move templates to another folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MoveTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MoveTemplate'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/templates/sharing_status/:
     get:
       operationId: templates_sharing_status_retrieve
@@ -5606,19 +5584,6 @@ components:
       required:
       - max_test_rows
       description: ''
-    ChangePassword:
-      type: object
-      properties:
-        current_password:
-          type: string
-          writeOnly: true
-        new_password:
-          type: string
-          writeOnly: true
-      required:
-      - current_password
-      - new_password
-      description: ''
     ChangeRole:
       type: object
       properties:
@@ -5743,15 +5708,6 @@ components:
       - title
       description: ''
     DeleteCurrentWorkspace:
-      type: object
-      properties:
-        otp:
-          type: string
-          writeOnly: true
-      required:
-      - otp
-      description: ''
-    DeleteWorkspace:
       type: object
       properties:
         otp:
@@ -5969,6 +5925,12 @@ components:
           nullable: true
           maxLength: 255
         folder:
+          type: string
+        mode:
+          enum:
+          - add_as_new
+          - conflict
+          - overwrite
           type: string
       required:
       - account
@@ -6640,6 +6602,20 @@ components:
       - batch_process_max_allowed_test_rows
       - file_uploads
       - iam
+      description: ''
+    MoveTemplate:
+      type: object
+      properties:
+        template_ids:
+          type: array
+          items:
+            type: integer
+        new_folder_id:
+          type: integer
+          nullable: true
+      required:
+      - new_folder_id
+      - template_ids
       description: ''
     NewTemplate:
       type: object
