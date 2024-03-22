@@ -4,6 +4,7 @@
 
 export type SignNowDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     signers: Array<{
         order?: string;
@@ -13,7 +14,6 @@ export type SignNowDelivery = {
     name: string;
     type?: 'sign_now';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     subject?: string | null;
     message?: string | null;
     cc?: Array<string>;

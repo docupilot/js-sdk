@@ -4,6 +4,7 @@
 
 export type DocuSignDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     custom_tags?: Record<string, Record<string, Array<any>>> | null;
     signers: Array<{
@@ -19,7 +20,6 @@ export type DocuSignDelivery = {
     name: string;
     type?: 'docu_sign';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     subject?: string | null;
     message?: string | null;
     fullname_anchor_tags?: boolean;
