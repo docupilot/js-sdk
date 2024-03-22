@@ -4,6 +4,7 @@
 
 export type HelloSignDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     signers: Array<{
         name: string;
@@ -12,7 +13,6 @@ export type HelloSignDelivery = {
     name: string;
     type?: 'hellosign';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     title?: string | null;
     subject?: string | null;
     message?: string | null;

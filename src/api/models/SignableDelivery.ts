@@ -4,6 +4,7 @@
 
 export type SignableDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     parties: Array<{
         party_name: string;
@@ -13,7 +14,6 @@ export type SignableDelivery = {
     name: string;
     type?: 'signable';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     title?: string | null;
     expire_after?: number | null;
     remind_after?: number | null;

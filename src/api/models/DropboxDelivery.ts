@@ -4,11 +4,11 @@
 
 export type DropboxDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     name: string;
     type?: 'dropbox';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     folder?: string;
     mode?: 'add_as_new' | 'conflict' | 'overwrite';
 };

@@ -1228,6 +1228,9 @@ paths:
       - append
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppendFiles'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/AppendFiles'
@@ -1250,12 +1253,6 @@ paths:
               schema:
                 type: string
                 format: binary
-          description: ''
-        '413':
-          content:
-            text/html:
-              schema:
-                description: Uploaded File Is Too Large.
           description: ''
         '400':
           content:
@@ -5769,6 +5766,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         custom_tags:
@@ -5839,11 +5840,6 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
-          nullable: true
-          maxLength: 255
         subject:
           type: string
           nullable: true
@@ -5893,6 +5889,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         name:
@@ -5917,11 +5917,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         folder:
@@ -5971,6 +5966,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         attachments:
           type: array
           items:
@@ -5998,11 +5997,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         from_email:
@@ -6058,6 +6052,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         signers:
@@ -6117,11 +6115,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         title:
@@ -6340,6 +6333,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         name:
@@ -6366,17 +6363,19 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
-          nullable: true
-          maxLength: 255
         folder:
           type: string
+          description: Base folder name
         folder_id:
           type: string
           nullable: true
+          description: Base folder id
           maxLength: 100
+        path:
+          type: string
+          nullable: true
+          description: Dynamic folder path
+          maxLength: 255
       required:
       - account
       - id
@@ -6396,6 +6395,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         signers:
@@ -6435,11 +6438,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         title:
@@ -6663,6 +6661,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         name:
@@ -6687,11 +6689,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         folder:
@@ -6872,6 +6869,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         name:
@@ -6896,11 +6897,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         bucket:
@@ -6952,6 +6948,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         signers:
@@ -6995,11 +6995,6 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
-          nullable: true
-          maxLength: 255
         subject:
           type: string
           nullable: true
@@ -7027,6 +7022,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         parties:
@@ -7072,11 +7071,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         title:
@@ -7657,6 +7651,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         name:
           type: string
           maxLength: 255
@@ -7679,11 +7677,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         url:
@@ -7871,6 +7864,10 @@ components:
         id:
           type: integer
           readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
         account:
           type: integer
         signers:
@@ -8025,11 +8022,6 @@ components:
           type: string
         success_callback_url:
           type: string
-          nullable: true
-          maxLength: 255
-        failure_email_recipients:
-          type: string
-          format: email
           nullable: true
           maxLength: 255
         title:
