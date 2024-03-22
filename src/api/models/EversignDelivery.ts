@@ -4,6 +4,7 @@
 
 export type EversignDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     signers: Array<{
         pin?: string;
@@ -18,7 +19,6 @@ export type EversignDelivery = {
     name: string;
     type?: 'eversign';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     title?: string | null;
     message?: string | null;
     use_signer_order?: boolean;

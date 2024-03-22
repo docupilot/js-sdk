@@ -4,6 +4,7 @@
 
 export type YouSignDelivery = {
     readonly id: number;
+    failure_email_recipients?: string | null;
     account: number;
     signers: Array<{
         first_name: string;
@@ -35,7 +36,6 @@ export type YouSignDelivery = {
     name: string;
     type?: 'yousign';
     success_callback_url?: string | null;
-    failure_email_recipients?: string | null;
     title: string;
     email_custom_note?: string | null;
     delivery_mode?: 'email';
