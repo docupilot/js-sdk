@@ -3316,16 +3316,25 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: output_type
+        schema:
+          type: string
+          enum:
+          - docx
+          - html
+          - pdf
+          - png
+          - pptx
+          - xlsx
       tags:
       - generate
       requestBody:
         content:
           application/json:
-            schema: {}
-          application/x-www-form-urlencoded:
-            schema: {}
-          multipart/form-data:
-            schema: {}
+            schema:
+              type: object
+              additionalProperties: {}
       security:
       - SessionAuthentication: []
       - tokenAuth: []
@@ -3661,14 +3670,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Template'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Template'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Template'
-        required: true
+              type: object
+              additionalProperties: {}
       security:
       - SessionAuthentication: []
       responses:
