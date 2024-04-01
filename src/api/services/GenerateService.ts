@@ -19,6 +19,7 @@ export class GenerateService {
     public static generateDocument({
         id,
         download,
+        outputType,
         requestBody,
     }: {
         /**
@@ -26,7 +27,8 @@ export class GenerateService {
          */
         id: number,
         download?: 'false' | 'file' | 'true',
-        requestBody?: any,
+        outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        requestBody?: Record<string, any>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -36,6 +38,7 @@ export class GenerateService {
             },
             query: {
                 'download': download,
+                'output_type': outputType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -49,15 +52,15 @@ export class GenerateService {
      */
     public static testDocumentGeneration({
         id,
-        requestBody,
         outputType,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: OmitReadonly<Template>,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        requestBody?: Record<string, any>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',

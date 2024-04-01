@@ -2490,6 +2490,56 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/linked_accounts/{id}/docusign_folders/:
+    get:
+      operationId: get_docusign_folders
+      description: Get docusign folders
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: query
+        name: folder_id
+        schema:
+          type: string
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryAccount'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/{id}/google_picker_payload/:
     get:
       operationId: get_google_picker_payload
@@ -3316,16 +3366,25 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: output_type
+        schema:
+          type: string
+          enum:
+          - docx
+          - html
+          - pdf
+          - png
+          - pptx
+          - xlsx
       tags:
       - generate
       requestBody:
         content:
           application/json:
-            schema: {}
-          application/x-www-form-urlencoded:
-            schema: {}
-          multipart/form-data:
-            schema: {}
+            schema:
+              type: object
+              additionalProperties: {}
       security:
       - SessionAuthentication: []
       - tokenAuth: []
@@ -3661,14 +3720,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Template'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Template'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Template'
-        required: true
+              type: object
+              additionalProperties: {}
       security:
       - SessionAuthentication: []
       responses:
@@ -5867,6 +5920,9 @@ components:
           type: string
           nullable: true
           maxLength: 52
+        folder_name:
+          type: string
+          nullable: true
       required:
       - account
       - api_version

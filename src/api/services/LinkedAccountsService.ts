@@ -140,6 +140,33 @@ export class LinkedAccountsService {
     }
 
     /**
+     * Get docusign folders
+     * @returns DeliveryAccount
+     * @throws ApiError
+     */
+    public static getDocusignFolders({
+        id,
+        folderId,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+        folderId?: string,
+    }): CancelablePromise<DeliveryAccount> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/docusign_folders/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'folder_id': folderId,
+            },
+        });
+    }
+
+    /**
      * Get google picker payload
      * @returns GoogleDrivePickerPayload
      * @throws ApiError
