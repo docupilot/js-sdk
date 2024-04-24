@@ -6,6 +6,7 @@ export type Invitation = {
     readonly id: number;
     readonly workspace: string;
     readonly sender: string;
+    readonly expired: string;
     email: string;
     role: 'admin' | 'manager' | 'member' | 'billing_manager';
     readonly created_at: string;

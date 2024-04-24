@@ -17,6 +17,11 @@ export type DocuSignDelivery = {
         country_code?: string;
         phone_number?: string;
     }>;
+    reminder_settings?: {
+        reminder_delay: number;
+        reminder_frequency: number;
+    } | null;
+    overwrite_account_defaults?: boolean;
     name: string;
     type?: 'docu_sign';
     success_callback_url?: string | null;

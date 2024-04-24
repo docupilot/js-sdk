@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { InitiateAuthorizationSequence } from '../models/InitiateAuthorizationSequence';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -12,13 +13,19 @@ export class UsersService {
 
     /**
      * Initiate a re-authorization sequence that would verify authenticity of logged-in userin order to allow performing high security operations like delete workspace
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static initiateAuthorizationSequence(): CancelablePromise<any> {
+    public static initiateAuthorizationSequence({
+        requestBody,
+    }: {
+        requestBody?: OmitReadonly<InitiateAuthorizationSequence>,
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/users/initiate_authorization_sequence/',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
