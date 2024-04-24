@@ -842,6 +842,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/team/transfer_ownership/:
+    put:
+      operationId: transfer_ownership_to_admin_user
+      summary: Transfer Ownership To Admin User
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOwnership'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOwnership'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOwnership'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -850,10 +899,21 @@ paths:
         delete workspace
       tags:
       - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitiateAuthorizationSequence'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/InitiateAuthorizationSequence'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/InitiateAuthorizationSequence'
       security:
       - SessionAuthentication: []
       responses:
-        '200':
+        '204':
           description: No response body
         '400':
           content:
@@ -5869,6 +5929,20 @@ components:
             - name
             - is_email_delivery
             - is_sms_delivery
+        reminder_settings:
+          type: object
+          nullable: true
+          properties:
+            reminder_delay:
+              type: number
+            reminder_frequency:
+              type: number
+          required:
+          - reminder_delay
+          - reminder_frequency
+        overwrite_account_defaults:
+          type: boolean
+          default: false
         name:
           type: string
           maxLength: 255
@@ -6523,6 +6597,16 @@ components:
       - id
       - name
       - signers
+    InitiateAuthorizationSequence:
+      type: object
+      properties:
+        action_name:
+          enum:
+          - delete workspace
+          - transfer ownership
+          type: string
+          default: delete workspace
+      description: ''
     Invitation:
       type: object
       properties:
@@ -6533,6 +6617,9 @@ components:
           type: string
           readOnly: true
         sender:
+          type: string
+          readOnly: true
+        expired:
           type: string
           readOnly: true
         email:
@@ -6569,6 +6656,7 @@ components:
       - accepted_at
       - created_at
       - email
+      - expired
       - expires_at
       - id
       - invite_key
@@ -7441,6 +7529,17 @@ components:
       required:
       - name
       - tz
+      description: ''
+    TransferOwnership:
+      type: object
+      properties:
+        transfer_to:
+          type: integer
+        otp:
+          type: integer
+      required:
+      - otp
+      - transfer_to
       description: ''
     UnauthenticatedError:
       type: object
