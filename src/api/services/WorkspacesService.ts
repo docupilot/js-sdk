@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CSMDetails } from '../models/CSMDetails';
 import type { DeleteCurrentWorkspace } from '../models/DeleteCurrentWorkspace';
 import type { RetentionPreference } from '../models/RetentionPreference';
 import type { Workspace } from '../models/Workspace';
@@ -55,6 +56,18 @@ export class WorkspacesService {
             url: '/accounts/v2/workspaces/',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Returns csm details for given workspace
+     * @returns CSMDetails
+     * @throws ApiError
+     */
+    public static getCsmDetails(): CancelablePromise<CSMDetails> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/workspaces/csm_details/',
         });
     }
 
