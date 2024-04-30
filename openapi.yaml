@@ -7633,6 +7633,9 @@ components:
     SmtpCredentials:
       type: object
       properties:
+        email:
+          type: string
+          format: email
         smtp_server_address:
           type: string
           maxLength: 255
@@ -7650,6 +7653,7 @@ components:
           - SSL
           type: string
       required:
+      - email
       - smtp_encryption_type
       - smtp_port
       - smtp_server_address
