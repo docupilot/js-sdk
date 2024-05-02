@@ -34,6 +34,5 @@ export type DocuSignDelivery = {
     readonly api_version: '2.0' | '2.1';
     folder_id?: string | null;
     folder_name?: string | null;
-    allow_reassign?: boolean;
 };
 
