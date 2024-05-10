@@ -4,7 +4,7 @@
 
 export type DeliveryAccount = {
     readonly id: number;
-    type: 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email';
+    type: 'hellosign' | 'aws_s3' | 'signable' | 'yousign';
     readonly sub_type: string;
     readonly used_by: number;
     readonly name: string | null;

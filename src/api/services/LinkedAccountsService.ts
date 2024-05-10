@@ -3,10 +3,7 @@
 /* eslint-disable */
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
-import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
-import type { SmtpCredentials } from '../models/SmtpCredentials';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
-import type { VerifyEmailAccountOTP } from '../models/VerifyEmailAccountOTP';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -33,7 +30,7 @@ export class LinkedAccountsService {
          * A search term.
          */
         search?: string,
-        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'yousign' | 'zoho_crm',
+        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'yousign' | 'zoho_crm',
     }): CancelablePromise<Array<DeliveryAccount>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -192,32 +189,6 @@ export class LinkedAccountsService {
     }
 
     /**
-     * Initiate email authorization
-     * @returns void
-     * @throws ApiError
-     */
-    public static initiateEmailAuthorization({
-        id,
-        requestBody,
-    }: {
-        /**
-         * A unique integer value identifying this delivery account.
-         */
-        id: number,
-        requestBody: OmitReadonly<SendEmailAccountAuthorizationOTP>,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/linked_accounts/{id}/initiate_authorization/',
-            path: {
-                'id': id,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * Redirects to oauth endpoint for re-connecting an account
      * @returns void
      * @throws ApiError
@@ -239,50 +210,6 @@ export class LinkedAccountsService {
             errors: {
                 302: `No response body`,
             },
-        });
-    }
-
-    /**
-     * Verify email otp
-     * @returns void
-     * @throws ApiError
-     */
-    public static verifyEmailOtp({
-        id,
-        requestBody,
-    }: {
-        /**
-         * A unique integer value identifying this delivery account.
-         */
-        id: number,
-        requestBody: OmitReadonly<VerifyEmailAccountOTP>,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/v2/linked_accounts/{id}/verify_otp/',
-            path: {
-                'id': id,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * send_test_mail
-     * @returns any No response body
-     * @throws ApiError
-     */
-    public static sendTestMail({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<SmtpCredentials>,
-    }): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/linked_accounts/send_test_mail/',
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 
