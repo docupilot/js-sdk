@@ -891,6 +891,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/users/g2_review_link/:
+    get:
+      operationId: g2_review_link
+      summary: G2 review link
+      tags:
+      - users
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -6464,7 +6491,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer
@@ -6970,7 +6996,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer
@@ -6993,7 +7018,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer
@@ -7571,7 +7595,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer

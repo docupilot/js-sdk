@@ -12,6 +12,18 @@ import { OmitReadonly } from '../core/utils/OmitReadonly';
 export class UsersService {
 
     /**
+     * G2 review link
+     * @returns User
+     * @throws ApiError
+     */
+    public static g2ReviewLink(): CancelablePromise<User> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/users/g2_review_link/',
+        });
+    }
+
+    /**
      * Initiate a re-authorization sequence that would verify authenticity of logged-in userin order to allow performing high security operations like delete workspace
      * @returns void
      * @throws ApiError
