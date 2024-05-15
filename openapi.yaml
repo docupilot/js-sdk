@@ -5454,6 +5454,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /g2-review-link/:
+    get:
+      operationId: g2_review_link
+      summary: G2 review link
+      tags:
+      - g2-review-link
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /meta/:
     get:
       operationId: get_app_meta
@@ -6464,7 +6488,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer
@@ -6970,7 +6993,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer
@@ -6993,7 +7015,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer
@@ -7571,7 +7592,6 @@ components:
           enum:
           - read
           - write
-          - manage
           type: string
         user:
           type: integer

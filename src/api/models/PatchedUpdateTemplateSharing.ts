@@ -4,7 +4,7 @@
 
 export type PatchedUpdateTemplateSharing = {
     readonly id?: number;
-    permission?: 'read' | 'write' | 'manage';
+    permission?: 'read' | 'write';
     readonly user?: number;
 };
 

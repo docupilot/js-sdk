@@ -89,6 +89,7 @@ export type { YouSignDelivery } from './models/YouSignDelivery';
 export { AppendService } from './services/AppendService';
 export { AuthTokensService } from './services/AuthTokensService';
 export { FoldersService } from './services/FoldersService';
+export { G2ReviewLinkService } from './services/G2ReviewLinkService';
 export { GeneralService } from './services/GeneralService';
 export { GenerateService } from './services/GenerateService';
 export { GenerateBulkService } from './services/GenerateBulkService';
