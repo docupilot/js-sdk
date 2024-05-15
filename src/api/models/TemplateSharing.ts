@@ -4,7 +4,7 @@
 
 export type TemplateSharing = {
     readonly id: number;
-    permission?: 'read' | 'write' | 'manage';
+    permission?: 'read' | 'write';
     user: number;
 };
 
