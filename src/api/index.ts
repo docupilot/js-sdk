@@ -39,6 +39,7 @@ export type { Folder } from './models/Folder';
 export type { FolderCount } from './models/FolderCount';
 export type { FolderSharing } from './models/FolderSharing';
 export type { ForbiddenError } from './models/ForbiddenError';
+export type { G2Link } from './models/G2Link';
 export type { GlobalPermission } from './models/GlobalPermission';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
 export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload';

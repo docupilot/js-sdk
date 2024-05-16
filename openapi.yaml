@@ -904,7 +904,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/G2Link'
           description: ''
         '401':
           content:
@@ -6504,6 +6504,15 @@ components:
           type: string
       required:
       - detail
+      description: ''
+    G2Link:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+      required:
+      - url
       description: ''
     GlobalPermission:
       type: object
