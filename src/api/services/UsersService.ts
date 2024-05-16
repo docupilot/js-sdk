@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { G2Link } from '../models/G2Link';
 import type { InitiateAuthorizationSequence } from '../models/InitiateAuthorizationSequence';
 import type { User } from '../models/User';
 
@@ -13,10 +14,10 @@ export class UsersService {
 
     /**
      * G2 review link
-     * @returns User
+     * @returns G2Link
      * @throws ApiError
      */
-    public static g2ReviewLink(): CancelablePromise<User> {
+    public static g2ReviewLink(): CancelablePromise<G2Link> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/users/g2_review_link/',
