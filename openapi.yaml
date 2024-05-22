@@ -1316,6 +1316,324 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /ai-chat/threads/:
+    get:
+      operationId: list_all_chat_threads
+      summary: List all chat threads
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - ai-chat
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerChatThreads'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_new_customer_thread
+      summary: create new customer thread
+      tags:
+      - ai-chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerThreadInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerThreadInput'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerThreadInput'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerThreadOutput'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai-chat/threads/{thread_id}/:
+    get:
+      operationId: ai_chat_threads_retrieve
+      parameters:
+      - in: path
+        name: thread_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - ai-chat
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerChatThreads'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    put:
+      operationId: update_customer_thread
+      summary: update existing customer thread
+      parameters:
+      - in: path
+        name: thread_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - ai-chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerThreadInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerThreadInput'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerThreadInput'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCustomerThreadOutput'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: ai_chat_threads_destroy
+      parameters:
+      - in: path
+        name: thread_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - ai-chat
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /ai-chat/threads/{thread_id}/messages/:
+    get:
+      operationId: get_messages_for_thread
+      summary: Get all messages for a thread
+      parameters:
+      - in: path
+        name: thread_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - ai-chat
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThreadMessages'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /ai-chat/threads/{thread_id}/update_thread_name/:
+    put:
+      operationId: update_customer_thread_name
+      summary: update customer thread name
+      parameters:
+      - in: path
+        name: thread_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - ai-chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThreadName'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateThreadName'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateThreadName'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/append/:
     post:
       operationId: append_files
@@ -2345,7 +2663,6 @@ paths:
           type: string
           enum:
           - aws_s3
-          - box
           - docu_sign
           - dropbox
           - eversign
@@ -2455,7 +2772,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|box$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
         required: true
       tags:
       - linked_accounts
@@ -2569,58 +2886,6 @@ paths:
       responses:
         '204':
           description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{id}/box_drive_picker_payload/:
-    get:
-      operationId: get_box_drive_picker_payload
-      description: Get box drive picker payload
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
-      tags:
-      - linked_accounts
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BoxDrivePickerPayload'
-          description: ''
         '400':
           content:
             application/json:
@@ -5683,62 +5948,6 @@ components:
       - attributes
       - text
       description: ''
-    BoxDriveDelivery:
-      type: object
-      description: ''
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        failure_email_recipients:
-          type: string
-          nullable: true
-          maxLength: 255
-        account:
-          type: integer
-        name:
-          type: string
-          maxLength: 255
-        type:
-          enum:
-          - email
-          - webhook
-          - box_drive
-          - docu_sign
-          - sign_now
-          - zoho_crm
-          - dropbox
-          - google_drive
-          - podio
-          - one_drive
-          - eversign
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          type: string
-        success_callback_url:
-          type: string
-          nullable: true
-          maxLength: 255
-        folder:
-          type: string
-        folder_id:
-          type: string
-          nullable: true
-          maxLength: 100
-      required:
-      - account
-      - id
-      - name
-    BoxDrivePickerPayload:
-      type: object
-      properties:
-        payload:
-          type: string
-      required:
-      - payload
-      description: ''
     BulkGen:
       type: object
       description: ''
@@ -5981,6 +6190,46 @@ components:
       required:
       - title
       description: ''
+    CreateCustomerThreadInput:
+      type: object
+      properties:
+        message:
+          type: string
+          writeOnly: true
+      required:
+      - message
+      description: ''
+    CreateCustomerThreadOutput:
+      type: object
+      properties:
+        output_message:
+          type: string
+        thread_id:
+          type: integer
+        thread_display_name:
+          type: string
+      required:
+      - output_message
+      - thread_display_name
+      - thread_id
+      description: ''
+    CustomerChatThreads:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        thread_id:
+          type: string
+          maxLength: 200
+        thread_name:
+          type: string
+          nullable: true
+          maxLength: 200
+      required:
+      - id
+      - thread_id
+      description: ''
     DeleteCurrentWorkspace:
       type: object
       properties:
@@ -6114,7 +6363,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6199,7 +6447,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6280,7 +6527,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6399,7 +6645,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6646,7 +6891,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6724,7 +6968,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -6990,7 +7233,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7149,7 +7391,6 @@ components:
       - $ref: '#/components/schemas/EversignDelivery'
       - $ref: '#/components/schemas/SignableDelivery'
       - $ref: '#/components/schemas/YouSignDelivery'
-      - $ref: '#/components/schemas/BoxDriveDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -7165,7 +7406,6 @@ components:
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
-          box_drive: '#/components/schemas/BoxDriveDelivery'
     RenewSubscription:
       type: object
       properties:
@@ -7201,7 +7441,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7298,7 +7537,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7377,7 +7615,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7523,7 +7760,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7696,6 +7932,15 @@ components:
       required:
       - id
       - user
+    ThreadMessages:
+      type: object
+      properties:
+        messages:
+          type: object
+          additionalProperties: {}
+      required:
+      - messages
+      description: ''
     Timezone:
       type: object
       properties:
@@ -7727,6 +7972,23 @@ components:
           type: string
       required:
       - detail
+      description: ''
+    UpdateCustomerThreadInput:
+      type: object
+      properties:
+        message:
+          type: string
+          writeOnly: true
+      required:
+      - message
+      description: ''
+    UpdateCustomerThreadOutput:
+      type: object
+      properties:
+        output_message:
+          type: string
+      required:
+      - output_message
       description: ''
     UpdateDeliveryAccount:
       type: object
@@ -7774,6 +8036,15 @@ components:
       - type
       - updated_at
       - used_by
+    UpdateThreadName:
+      type: object
+      properties:
+        thread_name:
+          type: string
+          writeOnly: true
+      required:
+      - thread_name
+      description: ''
     UploadTemplateImage:
       type: object
       properties:
@@ -7996,7 +8267,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8342,7 +8612,6 @@ components:
           enum:
           - email
           - webhook
-          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm

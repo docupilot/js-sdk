@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BoxDrivePickerPayload = {
-    payload: string;
+export type ThreadMessages = {
+    messages: Record<string, any>;
 };
 
