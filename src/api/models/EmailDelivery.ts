@@ -7,11 +7,11 @@ import type { File } from './File';
 export type EmailDelivery = {
     readonly id: number;
     failure_email_recipients?: string | null;
-    account: number;
     readonly attachments: Array<File>;
     name: string;
     type?: 'email';
     success_callback_url?: string | null;
+    from_email: string;
     to_email: Array<string>;
     cc?: Array<string>;
     bcc?: Array<string>;
