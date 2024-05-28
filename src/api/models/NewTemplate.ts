@@ -3,10 +3,11 @@
 /* eslint-disable */
 
 export type NewTemplate = {
-    file: Blob;
+    file?: Blob;
     folder?: number | null;
-    title: string;
+    title?: string;
     output_type: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     description?: string | null;
+    template_gallery?: number;
 };
 
