@@ -891,97 +891,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/template_gallery/:
-    get:
-      operationId: list_gallery_templates
-      summary: Get list of galery templates
-      parameters:
-      - in: query
-        name: category
-        schema:
-          type: string
-          enum:
-          - legal
-          - real_state
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      tags:
-      - Gallery templates
-      security:
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TemplateGallery'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /accounts/v2/template_gallery/{id}/:
-    get:
-      operationId: get_gallery_template
-      summary: Get one template
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this template gallery.
-        required: true
-      tags:
-      - Gallery templates
-      security:
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemplateGallery'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -1473,6 +1382,117 @@ paths:
             application/pdf:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/domain/{id}/:
+    get:
+      operationId: get_domain
+      summary: Get one domain
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this domain.
+        required: true
+      tags:
+      - domain
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/domain/{id}/verify/:
+    patch:
+      operationId: verify_domain
+      summary: verify domain
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this domain.
+        required: true
+      tags:
+      - domain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDomain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDomain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDomain'
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainVerify'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/folders/:
     get:
@@ -2438,6 +2458,7 @@ paths:
           - aws_s3
           - docu_sign
           - dropbox
+          - email
           - eversign
           - google_drive
           - hellosign
@@ -2785,6 +2806,66 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/linked_accounts/{id}/initiate_authorization/:
+    post:
+      operationId: initiate_email_authorization
+      description: Initiate email authorization
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailAccountAuthorizationOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailAccountAuthorizationOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailAccountAuthorizationOTP'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/{id}/reconnect/:
     get:
       operationId: reconnect_account
@@ -2826,6 +2907,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/linked_accounts/{id}/verify_otp/:
+    put:
+      operationId: verify_email_otp
+      description: Verify email otp
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailAccountOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailAccountOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyEmailAccountOTP'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/linked_accounts/send_test_mail/:
+    post:
+      operationId: Send test mail
+      description: send_test_mail
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - linked_accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmtpCredentials'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SmtpCredentials'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SmtpCredentials'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /api/v2/permissions/folder/:
     get:
@@ -5985,6 +6174,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         sub_type:
           type: string
@@ -6094,7 +6284,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6108,6 +6297,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -6160,6 +6350,58 @@ components:
       required:
       - path
       description: ''
+    Domain:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        domain_name:
+          type: string
+          maxLength: 255
+        txt_record:
+          type: string
+          maxLength: 32
+        is_txt_verified:
+          type: boolean
+        is_spf_verified:
+          type: boolean
+        spf_record:
+          type: string
+          readOnly: true
+      required:
+      - domain_name
+      - id
+      - spf_record
+      - txt_record
+      description: ''
+    DomainFailure:
+      type: object
+      properties:
+        spf_record:
+          type: string
+        txt_record:
+          type: string
+      required:
+      - spf_record
+      - txt_record
+      description: ''
+    DomainVerify:
+      type: object
+      properties:
+        success:
+          type: array
+          items:
+            enum:
+            - txt_record
+            - spf_record
+            type: string
+        failures:
+          $ref: '#/components/schemas/DomainFailure'
+      required:
+      - failures
+      - success
+      description: ''
     DropboxDelivery:
       type: object
       description: ''
@@ -6178,7 +6420,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6192,6 +6433,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -6248,6 +6490,9 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        account:
+          type: integer
+          nullable: true
         attachments:
           type: array
           items:
@@ -6258,7 +6503,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6272,13 +6516,11 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
           nullable: true
-          maxLength: 255
-        from_email:
-          type: string
           maxLength: 255
         to_email:
           type: array
@@ -6307,8 +6549,8 @@ components:
         enable_optional_recipients:
           type: boolean
       required:
+      - account
       - attachments
-      - from_email
       - id
       - name
       - to_email
@@ -6376,7 +6618,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6390,6 +6631,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -6622,7 +6864,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6636,6 +6877,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -6699,7 +6941,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6713,6 +6954,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -6934,10 +7176,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        template_gallery:
-          type: integer
       required:
+      - file
       - output_type
+      - title
     NotFoundError:
       type: object
       properties:
@@ -6964,7 +7206,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -6978,6 +7219,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -7049,6 +7291,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+    PatchedDomain:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        domain_name:
+          type: string
+          maxLength: 255
+        txt_record:
+          type: string
+          maxLength: 32
+        is_txt_verified:
+          type: boolean
+        is_spf_verified:
+          type: boolean
+        spf_record:
+          type: string
+          readOnly: true
+      description: ''
     PatchedUpdateFolderSharing:
       type: object
       description: ''
@@ -7172,7 +7434,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -7186,6 +7447,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -7207,6 +7469,21 @@ components:
       - bucket
       - id
       - name
+    SendEmailAccountAuthorizationOTP:
+      type: object
+      properties:
+        action_name:
+          enum:
+          - verify
+          - update
+          type: string
+        email:
+          type: string
+          format: email
+          nullable: true
+      required:
+      - action_name
+      description: ''
     SharingInfoFolder:
       type: object
       properties:
@@ -7268,7 +7545,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -7282,6 +7558,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -7346,7 +7623,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -7360,6 +7636,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -7383,6 +7660,36 @@ components:
       - id
       - name
       - parties
+    SmtpCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        smtp_server_address:
+          type: string
+          maxLength: 255
+        smtp_server_username:
+          type: string
+          maxLength: 255
+        smtp_server_password:
+          type: string
+          maxLength: 255
+        smtp_port:
+          type: integer
+        smtp_encryption_type:
+          enum:
+          - TLS
+          - SSL
+          type: string
+      required:
+      - email
+      - smtp_encryption_type
+      - smtp_port
+      - smtp_server_address
+      - smtp_server_password
+      - smtp_server_username
+      description: ''
     TeamMember:
       type: object
       properties:
@@ -7491,7 +7798,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -7505,47 +7811,13 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
           readOnly: true
       required:
       - id
       - name
       - type
-      description: ''
-    TemplateGallery:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        image_path:
-          type: string
-          readOnly: true
-        title:
-          type: string
-          maxLength: 50
-        description:
-          type: string
-          nullable: true
-          maxLength: 255
-        category:
-          enum:
-          - legal
-          - real_state
-          type: string
-        file_path:
-          type: string
-          format: uri
-          nullable: true
-        preview_path:
-          type: string
-          format: uri
-          nullable: true
-      required:
-      - category
-      - id
-      - image_path
-      - title
       description: ''
     TemplateSchema:
       type: object
@@ -7745,6 +8017,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         sub_type:
           type: string
@@ -7935,6 +8208,9 @@ components:
           - Pacific/Apia
           - Pacific/Kiritimati
           type: string
+        locale:
+          type: string
+          maxLength: 5
       required:
       - email
       - guid
@@ -7982,6 +8258,25 @@ components:
       - errors
       - non_field_errors
       description: ''
+    VerifyEmailAccountOTP:
+      type: object
+      properties:
+        action_name:
+          enum:
+          - verify
+          - update
+          type: string
+        email:
+          type: string
+          format: email
+          nullable: true
+        otp:
+          type: string
+          maxLength: 6
+      required:
+      - action_name
+      - otp
+      description: ''
     WebhookDelivery:
       type: object
       description: ''
@@ -7998,7 +8293,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -8012,6 +8306,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
@@ -8343,7 +8638,6 @@ components:
           maxLength: 255
         type:
           enum:
-          - email
           - webhook
           - docu_sign
           - sign_now
@@ -8357,6 +8651,7 @@ components:
           - aws_s3
           - signable
           - yousign
+          - email
           type: string
         success_callback_url:
           type: string
