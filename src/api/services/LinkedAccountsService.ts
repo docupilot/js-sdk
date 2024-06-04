@@ -4,7 +4,7 @@
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
-import type { SmtpCredentials } from '../models/SmtpCredentials';
+import type { SendTestSmtpMail } from '../models/SendTestSmtpMail';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
 import type { VerifyEmailAccountOTP } from '../models/VerifyEmailAccountOTP';
 
@@ -136,6 +136,28 @@ export class LinkedAccountsService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/v2/linked_accounts/{id}/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * List delivery emails for email account
+     * @returns DeliveryAccount
+     * @throws ApiError
+     */
+    public static listDeliveryEmailsForEmailAccount({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<DeliveryAccount> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/delivery_emails/',
             path: {
                 'id': id,
             },
@@ -276,7 +298,7 @@ export class LinkedAccountsService {
     public static sendTestMail({
         requestBody,
     }: {
-        requestBody: OmitReadonly<SmtpCredentials>,
+        requestBody: OmitReadonly<SendTestSmtpMail>,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',

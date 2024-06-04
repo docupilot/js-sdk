@@ -2704,6 +2704,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/linked_accounts/{id}/delivery_emails/:
+    get:
+      operationId: list_delivery_emails_for_email_account
+      description: List delivery emails for email account
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryAccount'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/{id}/docusign_folders/:
     get:
       operationId: get_docusign_folders
@@ -2985,13 +3031,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SmtpCredentials'
+              $ref: '#/components/schemas/SendTestSmtpMail'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SmtpCredentials'
+              $ref: '#/components/schemas/SendTestSmtpMail'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SmtpCredentials'
+              $ref: '#/components/schemas/SendTestSmtpMail'
         required: true
       security:
       - SessionAuthentication: []
@@ -6522,6 +6568,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        from_email:
+          type: string
+          nullable: true
+          maxLength: 255
         to_email:
           type: array
           items:
@@ -7484,6 +7534,36 @@ components:
       required:
       - action_name
       description: ''
+    SendTestSmtpMail:
+      type: object
+      properties:
+        smtp_server_address:
+          type: string
+          maxLength: 255
+        smtp_server_username:
+          type: string
+          maxLength: 255
+        smtp_server_password:
+          type: string
+          maxLength: 255
+        smtp_port:
+          type: integer
+        smtp_encryption_type:
+          enum:
+          - TLS
+          - SSL
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - smtp_encryption_type
+      - smtp_port
+      - smtp_server_address
+      - smtp_server_password
+      - smtp_server_username
+      description: ''
     SharingInfoFolder:
       type: object
       properties:
@@ -7660,36 +7740,6 @@ components:
       - id
       - name
       - parties
-    SmtpCredentials:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        smtp_server_address:
-          type: string
-          maxLength: 255
-        smtp_server_username:
-          type: string
-          maxLength: 255
-        smtp_server_password:
-          type: string
-          maxLength: 255
-        smtp_port:
-          type: integer
-        smtp_encryption_type:
-          enum:
-          - TLS
-          - SSL
-          type: string
-      required:
-      - email
-      - smtp_encryption_type
-      - smtp_port
-      - smtp_server_address
-      - smtp_server_password
-      - smtp_server_username
-      description: ''
     TeamMember:
       type: object
       properties:
