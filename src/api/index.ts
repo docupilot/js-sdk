@@ -77,6 +77,7 @@ export type { TeamMember } from './models/TeamMember';
 export type { Template } from './models/Template';
 export type { TemplateCount } from './models/TemplateCount';
 export type { TemplateDelivery } from './models/TemplateDelivery';
+export type { TemplateInfo } from './models/TemplateInfo';
 export type { TemplateSchema } from './models/TemplateSchema';
 export type { TemplateSettings } from './models/TemplateSettings';
 export type { TemplateSharing } from './models/TemplateSharing';
