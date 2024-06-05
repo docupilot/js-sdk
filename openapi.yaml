@@ -5927,17 +5927,12 @@ components:
         name:
           type: string
           maxLength: 255
-        template_id:
-          type: integer
-          readOnly: true
-        template_name:
-          type: string
-          readOnly: true
+        template_info:
+          $ref: '#/components/schemas/TemplateInfo'
       required:
       - id
       - name
-      - template_id
-      - template_name
+      - template_info
       description: ''
     AppendFiles:
       type: object
@@ -7935,6 +7930,19 @@ components:
       - id
       - name
       - type
+      description: ''
+    TemplateInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - name
       description: ''
     TemplateSchema:
       type: object
