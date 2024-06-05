@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AccountDelivery } from '../models/AccountDelivery';
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
@@ -136,6 +137,28 @@ export class LinkedAccountsService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/v2/linked_accounts/{id}/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * List account deliveries
+     * @returns AccountDelivery
+     * @throws ApiError
+     */
+    public static listAccountDeliveries({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<AccountDelivery> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/deliveries/',
             path: {
                 'id': id,
             },

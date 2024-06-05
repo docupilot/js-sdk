@@ -7,6 +7,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AcceptInvite } from './models/AcceptInvite';
+export type { AccountDelivery } from './models/AccountDelivery';
 export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
