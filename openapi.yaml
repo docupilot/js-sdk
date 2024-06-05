@@ -2704,6 +2704,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/linked_accounts/{id}/deliveries/:
+    get:
+      operationId: list_account_deliveries
+      description: List account deliveries
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDelivery'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/{id}/delivery_emails/:
     get:
       operationId: list_delivery_emails_for_email_account
@@ -5871,6 +5917,27 @@ components:
           type: string
       required:
       - workspace_unique_key
+      description: ''
+    AccountDelivery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        template_id:
+          type: integer
+          readOnly: true
+        template_name:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - name
+      - template_id
+      - template_name
       description: ''
     AppendFiles:
       type: object
