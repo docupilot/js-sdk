@@ -2721,6 +2721,24 @@ paths:
           type: integer
         description: A unique integer value identifying this delivery account.
         required: true
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sign_now
+          - signable
+          - yousign
+          - zoho_crm
       tags:
       - linked_accounts
       security:
@@ -2730,7 +2748,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountDelivery'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountDelivery'
           description: ''
         '401':
           content:
@@ -2743,12 +2763,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/linked_accounts/{id}/delivery_emails/:
     get:
@@ -2776,8 +2790,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeliveryAccount'
-          description: ''
+                type: array
+                items:
+                  type: string
+              examples:
+                ResponseExample:
+                  value:
+                  - abc@gmail.com
+                  - abcd@gmail.com
+                  summary: Response Example
+          description: An array of emails
         '401':
           content:
             application/json:
