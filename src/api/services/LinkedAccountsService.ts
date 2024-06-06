@@ -150,24 +150,29 @@ export class LinkedAccountsService {
      */
     public static listAccountDeliveries({
         id,
+        type,
     }: {
         /**
          * A unique integer value identifying this delivery account.
          */
         id: number,
-    }): CancelablePromise<AccountDelivery> {
+        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'yousign' | 'zoho_crm',
+    }): CancelablePromise<Array<AccountDelivery>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/linked_accounts/{id}/deliveries/',
             path: {
                 'id': id,
             },
+            query: {
+                'type': type,
+            },
         });
     }
 
     /**
      * List delivery emails for email account
-     * @returns DeliveryAccount
+     * @returns string An array of emails
      * @throws ApiError
      */
     public static listDeliveryEmailsForEmailAccount({
@@ -177,7 +182,7 @@ export class LinkedAccountsService {
          * A unique integer value identifying this delivery account.
          */
         id: number,
-    }): CancelablePromise<DeliveryAccount> {
+    }): CancelablePromise<Array<string>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/linked_accounts/{id}/delivery_emails/',
