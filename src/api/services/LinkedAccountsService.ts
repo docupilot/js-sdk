@@ -1,10 +1,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AccountDelivery } from '../models/AccountDelivery';
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
-import type { SmtpCredentials } from '../models/SmtpCredentials';
+import type { SendTestSmtpMail } from '../models/SendTestSmtpMail';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
 import type { VerifyEmailAccountOTP } from '../models/VerifyEmailAccountOTP';
 
@@ -136,6 +137,55 @@ export class LinkedAccountsService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/v2/linked_accounts/{id}/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * List account deliveries
+     * @returns AccountDelivery
+     * @throws ApiError
+     */
+    public static listAccountDeliveries({
+        id,
+        type,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'yousign' | 'zoho_crm',
+    }): CancelablePromise<Array<AccountDelivery>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/deliveries/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'type': type,
+            },
+        });
+    }
+
+    /**
+     * List delivery emails for email account
+     * @returns string An array of emails
+     * @throws ApiError
+     */
+    public static listDeliveryEmailsForEmailAccount({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<Array<string>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/delivery_emails/',
             path: {
                 'id': id,
             },
@@ -276,7 +326,7 @@ export class LinkedAccountsService {
     public static sendTestMail({
         requestBody,
     }: {
-        requestBody: OmitReadonly<SmtpCredentials>,
+        requestBody: OmitReadonly<SendTestSmtpMail>,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
