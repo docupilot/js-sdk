@@ -891,6 +891,97 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/template_gallery/:
+    get:
+      operationId: list_gallery_templates
+      summary: Get list of galery templates
+      parameters:
+      - in: query
+        name: category
+        schema:
+          type: string
+          enum:
+          - legal
+          - real_state
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Gallery templates
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateGallery'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/template_gallery/{id}/:
+    get:
+      operationId: get_gallery_template
+      summary: Get one template
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this template gallery.
+        required: true
+      tags:
+      - Gallery templates
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateGallery'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -7310,8 +7401,9 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        template_gallery_id:
+          type: integer
       required:
-      - file
       - output_type
       - title
     NotFoundError:
@@ -7952,6 +8044,33 @@ components:
       - id
       - name
       - type
+      description: ''
+    TemplateGallery:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        image_path:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        category:
+          enum:
+          - legal
+          - real_state
+          type: string
+      required:
+      - category
+      - id
+      - image_path
+      - title
       description: ''
     TemplateInfo:
       type: object
