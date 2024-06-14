@@ -8054,6 +8054,9 @@ components:
         image_path:
           type: string
           readOnly: true
+        file_type:
+          type: string
+          readOnly: true
         title:
           type: string
           maxLength: 50
@@ -8068,6 +8071,7 @@ components:
           type: string
       required:
       - category
+      - file_type
       - id
       - image_path
       - title
