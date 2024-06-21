@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AccountDelivery } from '../models/AccountDelivery';
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
+import type { PaginatedAccountDeliveryList } from '../models/PaginatedAccountDeliveryList';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
 import type { SendTestSmtpMail } from '../models/SendTestSmtpMail';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
@@ -145,19 +145,24 @@ export class LinkedAccountsService {
 
     /**
      * List account deliveries
-     * @returns AccountDelivery
+     * @returns PaginatedAccountDeliveryList
      * @throws ApiError
      */
     public static listAccountDeliveries({
         id,
+        page,
         type,
     }: {
         /**
          * A unique integer value identifying this delivery account.
          */
         id: number,
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
         type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sign_now' | 'signable' | 'yousign' | 'zoho_crm',
-    }): CancelablePromise<Array<AccountDelivery>> {
+    }): CancelablePromise<PaginatedAccountDeliveryList> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/linked_accounts/{id}/deliveries/',
@@ -165,6 +170,7 @@ export class LinkedAccountsService {
                 'id': id,
             },
             query: {
+                'page': page,
                 'type': type,
             },
         });
@@ -199,22 +205,17 @@ export class LinkedAccountsService {
      */
     public static getDocusignFolders({
         id,
-        folderId,
     }: {
         /**
          * A unique integer value identifying this delivery account.
          */
         id: number,
-        folderId?: string,
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/linked_accounts/{id}/docusign_folders/',
             path: {
                 'id': id,
-            },
-            query: {
-                'folder_id': folderId,
             },
         });
     }
@@ -288,6 +289,28 @@ export class LinkedAccountsService {
             },
             errors: {
                 302: `No response body`,
+            },
+        });
+    }
+
+    /**
+     * Update delivery accounts use for images flag
+     * @returns DeliveryAccount
+     * @throws ApiError
+     */
+    public static updateDeliveryAccountsUseForImagesFlag({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<DeliveryAccount> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/linked_accounts/{id}/toggle_use_for_images/',
+            path: {
+                'id': id,
             },
         });
     }
