@@ -2812,6 +2812,12 @@ paths:
           type: integer
         description: A unique integer value identifying this delivery account.
         required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
       - in: query
         name: type
         schema:
@@ -2839,9 +2845,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AccountDelivery'
+                $ref: '#/components/schemas/PaginatedAccountDeliveryList'
           description: ''
         '401':
           content:
@@ -2920,10 +2924,6 @@ paths:
           type: string
         description: Organization unique_key
         required: true
-      - in: query
-        name: folder_id
-        schema:
-          type: string
       - in: path
         name: id
         schema:
@@ -3095,6 +3095,58 @@ paths:
       responses:
         '302':
           description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/linked_accounts/{id}/toggle_use_for_images/:
+    post:
+      operationId: update_delivery_accounts_use_for_images_flag
+      description: Update delivery accounts use for images flag
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryAccount'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
         '401':
           content:
             application/json:
@@ -7457,6 +7509,26 @@ components:
       - account
       - id
       - name
+    PaginatedAccountDeliveryList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountDelivery'
     PaginatedBulkGenList:
       type: object
       properties:
@@ -8480,6 +8552,7 @@ components:
           type: string
         locale:
           type: string
+          nullable: true
           maxLength: 5
       required:
       - email
@@ -8499,6 +8572,11 @@ components:
         tp:freshchat:restoreId:
           type: string
           format: uuid
+        g2_reviewed:
+          type: boolean
+        g2_next_reminder:
+          type: string
+          format: date-time
       description: ''
     UserPersonalizationListViewTemplate:
       type: object
