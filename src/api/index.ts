@@ -55,6 +55,7 @@ export type { MoveTemplate } from './models/MoveTemplate';
 export type { NewTemplate } from './models/NewTemplate';
 export type { NotFoundError } from './models/NotFoundError';
 export type { OneDriveDelivery } from './models/OneDriveDelivery';
+export type { PaginatedAccountDeliveryList } from './models/PaginatedAccountDeliveryList';
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
