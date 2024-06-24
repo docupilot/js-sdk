@@ -8572,6 +8572,11 @@ components:
         tp:freshchat:restoreId:
           type: string
           format: uuid
+        g2_reviewed:
+          type: boolean
+        g2_next_reminder:
+          type: string
+          format: date-time
       description: ''
     UserPersonalizationListViewTemplate:
       type: object
