@@ -13,6 +13,7 @@ export type HelloSignDelivery = {
     name: string;
     type?: 'hellosign';
     success_callback_url?: string | null;
+    last_used_on?: string | null;
     title?: string | null;
     subject?: string | null;
     message?: string | null;
