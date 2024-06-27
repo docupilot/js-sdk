@@ -6092,6 +6092,10 @@ components:
         name:
           type: string
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         template_info:
           $ref: '#/components/schemas/TemplateInfo'
       required:
@@ -6576,6 +6580,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         subject:
           type: string
           nullable: true
@@ -6712,6 +6720,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         folder:
           type: string
         mode:
@@ -6795,6 +6807,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         from_email:
           type: string
           nullable: true
@@ -6914,6 +6930,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         title:
           type: string
           nullable: true
@@ -7160,6 +7180,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         folder:
           type: string
           description: Base folder name
@@ -7237,6 +7261,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         title:
           type: string
           nullable: true
@@ -7503,6 +7531,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         folder:
           type: string
       required:
@@ -7751,6 +7783,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         bucket:
           type: string
           maxLength: 2000
@@ -7892,6 +7928,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         subject:
           type: string
           nullable: true
@@ -7970,6 +8010,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         title:
           type: string
           nullable: true
@@ -8157,9 +8201,13 @@ components:
         name:
           type: string
           readOnly: true
+        status:
+          type: boolean
+          readOnly: true
       required:
       - id
       - name
+      - status
       description: ''
     TemplateSchema:
       type: object
@@ -8660,6 +8708,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         url:
           type: string
           maxLength: 255
@@ -9005,6 +9057,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
         title:
           type: string
           maxLength: 256
