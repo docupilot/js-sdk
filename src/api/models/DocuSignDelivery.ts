@@ -25,7 +25,6 @@ export type DocuSignDelivery = {
     name: string;
     type?: 'docu_sign';
     success_callback_url?: string | null;
-    last_used_on?: string | null;
     subject?: string | null;
     message?: string | null;
     fullname_anchor_tags?: boolean;

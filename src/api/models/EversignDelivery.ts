@@ -19,7 +19,6 @@ export type EversignDelivery = {
     name: string;
     type?: 'eversign';
     success_callback_url?: string | null;
-    last_used_on?: string | null;
     title?: string | null;
     message?: string | null;
     use_signer_order?: boolean;

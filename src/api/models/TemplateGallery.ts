@@ -8,6 +8,6 @@ export type TemplateGallery = {
     readonly file_type: string;
     title: string;
     description?: string | null;
-    category: 'legal' | 'real_state';
+    category?: number | null;
 };
 
