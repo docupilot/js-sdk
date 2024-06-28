@@ -9,6 +9,7 @@ export type GoogleDriveDelivery = {
     name: string;
     type?: 'google_drive';
     success_callback_url?: string | null;
+    last_used_on?: string | null;
     /**
      * Base folder name
      */
