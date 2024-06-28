@@ -5,7 +5,7 @@
 export type TemplateInfo = {
     readonly id: number;
     readonly name: string;
-    readonly status: boolean;
+    readonly status: string;
     readonly type: string;
 };
 

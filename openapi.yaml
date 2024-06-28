@@ -8202,7 +8202,7 @@ components:
           type: string
           readOnly: true
         status:
-          type: boolean
+          type: string
           readOnly: true
         type:
           type: string
