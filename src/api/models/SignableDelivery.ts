@@ -14,7 +14,6 @@ export type SignableDelivery = {
     name: string;
     type?: 'signable';
     success_callback_url?: string | null;
-    last_used_on?: string | null;
     title?: string | null;
     expire_after?: number | null;
     remind_after?: number | null;

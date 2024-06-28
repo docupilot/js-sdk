@@ -9,7 +9,6 @@ export type DropboxDelivery = {
     name: string;
     type?: 'dropbox';
     success_callback_url?: string | null;
-    last_used_on?: string | null;
     folder?: string;
     mode?: 'add_as_new' | 'conflict' | 'overwrite';
 };

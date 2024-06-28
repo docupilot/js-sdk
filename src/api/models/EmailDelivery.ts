@@ -12,7 +12,6 @@ export type EmailDelivery = {
     name: string;
     type?: 'email';
     success_callback_url?: string | null;
-    last_used_on?: string | null;
     from_email?: string | null;
     to_email: Array<string>;
     cc?: Array<string>;
