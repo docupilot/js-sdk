@@ -7423,6 +7423,19 @@ components:
       - new_folder_id
       - template_ids
       description: ''
+    Nested:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - name
+      description: ''
     NewTemplate:
       type: object
       description: ''
@@ -8134,9 +8147,11 @@ components:
           nullable: true
           maxLength: 255
         category:
-          type: integer
-          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/Nested'
+          readOnly: true
       required:
+      - category
       - file_type
       - id
       - image_path
