@@ -20,7 +20,7 @@ export class GalleryTemplatesService {
         ordering,
         search,
     }: {
-        category?: number,
+        category?: 'legal' | 'real_state',
         /**
          * Which field to use when ordering the results.
          */

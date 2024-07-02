@@ -8,6 +8,7 @@ export type WebhookDelivery = {
     name: string;
     type?: 'webhook';
     success_callback_url?: string | null;
+    last_used_on?: string | null;
     url: string;
     headers?: Record<string, any> | null;
     payload?: Record<string, any> | null;
