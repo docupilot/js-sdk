@@ -36,6 +36,7 @@ export type YouSignDelivery = {
     name: string;
     type?: 'yousign';
     success_callback_url?: string | null;
+    last_used_on?: string | null;
     title: string;
     email_custom_note?: string | null;
     delivery_mode?: 'email';

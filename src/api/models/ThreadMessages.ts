@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type Nested = {
-    readonly id: number;
-    name: string;
+export type ThreadMessages = {
+    messages: Record<string, any>;
 };
 
