@@ -899,10 +899,7 @@ paths:
       - in: query
         name: category
         schema:
-          type: string
-          enum:
-          - legal
-          - real_state
+          type: integer
       - name: ordering
         required: false
         in: query
@@ -7108,6 +7105,19 @@ components:
       required:
       - detail
       description: ''
+    GalleryCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - name
+      description: ''
     GlobalPermission:
       type: object
       properties:
@@ -8173,6 +8183,8 @@ components:
         file_type:
           type: string
           readOnly: true
+        category:
+          $ref: '#/components/schemas/GalleryCategory'
         title:
           type: string
           maxLength: 50
@@ -8180,11 +8192,6 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        category:
-          enum:
-          - legal
-          - real_state
-          type: string
       required:
       - category
       - file_type
