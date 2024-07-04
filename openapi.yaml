@@ -899,10 +899,7 @@ paths:
       - in: query
         name: category
         schema:
-          type: string
-          enum:
-          - legal
-          - real_state
+          type: integer
       - name: ordering
         required: false
         in: query
@@ -6739,12 +6736,12 @@ components:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        model:
+        model_name:
           type: string
           maxLength: 200
       required:
       - id
-      - model
+      - model_name
       - thread_id
       description: ''
     ChildTemplate:
@@ -7516,6 +7513,19 @@ components:
           type: string
       required:
       - detail
+      description: ''
+    GalleryCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - id
+      - name
       description: ''
     GlobalPermission:
       type: object
@@ -8582,6 +8592,8 @@ components:
         file_type:
           type: string
           readOnly: true
+        category:
+          $ref: '#/components/schemas/GalleryCategory'
         title:
           type: string
           maxLength: 50
@@ -8589,11 +8601,6 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        category:
-          enum:
-          - legal
-          - real_state
-          type: string
       required:
       - category
       - file_type
