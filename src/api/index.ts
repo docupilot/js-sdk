@@ -64,6 +64,7 @@ export type { PatchedDomain } from './models/PatchedDomain';
 export type { PatchedUpdateFolderSharing } from './models/PatchedUpdateFolderSharing';
 export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate';
 export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplateSharing';
+export type { PatchedUpdateUser } from './models/PatchedUpdateUser';
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
 export type { RenewSubscription } from './models/RenewSubscription';

@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { InitiateAuthorizationSequence } from '../models/InitiateAuthorizationSequence';
+import type { PatchedUpdateUser } from '../models/PatchedUpdateUser';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -38,6 +39,24 @@ export class UsersService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/users/me/',
+        });
+    }
+
+    /**
+     * Update User Profile
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static updateUserProfile({
+        requestBody,
+    }: {
+        requestBody?: OmitReadonly<PatchedUpdateUser>,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/accounts/v2/users/update_user_profile/',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
