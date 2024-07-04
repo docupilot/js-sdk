@@ -7,6 +7,6 @@ export type ChatThreads = {
     thread_id: string;
     thread_name?: string | null;
     tokens_used?: number;
-    model: string;
+    model_name: string;
 };
 
