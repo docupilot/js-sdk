@@ -1037,6 +1037,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
+  /accounts/v2/users/update_user_profile/:
+    patch:
+      operationId: update_user_profile
+      summary: Update User Profile
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateUser'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '202':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/workspaces/:
     get:
       operationId: list_workspaces
@@ -1431,7 +1471,6 @@ paths:
       - ai-chat
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1479,7 +1518,6 @@ paths:
         required: true
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '201':
           content:
@@ -1524,7 +1562,6 @@ paths:
       - ai-chat
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1581,7 +1618,6 @@ paths:
         required: true
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '201':
           content:
@@ -1631,7 +1667,6 @@ paths:
       - ai-chat
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -1679,7 +1714,6 @@ paths:
       - ai-chat
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1737,7 +1771,6 @@ paths:
         required: true
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -7500,6 +7533,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8071,6 +8105,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8093,10 +8128,19 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
           readOnly: true
+    PatchedUpdateUser:
+      type: object
+      properties:
+        locale:
+          type: string
+          nullable: true
+          maxLength: 5
+      description: ''
     Plan:
       type: object
       properties:
@@ -8776,6 +8820,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
