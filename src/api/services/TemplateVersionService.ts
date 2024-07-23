@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CopyTemplateFromVersion } from '../models/CopyTemplateFromVersion';
 import type { PaginatedTemplateVersionList } from '../models/PaginatedTemplateVersionList';
 import type { PatchedRenameTemplateVersion } from '../models/PatchedRenameTemplateVersion';
 import type { Template } from '../models/Template';
@@ -95,7 +96,7 @@ export class TemplateVersionService {
          */
         id: number,
         templateId: string,
-        requestBody?: OmitReadonly<TemplateVersion>,
+        requestBody?: OmitReadonly<CopyTemplateFromVersion>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
