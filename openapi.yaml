@@ -6298,13 +6298,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TemplateVersion'
+              $ref: '#/components/schemas/CopyTemplateFromVersion'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TemplateVersion'
+              $ref: '#/components/schemas/CopyTemplateFromVersion'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TemplateVersion'
+              $ref: '#/components/schemas/CopyTemplateFromVersion'
       security:
       - SessionAuthentication: []
       - tokenAuth: []
@@ -7272,6 +7272,13 @@ components:
           maxLength: 120
       required:
       - title
+      description: ''
+    CopyTemplateFromVersion:
+      type: object
+      properties:
+        folder:
+          type: integer
+          nullable: true
       description: ''
     CreateCustomerThreadInput:
       type: object

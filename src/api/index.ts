@@ -23,6 +23,7 @@ export type { ChargebeeSubscription } from './models/ChargebeeSubscription';
 export type { ChatThreads } from './models/ChatThreads';
 export type { ChildTemplate } from './models/ChildTemplate';
 export type { CopyTemplate } from './models/CopyTemplate';
+export type { CopyTemplateFromVersion } from './models/CopyTemplateFromVersion';
 export type { CreateCustomerThreadInput } from './models/CreateCustomerThreadInput';
 export type { CreateCustomerThreadOutput } from './models/CreateCustomerThreadOutput';
 export type { CSMDetails } from './models/CSMDetails';
