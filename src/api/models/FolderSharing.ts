@@ -4,7 +4,7 @@
 
 export type FolderSharing = {
     readonly id: number;
-    permission?: 'read' | 'write';
+    permission?: 'read' | 'write' | 'manage';
     user: number;
 };
 
