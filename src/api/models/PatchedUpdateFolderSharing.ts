@@ -4,7 +4,7 @@
 
 export type PatchedUpdateFolderSharing = {
     readonly id?: number;
-    permission?: 'read' | 'write';
+    permission?: 'read' | 'write' | 'manage';
     readonly user?: number;
 };
 

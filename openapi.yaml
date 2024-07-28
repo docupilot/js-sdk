@@ -1993,6 +1993,14 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+      - in: query
+        name: permission
+        schema:
+          type: string
+          enum:
+          - manage
+          - read
+          - write
       tags:
       - folders
       security:
@@ -7533,6 +7541,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8104,6 +8113,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8126,6 +8136,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8817,6 +8828,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
