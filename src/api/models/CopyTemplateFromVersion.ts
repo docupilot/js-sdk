@@ -4,5 +4,6 @@
 
 export type CopyTemplateFromVersion = {
     folder?: number | null;
+    title: string;
 };
 

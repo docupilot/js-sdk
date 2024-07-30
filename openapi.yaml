@@ -1993,6 +1993,14 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+      - in: query
+        name: permission
+        schema:
+          type: string
+          enum:
+          - manage
+          - read
+          - write
       tags:
       - folders
       security:
@@ -6305,6 +6313,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/CopyTemplateFromVersion'
+        required: true
       security:
       - SessionAuthentication: []
       - tokenAuth: []
@@ -7279,6 +7288,11 @@ components:
         folder:
           type: integer
           nullable: true
+        title:
+          type: string
+          maxLength: 120
+      required:
+      - title
       description: ''
     CreateCustomerThreadInput:
       type: object
@@ -7968,6 +7982,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8565,6 +8580,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -8587,6 +8603,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer
@@ -9278,6 +9295,7 @@ components:
           enum:
           - read
           - write
+          - manage
           type: string
         user:
           type: integer

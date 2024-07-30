@@ -21,17 +21,20 @@ export class FoldersService {
      */
     public static listFolders({
         ordering,
+        permission,
     }: {
         /**
          * Which field to use when ordering the results.
          */
         ordering?: string,
+        permission?: 'manage' | 'read' | 'write',
     }): CancelablePromise<Array<Folder>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/folders/',
             query: {
                 'ordering': ordering,
+                'permission': permission,
             },
         });
     }

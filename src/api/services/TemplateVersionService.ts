@@ -96,7 +96,7 @@ export class TemplateVersionService {
          */
         id: number,
         templateId: string,
-        requestBody?: OmitReadonly<CopyTemplateFromVersion>,
+        requestBody: OmitReadonly<CopyTemplateFromVersion>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
