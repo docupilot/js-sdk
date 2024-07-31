@@ -2,7 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
+import type { PatchedSubscriptionChange } from '../models/PatchedSubscriptionChange';
 import type { RenewSubscription } from '../models/RenewSubscription';
+import type { Subscription } from '../models/Subscription';
+import type { SubscriptionChange } from '../models/SubscriptionChange';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -10,6 +13,17 @@ import { request as __request } from '../core/request';
 import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class SubscriptionService {
+
+    /**
+     * @returns ChargebeeSubscription
+     * @throws ApiError
+     */
+    public static subscriptionCurrentVersionRetrieve(): CancelablePromise<ChargebeeSubscription> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/current_version/',
+        });
+    }
 
     /**
      * @returns ChargebeeSubscription
@@ -37,6 +51,61 @@ export class SubscriptionService {
             query: {
                 'plan_id': planId,
             },
+        });
+    }
+
+    /**
+     * @returns SubscriptionChange
+     * @throws ApiError
+     */
+    public static subscriptionNewChangesRetrieve(): CancelablePromise<SubscriptionChange> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/changes/',
+        });
+    }
+
+    /**
+     * @returns SubscriptionChange
+     * @throws ApiError
+     */
+    public static subscriptionNewChangesCancelPartialUpdate({
+        changeId,
+        requestBody,
+    }: {
+        changeId: string,
+        requestBody?: OmitReadonly<PatchedSubscriptionChange>,
+    }): CancelablePromise<SubscriptionChange> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/accounts/v2/subscription/new/changes/{change_id}/cancel/',
+            path: {
+                'change_id': changeId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns Subscription
+     * @throws ApiError
+     */
+    public static subscriptionNewCurrentVersionRetrieve(): CancelablePromise<Subscription> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/current_version/',
+        });
+    }
+
+    /**
+     * @returns Subscription
+     * @throws ApiError
+     */
+    public static getNewSubscriptionDetails(): CancelablePromise<Subscription> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/details/',
         });
     }
 
