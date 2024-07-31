@@ -655,7 +655,7 @@ paths:
           description: ''
   /accounts/v2/plans/{id}/stripe_checkout/:
     post:
-      operationId: get_new_subscription_details
+      operationId: stripe_checkout
       parameters:
       - in: header
         name: X-Workspace
@@ -856,7 +856,7 @@ paths:
           description: ''
   /accounts/v2/subscription/new/changes/{change_id}/cancel/:
     patch:
-      operationId: update_new_subscription_changes
+      operationId: cancel_scheduled_subscription_changes
       parameters:
       - in: header
         name: X-Workspace
@@ -918,7 +918,7 @@ paths:
           description: ''
   /accounts/v2/subscription/new/details/:
     get:
-      operationId: get_new_subscription_details_2
+      operationId: get_new_subscription_details
       parameters:
       - in: header
         name: X-Workspace
