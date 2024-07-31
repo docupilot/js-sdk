@@ -69,7 +69,7 @@ export class SubscriptionService {
      * @returns SubscriptionChange
      * @throws ApiError
      */
-    public static updateNewSubscriptionChanges({
+    public static cancelScheduledSubscriptionChanges({
         changeId,
         requestBody,
     }: {
@@ -91,7 +91,7 @@ export class SubscriptionService {
      * @returns Subscription
      * @throws ApiError
      */
-    public static getNewSubscriptionDetails2(): CancelablePromise<Subscription> {
+    public static getNewSubscriptionDetails(): CancelablePromise<Subscription> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/new/details/',

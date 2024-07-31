@@ -48,7 +48,7 @@ export class PlansService {
      * @returns PlanSubscription
      * @throws ApiError
      */
-    public static getNewSubscriptionDetails({
+    public static stripeCheckout({
         id,
         requestBody,
     }: {
