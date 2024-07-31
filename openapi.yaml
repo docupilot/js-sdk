@@ -527,6 +527,319 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/payment-methods/:
+    get:
+      operationId: payment_methods_list
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - payment-methods
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StripeCard'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/payment-methods/{id}/:
+    get:
+      operationId: payment_methods_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - payment-methods
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeCard'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/payment-methods/setup_intent/:
+    get:
+      operationId: payment_methods_setup_intent_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - payment-methods
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeCard'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/plans/:
+    get:
+      operationId: plans_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - plans
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPlansList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/plans/{id}/:
+    get:
+      operationId: plans_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this plan template.
+        required: true
+      tags:
+      - plans
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plans'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/plans/{id}/stripe_checkout/:
+    post:
+      operationId: plans_stripe_checkout_create
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this plan template.
+        required: true
+      tags:
+      - plans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanSubscription'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PlanSubscription'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PlanSubscription'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlanSubscription'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/subscription/current_version/:
+    get:
+      operationId: subscription_current_version_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargebeeSubscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -585,6 +898,167 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/new/changes/:
+    get:
+      operationId: subscription_new_changes_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionChange'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/new/changes/{change_id}/cancel/:
+    patch:
+      operationId: subscription_new_changes_cancel_partial_update
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: change_id
+        schema:
+          type: string
+          pattern: ^\d+$
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionChange'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionChange'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/subscription/new/current_version/:
+    get:
+      operationId: subscription_new_current_version_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/new/details/:
+    get:
+      operationId: get_new_subscription_details
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
           description: ''
         '401':
           content:
@@ -8062,6 +8536,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MergeHistory'
+    PaginatedPlansList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Plans'
     PaginatedTemplateList:
       type: object
       properties:
@@ -8101,6 +8595,43 @@ components:
         spf_record:
           type: string
           readOnly: true
+      description: ''
+    PatchedSubscriptionChange:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        plan:
+          type: string
+          readOnly: true
+        credit_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        template_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        user_seat_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_on:
+          type: string
+          readOnly: true
+        action_taken_on:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - applied
+          - pending
+          - cencelled
+          type: string
+        change_type:
+          type: string
+          maxLength: 200
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -8172,6 +8703,118 @@ components:
       - documents_allowed
       - plan_id
       - price
+      description: ''
+    PlanCredit:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        credit:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        user_seat:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        template:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+      required:
+      - credit
+      - name
+      - template
+      - user_seat
+      description: ''
+    PlanSubscription:
+      type: object
+      properties:
+        billing_term:
+          enum:
+          - monthly
+          - yearly
+          type: string
+        credit_addon:
+          type: integer
+          minimum: 0
+          default: 0
+        template_addon:
+          type: integer
+          minimum: 0
+          default: 0
+        user_seat_addon:
+          type: integer
+          minimum: 0
+          default: 0
+        payment_id:
+          type: string
+      required:
+      - billing_term
+      - payment_id
+      description: ''
+    Plans:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        version:
+          enum:
+          - 1
+          - 2
+          type: integer
+          minimum: -2147483648
+          maximum: 2147483647
+        category:
+          enum:
+          - trial
+          - free
+          - individual
+          - team
+          - enterprise
+          - custom
+          type: string
+        name:
+          type: string
+          maxLength: 50
+        price:
+          type: string
+          readOnly: true
+        credit:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        template:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        user_seat:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        credit_addon_price:
+          type: string
+          readOnly: true
+        template_addon_price:
+          type: string
+          readOnly: true
+        user_seat_addon_price:
+          type: string
+          readOnly: true
+      required:
+      - category
+      - credit
+      - credit_addon_price
+      - id
+      - name
+      - price
+      - template
+      - template_addon_price
+      - user_seat
+      - user_seat_addon_price
+      - version
       description: ''
     PolymorphicDelivery:
       oneOf:
@@ -8503,6 +9146,158 @@ components:
       - id
       - name
       - parties
+    StripeCard:
+      type: object
+      properties:
+        id:
+          type: string
+        brand:
+          type: string
+        last4:
+          type: string
+        exp_month:
+          type: integer
+        exp_year:
+          type: integer
+        default:
+          type: boolean
+      required:
+      - brand
+      - default
+      - exp_month
+      - exp_year
+      - id
+      - last4
+      description: ''
+    Subscription:
+      type: object
+      properties:
+        base_plan:
+          allOf:
+          - $ref: '#/components/schemas/PlanCredit'
+          readOnly: true
+        credit_used:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        active_template:
+          type: string
+          readOnly: true
+        active_user:
+          type: string
+          readOnly: true
+        total_credit:
+          type: string
+          readOnly: true
+        total_template:
+          type: string
+          readOnly: true
+        total_user_seat:
+          type: string
+          readOnly: true
+        credit_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        template_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        user_seat_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        trial_started_on:
+          type: string
+          readOnly: true
+        trial_end:
+          type: string
+          readOnly: true
+        billing_term:
+          enum:
+          - monthly
+          - yearly
+          - null
+          type: string
+          nullable: true
+        status:
+          enum:
+          - a
+          - t
+          - e
+          - c
+          type: string
+        current_term_start:
+          type: string
+          readOnly: true
+        current_term_end:
+          type: string
+          readOnly: true
+        reset_usage_on:
+          type: string
+          readOnly: true
+        overage:
+          type: boolean
+      required:
+      - active_template
+      - active_user
+      - base_plan
+      - current_term_end
+      - current_term_start
+      - reset_usage_on
+      - total_credit
+      - total_template
+      - total_user_seat
+      - trial_end
+      - trial_started_on
+      description: ''
+    SubscriptionChange:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        plan:
+          type: string
+          readOnly: true
+        credit_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        template_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        user_seat_addon:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        created_on:
+          type: string
+          readOnly: true
+        action_taken_on:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - applied
+          - pending
+          - cencelled
+          type: string
+        change_type:
+          type: string
+          maxLength: 200
+      required:
+      - action_taken_on
+      - change_type
+      - created_on
+      - credit_addon
+      - id
+      - plan
+      - status
+      - template_addon
+      - user_seat_addon
+      description: ''
     TeamMember:
       type: object
       properties:
