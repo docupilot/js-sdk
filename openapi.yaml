@@ -529,7 +529,7 @@ paths:
           description: ''
   /accounts/v2/payment-methods/:
     get:
-      operationId: payment_methods_list
+      operationId: list_payment_methods
       parameters:
       - in: header
         name: X-Workspace
@@ -574,53 +574,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/payment-methods/{id}/:
+  /accounts/v2/payment-methods/setup_intent_secret/:
     get:
-      operationId: payment_methods_retrieve
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - payment-methods
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StripeCard'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /accounts/v2/payment-methods/setup_intent/:
-    get:
-      operationId: payment_methods_setup_intent_retrieve
+      operationId: get_setup_intent_secret
       parameters:
       - in: header
         name: X-Workspace
@@ -653,7 +609,7 @@ paths:
           description: ''
   /accounts/v2/plans/:
     get:
-      operationId: plans_list
+      operationId: list_plans
       parameters:
       - name: ordering
         required: false
@@ -697,55 +653,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/plans/{id}/:
-    get:
-      operationId: plans_retrieve
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this plan template.
-        required: true
-      tags:
-      - plans
-      security:
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Plans'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /accounts/v2/plans/{id}/stripe_checkout/:
     post:
-      operationId: plans_stripe_checkout_create
+      operationId: get_new_subscription_details
       parameters:
       - in: header
         name: X-Workspace
@@ -809,7 +719,7 @@ paths:
           description: ''
   /accounts/v2/subscription/current_version/:
     get:
-      operationId: subscription_current_version_retrieve
+      operationId: get_subscription_current_version
       parameters:
       - in: header
         name: X-Workspace
@@ -913,7 +823,7 @@ paths:
           description: ''
   /accounts/v2/subscription/new/changes/:
     get:
-      operationId: subscription_new_changes_retrieve
+      operationId: get_new_subscription_changes
       parameters:
       - in: header
         name: X-Workspace
@@ -946,7 +856,7 @@ paths:
           description: ''
   /accounts/v2/subscription/new/changes/{change_id}/cancel/:
     patch:
-      operationId: subscription_new_changes_cancel_partial_update
+      operationId: update_new_subscription_changes
       parameters:
       - in: header
         name: X-Workspace
@@ -1006,42 +916,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/subscription/new/current_version/:
-    get:
-      operationId: subscription_new_current_version_retrieve
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - subscription
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Subscription'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/subscription/new/details/:
     get:
-      operationId: get_new_subscription_details
+      operationId: get_new_subscription_details_2
       parameters:
       - in: header
         name: X-Workspace

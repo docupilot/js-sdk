@@ -14,7 +14,7 @@ export class PaymentMethodsService {
      * @returns StripeCard
      * @throws ApiError
      */
-    public static paymentMethodsList({
+    public static listPaymentMethods({
         ordering,
         search,
     }: {
@@ -41,28 +41,10 @@ export class PaymentMethodsService {
      * @returns StripeCard
      * @throws ApiError
      */
-    public static paymentMethodsRetrieve({
-        id,
-    }: {
-        id: string,
-    }): CancelablePromise<StripeCard> {
+    public static getSetupIntentSecret(): CancelablePromise<StripeCard> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/payment-methods/{id}/',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
-     * @returns StripeCard
-     * @throws ApiError
-     */
-    public static paymentMethodsSetupIntentRetrieve(): CancelablePromise<StripeCard> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/payment-methods/setup_intent/',
+            url: '/accounts/v2/payment-methods/setup_intent_secret/',
         });
     }
 

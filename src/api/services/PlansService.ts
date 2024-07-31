@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { PaginatedPlansList } from '../models/PaginatedPlansList';
-import type { Plans } from '../models/Plans';
 import type { PlanSubscription } from '../models/PlanSubscription';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -16,7 +15,7 @@ export class PlansService {
      * @returns PaginatedPlansList
      * @throws ApiError
      */
-    public static plansList({
+    public static listPlans({
         ordering,
         page,
         search,
@@ -46,31 +45,10 @@ export class PlansService {
     }
 
     /**
-     * @returns Plans
-     * @throws ApiError
-     */
-    public static plansRetrieve({
-        id,
-    }: {
-        /**
-         * A unique integer value identifying this plan template.
-         */
-        id: number,
-    }): CancelablePromise<Plans> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/plans/{id}/',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
      * @returns PlanSubscription
      * @throws ApiError
      */
-    public static plansStripeCheckoutCreate({
+    public static getNewSubscriptionDetails({
         id,
         requestBody,
     }: {

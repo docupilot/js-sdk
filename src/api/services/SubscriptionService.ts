@@ -18,7 +18,7 @@ export class SubscriptionService {
      * @returns ChargebeeSubscription
      * @throws ApiError
      */
-    public static subscriptionCurrentVersionRetrieve(): CancelablePromise<ChargebeeSubscription> {
+    public static getSubscriptionCurrentVersion(): CancelablePromise<ChargebeeSubscription> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/current_version/',
@@ -58,7 +58,7 @@ export class SubscriptionService {
      * @returns SubscriptionChange
      * @throws ApiError
      */
-    public static subscriptionNewChangesRetrieve(): CancelablePromise<SubscriptionChange> {
+    public static getNewSubscriptionChanges(): CancelablePromise<SubscriptionChange> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/new/changes/',
@@ -69,7 +69,7 @@ export class SubscriptionService {
      * @returns SubscriptionChange
      * @throws ApiError
      */
-    public static subscriptionNewChangesCancelPartialUpdate({
+    public static updateNewSubscriptionChanges({
         changeId,
         requestBody,
     }: {
@@ -91,18 +91,7 @@ export class SubscriptionService {
      * @returns Subscription
      * @throws ApiError
      */
-    public static subscriptionNewCurrentVersionRetrieve(): CancelablePromise<Subscription> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/subscription/new/current_version/',
-        });
-    }
-
-    /**
-     * @returns Subscription
-     * @throws ApiError
-     */
-    public static getNewSubscriptionDetails(): CancelablePromise<Subscription> {
+    public static getNewSubscriptionDetails2(): CancelablePromise<Subscription> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/new/details/',
