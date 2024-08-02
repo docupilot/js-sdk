@@ -2,10 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
-import type { PatchedSubscriptionChange } from '../models/PatchedSubscriptionChange';
+import type { PatchedSubscriptionScheduleChange } from '../models/PatchedSubscriptionScheduleChange';
 import type { RenewSubscription } from '../models/RenewSubscription';
 import type { Subscription } from '../models/Subscription';
-import type { SubscriptionChange } from '../models/SubscriptionChange';
+import type { SubscriptionScheduleChange } from '../models/SubscriptionScheduleChange';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -55,39 +55,6 @@ export class SubscriptionService {
     }
 
     /**
-     * @returns SubscriptionChange
-     * @throws ApiError
-     */
-    public static getNewSubscriptionChanges(): CancelablePromise<SubscriptionChange> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/subscription/new/changes/',
-        });
-    }
-
-    /**
-     * @returns SubscriptionChange
-     * @throws ApiError
-     */
-    public static cancelScheduledSubscriptionChanges({
-        changeId,
-        requestBody,
-    }: {
-        changeId: string,
-        requestBody?: OmitReadonly<PatchedSubscriptionChange>,
-    }): CancelablePromise<SubscriptionChange> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/accounts/v2/subscription/new/changes/{change_id}/cancel/',
-            path: {
-                'change_id': changeId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * @returns Subscription
      * @throws ApiError
      */
@@ -95,6 +62,39 @@ export class SubscriptionService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/new/details/',
+        });
+    }
+
+    /**
+     * @returns SubscriptionScheduleChange
+     * @throws ApiError
+     */
+    public static getNewSubscriptionScheduledChange(): CancelablePromise<SubscriptionScheduleChange> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/scheduled_change/',
+        });
+    }
+
+    /**
+     * @returns SubscriptionScheduleChange
+     * @throws ApiError
+     */
+    public static cancelScheduledSubscriptionChange({
+        changeId,
+        requestBody,
+    }: {
+        changeId: string,
+        requestBody?: OmitReadonly<PatchedSubscriptionScheduleChange>,
+    }): CancelablePromise<SubscriptionScheduleChange> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/accounts/v2/subscription/new/scheduled_change/{change_id}/cancel/',
+            path: {
+                'change_id': changeId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

@@ -821,101 +821,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/new/changes/:
-    get:
-      operationId: get_new_subscription_changes
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - subscription
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SubscriptionChange'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /accounts/v2/subscription/new/changes/{change_id}/cancel/:
-    patch:
-      operationId: cancel_scheduled_subscription_changes
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      - in: path
-        name: change_id
-        schema:
-          type: string
-          pattern: ^\d+$
-        required: true
-      tags:
-      - subscription
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedSubscriptionChange'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedSubscriptionChange'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedSubscriptionChange'
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SubscriptionChange'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /accounts/v2/subscription/new/details/:
     get:
       operationId: get_new_subscription_details
@@ -948,6 +853,101 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/new/scheduled_change/:
+    get:
+      operationId: get_new_subscription_scheduled_change
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionScheduleChange'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/new/scheduled_change/{change_id}/cancel/:
+    patch:
+      operationId: cancel_scheduled_subscription_change
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: change_id
+        schema:
+          type: string
+          pattern: ^\d+$
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionScheduleChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionScheduleChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSubscriptionScheduleChange'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionScheduleChange'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /accounts/v2/subscription/portal_session/:
     get:
@@ -8473,7 +8473,7 @@ components:
           type: string
           readOnly: true
       description: ''
-    PatchedSubscriptionChange:
+    PatchedSubscriptionScheduleChange:
       type: object
       properties:
         id:
@@ -8494,12 +8494,6 @@ components:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        created_on:
-          type: string
-          readOnly: true
-        action_taken_on:
-          type: string
-          readOnly: true
         status:
           enum:
           - applied
@@ -8507,8 +8501,51 @@ components:
           - cencelled
           type: string
         change_type:
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          - 14
+          - 15
+          - 16
+          - 17
+          - 18
+          - 19
+          - 20
+          - 21
+          - 22
+          - 23
+          - 24
+          - 25
+          - 26
+          - 27
+          - 28
+          - 29
+          - 30
+          - 31
+          - 32
+          - 33
+          - 34
+          - 35
+          - 36
+          - 37
+          type: integer
+          minimum: -32768
+          maximum: 32767
+        scheduled_on:
           type: string
-          maxLength: 200
+          readOnly: true
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -9128,7 +9165,7 @@ components:
       - trial_end
       - trial_started_on
       description: ''
-    SubscriptionChange:
+    SubscriptionScheduleChange:
       type: object
       properties:
         id:
@@ -9149,12 +9186,6 @@ components:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        created_on:
-          type: string
-          readOnly: true
-        action_taken_on:
-          type: string
-          readOnly: true
         status:
           enum:
           - applied
@@ -9162,15 +9193,57 @@ components:
           - cencelled
           type: string
         change_type:
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 12
+          - 13
+          - 14
+          - 15
+          - 16
+          - 17
+          - 18
+          - 19
+          - 20
+          - 21
+          - 22
+          - 23
+          - 24
+          - 25
+          - 26
+          - 27
+          - 28
+          - 29
+          - 30
+          - 31
+          - 32
+          - 33
+          - 34
+          - 35
+          - 36
+          - 37
+          type: integer
+          minimum: -32768
+          maximum: 32767
+        scheduled_on:
           type: string
-          maxLength: 200
+          readOnly: true
       required:
-      - action_taken_on
       - change_type
-      - created_on
       - credit_addon
       - id
       - plan
+      - scheduled_on
       - status
       - template_addon
       - user_seat_addon
