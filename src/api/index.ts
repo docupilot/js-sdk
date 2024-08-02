@@ -65,7 +65,7 @@ export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryLi
 export type { PaginatedPlansList } from './models/PaginatedPlansList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
 export type { PatchedDomain } from './models/PatchedDomain';
-export type { PatchedSubscriptionChange } from './models/PatchedSubscriptionChange';
+export type { PatchedSubscriptionScheduleChange } from './models/PatchedSubscriptionScheduleChange';
 export type { PatchedUpdateFolderSharing } from './models/PatchedUpdateFolderSharing';
 export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate';
 export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplateSharing';
@@ -86,7 +86,7 @@ export type { SignableDelivery } from './models/SignableDelivery';
 export type { SignNowDelivery } from './models/SignNowDelivery';
 export type { StripeCard } from './models/StripeCard';
 export type { Subscription } from './models/Subscription';
-export type { SubscriptionChange } from './models/SubscriptionChange';
+export type { SubscriptionScheduleChange } from './models/SubscriptionScheduleChange';
 export type { TeamMember } from './models/TeamMember';
 export type { Template } from './models/Template';
 export type { TemplateCount } from './models/TemplateCount';
