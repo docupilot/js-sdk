@@ -8494,6 +8494,12 @@ components:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
+        created_on:
+          type: string
+          readOnly: true
+        scheduled_on:
+          type: string
+          readOnly: true
         status:
           enum:
           - applied
@@ -8543,9 +8549,6 @@ components:
           type: integer
           minimum: -32768
           maximum: 32767
-        scheduled_on:
-          type: string
-          readOnly: true
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -9152,6 +9155,9 @@ components:
           readOnly: true
         overage:
           type: boolean
+        subscription_price:
+          type: string
+          readOnly: true
       required:
       - active_template
       - active_user
@@ -9159,6 +9165,7 @@ components:
       - current_term_end
       - current_term_start
       - reset_usage_on
+      - subscription_price
       - total_credit
       - total_template
       - total_user_seat
@@ -9186,6 +9193,12 @@ components:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
+        created_on:
+          type: string
+          readOnly: true
+        scheduled_on:
+          type: string
+          readOnly: true
         status:
           enum:
           - applied
@@ -9235,11 +9248,9 @@ components:
           type: integer
           minimum: -32768
           maximum: 32767
-        scheduled_on:
-          type: string
-          readOnly: true
       required:
       - change_type
+      - created_on
       - credit_addon
       - id
       - plan

@@ -23,5 +23,6 @@ export type Subscription = {
     readonly current_term_end: string;
     readonly reset_usage_on: string;
     overage?: boolean;
+    readonly subscription_price: string;
 };
 
