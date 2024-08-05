@@ -979,57 +979,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/users/g2_review_to_airtable/:
-    post:
-      operationId: submit_review_to_airtable
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/G2reviewAirTable'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/G2reviewAirTable'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/G2reviewAirTable'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/G2reviewAirTable'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -1087,6 +1036,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /accounts/v2/users/save_user_feedback/:
+    post:
+      operationId: save_user_feedback
+      summary: Save user feedback
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/G2reviewAirTable'
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/G2reviewAirTable'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/G2reviewAirTable'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/G2reviewAirTable'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/v2/users/update_user_profile/:
     patch:
