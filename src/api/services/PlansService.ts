@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CartValidation } from '../models/CartValidation';
 import type { PaginatedPlansList } from '../models/PaginatedPlansList';
 import type { PlanSubscription } from '../models/PlanSubscription';
 
@@ -61,6 +62,31 @@ export class PlansService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/plans/{id}/stripe_checkout/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns CartValidation
+     * @throws ApiError
+     */
+    public static validateCart({
+        id,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this plan template.
+         */
+        id: number,
+        requestBody: OmitReadonly<CartValidation>,
+    }): CancelablePromise<CartValidation> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/plans/{id}/validate_cart/',
             path: {
                 'id': id,
             },

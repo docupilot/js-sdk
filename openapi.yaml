@@ -717,6 +717,70 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/plans/{id}/validate_cart/:
+    post:
+      operationId: validate_cart
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this plan template.
+        required: true
+      tags:
+      - plans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartValidation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartValidation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartValidation'
+        required: true
+      security:
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartValidation'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /accounts/v2/subscription/current_version/:
     get:
       operationId: get_subscription_current_version
@@ -7056,6 +7120,29 @@ components:
       - name
       - phone_number
       description: ''
+    CartValidation:
+      type: object
+      properties:
+        billing_term:
+          enum:
+          - monthly
+          - yearly
+          type: string
+        credit_addon:
+          type: integer
+          minimum: 0
+          default: 0
+        template_addon:
+          type: integer
+          minimum: 0
+          default: 0
+        user_seat_addon:
+          type: integer
+          minimum: 0
+          default: 0
+      required:
+      - billing_term
+      description: ''
     ChangeRole:
       type: object
       properties:
@@ -8504,7 +8591,7 @@ components:
           enum:
           - applied
           - pending
-          - cencelled
+          - cancelled
           type: string
         change_type:
           enum:
@@ -9203,7 +9290,7 @@ components:
           enum:
           - applied
           - pending
-          - cencelled
+          - cancelled
           type: string
         change_type:
           enum:

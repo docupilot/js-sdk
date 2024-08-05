@@ -18,6 +18,7 @@ export type { BulkGenData } from './models/BulkGenData';
 export type { BulkGenerateMeta } from './models/BulkGenerateMeta';
 export type { BulkGenTask } from './models/BulkGenTask';
 export type { BulkGenUpload } from './models/BulkGenUpload';
+export type { CartValidation } from './models/CartValidation';
 export type { ChangeRole } from './models/ChangeRole';
 export type { ChargebeeSubscription } from './models/ChargebeeSubscription';
 export type { ChatThreads } from './models/ChatThreads';
