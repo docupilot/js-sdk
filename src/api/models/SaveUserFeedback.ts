@@ -4,6 +4,6 @@
 
 export type SaveUserFeedback = {
     question_field: string;
-    value: string;
+    value: (string | Array<string>);
 };
 
