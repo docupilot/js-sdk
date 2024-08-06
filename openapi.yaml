@@ -885,6 +885,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/new/cancel_subscription/:
+    post:
+      operationId: cancel_new_subscription
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/new/details/:
     get:
       operationId: get_new_subscription_details
@@ -8711,6 +8750,9 @@ components:
     PlanCredit:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 50
@@ -8728,6 +8770,7 @@ components:
           minimum: -2147483648
       required:
       - credit
+      - id
       - name
       - template
       - user_seat

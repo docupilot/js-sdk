@@ -58,6 +58,17 @@ export class SubscriptionService {
      * @returns Subscription
      * @throws ApiError
      */
+    public static cancelNewSubscription(): CancelablePromise<Subscription> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/new/cancel_subscription/',
+        });
+    }
+
+    /**
+     * @returns Subscription
+     * @throws ApiError
+     */
     public static getNewSubscriptionDetails(): CancelablePromise<Subscription> {
         return __request(OpenAPI, {
             method: 'GET',
