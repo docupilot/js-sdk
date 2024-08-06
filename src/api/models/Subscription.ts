@@ -7,11 +7,11 @@ import type { PlanCredit } from './PlanCredit';
 export type Subscription = {
     readonly base_plan: PlanCredit;
     credit_used?: number;
-    readonly active_template: string;
-    readonly active_user: string;
-    readonly total_credit: string;
-    readonly total_template: string;
-    readonly total_user_seat: string;
+    readonly active_template: number;
+    readonly active_user: number;
+    readonly total_credit: number;
+    readonly total_template: number;
+    readonly total_user_seat: number;
     credit_addon?: number;
     template_addon?: number;
     user_seat_addon?: number;
@@ -23,6 +23,6 @@ export type Subscription = {
     readonly current_term_end: string;
     readonly reset_usage_on: string;
     overage?: boolean;
-    readonly subscription_price: string;
+    readonly subscription_price: number;
 };
 

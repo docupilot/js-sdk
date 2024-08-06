@@ -8784,7 +8784,8 @@ components:
           type: string
           maxLength: 50
         price:
-          type: string
+          type: number
+          format: float
           readOnly: true
         credit:
           type: integer
@@ -8799,13 +8800,16 @@ components:
           maximum: 2147483647
           minimum: -2147483648
         credit_addon_price:
-          type: string
+          type: number
+          format: float
           readOnly: true
         template_addon_price:
-          type: string
+          type: number
+          format: float
           readOnly: true
         user_seat_addon_price:
-          type: string
+          type: number
+          format: float
           readOnly: true
       required:
       - category
@@ -9185,19 +9189,19 @@ components:
           maximum: 2147483647
           minimum: -2147483648
         active_template:
-          type: string
+          type: integer
           readOnly: true
         active_user:
-          type: string
+          type: integer
           readOnly: true
         total_credit:
-          type: string
+          type: integer
           readOnly: true
         total_template:
-          type: string
+          type: integer
           readOnly: true
         total_user_seat:
-          type: string
+          type: integer
           readOnly: true
         credit_addon:
           type: integer
@@ -9243,7 +9247,8 @@ components:
         overage:
           type: boolean
         subscription_price:
-          type: string
+          type: number
+          format: float
           readOnly: true
       required:
       - active_template

@@ -7,12 +7,12 @@ export type Plans = {
     version: 1 | 2;
     category: 'trial' | 'free' | 'individual' | 'team' | 'enterprise' | 'custom';
     name: string;
-    readonly price: string;
+    readonly price: number;
     credit: number;
     template: number;
     user_seat: number;
-    readonly credit_addon_price: string;
-    readonly template_addon_price: string;
-    readonly user_seat_addon_price: string;
+    readonly credit_addon_price: number;
+    readonly template_addon_price: number;
+    readonly user_seat_addon_price: number;
 };
 
