@@ -1,9 +1,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CartValidateResponse } from '../models/CartValidateResponse';
 import type { CartValidation } from '../models/CartValidation';
 import type { PaginatedPlansList } from '../models/PaginatedPlansList';
 import type { PlanSubscription } from '../models/PlanSubscription';
+import type { StripeCheckoutResponse } from '../models/StripeCheckoutResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -46,7 +48,7 @@ export class PlansService {
     }
 
     /**
-     * @returns PlanSubscription
+     * @returns StripeCheckoutResponse
      * @throws ApiError
      */
     public static stripeCheckout({
@@ -58,7 +60,7 @@ export class PlansService {
          */
         id: number,
         requestBody: OmitReadonly<PlanSubscription>,
-    }): CancelablePromise<PlanSubscription> {
+    }): CancelablePromise<StripeCheckoutResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/plans/{id}/stripe_checkout/',
@@ -71,7 +73,7 @@ export class PlansService {
     }
 
     /**
-     * @returns CartValidation
+     * @returns CartValidateResponse
      * @throws ApiError
      */
     public static validateCart({
@@ -83,7 +85,7 @@ export class PlansService {
          */
         id: number,
         requestBody: OmitReadonly<CartValidation>,
-    }): CancelablePromise<CartValidation> {
+    }): CancelablePromise<CartValidateResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/plans/{id}/validate_cart/',
