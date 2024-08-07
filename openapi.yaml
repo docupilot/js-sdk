@@ -633,7 +633,6 @@ paths:
       - plans
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -685,13 +684,12 @@ paths:
         required: true
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PlanSubscription'
+                $ref: '#/components/schemas/StripeCheckoutResponse'
           description: ''
         '400':
           content:
@@ -749,13 +747,12 @@ paths:
         required: true
       security:
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CartValidation'
+                $ref: '#/components/schemas/CartValidateResponse'
           description: ''
         '400':
           content:
@@ -7159,6 +7156,54 @@ components:
       - name
       - phone_number
       description: ''
+    CartValidateResponse:
+      type: object
+      properties:
+        action:
+          type: string
+        billing_term:
+          enum:
+          - monthly
+          - yearly
+          type: string
+        renewal_summary:
+          type: array
+          items:
+            $ref: '#/components/schemas/Summary'
+        renewal_summary_price:
+          type: number
+          format: double
+        cart_summary:
+          type: array
+          items:
+            $ref: '#/components/schemas/Summary'
+        refund_summary:
+          type: array
+          items:
+            $ref: '#/components/schemas/Summary'
+        scheduled_summary:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        scheduled_date:
+          type: string
+          format: date-time
+          nullable: true
+        payment_amount:
+          type: number
+          format: double
+      required:
+      - action
+      - billing_term
+      - cart_summary
+      - payment_amount
+      - refund_summary
+      - renewal_summary
+      - renewal_summary_price
+      - scheduled_date
+      - scheduled_summary
+      description: ''
     CartValidation:
       type: object
       properties:
@@ -9220,6 +9265,18 @@ components:
       - id
       - last4
       description: ''
+    StripeCheckoutResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        clientSecret:
+          type: string
+          nullable: true
+      required:
+      - clientSecret
+      - status
+      description: ''
     Subscription:
       type: object
       properties:
@@ -9393,6 +9450,28 @@ components:
       - status
       - template_addon
       - user_seat_addon
+      description: ''
+    Summary:
+      type: object
+      properties:
+        item_name:
+          type: string
+        quantity:
+          type: integer
+        unit_price:
+          type: number
+          format: double
+        type:
+          type: string
+        price:
+          type: number
+          format: double
+      required:
+      - item_name
+      - price
+      - quantity
+      - type
+      - unit_price
       description: ''
     TeamMember:
       type: object
