@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
+import type { Invoice } from '../models/Invoice';
 import type { PatchedSubscriptionScheduleChange } from '../models/PatchedSubscriptionScheduleChange';
 import type { RenewSubscription } from '../models/RenewSubscription';
 import type { Subscription } from '../models/Subscription';
@@ -73,6 +74,53 @@ export class SubscriptionService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/new/details/',
+        });
+    }
+
+    /**
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadNewSubscription({
+        invoiceId,
+    }: {
+        invoiceId: string,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/invoice/{invoice_id}/download/',
+            path: {
+                'invoice_id': invoiceId,
+            },
+        });
+    }
+
+    /**
+     * @returns Subscription
+     * @throws ApiError
+     */
+    public static getNewSubscriptionInvoicePreview({
+        invoiceId,
+    }: {
+        invoiceId: string,
+    }): CancelablePromise<Subscription> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/invoice/{invoice_id}/preview/',
+            path: {
+                'invoice_id': invoiceId,
+            },
+        });
+    }
+
+    /**
+     * @returns Invoice
+     * @throws ApiError
+     */
+    public static getNewSubscriptionInvoices(): CancelablePromise<Invoice> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/new/invoices/',
         });
     }
 

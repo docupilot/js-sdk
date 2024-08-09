@@ -55,6 +55,7 @@ export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload
 export type { HelloSignDelivery } from './models/HelloSignDelivery';
 export type { InitiateAuthorizationSequence } from './models/InitiateAuthorizationSequence';
 export type { Invitation } from './models/Invitation';
+export type { Invoice } from './models/Invoice';
 export type { MergeHistory } from './models/MergeHistory';
 export type { Meta } from './models/Meta';
 export type { MoveTemplate } from './models/MoveTemplate';
