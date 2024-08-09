@@ -954,6 +954,130 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/new/invoice/{invoice_id}/download/:
+    get:
+      operationId: download_new_subscription
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: invoice_id
+        schema:
+          type: string
+          pattern: ^\d+$
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/subscription/new/invoice/{invoice_id}/preview/:
+    get:
+      operationId: get_new_subscription_invoice_preview
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: invoice_id
+        schema:
+          type: string
+          pattern: ^\d+$
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/subscription/new/invoices/:
+    get:
+      operationId: get_new_subscription_invoices
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/new/scheduled_change/:
     get:
       operationId: get_new_subscription_scheduled_change
@@ -8342,6 +8466,23 @@ components:
       - role
       - sender
       - workspace
+      description: ''
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        generated_on:
+          type: string
+          format: date-time
+      required:
+      - generated_on
+      - id
+      - name
       description: ''
     MergeHistory:
       type: object
