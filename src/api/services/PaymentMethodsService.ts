@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { SetupIntentResponse } from '../models/SetupIntentResponse';
 import type { StripeCard } from '../models/StripeCard';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -38,10 +39,10 @@ export class PaymentMethodsService {
     }
 
     /**
-     * @returns StripeCard
+     * @returns SetupIntentResponse
      * @throws ApiError
      */
-    public static getSetupIntentSecret(): CancelablePromise<StripeCard> {
+    public static getSetupIntentSecret(): CancelablePromise<SetupIntentResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/payment-methods/setup_intent_secret/',

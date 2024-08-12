@@ -593,7 +593,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StripeCard'
+                $ref: '#/components/schemas/SetupIntentResponse'
           description: ''
         '401':
           content:
@@ -1055,6 +1055,24 @@ paths:
           type: string
         description: Organization unique_key
         required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
       tags:
       - subscription
       security:
@@ -1064,7 +1082,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Invoice'
+                $ref: '#/components/schemas/PaginatedInvoiceList'
           description: ''
         '401':
           content:
@@ -8705,6 +8723,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulkGen'
+    PaginatedInvoiceList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Invoice'
     PaginatedMergeHistoryList:
       type: object
       properties:
@@ -9198,6 +9236,14 @@ components:
       - smtp_server_address
       - smtp_server_password
       - smtp_server_username
+      description: ''
+    SetupIntentResponse:
+      type: object
+      properties:
+        clientSecret:
+          type: string
+      required:
+      - clientSecret
       description: ''
     SharingInfoFolder:
       type: object
