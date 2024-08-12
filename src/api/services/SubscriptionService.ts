@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
-import type { Invoice } from '../models/Invoice';
+import type { PaginatedInvoiceList } from '../models/PaginatedInvoiceList';
 import type { PatchedSubscriptionScheduleChange } from '../models/PatchedSubscriptionScheduleChange';
 import type { RenewSubscription } from '../models/RenewSubscription';
 import type { Subscription } from '../models/Subscription';
@@ -114,13 +114,35 @@ export class SubscriptionService {
     }
 
     /**
-     * @returns Invoice
+     * @returns PaginatedInvoiceList
      * @throws ApiError
      */
-    public static getNewSubscriptionInvoices(): CancelablePromise<Invoice> {
+    public static getNewSubscriptionInvoices({
+        ordering,
+        page,
+        search,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<PaginatedInvoiceList> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/new/invoices/',
+            query: {
+                'ordering': ordering,
+                'page': page,
+                'search': search,
+            },
         });
     }
 
