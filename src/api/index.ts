@@ -8,6 +8,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AcceptInvite } from './models/AcceptInvite';
 export type { AccountDelivery } from './models/AccountDelivery';
+export type { Address } from './models/Address';
 export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
@@ -133,7 +134,7 @@ export { GenerateBulkService } from './services/GenerateBulkService';
 export { HistoryService } from './services/HistoryService';
 export { InvitationsService } from './services/InvitationsService';
 export { LinkedAccountsService } from './services/LinkedAccountsService';
-export { PaymentMethodsService } from './services/PaymentMethodsService';
+export { ManageBillingService } from './services/ManageBillingService';
 export { PermissionsService } from './services/PermissionsService';
 export { PersonalizationService } from './services/PersonalizationService';
 export { PlansService } from './services/PlansService';
