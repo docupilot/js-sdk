@@ -527,9 +527,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/payment-methods/:
-    get:
-      operationId: list_payment_methods
+  /accounts/v2/manage_billing/delete_card/:
+    post:
+      operationId: delete_card
       parameters:
       - in: header
         name: X-Workspace
@@ -537,30 +537,30 @@ paths:
           type: string
         description: Organization unique_key
         required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       tags:
-      - payment-methods
+      - manage_billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StripeCard'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StripeCard'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StripeCard'
+        required: true
       security:
       - SessionAuthentication: []
       responses:
-        '200':
+        '204':
+          description: No response body
+        '400':
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/StripeCard'
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -574,7 +574,73 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/payment-methods/setup_intent_secret/:
+  /accounts/v2/manage_billing/get_address/:
+    get:
+      operationId: get_billing_address
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - manage_billing
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/manage_billing/payment_methods/:
+    get:
+      operationId: list_payment_methods
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - manage_billing
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StripeCard'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/manage_billing/setup_intent_secret/:
     get:
       operationId: get_setup_intent_secret
       parameters:
@@ -585,7 +651,7 @@ paths:
         description: Organization unique_key
         required: true
       tags:
-      - payment-methods
+      - manage_billing
       security:
       - SessionAuthentication: []
       responses:
@@ -594,6 +660,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetupIntentResponse'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/manage_billing/update_address/:
+    post:
+      operationId: update_billing_address
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - manage_billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Address'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Address'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -7094,6 +7210,28 @@ components:
       - id
       - name
       - template_info
+      description: ''
+    Address:
+      type: object
+      properties:
+        line1:
+          type: string
+          maxLength: 255
+        line2:
+          type: string
+          maxLength: 255
+        city:
+          type: string
+          maxLength: 255
+        state:
+          type: string
+          maxLength: 255
+        postal_code:
+          type: string
+          maxLength: 20
+        country:
+          type: string
+          maxLength: 2
       description: ''
     AppendFiles:
       type: object
