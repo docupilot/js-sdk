@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CancelSubscriptionSurvey } from '../models/CancelSubscriptionSurvey';
+import type { CancelSubscriptionSurveyResponse } from '../models/CancelSubscriptionSurveyResponse';
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
 import type { PaginatedInvoiceList } from '../models/PaginatedInvoiceList';
 import type { PatchedSubscriptionScheduleChange } from '../models/PatchedSubscriptionScheduleChange';
@@ -67,6 +69,23 @@ export class SubscriptionService {
     }
 
     /**
+     * @returns CancelSubscriptionSurveyResponse
+     * @throws ApiError
+     */
+    public static newSubscriptionCancelSubscriptionSurvey({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<CancelSubscriptionSurvey>,
+    }): CancelablePromise<CancelSubscriptionSurveyResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/new/cancel_subscription_survey/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * @returns Subscription
      * @throws ApiError
      */
@@ -81,7 +100,7 @@ export class SubscriptionService {
      * @returns binary
      * @throws ApiError
      */
-    public static downloadNewSubscription({
+    public static downloadNewSubscriptionInvoice({
         invoiceId,
     }: {
         invoiceId: string,

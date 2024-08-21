@@ -3,6 +3,8 @@
 /* eslint-disable */
 import type { CartValidateResponse } from '../models/CartValidateResponse';
 import type { CartValidation } from '../models/CartValidation';
+import type { CustomPlanRequest } from '../models/CustomPlanRequest';
+import type { CustomPlanResponse } from '../models/CustomPlanResponse';
 import type { PaginatedPlansList } from '../models/PaginatedPlansList';
 import type { PlanSubscription } from '../models/PlanSubscription';
 import type { StripeCheckoutResponse } from '../models/StripeCheckoutResponse';
@@ -92,6 +94,23 @@ export class PlansService {
             path: {
                 'id': id,
             },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns CustomPlanResponse
+     * @throws ApiError
+     */
+    public static customPlanRequest({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<CustomPlanRequest>,
+    }): CancelablePromise<CustomPlanResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/plans/custom-plan-request/',
             body: requestBody,
             mediaType: 'application/json',
         });

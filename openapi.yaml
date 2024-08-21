@@ -543,13 +543,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StripeCard'
+              $ref: '#/components/schemas/DeleteStripeCard'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/StripeCard'
+              $ref: '#/components/schemas/DeleteStripeCard'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/StripeCard'
+              $ref: '#/components/schemas/DeleteStripeCard'
         required: true
       security:
       - SessionAuthentication: []
@@ -626,7 +626,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StripeCard'
+                type: array
+                items:
+                  $ref: '#/components/schemas/StripeCard'
           description: ''
         '401':
           content:
@@ -894,6 +896,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/plans/custom-plan-request/:
+    post:
+      operationId: custom_plan_request
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - plans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomPlanRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomPlanRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomPlanRequest'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomPlanResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/current_version/:
     get:
       operationId: get_subscription_current_version
@@ -1037,6 +1090,57 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/new/cancel_subscription_survey/:
+    post:
+      operationId: new_subscription_cancel_subscription_survey
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelSubscriptionSurvey'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CancelSubscriptionSurvey'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CancelSubscriptionSurvey'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelSubscriptionSurveyResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/new/details/:
     get:
       operationId: get_new_subscription_details
@@ -1072,7 +1176,7 @@ paths:
           description: ''
   /accounts/v2/subscription/new/invoice/{invoice_id}/download/:
     get:
-      operationId: download_new_subscription
+      operationId: download_new_subscription_invoice
       parameters:
       - in: header
         name: X-Workspace
@@ -7436,6 +7540,25 @@ components:
       - name
       - phone_number
       description: ''
+    CancelSubscriptionSurvey:
+      type: object
+      properties:
+        questions:
+          type: array
+          items:
+            type: string
+            maxLength: 100
+      required:
+      - questions
+      description: ''
+    CancelSubscriptionSurveyResponse:
+      type: object
+      properties:
+        details:
+          type: string
+      required:
+      - details
+      description: ''
     CartValidateResponse:
       type: object
       properties:
@@ -7678,6 +7801,30 @@ components:
       - thread_display_name
       - thread_id
       description: ''
+    CustomPlanRequest:
+      type: object
+      properties:
+        credits:
+          type: integer
+          minimum: 0
+        users:
+          type: integer
+          minimum: 0
+        additional_notes:
+          type: string
+          maxLength: 500
+      required:
+      - credits
+      - users
+      description: ''
+    CustomPlanResponse:
+      type: object
+      properties:
+        details:
+          type: string
+      required:
+      - details
+      description: ''
     DeleteCurrentWorkspace:
       type: object
       properties:
@@ -7686,6 +7833,14 @@ components:
           writeOnly: true
       required:
       - otp
+      description: ''
+    DeleteStripeCard:
+      type: object
+      properties:
+        payment_id:
+          type: string
+      required:
+      - payment_id
       description: ''
     DeliveryAccount:
       type: object
