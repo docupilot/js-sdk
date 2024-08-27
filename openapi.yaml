@@ -979,6 +979,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/user_satisfaction_survey/g2_review_link/:
+    get:
+      operationId: g2_review_link
+      summary: G2 review link
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/G2Link'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/user_satisfaction_survey/nps_next_reminder/:
     post:
       operationId: nps_next_reminder
@@ -1149,8 +1176,8 @@ paths:
           description: ''
   /accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/:
     post:
-      operationId: update_g3_review_updated_on
-      summary: Update g3_review_updated_on
+      operationId: update_g2_review_updated_on
+      summary: Update g2_review_updated_on
       tags:
       - user_satisfaction_survey
       security:
@@ -3154,6 +3181,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -3253,7 +3281,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|zoho$
         required: true
       tags:
       - linked_accounts
@@ -3431,6 +3459,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -7753,6 +7782,15 @@ components:
       required:
       - detail
       description: ''
+    G2Link:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+      required:
+      - url
+      description: ''
     GalleryCategory:
       type: object
       properties:
@@ -8882,6 +8920,11 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        images_count:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
       required:
       - category
       - file_type
