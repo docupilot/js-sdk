@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { G2Link } from '../models/G2Link';
 import type { NpsNextReminder } from '../models/NpsNextReminder';
 import type { NpsRating } from '../models/NpsRating';
 import type { SaveUserFeedback } from '../models/SaveUserFeedback';
@@ -11,6 +12,18 @@ import { request as __request } from '../core/request';
 import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class UserSatisfactionSurveyService {
+
+    /**
+     * G2 review link
+     * @returns G2Link
+     * @throws ApiError
+     */
+    public static g2ReviewLink(): CancelablePromise<G2Link> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/user_satisfaction_survey/g2_review_link/',
+        });
+    }
 
     /**
      * Nps next reminder
@@ -79,11 +92,11 @@ export class UserSatisfactionSurveyService {
     }
 
     /**
-     * Update g3_review_updated_on
+     * Update g2_review_updated_on
      * @returns any No response body
      * @throws ApiError
      */
-    public static updateG3ReviewUpdatedOn(): CancelablePromise<any> {
+    public static updateG2ReviewUpdatedOn(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/',
