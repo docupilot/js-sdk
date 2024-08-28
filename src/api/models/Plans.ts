@@ -9,10 +9,8 @@ export type Plans = {
     name: string;
     readonly price: number;
     credit: number;
-    template: number;
     user_seat: number;
     readonly credit_addon_price: number;
-    readonly template_addon_price: number;
     readonly user_seat_addon_price: number;
 };
 
