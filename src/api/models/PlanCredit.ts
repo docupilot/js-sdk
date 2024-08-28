@@ -7,6 +7,5 @@ export type PlanCredit = {
     name: string;
     credit: number;
     user_seat: number;
-    template: number;
 };
 

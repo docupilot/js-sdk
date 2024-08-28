@@ -6,7 +6,6 @@ export type PatchedSubscriptionScheduleChange = {
     readonly id?: number;
     readonly plan?: string;
     credit_addon?: number;
-    template_addon?: number;
     user_seat_addon?: number;
     readonly created_on?: string;
     readonly scheduled_on?: string;
