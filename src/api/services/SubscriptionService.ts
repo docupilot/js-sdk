@@ -23,6 +23,18 @@ export class SubscriptionService {
     }
 
     /**
+     * Extend trial
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static extendTrial(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/extend_trial/',
+        });
+    }
+
+    /**
      * @returns any
      * @throws ApiError
      */
