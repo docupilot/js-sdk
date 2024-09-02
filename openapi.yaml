@@ -560,6 +560,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/extend_trial/:
+    post:
+      operationId: extend_trial
+      summary: Extend trial
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/hosted_page/:
     get:
       operationId: get_chargebee_hosted_page
@@ -979,57 +1015,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/users/g2_review_to_airtable/:
-    post:
-      operationId: submit_review_to_airtable
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/G2reviewAirTable'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/G2reviewAirTable'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/G2reviewAirTable'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/G2reviewAirTable'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -1087,6 +1072,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /accounts/v2/users/save_user_feedback/:
+    post:
+      operationId: save_user_feedback
+      summary: Save user feedback
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SaveUserFeedback'
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SaveUserFeedback'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SaveUserFeedback'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveUserFeedback'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/v2/users/update_user_profile/:
     patch:
@@ -3008,6 +3044,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -3107,7 +3144,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|zoho$
         required: true
       tags:
       - linked_accounts
@@ -3285,6 +3322,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -6807,7 +6845,11 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
+        can_extend_trial:
+          type: boolean
+          readOnly: true
       required:
+      - can_extend_trial
       - current_term_end
       - current_term_start
       description: ''
@@ -7607,17 +7649,6 @@ components:
       required:
       - detail
       description: ''
-    G2reviewAirTable:
-      type: object
-      properties:
-        question_field:
-          type: string
-        value:
-          type: string
-      required:
-      - question_field
-      - value
-      description: ''
     GalleryCategory:
       type: object
       properties:
@@ -8336,6 +8367,21 @@ components:
       - bucket
       - id
       - name
+    SaveUserFeedback:
+      type: object
+      properties:
+        question_field:
+          type: string
+        value:
+          oneOf:
+          - type: string
+          - type: array
+            items:
+              type: string
+      required:
+      - question_field
+      - value
+      description: ''
     SendEmailAccountAuthorizationOTP:
       type: object
       properties:
@@ -8715,6 +8761,11 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        images_count:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
       required:
       - category
       - file_type
