@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type Address = {
+    display_name?: string;
     line1?: string;
     line2?: string;
     city?: string;

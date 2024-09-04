@@ -7318,6 +7318,9 @@ components:
     Address:
       type: object
       properties:
+        display_name:
+          type: string
+          maxLength: 255
         line1:
           type: string
           maxLength: 255
@@ -9326,7 +9329,15 @@ components:
         name:
           type: string
           maxLength: 50
-        price:
+        monthly_price:
+          type: number
+          format: float
+          readOnly: true
+        yearly_price:
+          type: number
+          format: float
+          readOnly: true
+        yearly_discounted_price:
           type: number
           format: float
           readOnly: true
@@ -9339,23 +9350,25 @@ components:
           maximum: 2147483647
           minimum: -2147483648
         credit_addon_price:
-          type: number
-          format: float
+          type: object
+          additionalProperties: {}
           readOnly: true
         user_seat_addon_price:
-          type: number
-          format: float
+          type: object
+          additionalProperties: {}
           readOnly: true
       required:
       - category
       - credit
       - credit_addon_price
       - id
+      - monthly_price
       - name
-      - price
       - user_seat
       - user_seat_addon_price
       - version
+      - yearly_discounted_price
+      - yearly_price
       description: ''
     PolymorphicDelivery:
       oneOf:
