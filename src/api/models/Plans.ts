@@ -7,10 +7,12 @@ export type Plans = {
     version: 1 | 2;
     category: 'trial' | 'free' | 'individual' | 'team' | 'enterprise' | 'custom';
     name: string;
-    readonly price: number;
+    readonly monthly_price: number;
+    readonly yearly_price: number;
+    readonly yearly_discounted_price: number;
     credit: number;
     user_seat: number;
-    readonly credit_addon_price: number;
-    readonly user_seat_addon_price: number;
+    readonly credit_addon_price: Record<string, any>;
+    readonly user_seat_addon_price: Record<string, any>;
 };
 
