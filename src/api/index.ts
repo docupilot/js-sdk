@@ -73,6 +73,7 @@ export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
 export type { RenewSubscription } from './models/RenewSubscription';
 export type { RetentionPreference } from './models/RetentionPreference';
 export type { S3Delivery } from './models/S3Delivery';
+export type { SaveUserFeedback } from './models/SaveUserFeedback';
 export type { SendEmailAccountAuthorizationOTP } from './models/SendEmailAccountAuthorizationOTP';
 export type { SendTestSmtpMail } from './models/SendTestSmtpMail';
 export type { SharingInfoFolder } from './models/SharingInfoFolder';
