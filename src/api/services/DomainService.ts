@@ -39,7 +39,7 @@ export class DomainService {
      * @returns DomainVerify
      * @throws ApiError
      */
-    public static verifyDomain({
+    public static verifyDomain2({
         id,
         requestBody,
     }: {
