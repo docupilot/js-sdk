@@ -80,4 +80,15 @@ export class SubscriptionService {
         });
     }
 
+    /**
+     * @returns ChargebeeSubscription
+     * @throws ApiError
+     */
+    public static getChargebeeUnpaidInvoices(): CancelablePromise<ChargebeeSubscription> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/unpaid_invoices/',
+        });
+    }
+
 }
