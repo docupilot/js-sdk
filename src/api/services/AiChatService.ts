@@ -74,6 +74,60 @@ export class AiChatService {
     }
 
     /**
+     * Word group category chat completion
+     * @returns ChatCompletionOutput
+     * @throws ApiError
+     */
+    public static wordGroupCategoryChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<ChatCompletion>,
+    }): CancelablePromise<ChatCompletionOutput> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai-chat/completions/word_group_category/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Word table category chat completion
+     * @returns ChatCompletionOutput
+     * @throws ApiError
+     */
+    public static wordTableCategoryChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<ChatCompletion>,
+    }): CancelablePromise<ChatCompletionOutput> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai-chat/completions/word_table_category/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Word text category chat completion
+     * @returns ChatCompletionOutput
+     * @throws ApiError
+     */
+    public static wordTextCategoryChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<ChatCompletion>,
+    }): CancelablePromise<ChatCompletionOutput> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai-chat/completions/word_text_category/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * List all chat threads
      * @returns ChatThreads
      * @throws ApiError
