@@ -1,9 +1,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ChatCompletion } from '../models/ChatCompletion';
+import type { ChatCompletionOutput } from '../models/ChatCompletionOutput';
 import type { ChatThreads } from '../models/ChatThreads';
 import type { CreateCustomerThreadInput } from '../models/CreateCustomerThreadInput';
 import type { CreateCustomerThreadOutput } from '../models/CreateCustomerThreadOutput';
+import type { PromptSuggestions } from '../models/PromptSuggestions';
 import type { ThreadMessages } from '../models/ThreadMessages';
 import type { UpdateCustomerThreadInput } from '../models/UpdateCustomerThreadInput';
 import type { UpdateCustomerThreadOutput } from '../models/UpdateCustomerThreadOutput';
@@ -15,6 +18,60 @@ import { request as __request } from '../core/request';
 import { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class AiChatService {
+
+    /**
+     * create template using chat completion
+     * @returns ChatCompletionOutput
+     * @throws ApiError
+     */
+    public static createTemplateChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<ChatCompletion>,
+    }): CancelablePromise<ChatCompletionOutput> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai-chat/completions/create_template/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * edit template using chat completion
+     * @returns ChatCompletionOutput
+     * @throws ApiError
+     */
+    public static editTemplateChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<ChatCompletion>,
+    }): CancelablePromise<ChatCompletionOutput> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai-chat/completions/edit_template/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * list prompt suggestions based on template name and description
+     * @returns ChatCompletionOutput
+     * @throws ApiError
+     */
+    public static listPromptSuggestions({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<PromptSuggestions>,
+    }): CancelablePromise<ChatCompletionOutput> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai-chat/completions/list_prompt_suggestions/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
 
     /**
      * List all chat threads

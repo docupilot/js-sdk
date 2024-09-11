@@ -560,42 +560,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/extend_trial/:
-    post:
-      operationId: extend_trial
-      summary: Extend trial
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - subscription
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/subscription/hosted_page/:
     get:
       operationId: get_chargebee_hosted_page
@@ -739,8 +703,8 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -785,8 +749,8 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -845,8 +809,8 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -904,8 +868,8 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -951,8 +915,8 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -988,8 +952,8 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1531,6 +1495,162 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /ai-chat/completions/create_template/:
+    post:
+      operationId: create_template_chat_completion
+      summary: create template using chat completion
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai-chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChatCompletion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChatCompletion'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionOutput'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai-chat/completions/edit_template/:
+    post:
+      operationId: edit_template_chat_completion
+      summary: edit template using chat completion
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai-chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChatCompletion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChatCompletion'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionOutput'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai-chat/completions/list_prompt_suggestions/:
+    post:
+      operationId: list_prompt_suggestions
+      summary: list prompt suggestions based on template name and description
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai-chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromptSuggestions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PromptSuggestions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PromptSuggestions'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletionOutput'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /ai-chat/threads/:
     get:
       operationId: list_all_chat_threads
@@ -1907,8 +2027,8 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -1972,8 +2092,8 @@ paths:
       tags:
       - domain
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2030,8 +2150,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2091,8 +2211,8 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2139,8 +2259,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2483,8 +2603,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2536,8 +2656,8 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -2688,8 +2808,8 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2808,8 +2928,8 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2861,8 +2981,8 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2909,8 +3029,8 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4040,8 +4160,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4080,8 +4200,8 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4133,8 +4253,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4191,8 +4311,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4248,8 +4368,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4306,8 +4426,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4367,8 +4487,8 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4420,8 +4540,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4513,8 +4633,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4626,8 +4746,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4687,8 +4807,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4740,8 +4860,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4902,8 +5022,8 @@ paths:
       tags:
       - generate
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4955,8 +5075,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5008,8 +5128,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -5067,8 +5187,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5130,8 +5250,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5188,8 +5308,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5249,8 +5369,8 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5320,8 +5440,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5378,8 +5498,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5433,8 +5553,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5509,8 +5629,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5558,8 +5678,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5624,8 +5744,8 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5685,8 +5805,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5753,8 +5873,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5824,8 +5944,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5885,8 +6005,8 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -6269,8 +6389,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6358,8 +6478,8 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6432,8 +6552,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6845,13 +6965,26 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
-        can_extend_trial:
-          type: boolean
-          readOnly: true
       required:
-      - can_extend_trial
       - current_term_end
       - current_term_start
+      description: ''
+    ChatCompletion:
+      type: object
+      properties:
+        message:
+          type: string
+          maxLength: 2500
+      required:
+      - message
+      description: ''
+    ChatCompletionOutput:
+      type: object
+      properties:
+        output_message:
+          type: string
+      required:
+      - output_message
       description: ''
     ChatThreads:
       type: object
@@ -8295,6 +8428,17 @@ components:
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
+    PromptSuggestions:
+      type: object
+      properties:
+        template_title:
+          type: string
+        template_description:
+          type: string
+      required:
+      - template_description
+      - template_title
+      description: ''
     RenewSubscription:
       type: object
       properties:
@@ -9501,8 +9645,6 @@ components:
         active:
           type: boolean
           readOnly: true
-        mfa_enforced:
-          type: boolean
       required:
       - active
       - id
