@@ -20,6 +20,8 @@ export type { BulkGenTask } from './models/BulkGenTask';
 export type { BulkGenUpload } from './models/BulkGenUpload';
 export type { ChangeRole } from './models/ChangeRole';
 export type { ChargebeeSubscription } from './models/ChargebeeSubscription';
+export type { ChatCompletion } from './models/ChatCompletion';
+export type { ChatCompletionOutput } from './models/ChatCompletionOutput';
 export type { ChatThreads } from './models/ChatThreads';
 export type { ChildTemplate } from './models/ChildTemplate';
 export type { CopyTemplate } from './models/CopyTemplate';
@@ -70,6 +72,7 @@ export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplat
 export type { PatchedUpdateUser } from './models/PatchedUpdateUser';
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
+export type { PromptSuggestions } from './models/PromptSuggestions';
 export type { RenewSubscription } from './models/RenewSubscription';
 export type { RetentionPreference } from './models/RetentionPreference';
 export type { S3Delivery } from './models/S3Delivery';
