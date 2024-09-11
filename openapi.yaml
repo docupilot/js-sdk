@@ -214,103 +214,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/demographic/:
-    post:
-      operationId: create_demographic
-      summary: Create Demographic
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - demographic
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DemoGraphic'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DemoGraphic'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DemoGraphic'
-      security:
-      - tokenAuth: []
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /accounts/v2/demographic/verify_domain/:
-    post:
-      operationId: verify_domain
-      summary: Verify domain
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - demographic
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VerifyDomain'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/VerifyDomain'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/VerifyDomain'
-        required: true
-      security:
-      - tokenAuth: []
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/invitations/:
     get:
       operationId: list_invitation
@@ -657,42 +560,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/extend_trial/:
-    post:
-      operationId: extend_trial
-      summary: Extend trial
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - subscription
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/v2/subscription/hosted_page/:
     get:
       operationId: get_chargebee_hosted_page
@@ -836,8 +703,8 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -882,8 +749,8 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -942,8 +809,8 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1001,8 +868,8 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -1048,8 +915,8 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1085,8 +952,8 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2004,8 +1871,8 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2069,8 +1936,8 @@ paths:
       tags:
       - domain
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2098,7 +1965,7 @@ paths:
           description: ''
   /api/v2/domain/{id}/verify/:
     patch:
-      operationId: verify_domain_2
+      operationId: verify_domain
       summary: verify domain
       parameters:
       - in: header
@@ -2127,8 +1994,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2188,8 +2055,8 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2236,8 +2103,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2279,18 +2146,6 @@ paths:
         schema:
           type: integer
         required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       tags:
       - folders
       security:
@@ -2337,13 +2192,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FolderSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/FolderSharing'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/FolderSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/FolderSharing'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/FolderSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/FolderSharing'
         required: true
       security:
       - SessionAuthentication: []
@@ -2352,7 +2213,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FolderSharing'
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderSharing'
           description: ''
         '400':
           content:
@@ -2580,8 +2443,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2633,8 +2496,8 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -2785,8 +2648,8 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2905,8 +2768,8 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2958,8 +2821,8 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3006,8 +2869,8 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -3141,7 +3004,6 @@ paths:
           - sign_now
           - signable
           - yousign
-          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -3241,7 +3103,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|zoho$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
         required: true
       tags:
       - linked_accounts
@@ -3419,7 +3281,6 @@ paths:
           - sign_now
           - signable
           - yousign
-          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -4137,8 +3998,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4177,8 +4038,8 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4230,8 +4091,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4288,8 +4149,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4345,8 +4206,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4403,8 +4264,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4464,8 +4325,8 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4517,8 +4378,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4610,8 +4471,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4723,8 +4584,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4784,8 +4645,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4837,8 +4698,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4999,8 +4860,8 @@ paths:
       tags:
       - generate
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5052,8 +4913,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5105,8 +4966,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -5164,8 +5025,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5227,8 +5088,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5285,8 +5146,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5346,8 +5207,8 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5417,8 +5278,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5475,8 +5336,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5530,8 +5391,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5606,8 +5467,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5655,8 +5516,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5721,8 +5582,8 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5782,8 +5643,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5850,8 +5711,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5921,8 +5782,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5982,8 +5843,8 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -6076,18 +5937,6 @@ paths:
           type: string
         description: Organization unique_key
         required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       - in: path
         name: template_id
         schema:
@@ -6139,13 +5988,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TemplateSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSharing'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TemplateSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSharing'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TemplateSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSharing'
         required: true
       security:
       - SessionAuthentication: []
@@ -6154,7 +6009,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemplateSharing'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateSharing'
           description: ''
         '400':
           content:
@@ -6366,8 +6223,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6455,8 +6312,8 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6529,8 +6386,8 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6942,11 +6799,7 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
-        can_extend_trial:
-          type: boolean
-          readOnly: true
       required:
-      - can_extend_trial
       - current_term_end
       - current_term_start
       description: ''
@@ -7122,18 +6975,6 @@ components:
       - type
       - updated_at
       - used_by
-    DemoGraphic:
-      type: object
-      properties:
-        user_demographic:
-          allOf:
-          - $ref: '#/components/schemas/UserDemographic'
-          nullable: true
-        workspace_demographic:
-          allOf:
-          - $ref: '#/components/schemas/WorkspaceDemographic'
-          nullable: true
-      description: ''
     DocuSignDelivery:
       type: object
       description: ''
@@ -9332,31 +9173,10 @@ components:
           type: string
           nullable: true
           maxLength: 5
-        show_demographic_prompt:
-          type: boolean
-          readOnly: true
       required:
       - email
       - guid
       - id
-      - show_demographic_prompt
-      description: ''
-    UserDemographic:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        role:
-          type: string
-          maxLength: 52
-        product_referral_source:
-          type: string
-          maxLength: 52
-      required:
-      - id
-      - product_referral_source
-      - role
       description: ''
     UserPersonalization:
       type: object
@@ -9404,15 +9224,6 @@ components:
       required:
       - errors
       - non_field_errors
-      description: ''
-    VerifyDomain:
-      type: object
-      properties:
-        domain_name:
-          type: string
-          maxLength: 255
-      required:
-      - domain_name
       description: ''
     VerifyEmailAccountOTP:
       type: object
@@ -9640,11 +9451,6 @@ components:
         active:
           type: boolean
           readOnly: true
-        mfa_enforced:
-          type: boolean
-        show_demographic_prompt:
-          type: boolean
-          readOnly: true
       required:
       - active
       - id
@@ -9652,42 +9458,8 @@ components:
       - plan_id
       - plan_status
       - role
-      - show_demographic_prompt
       - timezone
       - unique_key
-      description: ''
-    WorkspaceDemographic:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        domain_name:
-          type: string
-          maxLength: 255
-        employee_count:
-          enum:
-          - 1-10
-          - 11-15
-          - 51-200
-          - 201-500
-          - 501-1000
-          - 1001-5000
-          - 5001-10000
-          - 10000+
-          type: string
-        industry:
-          type: string
-          maxLength: 52
-        primary_region:
-          type: string
-          maxLength: 100
-      required:
-      - domain_name
-      - employee_count
-      - id
-      - industry
-      - primary_region
       description: ''
     YouSignDelivery:
       type: object
