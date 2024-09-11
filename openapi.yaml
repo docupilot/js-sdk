@@ -6821,6 +6821,7 @@ components:
           - t
           - e
           - c
+          - p
           type: string
         trial_end:
           type: string
