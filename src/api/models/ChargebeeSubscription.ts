@@ -9,6 +9,8 @@ export type ChargebeeSubscription = {
     billing_period_unit?: string | null;
     readonly current_term_start: string;
     readonly current_term_end: string;
+    unpaid_invoices?: number;
+    max_allowed_unpaid_invoices?: number;
     documents_allowed?: number;
     documents_created?: number;
     readonly can_extend_trial: boolean;

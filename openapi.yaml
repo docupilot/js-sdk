@@ -713,6 +713,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/unpaid_invoices/:
+    get:
+      operationId: get_chargebee_unpaid_invoices
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargebeeSubscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/team/:
     get:
       operationId: list_all_team_members
@@ -6836,6 +6869,14 @@ components:
         current_term_end:
           type: string
           readOnly: true
+        unpaid_invoices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        max_allowed_unpaid_invoices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
         documents_allowed:
           type: integer
           maximum: 9223372036854775807
