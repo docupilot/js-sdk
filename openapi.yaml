@@ -732,7 +732,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChargebeeSubscription'
+                $ref: '#/components/schemas/HostedPage'
           description: ''
         '401':
           content:
@@ -7888,6 +7888,42 @@ components:
       - id
       - name
       - signers
+    HostedPage:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        url:
+          type: string
+          format: uri
+        state:
+          type: string
+        embed:
+          type: boolean
+        created_at:
+          type: integer
+        expires_at:
+          type: integer
+        object:
+          type: string
+        updated_at:
+          type: integer
+        resource_version:
+          type: integer
+      required:
+      - created_at
+      - embed
+      - expires_at
+      - id
+      - object
+      - resource_version
+      - state
+      - type
+      - updated_at
+      - url
+      description: ''
     InitiateAuthorizationSequence:
       type: object
       properties:

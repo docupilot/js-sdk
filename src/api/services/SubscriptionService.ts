@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
+import type { HostedPage } from '../models/HostedPage';
 import type { RenewSubscription } from '../models/RenewSubscription';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -81,10 +82,10 @@ export class SubscriptionService {
     }
 
     /**
-     * @returns ChargebeeSubscription
+     * @returns HostedPage
      * @throws ApiError
      */
-    public static getChargebeeUnpaidInvoices(): CancelablePromise<ChargebeeSubscription> {
+    public static getChargebeeUnpaidInvoices(): CancelablePromise<HostedPage> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/unpaid_invoices/',

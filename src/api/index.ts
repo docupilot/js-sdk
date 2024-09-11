@@ -51,6 +51,7 @@ export type { GlobalPermission } from './models/GlobalPermission';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
 export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload';
 export type { HelloSignDelivery } from './models/HelloSignDelivery';
+export type { HostedPage } from './models/HostedPage';
 export type { InitiateAuthorizationSequence } from './models/InitiateAuthorizationSequence';
 export type { Invitation } from './models/Invitation';
 export type { MergeHistory } from './models/MergeHistory';
