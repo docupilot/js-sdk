@@ -4,7 +4,7 @@
 
 export type ChargebeeSubscription = {
     plan_id?: string | null;
-    status?: 'a' | 't' | 'e' | 'c';
+    status?: 'a' | 't' | 'e' | 'c' | 'p';
     trial_end?: string;
     billing_period_unit?: string | null;
     readonly current_term_start: string;
