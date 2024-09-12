@@ -64,14 +64,28 @@ export class FoldersService {
      */
     public static listFolderSharing({
         folderId,
+        ordering,
+        search,
     }: {
         folderId: number,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
     }): CancelablePromise<Array<FolderSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/folders/{folder_id}/permissions/',
             path: {
                 'folder_id': folderId,
+            },
+            query: {
+                'ordering': ordering,
+                'search': search,
             },
         });
     }
@@ -86,8 +100,8 @@ export class FoldersService {
         requestBody,
     }: {
         folderId: number,
-        requestBody: Array<FolderSharing>,
-    }): CancelablePromise<Array<FolderSharing>> {
+        requestBody: OmitReadonly<FolderSharing>,
+    }): CancelablePromise<FolderSharing> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/folders/{folder_id}/permissions/',

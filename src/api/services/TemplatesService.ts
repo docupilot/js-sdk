@@ -354,14 +354,28 @@ export class TemplatesService {
      */
     public static listTemplateSharing({
         templateId,
+        ordering,
+        search,
     }: {
         templateId: number,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
     }): CancelablePromise<Array<TemplateSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{template_id}/permissions/',
             path: {
                 'template_id': templateId,
+            },
+            query: {
+                'ordering': ordering,
+                'search': search,
             },
         });
     }
@@ -376,8 +390,8 @@ export class TemplatesService {
         requestBody,
     }: {
         templateId: number,
-        requestBody: Array<TemplateSharing>,
-    }): CancelablePromise<Array<TemplateSharing>> {
+        requestBody: OmitReadonly<TemplateSharing>,
+    }): CancelablePromise<TemplateSharing> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/templates/{template_id}/permissions/',
