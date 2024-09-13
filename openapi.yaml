@@ -560,6 +560,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/extend_trial/:
+    post:
+      operationId: extend_trial
+      summary: Extend trial
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/hosted_page/:
     get:
       operationId: get_chargebee_hosted_page
@@ -703,8 +739,8 @@ paths:
       tags:
       - team
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -749,8 +785,8 @@ paths:
       tags:
       - team
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -809,8 +845,8 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -868,8 +904,8 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -915,8 +951,8 @@ paths:
       tags:
       - Gallery templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -952,8 +988,8 @@ paths:
       tags:
       - Gallery templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1871,8 +1907,8 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -1936,8 +1972,8 @@ paths:
       tags:
       - domain
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1994,8 +2030,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2055,8 +2091,8 @@ paths:
       tags:
       - folders
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2103,8 +2139,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -2146,6 +2182,18 @@ paths:
         schema:
           type: integer
         required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
       tags:
       - folders
       security:
@@ -2192,19 +2240,13 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/FolderSharing'
+              $ref: '#/components/schemas/FolderSharing'
           application/x-www-form-urlencoded:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/FolderSharing'
+              $ref: '#/components/schemas/FolderSharing'
           multipart/form-data:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/FolderSharing'
+              $ref: '#/components/schemas/FolderSharing'
         required: true
       security:
       - SessionAuthentication: []
@@ -2213,9 +2255,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FolderSharing'
+                $ref: '#/components/schemas/FolderSharing'
           description: ''
         '400':
           content:
@@ -2443,8 +2483,8 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2496,8 +2536,8 @@ paths:
       tags:
       - folders
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -2648,8 +2688,8 @@ paths:
       tags:
       - history
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2768,8 +2808,8 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2821,8 +2861,8 @@ paths:
       tags:
       - history
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2869,8 +2909,8 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -3004,6 +3044,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -3103,7 +3144,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|zoho$
         required: true
       tags:
       - linked_accounts
@@ -3281,6 +3322,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -3998,8 +4040,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4038,8 +4080,8 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -4091,8 +4133,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4149,8 +4191,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4206,8 +4248,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4264,8 +4306,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -4325,8 +4367,8 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -4378,8 +4420,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4471,8 +4513,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4584,8 +4626,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -4645,8 +4687,8 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4698,8 +4740,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4860,8 +4902,8 @@ paths:
       tags:
       - generate
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4913,8 +4955,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4966,8 +5008,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -5025,8 +5067,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5088,8 +5130,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5146,8 +5188,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -5207,8 +5249,8 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5278,8 +5320,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5336,8 +5378,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -5391,8 +5433,8 @@ paths:
       tags:
       - template_delivery
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5467,8 +5509,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5516,8 +5558,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5582,8 +5624,8 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5643,8 +5685,8 @@ paths:
       tags:
       - generate_bulk
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5711,8 +5753,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -5782,8 +5824,8 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5843,8 +5885,8 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -5937,6 +5979,18 @@ paths:
           type: string
         description: Organization unique_key
         required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
       - in: path
         name: template_id
         schema:
@@ -5988,19 +6042,13 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/TemplateSharing'
+              $ref: '#/components/schemas/TemplateSharing'
           application/x-www-form-urlencoded:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/TemplateSharing'
+              $ref: '#/components/schemas/TemplateSharing'
           multipart/form-data:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/TemplateSharing'
+              $ref: '#/components/schemas/TemplateSharing'
         required: true
       security:
       - SessionAuthentication: []
@@ -6009,9 +6057,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TemplateSharing'
+                $ref: '#/components/schemas/TemplateSharing'
           description: ''
         '400':
           content:
@@ -6223,8 +6269,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -6312,8 +6358,8 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -6386,8 +6432,8 @@ paths:
       tags:
       - templates
       security:
-      - SessionAuthentication: []
       - tokenAuth: []
+      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -6799,7 +6845,11 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
+        can_extend_trial:
+          type: boolean
+          readOnly: true
       required:
+      - can_extend_trial
       - current_term_end
       - current_term_start
       description: ''
@@ -7132,7 +7182,7 @@ components:
           maxLength: 255
         txt_record:
           type: string
-          maxLength: 32
+          maxLength: 60
         is_txt_verified:
           type: boolean
         is_spf_verified:
@@ -8136,7 +8186,7 @@ components:
           maxLength: 255
         txt_record:
           type: string
-          maxLength: 32
+          maxLength: 60
         is_txt_verified:
           type: boolean
         is_spf_verified:
@@ -8191,6 +8241,12 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
       description: ''
     Plan:
       type: object
@@ -9173,10 +9229,18 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+          readOnly: true
       required:
       - email
       - guid
       - id
+      - theme
       description: ''
     UserPersonalization:
       type: object
@@ -9451,6 +9515,8 @@ components:
         active:
           type: boolean
           readOnly: true
+        mfa_enforced:
+          type: boolean
       required:
       - active
       - id
