@@ -3,7 +3,6 @@
 /* eslint-disable */
 import type { InitiateAuthorizationSequence } from '../models/InitiateAuthorizationSequence';
 import type { PatchedUpdateUser } from '../models/PatchedUpdateUser';
-import type { SaveUserFeedback } from '../models/SaveUserFeedback';
 import type { User } from '../models/User';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -40,24 +39,6 @@ export class UsersService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/users/me/',
-        });
-    }
-
-    /**
-     * Save user feedback
-     * @returns SaveUserFeedback
-     * @throws ApiError
-     */
-    public static saveUserFeedback({
-        requestBody,
-    }: {
-        requestBody: Array<SaveUserFeedback>,
-    }): CancelablePromise<SaveUserFeedback> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/accounts/v2/users/save_user_feedback/',
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 

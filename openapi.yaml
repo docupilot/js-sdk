@@ -1015,6 +1015,224 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/user_satisfaction_survey/g2_review/:
+    get:
+      operationId: g2_review
+      summary: Redirect to G2 Review Page
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '302':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/nps_next_reminder/:
+    post:
+      operationId: nps_next_reminder
+      summary: Update the next NPS reminder time
+      tags:
+      - user_satisfaction_survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NpsNextReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NpsNextReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NpsNextReminder'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/nps_rating/:
+    post:
+      operationId: nps_rating
+      summary: Update NPS rating
+      tags:
+      - user_satisfaction_survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NpsRating'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NpsRating'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NpsRating'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/save_user_feedback/:
+    post:
+      operationId: save_user_feedback
+      summary: Save user feedback
+      tags:
+      - user_satisfaction_survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SaveUserFeedback'
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SaveUserFeedback'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/SaveUserFeedback'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveUserFeedback'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/show_survey_prompt/:
+    get:
+      operationId: show_survey_prompt
+      summary: Show survey prompt
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyPrompt'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/:
+    post:
+      operationId: update_g2_review_updated_on
+      summary: Update g2_review_updated_on
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -1072,57 +1290,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-  /accounts/v2/users/save_user_feedback/:
-    post:
-      operationId: save_user_feedback
-      summary: Save user feedback
-      tags:
-      - users
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
-          application/x-www-form-urlencoded:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
-          multipart/form-data:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SaveUserFeedback'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/v2/users/update_user_profile/:
     patch:
@@ -7182,7 +7349,7 @@ components:
           maxLength: 255
         txt_record:
           type: string
-          maxLength: 32
+          maxLength: 60
         is_txt_verified:
           type: boolean
         is_spf_verified:
@@ -8048,6 +8215,23 @@ components:
       required:
       - detail
       description: ''
+    NpsNextReminder:
+      type: object
+      properties:
+        days:
+          type: integer
+      required:
+      - days
+      description: ''
+    NpsRating:
+      type: object
+      properties:
+        nps_rating:
+          type: integer
+          maximum: 10
+          minimum: 0
+          nullable: true
+      description: ''
     OneDriveDelivery:
       type: object
       description: ''
@@ -8186,7 +8370,7 @@ components:
           maxLength: 255
         txt_record:
           type: string
-          maxLength: 32
+          maxLength: 60
         is_txt_verified:
           type: boolean
         is_spf_verified:
@@ -8241,6 +8425,12 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
       description: ''
     Plan:
       type: object
@@ -8611,6 +8801,15 @@ components:
       - id
       - name
       - parties
+    SurveyPrompt:
+      type: object
+      properties:
+        show_survey_prompt:
+          type: boolean
+          readOnly: true
+      required:
+      - show_survey_prompt
+      description: ''
     TeamMember:
       type: object
       properties:
@@ -9223,10 +9422,18 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+          readOnly: true
       required:
       - email
       - guid
       - id
+      - theme
       description: ''
     UserPersonalization:
       type: object
@@ -9241,11 +9448,6 @@ components:
         tp:freshchat:restoreId:
           type: string
           format: uuid
-        g2_reviewed:
-          type: boolean
-        g2_next_reminder:
-          type: string
-          format: date-time
       description: ''
     UserPersonalizationListViewTemplate:
       type: object
@@ -9503,6 +9705,9 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
+        use_froala:
+          type: boolean
+          readOnly: true
       required:
       - active
       - id
@@ -9512,6 +9717,7 @@ components:
       - role
       - timezone
       - unique_key
+      - use_froala
       description: ''
     YouSignDelivery:
       type: object
