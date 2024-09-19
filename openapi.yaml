@@ -1533,8 +1533,8 @@ paths:
           description: ''
   /ai-chat/completions/create_template/:
     post:
-      operationId: create_template_chat_completion
-      summary: create template using chat completion
+      operationId: create_template_using_ui
+      summary: create template using ai
       parameters:
       - in: header
         name: X-Workspace
@@ -1548,13 +1548,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatCompletion'
+              $ref: '#/components/schemas/AITemplate'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ChatCompletion'
+              $ref: '#/components/schemas/AITemplate'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ChatCompletion'
+              $ref: '#/components/schemas/AITemplate'
         required: true
       security:
       - SessionAuthentication: []
@@ -1563,7 +1563,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatCompletionOutput'
+                $ref: '#/components/schemas/Template'
           description: ''
         '400':
           content:
@@ -1600,13 +1600,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChatCompletion'
+              $ref: '#/components/schemas/AITemplateEdit'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ChatCompletion'
+              $ref: '#/components/schemas/AITemplateEdit'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ChatCompletion'
+              $ref: '#/components/schemas/AITemplateEdit'
         required: true
       security:
       - SessionAuthentication: []
@@ -1615,7 +1615,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatCompletionOutput'
+                $ref: '#/components/schemas/AITemplateEdit'
           description: ''
         '400':
           content:
@@ -1639,6 +1639,13 @@ paths:
     post:
       operationId: list_prompt_suggestions
       summary: list prompt suggestions based on template name and description
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
       tags:
       - ai-chat
       requestBody:
@@ -1660,163 +1667,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChatCompletionOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /ai-chat/completions/word_group_category/:
-    post:
-      operationId: word_group_category_chat_completion
-      summary: Word group category chat completion
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /ai-chat/completions/word_table_category/:
-    post:
-      operationId: word_table_category_chat_completion
-      summary: Word table category chat completion
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /ai-chat/completions/word_text_category/:
-    post:
-      operationId: word_text_category_chat_completion
-      summary: Word text category chat completion
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ChatCompletion'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChatCompletionOutput'
+                $ref: '#/components/schemas/PromptSuggestions'
           description: ''
         '400':
           content:
@@ -6868,6 +6719,44 @@ paths:
           description: ''
 components:
   schemas:
+    AITemplate:
+      type: object
+      properties:
+        ai_prompt:
+          type: string
+          maxLength: 2500
+        title:
+          type: string
+          maxLength: 120
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        folder:
+          type: integer
+          nullable: true
+      required:
+      - ai_prompt
+      - title
+      description: ''
+    AITemplateEdit:
+      type: object
+      properties:
+        ai_prompt:
+          type: string
+          writeOnly: true
+          maxLength: 2500
+        selected_content:
+          type: string
+          writeOnly: true
+        ai_response:
+          type: string
+          readOnly: true
+      required:
+      - ai_prompt
+      - ai_response
+      - selected_content
+      description: ''
     AcceptInvite:
       type: object
       properties:
@@ -7157,23 +7046,6 @@ components:
       - can_extend_trial
       - current_term_end
       - current_term_start
-      description: ''
-    ChatCompletion:
-      type: object
-      properties:
-        message:
-          type: string
-          maxLength: 2500
-      required:
-      - message
-      description: ''
-    ChatCompletionOutput:
-      type: object
-      properties:
-        output_message:
-          type: string
-      required:
-      - output_message
       description: ''
     ChatThreads:
       type: object
@@ -8563,6 +8435,12 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
       description: ''
     Plan:
       type: object
@@ -8622,10 +8500,18 @@ components:
       properties:
         template_title:
           type: string
+          writeOnly: true
         template_description:
           type: string
+          writeOnly: true
+          nullable: true
+        prompts:
+          type: array
+          items:
+            type: string
+          readOnly: true
       required:
-      - template_description
+      - prompts
       - template_title
       description: ''
     RenewSubscription:
@@ -9556,10 +9442,18 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+          readOnly: true
       required:
       - email
       - guid
       - id
+      - theme
       description: ''
     UserPersonalization:
       type: object

@@ -8,6 +8,8 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AcceptInvite } from './models/AcceptInvite';
 export type { AccountDelivery } from './models/AccountDelivery';
+export type { AITemplate } from './models/AITemplate';
+export type { AITemplateEdit } from './models/AITemplateEdit';
 export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
@@ -20,8 +22,6 @@ export type { BulkGenTask } from './models/BulkGenTask';
 export type { BulkGenUpload } from './models/BulkGenUpload';
 export type { ChangeRole } from './models/ChangeRole';
 export type { ChargebeeSubscription } from './models/ChargebeeSubscription';
-export type { ChatCompletion } from './models/ChatCompletion';
-export type { ChatCompletionOutput } from './models/ChatCompletionOutput';
 export type { ChatThreads } from './models/ChatThreads';
 export type { ChildTemplate } from './models/ChildTemplate';
 export type { CopyTemplate } from './models/CopyTemplate';

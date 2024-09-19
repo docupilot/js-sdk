@@ -1,12 +1,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ChatCompletion } from '../models/ChatCompletion';
-import type { ChatCompletionOutput } from '../models/ChatCompletionOutput';
+import type { AITemplate } from '../models/AITemplate';
+import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { ChatThreads } from '../models/ChatThreads';
 import type { CreateCustomerThreadInput } from '../models/CreateCustomerThreadInput';
 import type { CreateCustomerThreadOutput } from '../models/CreateCustomerThreadOutput';
 import type { PromptSuggestions } from '../models/PromptSuggestions';
+import type { Template } from '../models/Template';
 import type { ThreadMessages } from '../models/ThreadMessages';
 import type { UpdateCustomerThreadInput } from '../models/UpdateCustomerThreadInput';
 import type { UpdateCustomerThreadOutput } from '../models/UpdateCustomerThreadOutput';
@@ -20,15 +21,15 @@ import { OmitReadonly } from '../core/utils/OmitReadonly';
 export class AiChatService {
 
     /**
-     * create template using chat completion
-     * @returns ChatCompletionOutput
+     * create template using ai
+     * @returns Template
      * @throws ApiError
      */
-    public static createTemplateChatCompletion({
+    public static createTemplateUsingUi({
         requestBody,
     }: {
-        requestBody: OmitReadonly<ChatCompletion>,
-    }): CancelablePromise<ChatCompletionOutput> {
+        requestBody: OmitReadonly<AITemplate>,
+    }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai-chat/completions/create_template/',
@@ -39,14 +40,14 @@ export class AiChatService {
 
     /**
      * edit template using chat completion
-     * @returns ChatCompletionOutput
+     * @returns AITemplateEdit
      * @throws ApiError
      */
     public static editTemplateChatCompletion({
         requestBody,
     }: {
-        requestBody: OmitReadonly<ChatCompletion>,
-    }): CancelablePromise<ChatCompletionOutput> {
+        requestBody: OmitReadonly<AITemplateEdit>,
+    }): CancelablePromise<AITemplateEdit> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai-chat/completions/edit_template/',
@@ -57,71 +58,17 @@ export class AiChatService {
 
     /**
      * list prompt suggestions based on template name and description
-     * @returns ChatCompletionOutput
+     * @returns PromptSuggestions
      * @throws ApiError
      */
     public static listPromptSuggestions({
         requestBody,
     }: {
         requestBody: OmitReadonly<PromptSuggestions>,
-    }): CancelablePromise<ChatCompletionOutput> {
+    }): CancelablePromise<PromptSuggestions> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai-chat/completions/list_prompt_suggestions/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Word group category chat completion
-     * @returns ChatCompletionOutput
-     * @throws ApiError
-     */
-    public static wordGroupCategoryChatCompletion({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<ChatCompletion>,
-    }): CancelablePromise<ChatCompletionOutput> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/ai-chat/completions/word_group_category/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Word table category chat completion
-     * @returns ChatCompletionOutput
-     * @throws ApiError
-     */
-    public static wordTableCategoryChatCompletion({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<ChatCompletion>,
-    }): CancelablePromise<ChatCompletionOutput> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/ai-chat/completions/word_table_category/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Word text category chat completion
-     * @returns ChatCompletionOutput
-     * @throws ApiError
-     */
-    public static wordTextCategoryChatCompletion({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<ChatCompletion>,
-    }): CancelablePromise<ChatCompletionOutput> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/ai-chat/completions/word_text_category/',
             body: requestBody,
             mediaType: 'application/json',
         });
