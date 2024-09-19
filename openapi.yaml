@@ -1015,21 +1015,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/g2_review_link/:
+  /accounts/v2/user_satisfaction_survey/g2_review/:
     get:
-      operationId: g2_review_link
-      summary: G2 review link
+      operationId: g2_review
+      summary: Redirect to G2 Review Page
       tags:
       - user_satisfaction_survey
       security:
       - SessionAuthentication: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/G2Link'
-          description: ''
+        '302':
+          description: No response body
         '401':
           content:
             application/json:
@@ -1045,7 +1041,7 @@ paths:
   /accounts/v2/user_satisfaction_survey/nps_next_reminder/:
     post:
       operationId: nps_next_reminder
-      summary: Nps next reminder
+      summary: Update the next NPS reminder time
       tags:
       - user_satisfaction_survey
       requestBody:
@@ -1063,7 +1059,7 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '200':
+        '204':
           description: No response body
         '400':
           content:
@@ -1086,7 +1082,7 @@ paths:
   /accounts/v2/user_satisfaction_survey/nps_rating/:
     post:
       operationId: nps_rating
-      summary: Nps rating
+      summary: Update NPS rating
       tags:
       - user_satisfaction_survey
       requestBody:
@@ -1194,9 +1190,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/SurveyPrompt'
           description: ''
         '401':
           content:
@@ -1219,7 +1213,7 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '200':
+        '204':
           description: No response body
         '400':
           content:
@@ -7822,15 +7816,6 @@ components:
       required:
       - detail
       description: ''
-    G2Link:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-      required:
-      - url
-      description: ''
     GalleryCategory:
       type: object
       properties:
@@ -8816,6 +8801,15 @@ components:
       - id
       - name
       - parties
+    SurveyPrompt:
+      type: object
+      properties:
+        show_survey_prompt:
+          type: boolean
+          readOnly: true
+      required:
+      - show_survey_prompt
+      description: ''
     TeamMember:
       type: object
       properties:
@@ -9435,8 +9429,12 @@ components:
           - system
           type: string
           readOnly: true
+        g2_verified:
+          type: boolean
+          readOnly: true
       required:
       - email
+      - g2_verified
       - guid
       - id
       - theme
@@ -9711,6 +9709,9 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
+        use_froala:
+          type: boolean
+          readOnly: true
       required:
       - active
       - id
@@ -9720,6 +9721,7 @@ components:
       - role
       - timezone
       - unique_key
+      - use_froala
       description: ''
     YouSignDelivery:
       type: object
