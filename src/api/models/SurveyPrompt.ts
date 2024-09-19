@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type G2Link = {
-    url: string;
+export type SurveyPrompt = {
+    readonly show_survey_prompt: boolean;
 };
 
