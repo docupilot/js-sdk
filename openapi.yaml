@@ -772,8 +772,9 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -818,8 +819,9 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -878,8 +880,9 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -937,8 +940,9 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -984,8 +988,9 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1021,8 +1026,9 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1309,6 +1315,7 @@ paths:
       tags:
       - users
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -2107,8 +2114,9 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2172,8 +2180,9 @@ paths:
       tags:
       - domain
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2230,8 +2239,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2291,8 +2301,9 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2339,8 +2350,9 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2683,8 +2695,9 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2736,8 +2749,9 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -2888,8 +2902,9 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3008,8 +3023,9 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3061,8 +3077,9 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3109,8 +3126,9 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4240,8 +4258,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4280,8 +4299,9 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4333,8 +4353,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4391,8 +4412,9 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4448,8 +4470,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4506,8 +4529,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4567,8 +4591,9 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4620,8 +4645,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4713,8 +4739,9 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4826,8 +4853,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4887,8 +4915,9 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4940,8 +4969,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5102,8 +5132,9 @@ paths:
       tags:
       - generate
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5155,8 +5186,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5208,8 +5240,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -5267,8 +5300,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5330,8 +5364,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5388,8 +5423,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5449,8 +5485,9 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5520,8 +5557,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5578,8 +5616,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5633,8 +5672,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5709,8 +5749,9 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5758,8 +5799,9 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5824,8 +5866,9 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5885,8 +5928,9 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5953,8 +5997,9 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -6024,8 +6069,9 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6085,8 +6131,9 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -6145,6 +6192,7 @@ paths:
       tags:
       - generate
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6469,8 +6517,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6558,8 +6607,9 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6632,8 +6682,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -9480,6 +9531,8 @@ components:
           - system
           type: string
           readOnly: true
+        is_mfa_enabled:
+          type: boolean
       required:
       - email
       - guid
@@ -9982,14 +10035,20 @@ components:
       - signers
       - title
   securitySchemes:
+    OAuthAuthentication:
+      type: http
+      scheme: bearer
+      description: OAuth2 Bearer Token Authentication
     SessionAuthentication:
       type: apiKey
       in: cookie
       name: sessionid
       description: browser based login takes care of this
     tokenAuth:
-      type: http
-      scheme: bearer
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Basic"
 externalDocs:
   description: Help docs on how to use API
   url: https://help.docupilot.app/developers/api-overview
