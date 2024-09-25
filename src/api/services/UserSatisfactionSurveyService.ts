@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { G2Link } from '../models/G2Link';
 import type { NpsNextReminder } from '../models/NpsNextReminder';
 import type { NpsRating } from '../models/NpsRating';
-import type { SaveUserFeedback } from '../models/SaveUserFeedback';
+import type { SaveCustomerFeedback } from '../models/SaveCustomerFeedback';
+import type { SurveyPrompt } from '../models/SurveyPrompt';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -14,27 +14,30 @@ import { OmitReadonly } from '../core/utils/OmitReadonly';
 export class UserSatisfactionSurveyService {
 
     /**
-     * G2 review link
-     * @returns G2Link
+     * Redirect to G2 Review Page
+     * @returns void
      * @throws ApiError
      */
-    public static g2ReviewLink(): CancelablePromise<G2Link> {
+    public static g2Review(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/user_satisfaction_survey/g2_review_link/',
+            url: '/accounts/v2/user_satisfaction_survey/g2_review/',
+            errors: {
+                302: `No response body`,
+            },
         });
     }
 
     /**
-     * Nps next reminder
-     * @returns any No response body
+     * Update the next NPS reminder time
+     * @returns void
      * @throws ApiError
      */
     public static npsNextReminder({
         requestBody,
     }: {
         requestBody: OmitReadonly<NpsNextReminder>,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/user_satisfaction_survey/nps_next_reminder/',
@@ -44,7 +47,7 @@ export class UserSatisfactionSurveyService {
     }
 
     /**
-     * Nps rating
+     * Update NPS rating
      * @returns void
      * @throws ApiError
      */
@@ -62,15 +65,15 @@ export class UserSatisfactionSurveyService {
     }
 
     /**
-     * Save user feedback
-     * @returns SaveUserFeedback
+     * Save customer feedback
+     * @returns void
      * @throws ApiError
      */
-    public static saveUserFeedback({
+    public static saveCustomerFeedback({
         requestBody,
     }: {
-        requestBody: Array<SaveUserFeedback>,
-    }): CancelablePromise<SaveUserFeedback> {
+        requestBody: OmitReadonly<SaveCustomerFeedback>,
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/user_satisfaction_survey/save_user_feedback/',
@@ -81,10 +84,10 @@ export class UserSatisfactionSurveyService {
 
     /**
      * Show survey prompt
-     * @returns any
+     * @returns SurveyPrompt
      * @throws ApiError
      */
-    public static showSurveyPrompt(): CancelablePromise<Record<string, any>> {
+    public static showSurveyPrompt(): CancelablePromise<SurveyPrompt> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/user_satisfaction_survey/show_survey_prompt/',
@@ -93,10 +96,10 @@ export class UserSatisfactionSurveyService {
 
     /**
      * Update g2_review_updated_on
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
-    public static updateG2ReviewUpdatedOn(): CancelablePromise<any> {
+    public static updateG2ReviewUpdatedOn(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/',
