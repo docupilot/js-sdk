@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type G2Link = {
+export type HostedPage = {
     url: string;
 };
 
