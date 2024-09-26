@@ -71,6 +71,7 @@ export type { PatchedUpdateFolderSharing } from './models/PatchedUpdateFolderSha
 export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate';
 export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplateSharing';
 export type { PatchedUpdateUser } from './models/PatchedUpdateUser';
+export type { PatchedWorkspace } from './models/PatchedWorkspace';
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
 export type { RenewSubscription } from './models/RenewSubscription';
