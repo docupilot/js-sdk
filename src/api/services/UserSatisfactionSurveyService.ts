@@ -3,7 +3,7 @@
 /* eslint-disable */
 import type { NpsNextReminder } from '../models/NpsNextReminder';
 import type { NpsRating } from '../models/NpsRating';
-import type { SaveUserFeedback } from '../models/SaveUserFeedback';
+import type { SaveCustomerFeedback } from '../models/SaveCustomerFeedback';
 import type { SurveyPrompt } from '../models/SurveyPrompt';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -65,15 +65,15 @@ export class UserSatisfactionSurveyService {
     }
 
     /**
-     * Save user feedback
-     * @returns SaveUserFeedback
+     * Save customer feedback
+     * @returns void
      * @throws ApiError
      */
-    public static saveUserFeedback({
+    public static saveCustomerFeedback({
         requestBody,
     }: {
-        requestBody: Array<SaveUserFeedback>,
-    }): CancelablePromise<SaveUserFeedback> {
+        requestBody: OmitReadonly<SaveCustomerFeedback>,
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/user_satisfaction_survey/save_user_feedback/',
