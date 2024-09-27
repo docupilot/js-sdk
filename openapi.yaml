@@ -772,8 +772,9 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -818,8 +819,9 @@ paths:
       tags:
       - team
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -878,8 +880,9 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -937,8 +940,9 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -984,8 +988,9 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1021,8 +1026,9 @@ paths:
       tags:
       - Gallery templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -1154,37 +1160,27 @@ paths:
           description: ''
   /accounts/v2/user_satisfaction_survey/save_user_feedback/:
     post:
-      operationId: save_user_feedback
-      summary: Save user feedback
+      operationId: save_customer_feedback
+      summary: Save customer feedback
       tags:
       - user_satisfaction_survey
       requestBody:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
+              $ref: '#/components/schemas/SaveCustomerFeedback'
           application/x-www-form-urlencoded:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
+              $ref: '#/components/schemas/SaveCustomerFeedback'
           multipart/form-data:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
+              $ref: '#/components/schemas/SaveCustomerFeedback'
         required: true
       security:
       - SessionAuthentication: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SaveUserFeedback'
-          description: ''
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -1309,6 +1305,7 @@ paths:
       tags:
       - users
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1526,7 +1523,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-    put:
+    patch:
       operationId: update_current_workspace
       summary: update current workspace details
       parameters:
@@ -1542,14 +1539,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Workspace'
+              $ref: '#/components/schemas/PatchedWorkspace'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Workspace'
+              $ref: '#/components/schemas/PatchedWorkspace'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Workspace'
-        required: true
+              $ref: '#/components/schemas/PatchedWorkspace'
       security:
       - SessionAuthentication: []
       responses:
@@ -1557,7 +1553,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workspace'
+                $ref: '#/components/schemas/PatchedWorkspace'
           description: ''
         '400':
           content:
@@ -2107,8 +2103,9 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2172,8 +2169,9 @@ paths:
       tags:
       - domain
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2230,8 +2228,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2291,8 +2290,9 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2339,8 +2339,9 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -2683,8 +2684,9 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2736,8 +2738,9 @@ paths:
       tags:
       - folders
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -2888,8 +2891,9 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3008,8 +3012,9 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3061,8 +3066,9 @@ paths:
       tags:
       - history
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3109,8 +3115,9 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4240,8 +4247,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4280,8 +4288,9 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4333,8 +4342,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4391,8 +4401,9 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4448,8 +4459,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4506,8 +4518,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4567,8 +4580,9 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4620,8 +4634,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4713,8 +4728,9 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4826,8 +4842,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4887,8 +4904,9 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4940,8 +4958,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5102,8 +5121,9 @@ paths:
       tags:
       - generate
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5155,8 +5175,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5208,8 +5229,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -5267,8 +5289,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5330,8 +5353,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5388,8 +5412,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5449,8 +5474,9 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5520,8 +5546,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5578,8 +5605,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5633,8 +5661,9 @@ paths:
       tags:
       - template_delivery
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5709,8 +5738,9 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5758,8 +5788,9 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5824,8 +5855,9 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5885,8 +5917,9 @@ paths:
       tags:
       - generate_bulk
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5953,8 +5986,9 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -6024,8 +6058,9 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6085,8 +6120,9 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -6145,6 +6181,7 @@ paths:
       tags:
       - generate
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6469,8 +6506,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6558,8 +6596,9 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -6632,8 +6671,9 @@ paths:
       tags:
       - templates
       security:
-      - tokenAuth: []
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -8483,6 +8523,165 @@ components:
           - system
           type: string
       description: ''
+    PatchedWorkspace:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        org_name:
+          type: string
+          maxLength: 255
+        unique_key:
+          type: string
+          readOnly: true
+        role:
+          type: string
+          readOnly: true
+        timezone:
+          enum:
+          - Pacific/Midway
+          - America/Adak
+          - Pacific/Honolulu
+          - Pacific/Marquesas
+          - America/Anchorage
+          - America/Tijuana
+          - America/Los_Angeles
+          - America/Phoenix
+          - America/Chihuahua
+          - America/Denver
+          - America/Belize
+          - America/Chicago
+          - Pacific/Easter
+          - America/Mexico_City
+          - America/Regina
+          - America/Bogota
+          - America/Cancun
+          - America/New_York
+          - America/Port-au-Prince
+          - America/Havana
+          - America/Indiana/Indianapolis
+          - America/Asuncion
+          - America/Halifax
+          - America/Caracas
+          - America/Cuiaba
+          - America/Manaus
+          - America/Santiago
+          - America/Grand_Turk
+          - America/St_Johns
+          - America/Fortaleza
+          - America/Sao_Paulo
+          - America/Cayenne
+          - America/Buenos_Aires
+          - America/Godthab
+          - America/Montevideo
+          - America/Miquelon
+          - America/Bahia
+          - America/Noronha
+          - Atlantic/Azores
+          - Atlantic/Cape_Verde
+          - UTC
+          - Africa/Casablanca
+          - Europe/London
+          - Africa/Monrovia
+          - Europe/Amsterdam
+          - Europe/Belgrade
+          - Europe/Brussels
+          - Europe/Warsaw
+          - Africa/Algiers
+          - Africa/Windhoek
+          - Asia/Amman
+          - Europe/Athens
+          - Asia/Beirut
+          - Africa/Cairo
+          - Asia/Damascus
+          - Asia/Gaza
+          - Africa/Harare
+          - Europe/Helsinki
+          - Asia/Jerusalem
+          - Europe/Kaliningrad
+          - Africa/Tripoli
+          - Asia/Baghdad
+          - Asia/Istanbul
+          - Asia/Kuwait
+          - Europe/Minsk
+          - Europe/Moscow
+          - Africa/Nairobi
+          - Asia/Tehran
+          - Asia/Muscat
+          - Europe/Astrakhan
+          - Asia/Baku
+          - Europe/Samara
+          - Indian/Mauritius
+          - Asia/Tbilisi
+          - Asia/Yerevan
+          - Asia/Kabul
+          - Asia/Tashkent
+          - Asia/Yekaterinburg
+          - Asia/Karachi
+          - Asia/Kolkata
+          - Asia/Colombo
+          - Asia/Katmandu
+          - Asia/Almaty
+          - Asia/Dhaka
+          - Asia/Rangoon
+          - Asia/Novosibirsk
+          - Asia/Bangkok
+          - Asia/Barnaul
+          - Asia/Hovd
+          - Asia/Krasnoyarsk
+          - Asia/Tomsk
+          - Asia/Chongqing
+          - Asia/Irkutsk
+          - Asia/Kuala_Lumpur
+          - Australia/Perth
+          - Asia/Taipei
+          - Asia/Ulaanbaatar
+          - Asia/Pyongyang
+          - Australia/Eucla
+          - Asia/Chita
+          - Asia/Tokyo
+          - Asia/Seoul
+          - Asia/Yakutsk
+          - Australia/Adelaide
+          - Australia/Darwin
+          - Australia/Brisbane
+          - Australia/Canberra
+          - Pacific/Guam
+          - Australia/Hobart
+          - Asia/Vladivostok
+          - Australia/Lord_Howe
+          - Pacific/Bougainville
+          - Asia/Srednekolymsk
+          - Asia/Magadan
+          - Pacific/Norfolk
+          - Asia/Sakhalin
+          - Pacific/Guadalcanal
+          - Asia/Anadyr
+          - Pacific/Auckland
+          - Pacific/Fiji
+          - Pacific/Chatham
+          - Pacific/Tongatapu
+          - Pacific/Apia
+          - Pacific/Kiritimati
+          type: string
+          readOnly: true
+        plan_id:
+          type: string
+          nullable: true
+          readOnly: true
+        plan_status:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+          readOnly: true
+        mfa_enforced:
+          type: boolean
+        use_froala:
+          type: boolean
+          readOnly: true
+      description: ''
     Plan:
       type: object
       properties:
@@ -8608,20 +8807,21 @@ components:
       - bucket
       - id
       - name
-    SaveUserFeedback:
+    SaveCustomerFeedback:
       type: object
       properties:
-        question_field:
-          type: string
-        value:
-          oneOf:
-          - type: string
-          - type: array
-            items:
+        feedback:
+          type: object
+          nullable: false
+          properties:
+            challanges_faced:
+              type: array
+            feature_improvement:
               type: string
+          required:
+          - challanges_faced
       required:
-      - question_field
-      - value
+      - feedback
       description: ''
     SendEmailAccountAuthorizationOTP:
       type: object
@@ -9480,8 +9680,14 @@ components:
           - system
           type: string
           readOnly: true
+        g2_verified:
+          type: boolean
+          readOnly: true
+        is_mfa_enabled:
+          type: boolean
       required:
       - email
+      - g2_verified
       - guid
       - id
       - theme
@@ -9982,14 +10188,20 @@ components:
       - signers
       - title
   securitySchemes:
+    OAuthAuthentication:
+      type: http
+      scheme: bearer
+      description: OAuth2 Bearer Token Authentication
     SessionAuthentication:
       type: apiKey
       in: cookie
       name: sessionid
       description: browser based login takes care of this
     tokenAuth:
-      type: http
-      scheme: bearer
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Basic"
 externalDocs:
   description: Help docs on how to use API
   url: https://help.docupilot.app/developers/api-overview
