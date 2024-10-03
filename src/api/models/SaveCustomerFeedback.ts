@@ -4,7 +4,7 @@
 
 export type SaveCustomerFeedback = {
     feedback: {
-        challanges_faced: any[];
+        challenges_faced: any[];
         feature_improvement?: string;
     };
 };

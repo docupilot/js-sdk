@@ -8814,12 +8814,12 @@ components:
           type: object
           nullable: false
           properties:
-            challanges_faced:
+            challenges_faced:
               type: array
             feature_improvement:
               type: string
           required:
-          - challanges_faced
+          - challenges_faced
       required:
       - feedback
       description: ''
