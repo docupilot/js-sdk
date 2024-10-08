@@ -1160,37 +1160,27 @@ paths:
           description: ''
   /accounts/v2/user_satisfaction_survey/save_user_feedback/:
     post:
-      operationId: save_user_feedback
-      summary: Save user feedback
+      operationId: save_customer_feedback
+      summary: Save customer feedback
       tags:
       - user_satisfaction_survey
       requestBody:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
+              $ref: '#/components/schemas/SaveCustomerFeedback'
           application/x-www-form-urlencoded:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
+              $ref: '#/components/schemas/SaveCustomerFeedback'
           multipart/form-data:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SaveUserFeedback'
+              $ref: '#/components/schemas/SaveCustomerFeedback'
         required: true
       security:
       - SessionAuthentication: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SaveUserFeedback'
-          description: ''
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -1533,7 +1523,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-    put:
+    patch:
       operationId: update_current_workspace
       summary: update current workspace details
       parameters:
@@ -1549,14 +1539,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Workspace'
+              $ref: '#/components/schemas/PatchedWorkspace'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Workspace'
+              $ref: '#/components/schemas/PatchedWorkspace'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Workspace'
-        required: true
+              $ref: '#/components/schemas/PatchedWorkspace'
       security:
       - SessionAuthentication: []
       responses:
@@ -1564,7 +1553,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workspace'
+                $ref: '#/components/schemas/PatchedWorkspace'
           description: ''
         '400':
           content:
@@ -7380,6 +7369,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7520,6 +7517,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7607,6 +7612,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7730,6 +7743,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7994,6 +8015,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8075,6 +8104,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8371,6 +8408,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8534,6 +8579,165 @@ components:
           - system
           type: string
       description: ''
+    PatchedWorkspace:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        org_name:
+          type: string
+          maxLength: 255
+        unique_key:
+          type: string
+          readOnly: true
+        role:
+          type: string
+          readOnly: true
+        timezone:
+          enum:
+          - Pacific/Midway
+          - America/Adak
+          - Pacific/Honolulu
+          - Pacific/Marquesas
+          - America/Anchorage
+          - America/Tijuana
+          - America/Los_Angeles
+          - America/Phoenix
+          - America/Chihuahua
+          - America/Denver
+          - America/Belize
+          - America/Chicago
+          - Pacific/Easter
+          - America/Mexico_City
+          - America/Regina
+          - America/Bogota
+          - America/Cancun
+          - America/New_York
+          - America/Port-au-Prince
+          - America/Havana
+          - America/Indiana/Indianapolis
+          - America/Asuncion
+          - America/Halifax
+          - America/Caracas
+          - America/Cuiaba
+          - America/Manaus
+          - America/Santiago
+          - America/Grand_Turk
+          - America/St_Johns
+          - America/Fortaleza
+          - America/Sao_Paulo
+          - America/Cayenne
+          - America/Buenos_Aires
+          - America/Godthab
+          - America/Montevideo
+          - America/Miquelon
+          - America/Bahia
+          - America/Noronha
+          - Atlantic/Azores
+          - Atlantic/Cape_Verde
+          - UTC
+          - Africa/Casablanca
+          - Europe/London
+          - Africa/Monrovia
+          - Europe/Amsterdam
+          - Europe/Belgrade
+          - Europe/Brussels
+          - Europe/Warsaw
+          - Africa/Algiers
+          - Africa/Windhoek
+          - Asia/Amman
+          - Europe/Athens
+          - Asia/Beirut
+          - Africa/Cairo
+          - Asia/Damascus
+          - Asia/Gaza
+          - Africa/Harare
+          - Europe/Helsinki
+          - Asia/Jerusalem
+          - Europe/Kaliningrad
+          - Africa/Tripoli
+          - Asia/Baghdad
+          - Asia/Istanbul
+          - Asia/Kuwait
+          - Europe/Minsk
+          - Europe/Moscow
+          - Africa/Nairobi
+          - Asia/Tehran
+          - Asia/Muscat
+          - Europe/Astrakhan
+          - Asia/Baku
+          - Europe/Samara
+          - Indian/Mauritius
+          - Asia/Tbilisi
+          - Asia/Yerevan
+          - Asia/Kabul
+          - Asia/Tashkent
+          - Asia/Yekaterinburg
+          - Asia/Karachi
+          - Asia/Kolkata
+          - Asia/Colombo
+          - Asia/Katmandu
+          - Asia/Almaty
+          - Asia/Dhaka
+          - Asia/Rangoon
+          - Asia/Novosibirsk
+          - Asia/Bangkok
+          - Asia/Barnaul
+          - Asia/Hovd
+          - Asia/Krasnoyarsk
+          - Asia/Tomsk
+          - Asia/Chongqing
+          - Asia/Irkutsk
+          - Asia/Kuala_Lumpur
+          - Australia/Perth
+          - Asia/Taipei
+          - Asia/Ulaanbaatar
+          - Asia/Pyongyang
+          - Australia/Eucla
+          - Asia/Chita
+          - Asia/Tokyo
+          - Asia/Seoul
+          - Asia/Yakutsk
+          - Australia/Adelaide
+          - Australia/Darwin
+          - Australia/Brisbane
+          - Australia/Canberra
+          - Pacific/Guam
+          - Australia/Hobart
+          - Asia/Vladivostok
+          - Australia/Lord_Howe
+          - Pacific/Bougainville
+          - Asia/Srednekolymsk
+          - Asia/Magadan
+          - Pacific/Norfolk
+          - Asia/Sakhalin
+          - Pacific/Guadalcanal
+          - Asia/Anadyr
+          - Pacific/Auckland
+          - Pacific/Fiji
+          - Pacific/Chatham
+          - Pacific/Tongatapu
+          - Pacific/Apia
+          - Pacific/Kiritimati
+          type: string
+          readOnly: true
+        plan_id:
+          type: string
+          nullable: true
+          readOnly: true
+        plan_status:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+          readOnly: true
+        mfa_enforced:
+          type: boolean
+        use_froala:
+          type: boolean
+          readOnly: true
+      description: ''
     Plan:
       type: object
       properties:
@@ -8639,6 +8843,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8659,20 +8871,21 @@ components:
       - bucket
       - id
       - name
-    SaveUserFeedback:
+    SaveCustomerFeedback:
       type: object
       properties:
-        question_field:
-          type: string
-        value:
-          oneOf:
-          - type: string
-          - type: array
-            items:
+        feedback:
+          type: object
+          nullable: false
+          properties:
+            challenges_faced:
+              type: array
+            feature_improvement:
               type: string
+          required:
+          - challenges_faced
       required:
-      - question_field
-      - value
+      - feedback
       description: ''
     SendEmailAccountAuthorizationOTP:
       type: object
@@ -8799,6 +9012,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8881,6 +9102,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -9531,10 +9760,14 @@ components:
           - system
           type: string
           readOnly: true
+        g2_verified:
+          type: boolean
+          readOnly: true
         is_mfa_enabled:
           type: boolean
       required:
       - email
+      - g2_verified
       - guid
       - id
       - theme
@@ -9635,6 +9868,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -9990,6 +10231,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
