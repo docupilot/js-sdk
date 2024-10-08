@@ -7369,6 +7369,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7509,6 +7517,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7596,6 +7612,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7719,6 +7743,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -7983,6 +8015,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8064,6 +8104,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8360,6 +8408,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8787,6 +8843,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -8948,6 +9012,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -9030,6 +9102,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -9788,6 +9868,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
@@ -10143,6 +10231,14 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
         last_used_on:
           type: string
           format: date-time
