@@ -3248,6 +3248,7 @@ paths:
           - hellosign
           - one_drive
           - podio
+          - sftp
           - sign_now
           - signable
           - yousign
@@ -3526,6 +3527,7 @@ paths:
           - hellosign
           - one_drive
           - podio
+          - sftp
           - sign_now
           - signable
           - yousign
@@ -7241,6 +7243,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         sub_type:
           type: string
@@ -7364,6 +7367,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -7512,6 +7516,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -7607,6 +7612,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -7738,6 +7744,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -8010,6 +8017,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -8099,6 +8107,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -8403,6 +8412,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -8776,6 +8786,7 @@ components:
       - $ref: '#/components/schemas/EversignDelivery'
       - $ref: '#/components/schemas/SignableDelivery'
       - $ref: '#/components/schemas/YouSignDelivery'
+      - $ref: '#/components/schemas/SftpDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -8791,6 +8802,7 @@ components:
           eversign: '#/components/schemas/EversignDelivery'
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
+          sftp: '#/components/schemas/SftpDelivery'
     RenewSubscription:
       type: object
       properties:
@@ -8838,6 +8850,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -8932,6 +8945,64 @@ components:
       - smtp_server_password
       - smtp_server_username
       description: ''
+    SftpDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        path:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - account
+      - id
+      - name
     SharingInfoFolder:
       type: object
       properties:
@@ -9007,6 +9078,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -9097,6 +9169,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -9263,6 +9336,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
           readOnly: true
       required:
@@ -9506,7 +9580,7 @@ components:
         transfer_to:
           type: integer
         otp:
-          type: integer
+          type: string
       required:
       - otp
       - transfer_to
@@ -9550,6 +9624,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         sub_type:
           type: string
@@ -9863,6 +9938,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
@@ -10226,6 +10302,7 @@ components:
           - signable
           - yousign
           - email
+          - sftp
           type: string
         success_callback_url:
           type: string
