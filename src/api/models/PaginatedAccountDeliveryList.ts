@@ -5,9 +5,9 @@
 import type { AccountDelivery } from './AccountDelivery';
 
 export type PaginatedAccountDeliveryList = {
-    count?: number;
+    count: number;
     next?: string | null;
     previous?: string | null;
-    results?: Array<AccountDelivery>;
+    results: Array<AccountDelivery>;
 };
 
