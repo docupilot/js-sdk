@@ -14,5 +14,7 @@ export type Plans = {
     user_seat: number;
     readonly credit_addon_price: Record<string, any>;
     readonly user_seat_addon_price: Record<string, any>;
+    readonly credit_addon_step: Record<string, any>;
+    readonly user_seat_addon_step: Record<string, any>;
 };
 

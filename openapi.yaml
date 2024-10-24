@@ -642,6 +642,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/manage_billing/set_default_card/:
+    post:
+      operationId: set_default_card
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - manage_billing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetDefaultStripeCard'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetDefaultStripeCard'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetDefaultStripeCard'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/manage_billing/setup_intent_secret/:
     get:
       operationId: get_setup_intent_secret
@@ -1000,6 +1047,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChargebeeSubscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/extend_trial/:
+    post:
+      operationId: extend_trial
+      summary: Extend trial
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -1490,6 +1573,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/unpaid_invoices/:
+    get:
+      operationId: get_chargebee_unpaid_invoices
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostedPage'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/team/:
     get:
       operationId: list_all_team_members
@@ -1516,6 +1632,7 @@ paths:
       tags:
       - team
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1562,6 +1679,7 @@ paths:
       tags:
       - team
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1622,6 +1740,7 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1681,6 +1800,7 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1728,6 +1848,7 @@ paths:
       tags:
       - Gallery templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1765,6 +1886,7 @@ paths:
       tags:
       - Gallery templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -1791,6 +1913,214 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/g2_review/:
+    get:
+      operationId: g2_review
+      summary: Redirect to G2 Review Page
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '302':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/nps_next_reminder/:
+    post:
+      operationId: nps_next_reminder
+      summary: Update the next NPS reminder time
+      tags:
+      - user_satisfaction_survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NpsNextReminder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NpsNextReminder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NpsNextReminder'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/nps_rating/:
+    post:
+      operationId: nps_rating
+      summary: Update NPS rating
+      tags:
+      - user_satisfaction_survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NpsRating'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NpsRating'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NpsRating'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/save_user_feedback/:
+    post:
+      operationId: save_customer_feedback
+      summary: Save customer feedback
+      tags:
+      - user_satisfaction_survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveCustomerFeedback'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SaveCustomerFeedback'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SaveCustomerFeedback'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/show_survey_prompt/:
+    get:
+      operationId: show_survey_prompt
+      summary: Show survey prompt
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SurveyPrompt'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/:
+    post:
+      operationId: update_g2_review_updated_on
+      summary: Update g2_review_updated_on
+      tags:
+      - user_satisfaction_survey
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/v2/users/initiate_authorization_sequence/:
     post:
@@ -1835,6 +2165,7 @@ paths:
       tags:
       - users
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -2052,7 +2383,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-    put:
+    patch:
       operationId: update_current_workspace
       summary: update current workspace details
       parameters:
@@ -2068,14 +2399,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Workspace'
+              $ref: '#/components/schemas/PatchedWorkspace'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Workspace'
+              $ref: '#/components/schemas/PatchedWorkspace'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Workspace'
-        required: true
+              $ref: '#/components/schemas/PatchedWorkspace'
       security:
       - SessionAuthentication: []
       responses:
@@ -2083,7 +2413,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Workspace'
+                $ref: '#/components/schemas/PatchedWorkspace'
           description: ''
         '400':
           content:
@@ -2633,6 +2963,7 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -2698,6 +3029,7 @@ paths:
       tags:
       - domain
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -2756,6 +3088,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -2817,6 +3150,7 @@ paths:
       tags:
       - folders
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -2865,6 +3199,7 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3209,6 +3544,7 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3262,6 +3598,7 @@ paths:
       tags:
       - folders
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3414,6 +3751,7 @@ paths:
       tags:
       - history
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3534,6 +3872,7 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3587,6 +3926,7 @@ paths:
       tags:
       - history
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3635,6 +3975,7 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -3770,6 +4111,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -3869,7 +4211,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|zoho$
         required: true
       tags:
       - linked_accounts
@@ -4047,6 +4389,7 @@ paths:
           - sign_now
           - signable
           - yousign
+          - zoho
           - zoho_crm
       tags:
       - linked_accounts
@@ -4764,6 +5107,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -4804,6 +5148,7 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -4857,6 +5202,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -4915,6 +5261,7 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -4972,6 +5319,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5030,6 +5378,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5091,6 +5440,7 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5144,6 +5494,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5237,6 +5588,7 @@ paths:
               type: object
               additionalProperties: {}
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5350,6 +5702,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5411,6 +5764,7 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5464,6 +5818,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5626,6 +5981,7 @@ paths:
       tags:
       - generate
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5679,6 +6035,7 @@ paths:
       tags:
       - template_delivery
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5732,6 +6089,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5791,6 +6149,7 @@ paths:
       tags:
       - template_delivery
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5854,6 +6213,7 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5912,6 +6272,7 @@ paths:
       tags:
       - template_delivery
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -5973,6 +6334,7 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6044,6 +6406,7 @@ paths:
       tags:
       - template_delivery
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6102,6 +6465,7 @@ paths:
       tags:
       - template_delivery
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6157,6 +6521,7 @@ paths:
       tags:
       - template_delivery
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6233,6 +6598,7 @@ paths:
       tags:
       - generate_bulk
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6282,6 +6648,7 @@ paths:
       tags:
       - generate_bulk
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6348,6 +6715,7 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6409,6 +6777,7 @@ paths:
       tags:
       - generate_bulk
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6477,6 +6846,7 @@ paths:
               type: object
               additionalProperties: {}
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6548,6 +6918,7 @@ paths:
               type: object
               additionalProperties: {}
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6609,6 +6980,7 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6669,6 +7041,7 @@ paths:
       tags:
       - generate
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -6993,6 +7366,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -7082,6 +7456,7 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -7156,6 +7531,7 @@ paths:
       tags:
       - templates
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
@@ -7383,6 +7759,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         last_used_time:
           type: string
           format: date-time
@@ -7472,6 +7849,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -7656,6 +8034,7 @@ components:
           - t
           - e
           - c
+          - p
           type: string
         trial_end:
           type: string
@@ -7670,6 +8049,14 @@ components:
         current_term_end:
           type: string
           readOnly: true
+        unpaid_invoices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        max_allowed_unpaid_invoices:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
         documents_allowed:
           type: integer
           maximum: 9223372036854775807
@@ -7680,7 +8067,11 @@ components:
           maximum: 9223372036854775807
           minimum: -9223372036854775808
           format: int64
+        can_extend_trial:
+          type: boolean
+          readOnly: true
       required:
+      - can_extend_trial
       - current_term_end
       - current_term_start
       description: ''
@@ -7741,6 +8132,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -7877,6 +8269,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -8045,7 +8438,7 @@ components:
           maxLength: 255
         txt_record:
           type: string
-          maxLength: 32
+          maxLength: 60
         is_txt_verified:
           type: boolean
         is_spf_verified:
@@ -8460,10 +8853,12 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         updated_time:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -8709,6 +9104,15 @@ components:
       - id
       - name
       - signers
+    HostedPage:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+      required:
+      - url
+      description: ''
     InitiateAuthorizationSequence:
       type: object
       properties:
@@ -8928,6 +9332,23 @@ components:
       required:
       - detail
       description: ''
+    NpsNextReminder:
+      type: object
+      properties:
+        days:
+          type: integer
+      required:
+      - days
+      description: ''
+    NpsRating:
+      type: object
+      properties:
+        nps_rating:
+          type: integer
+          maximum: 10
+          minimum: 0
+          nullable: true
+      description: ''
     OneDriveDelivery:
       type: object
       description: ''
@@ -8977,6 +9398,9 @@ components:
       - name
     PaginatedAccountDeliveryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8997,6 +9421,9 @@ components:
             $ref: '#/components/schemas/AccountDelivery'
     PaginatedBulkGenList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9017,6 +9444,9 @@ components:
             $ref: '#/components/schemas/BulkGen'
     PaginatedInvoiceList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9037,6 +9467,9 @@ components:
             $ref: '#/components/schemas/Invoice'
     PaginatedMergeHistoryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9057,6 +9490,9 @@ components:
             $ref: '#/components/schemas/MergeHistory'
     PaginatedPlansList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9077,6 +9513,9 @@ components:
             $ref: '#/components/schemas/Plans'
     PaginatedTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9106,7 +9545,7 @@ components:
           maxLength: 255
         txt_record:
           type: string
-          maxLength: 32
+          maxLength: 60
         is_txt_verified:
           type: boolean
         is_spf_verified:
@@ -9146,47 +9585,47 @@ components:
           type: string
         change_type:
           enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          - 10
-          - 11
-          - 12
-          - 13
-          - 14
-          - 15
-          - 16
-          - 17
-          - 18
-          - 19
-          - 20
-          - 21
-          - 22
-          - 23
-          - 24
-          - 25
-          - 26
-          - 27
-          - 28
-          - 29
-          - 30
-          - 31
-          - 32
-          - 33
-          - 34
-          - 35
-          - 36
-          - 37
-          type: integer
-          minimum: -32768
-          maximum: 32767
+          - no_action
+          - first_time_purchase
+          - term_upgrade
+          - plan_upgrade
+          - addon_upgrade
+          - term_upgrade_with_plan_upgrade
+          - term_upgrade_with_addon_upgrade
+          - plan_upgrade_with_addon_upgrade
+          - term_upgrade_with_plan_upgrade_and_addon_upgrade
+          - term_downgrade
+          - plan_downgrade
+          - addon_downgrade
+          - term_upgrade_with_plan_downgrade
+          - term_downgrade_with_plan_upgrade
+          - term_downgrade_with_plan_downgrade
+          - term_upgrade_with_addon_downgrade
+          - term_downgrade_with_addon_upgrade
+          - term_downgrade_with_addon_downgrade
+          - plan_upgrade_with_addon_downgrade
+          - plan_downgrade_with_addon_upgrade
+          - plan_downgrade_with_addon_downgrade
+          - addon_upgrade_with_addon_downgrade
+          - term_upgrade_with_plan_upgrade_and_addon_downgrade
+          - term_upgrade_with_plan_downgrade_and_addon_upgrade
+          - term_upgrade_with_plan_downgrade_and_addon_downgrade
+          - term_downgrade_with_plan_upgrade_and_addon_upgrade
+          - term_downgrade_with_plan_upgrade_and_addon_downgrade
+          - term_downgrade_with_plan_downgrade_and_addon_upgrade
+          - term_downgrade_with_plan_downgrade_and_addon_downgrade
+          - term_upgrade_with_addon_upgrade_and_addon_downgrade
+          - term_downgrade_with_addon_upgrade_and_addon_downgrade
+          - plan_upgrade_with_addon_upgrade_and_addon_downgrade
+          - plan_downgrade_with_addon_upgrade_and_addon_downgrade
+          - term_upgrade_with_plan_upgrade_and_addon_upgrade_and_addon_downgrade
+          - term_upgrade_with_plan_downgrade_and_addon_upgrade_and_addon_downgrade
+          - term_downgrade_with_plan_upgrade_and_addon_upgrade_and_addon_downgrade
+          - term_downgrade_with_plan_downgrade_and_addon_upgrade_and_addon_downgrade
+          - cancellation
+          - subscription_renewal
+          type: string
+          readOnly: true
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -9234,6 +9673,171 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+      description: ''
+    PatchedWorkspace:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        org_name:
+          type: string
+          maxLength: 255
+        unique_key:
+          type: string
+          readOnly: true
+        role:
+          type: string
+          readOnly: true
+        timezone:
+          enum:
+          - Pacific/Midway
+          - America/Adak
+          - Pacific/Honolulu
+          - Pacific/Marquesas
+          - America/Anchorage
+          - America/Tijuana
+          - America/Los_Angeles
+          - America/Phoenix
+          - America/Chihuahua
+          - America/Denver
+          - America/Belize
+          - America/Chicago
+          - Pacific/Easter
+          - America/Mexico_City
+          - America/Regina
+          - America/Bogota
+          - America/Cancun
+          - America/New_York
+          - America/Port-au-Prince
+          - America/Havana
+          - America/Indiana/Indianapolis
+          - America/Asuncion
+          - America/Halifax
+          - America/Caracas
+          - America/Cuiaba
+          - America/Manaus
+          - America/Santiago
+          - America/Grand_Turk
+          - America/St_Johns
+          - America/Fortaleza
+          - America/Sao_Paulo
+          - America/Cayenne
+          - America/Buenos_Aires
+          - America/Godthab
+          - America/Montevideo
+          - America/Miquelon
+          - America/Bahia
+          - America/Noronha
+          - Atlantic/Azores
+          - Atlantic/Cape_Verde
+          - UTC
+          - Africa/Casablanca
+          - Europe/London
+          - Africa/Monrovia
+          - Europe/Amsterdam
+          - Europe/Belgrade
+          - Europe/Brussels
+          - Europe/Warsaw
+          - Africa/Algiers
+          - Africa/Windhoek
+          - Asia/Amman
+          - Europe/Athens
+          - Asia/Beirut
+          - Africa/Cairo
+          - Asia/Damascus
+          - Asia/Gaza
+          - Africa/Harare
+          - Europe/Helsinki
+          - Asia/Jerusalem
+          - Europe/Kaliningrad
+          - Africa/Tripoli
+          - Asia/Baghdad
+          - Asia/Istanbul
+          - Asia/Kuwait
+          - Europe/Minsk
+          - Europe/Moscow
+          - Africa/Nairobi
+          - Asia/Tehran
+          - Asia/Muscat
+          - Europe/Astrakhan
+          - Asia/Baku
+          - Europe/Samara
+          - Indian/Mauritius
+          - Asia/Tbilisi
+          - Asia/Yerevan
+          - Asia/Kabul
+          - Asia/Tashkent
+          - Asia/Yekaterinburg
+          - Asia/Karachi
+          - Asia/Kolkata
+          - Asia/Colombo
+          - Asia/Katmandu
+          - Asia/Almaty
+          - Asia/Dhaka
+          - Asia/Rangoon
+          - Asia/Novosibirsk
+          - Asia/Bangkok
+          - Asia/Barnaul
+          - Asia/Hovd
+          - Asia/Krasnoyarsk
+          - Asia/Tomsk
+          - Asia/Chongqing
+          - Asia/Irkutsk
+          - Asia/Kuala_Lumpur
+          - Australia/Perth
+          - Asia/Taipei
+          - Asia/Ulaanbaatar
+          - Asia/Pyongyang
+          - Australia/Eucla
+          - Asia/Chita
+          - Asia/Tokyo
+          - Asia/Seoul
+          - Asia/Yakutsk
+          - Australia/Adelaide
+          - Australia/Darwin
+          - Australia/Brisbane
+          - Australia/Canberra
+          - Pacific/Guam
+          - Australia/Hobart
+          - Asia/Vladivostok
+          - Australia/Lord_Howe
+          - Pacific/Bougainville
+          - Asia/Srednekolymsk
+          - Asia/Magadan
+          - Pacific/Norfolk
+          - Asia/Sakhalin
+          - Pacific/Guadalcanal
+          - Asia/Anadyr
+          - Pacific/Auckland
+          - Pacific/Fiji
+          - Pacific/Chatham
+          - Pacific/Tongatapu
+          - Pacific/Apia
+          - Pacific/Kiritimati
+          type: string
+          readOnly: true
+        plan_id:
+          type: string
+          nullable: true
+          readOnly: true
+        plan_status:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+          readOnly: true
+        mfa_enforced:
+          type: boolean
+        use_froala:
+          type: boolean
+          readOnly: true
       description: ''
     Plan:
       type: object
@@ -9357,15 +9961,25 @@ components:
           type: object
           additionalProperties: {}
           readOnly: true
+        credit_addon_step:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        user_seat_addon_step:
+          type: object
+          additionalProperties: {}
+          readOnly: true
       required:
       - category
       - credit
       - credit_addon_price
+      - credit_addon_step
       - id
       - monthly_price
       - name
       - user_seat
       - user_seat_addon_price
+      - user_seat_addon_step
       - version
       - yearly_discounted_price
       - yearly_price
@@ -9471,6 +10085,22 @@ components:
       - bucket
       - id
       - name
+    SaveCustomerFeedback:
+      type: object
+      properties:
+        feedback:
+          type: object
+          nullable: false
+          properties:
+            challenges_faced:
+              type: array
+            feature_improvement:
+              type: string
+          required:
+          - challenges_faced
+      required:
+      - feedback
+      description: ''
     SendEmailAccountAuthorizationOTP:
       type: object
       properties:
@@ -9515,6 +10145,14 @@ components:
       - smtp_server_address
       - smtp_server_password
       - smtp_server_username
+      description: ''
+    SetDefaultStripeCard:
+      type: object
+      properties:
+        payment_id:
+          type: string
+      required:
+      - payment_id
       description: ''
     SetupIntentResponse:
       type: object
@@ -9790,6 +10428,7 @@ components:
           - t
           - e
           - c
+          - p
           type: string
         current_term_start:
           type: string
@@ -9849,47 +10488,47 @@ components:
           type: string
         change_type:
           enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          - 10
-          - 11
-          - 12
-          - 13
-          - 14
-          - 15
-          - 16
-          - 17
-          - 18
-          - 19
-          - 20
-          - 21
-          - 22
-          - 23
-          - 24
-          - 25
-          - 26
-          - 27
-          - 28
-          - 29
-          - 30
-          - 31
-          - 32
-          - 33
-          - 34
-          - 35
-          - 36
-          - 37
-          type: integer
-          minimum: -32768
-          maximum: 32767
+          - no_action
+          - first_time_purchase
+          - term_upgrade
+          - plan_upgrade
+          - addon_upgrade
+          - term_upgrade_with_plan_upgrade
+          - term_upgrade_with_addon_upgrade
+          - plan_upgrade_with_addon_upgrade
+          - term_upgrade_with_plan_upgrade_and_addon_upgrade
+          - term_downgrade
+          - plan_downgrade
+          - addon_downgrade
+          - term_upgrade_with_plan_downgrade
+          - term_downgrade_with_plan_upgrade
+          - term_downgrade_with_plan_downgrade
+          - term_upgrade_with_addon_downgrade
+          - term_downgrade_with_addon_upgrade
+          - term_downgrade_with_addon_downgrade
+          - plan_upgrade_with_addon_downgrade
+          - plan_downgrade_with_addon_upgrade
+          - plan_downgrade_with_addon_downgrade
+          - addon_upgrade_with_addon_downgrade
+          - term_upgrade_with_plan_upgrade_and_addon_downgrade
+          - term_upgrade_with_plan_downgrade_and_addon_upgrade
+          - term_upgrade_with_plan_downgrade_and_addon_downgrade
+          - term_downgrade_with_plan_upgrade_and_addon_upgrade
+          - term_downgrade_with_plan_upgrade_and_addon_downgrade
+          - term_downgrade_with_plan_downgrade_and_addon_upgrade
+          - term_downgrade_with_plan_downgrade_and_addon_downgrade
+          - term_upgrade_with_addon_upgrade_and_addon_downgrade
+          - term_downgrade_with_addon_upgrade_and_addon_downgrade
+          - plan_upgrade_with_addon_upgrade_and_addon_downgrade
+          - plan_downgrade_with_addon_upgrade_and_addon_downgrade
+          - term_upgrade_with_plan_upgrade_and_addon_upgrade_and_addon_downgrade
+          - term_upgrade_with_plan_downgrade_and_addon_upgrade_and_addon_downgrade
+          - term_downgrade_with_plan_upgrade_and_addon_upgrade_and_addon_downgrade
+          - term_downgrade_with_plan_downgrade_and_addon_upgrade_and_addon_downgrade
+          - cancellation
+          - subscription_renewal
+          type: string
+          readOnly: true
       required:
       - change_type
       - created_on
@@ -9921,6 +10560,15 @@ components:
       - quantity
       - type
       - unit_price
+      description: ''
+    SurveyPrompt:
+      type: object
+      properties:
+        show_survey_prompt:
+          type: boolean
+          readOnly: true
+      required:
+      - show_survey_prompt
       description: ''
     TeamMember:
       type: object
@@ -9982,6 +10630,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -10072,6 +10721,11 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        images_count:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
       required:
       - category
       - file_type
@@ -10348,6 +11002,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -10529,10 +11184,24 @@ components:
           type: string
           nullable: true
           maxLength: 5
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+          readOnly: true
+        g2_verified:
+          type: boolean
+          readOnly: true
+        is_mfa_enabled:
+          type: boolean
       required:
       - email
+      - g2_verified
       - guid
       - id
+      - theme
       description: ''
     UserPersonalization:
       type: object
@@ -10547,11 +11216,6 @@ components:
         tp:freshchat:restoreId:
           type: string
           format: uuid
-        g2_reviewed:
-          type: boolean
-        g2_next_reminder:
-          type: string
-          format: date-time
       description: ''
     UserPersonalizationListViewTemplate:
       type: object
@@ -10807,6 +11471,11 @@ components:
         active:
           type: boolean
           readOnly: true
+        mfa_enforced:
+          type: boolean
+        use_froala:
+          type: boolean
+          readOnly: true
       required:
       - active
       - id
@@ -10816,6 +11485,7 @@ components:
       - role
       - timezone
       - unique_key
+      - use_froala
       description: ''
     YouSignDelivery:
       type: object
@@ -11029,14 +11699,20 @@ components:
       - signers
       - title
   securitySchemes:
+    OAuthAuthentication:
+      type: http
+      scheme: bearer
+      description: OAuth2 Bearer Token Authentication
     SessionAuthentication:
       type: apiKey
       in: cookie
       name: sessionid
       description: browser based login takes care of this
     tokenAuth:
-      type: http
-      scheme: bearer
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Basic"
 externalDocs:
   description: Help docs on how to use API
   url: https://help.docupilot.app/developers/api-overview

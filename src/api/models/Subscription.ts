@@ -15,7 +15,7 @@ export type Subscription = {
     readonly trial_started_on: string;
     readonly trial_end: string;
     billing_term?: 'monthly' | 'yearly' | null;
-    status?: 'a' | 't' | 'e' | 'c';
+    status?: 'a' | 't' | 'e' | 'c' | 'p';
     readonly current_term_start: string;
     readonly current_term_end: string;
     readonly reset_usage_on: string;

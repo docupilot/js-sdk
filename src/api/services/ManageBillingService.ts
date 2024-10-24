@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { Address } from '../models/Address';
 import type { DeleteStripeCard } from '../models/DeleteStripeCard';
+import type { SetDefaultStripeCard } from '../models/SetDefaultStripeCard';
 import type { SetupIntentResponse } from '../models/SetupIntentResponse';
 import type { StripeCard } from '../models/StripeCard';
 
@@ -49,6 +50,23 @@ export class ManageBillingService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/manage_billing/payment_methods/',
+        });
+    }
+
+    /**
+     * @returns void
+     * @throws ApiError
+     */
+    public static setDefaultCard({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<SetDefaultStripeCard>,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/manage_billing/set_default_card/',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

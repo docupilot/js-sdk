@@ -11,5 +11,6 @@ export type TemplateGallery = {
     category: GalleryCategory;
     title: string;
     description?: string | null;
+    images_count?: number | null;
 };
 
