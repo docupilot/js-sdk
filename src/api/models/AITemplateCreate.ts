@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type AITemplate = {
+export type AITemplateCreate = {
     ai_prompt: string;
     title: string;
     description?: string | null;

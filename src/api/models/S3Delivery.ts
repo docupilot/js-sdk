@@ -9,6 +9,8 @@ export type S3Delivery = {
     name: string;
     type?: 'aws_s3';
     success_callback_url?: string | null;
+    success_callback_payload?: Record<string, any> | null;
+    success_callback_headers?: Record<string, any> | null;
     last_used_on?: string | null;
     bucket: string;
     key_prefix?: string | null;
