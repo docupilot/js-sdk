@@ -4,7 +4,7 @@
 
 export type UpdateDeliveryAccount = {
     readonly id: number;
-    type: 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email';
+    type: 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email' | 'sftp';
     readonly sub_type: string;
     readonly used_by: number;
     readonly name: string | null;
