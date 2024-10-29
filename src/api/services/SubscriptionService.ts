@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
+import type { HostedPage } from '../models/HostedPage';
 import type { RenewSubscription } from '../models/RenewSubscription';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -19,6 +20,18 @@ export class SubscriptionService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/details/',
+        });
+    }
+
+    /**
+     * Extend trial
+     * @returns void
+     * @throws ApiError
+     */
+    public static extendTrial(): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/extend_trial/',
         });
     }
 
@@ -65,6 +78,17 @@ export class SubscriptionService {
             url: '/accounts/v2/subscription/renew_request/',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns HostedPage
+     * @throws ApiError
+     */
+    public static getChargebeeUnpaidInvoices(): CancelablePromise<HostedPage> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/unpaid_invoices/',
         });
     }
 

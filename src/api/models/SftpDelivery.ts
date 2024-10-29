@@ -2,23 +2,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SignableDelivery = {
+export type SftpDelivery = {
     readonly id: number;
     failure_email_recipients?: string | null;
     account: number;
-    parties: Array<{
-        party_name: string;
-        party_email: string;
-        party_role: 'signer' | 'copy';
-    }>;
     name: string;
-    type?: 'signable';
+    type?: 'sftp';
     success_callback_url?: string | null;
     success_callback_payload?: Record<string, any> | null;
     success_callback_headers?: Record<string, any> | null;
     last_used_on?: string | null;
-    title?: string | null;
-    expire_after?: number | null;
-    remind_after?: number | null;
+    path?: string | null;
 };
 
