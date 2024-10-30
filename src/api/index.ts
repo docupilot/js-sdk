@@ -80,6 +80,7 @@ export type { S3Delivery } from './models/S3Delivery';
 export type { SaveCustomerFeedback } from './models/SaveCustomerFeedback';
 export type { SendEmailAccountAuthorizationOTP } from './models/SendEmailAccountAuthorizationOTP';
 export type { SendTestSmtpMail } from './models/SendTestSmtpMail';
+export type { SftpDelivery } from './models/SftpDelivery';
 export type { SharingInfoFolder } from './models/SharingInfoFolder';
 export type { SharingInfoTemplate } from './models/SharingInfoTemplate';
 export type { SignableDelivery } from './models/SignableDelivery';
