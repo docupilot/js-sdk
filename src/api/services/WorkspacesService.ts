@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { CSMDetails } from '../models/CSMDetails';
 import type { DeleteCurrentWorkspace } from '../models/DeleteCurrentWorkspace';
+import type { PatchedWorkspace } from '../models/PatchedWorkspace';
 import type { RetentionPreference } from '../models/RetentionPreference';
 import type { Workspace } from '../models/Workspace';
 
@@ -85,16 +86,16 @@ export class WorkspacesService {
 
     /**
      * update current workspace details
-     * @returns Workspace
+     * @returns PatchedWorkspace
      * @throws ApiError
      */
     public static updateCurrentWorkspace({
         requestBody,
     }: {
-        requestBody: OmitReadonly<Workspace>,
-    }): CancelablePromise<Workspace> {
+        requestBody?: OmitReadonly<PatchedWorkspace>,
+    }): CancelablePromise<PatchedWorkspace> {
         return __request(OpenAPI, {
-            method: 'PUT',
+            method: 'PATCH',
             url: '/accounts/v2/workspaces/current/',
             body: requestBody,
             mediaType: 'application/json',
