@@ -24,6 +24,7 @@ export class DocupilotSessionClient extends Docupilot {
   readonly DomainService = _API.DomainService;
   readonly GalleryTemplatesService = _API.GalleryTemplatesService;
   readonly AiChatService = _API.AiChatService;
+  readonly UserSatisfactionSurveyService = _API.UserSatisfactionSurveyService;
   readonly DemographicService = _API.DemographicService;
 
   configureHeadersInterceptor(getHeaders: () => Record<string, string>) {
