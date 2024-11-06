@@ -4,10 +4,10 @@
 
 export type NewTemplate = {
     file?: Blob;
-    folder?: number | null;
-    title: string;
-    output_type: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     description?: string | null;
+    title: string;
+    folder?: number | null;
+    output_type: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     template_gallery_id?: number;
 };
 
