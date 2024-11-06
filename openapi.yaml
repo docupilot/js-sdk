@@ -2077,162 +2077,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /ai/online-builder/create_template/:
-    post:
-      operationId: create_template_online_builder_ai
-      summary: create template using ai
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - ai
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AITemplateCreate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AITemplateCreate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AITemplateCreate'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /ai/online-builder/edit_template/:
-    post:
-      operationId: edit_template_online_builder_ai
-      summary: edit template using chat completion
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - ai
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AITemplateEdit'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AITemplateEdit'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AITemplateEdit'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AITemplateEdit'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /ai/online-builder/list_prompt_suggestions/:
-    post:
-      operationId: prompt_suggestions_online_builder_ai
-      summary: list prompt suggestions based on template name and description
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Organization unique_key
-        required: true
-      tags:
-      - ai
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PromptSuggestions'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PromptSuggestions'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PromptSuggestions'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PromptSuggestions'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /api/v2/append/:
     post:
       operationId: append_files
@@ -2300,6 +2144,926 @@ paths:
             application/pdf:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/content_blocks/:
+    get:
+      operationId: list_content_blocks
+      summary: Get list of content blocks
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedContentBlockList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_content_block
+      summary: Create content_block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewContentBlock'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewContentBlock'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NewContentBlock'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/content_blocks/{content_block_id}/permissions/:
+    get:
+      operationId: list_content_block_sharing
+      summary: Get all shared permissions for specific content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: content_block_id
+        schema:
+          type: integer
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - content_blocks
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentBlockSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_content_block_sharing_permission
+      summary: Create content block sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: content_block_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentBlockSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ContentBlockSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ContentBlockSharing'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlockSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{content_block_id}/permissions/{id}/:
+    get:
+      operationId: get_content_block_sharing
+      summary: Get specific permission details for given content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: content_block_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block sharing
+          setting.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlockSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_content_block_sharing_permission_content
+      summary: Update content block content partially
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: content_block_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block sharing
+          setting.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateContentBlockSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateContentBlockSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateContentBlockSharing'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlockSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: revoke_content_block_sharing_permission
+      summary: Revoke content block sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: content_block_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block sharing
+          setting.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{id}/:
+    get:
+      operationId: get_content_block
+      summary: Get one content_block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    put:
+      operationId: update_content_block
+      summary: Update content_block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentBlock'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ContentBlock'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ContentBlock'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_content_block_data
+      summary: Update content block data
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_content_block
+      summary: Delete a content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{id}/copy/:
+    post:
+      operationId: copy_content_block
+      summary: Copy content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyContentBlock'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CopyContentBlock'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CopyContentBlock'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{id}/download/:
+    get:
+      operationId: download_content_block_file
+      summary: Download content block file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{id}/schema/:
+    get:
+      operationId: get_content_block_schema
+      summary: Get content block schema
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateSchema'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{id}/test/:
+    post:
+      operationId: test_content_block
+      summary: Test a content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: {}
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestContentBlock'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/content_blocks/{id}/test_data/:
+    get:
+      operationId: get_test_data_for_content_block
+      summary: Get test data used for testing content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/domain/{id}/:
     get:
@@ -6949,42 +7713,6 @@ paths:
           description: ''
 components:
   schemas:
-    AITemplateCreate:
-      type: object
-      properties:
-        ai_prompt:
-          type: string
-        title:
-          type: string
-          maxLength: 120
-        description:
-          type: string
-          nullable: true
-          maxLength: 255
-        folder:
-          type: integer
-          nullable: true
-      required:
-      - ai_prompt
-      - title
-      description: ''
-    AITemplateEdit:
-      type: object
-      properties:
-        ai_prompt:
-          type: string
-          writeOnly: true
-        selected_content:
-          type: string
-          writeOnly: true
-        ai_response:
-          type: string
-          readOnly: true
-      required:
-      - ai_prompt
-      - ai_response
-      - selected_content
-      description: ''
     AcceptInvite:
       type: object
       properties:
@@ -7266,8 +7994,6 @@ components:
           type: integer
           maximum: 2147483647
           minimum: 0
-        overage_enabled:
-          type: boolean
         documents_allowed:
           type: integer
           maximum: 9223372036854775807
@@ -7285,7 +8011,6 @@ components:
       - can_extend_trial
       - current_term_end
       - current_term_start
-      - overage_enabled
       description: ''
     ChatThreads:
       type: object
@@ -7370,6 +8095,75 @@ components:
       - title
       - updated_by
       - updated_time
+      description: ''
+    ContentBlock:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        key:
+          type: string
+        name:
+          type: string
+          maxLength: 120
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+      required:
+      - created_by
+      - created_time
+      - id
+      - name
+      - updated_by
+      - updated_time
+    ContentBlockSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - write
+          - manage
+          type: string
+        user:
+          type: integer
+      required:
+      - id
+      - permission
+      - user
+    CopyContentBlock:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 120
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - name
       description: ''
     CopyTemplate:
       type: object
@@ -8506,6 +9300,23 @@ components:
       - new_folder_id
       - template_ids
       description: ''
+    NewContentBlock:
+      type: object
+      description: ''
+      properties:
+        file:
+          type: string
+          format: binary
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 120
+      required:
+      - file
+      - name
     NewTemplate:
       type: object
       description: ''
@@ -8513,12 +9324,16 @@ components:
         file:
           type: string
           format: binary
-        folder:
-          type: integer
+        description:
+          type: string
           nullable: true
+          maxLength: 255
         title:
           type: string
           maxLength: 120
+        folder:
+          type: integer
+          nullable: true
         output_type:
           enum:
           - html
@@ -8529,10 +9344,6 @@ components:
           - pptx
           - xlsx
           type: string
-        description:
-          type: string
-          nullable: true
-          maxLength: 255
         template_gallery_id:
           type: integer
       required:
@@ -8659,6 +9470,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulkGen'
+    PaginatedContentBlockList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentBlock'
     PaginatedMergeHistoryList:
       type: object
       properties:
@@ -8719,6 +9550,21 @@ components:
           type: string
           readOnly: true
       description: ''
+    PatchedUpdateContentBlockSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - write
+          - manage
+          type: string
+        user:
+          type: integer
+          readOnly: true
     PatchedUpdateFolderSharing:
       type: object
       description: ''
@@ -8735,6 +9581,13 @@ components:
         user:
           type: integer
           readOnly: true
+    PatchedUpdateNewContentBlock:
+      type: object
+      description: ''
+      properties:
+        file:
+          type: string
+          format: binary
     PatchedUpdateNewTemplate:
       type: object
       description: ''
@@ -8986,25 +9839,6 @@ components:
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
           sftp: '#/components/schemas/SftpDelivery'
-    PromptSuggestions:
-      type: object
-      properties:
-        template_title:
-          type: string
-          writeOnly: true
-        template_description:
-          type: string
-          writeOnly: true
-          nullable: true
-        prompts:
-          type: array
-          items:
-            type: string
-          readOnly: true
-      required:
-      - prompts
-      - template_title
-      description: ''
     RenewSubscription:
       type: object
       properties:
@@ -9754,6 +10588,17 @@ components:
       required:
       - id
       - user
+    TestContentBlock:
+      type: object
+      properties:
+        file_url:
+          type: string
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
+      description: ''
     ThreadMessages:
       type: object
       properties:
