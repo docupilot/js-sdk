@@ -7281,11 +7281,15 @@ components:
         can_extend_trial:
           type: boolean
           readOnly: true
+        subscribed_on:
+          type: string
+          readOnly: true
       required:
       - can_extend_trial
       - current_term_end
       - current_term_start
       - overage_enabled
+      - subscribed_on
       description: ''
     ChatThreads:
       type: object
@@ -8930,6 +8934,10 @@ components:
         use_froala:
           type: boolean
           readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
       description: ''
     Plan:
       type: object
@@ -10331,8 +10339,13 @@ components:
         use_froala:
           type: boolean
           readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - active
+      - created_time
       - id
       - org_name
       - plan_id
