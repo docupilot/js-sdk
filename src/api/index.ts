@@ -8,6 +8,8 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AcceptInvite } from './models/AcceptInvite';
 export type { AccountDelivery } from './models/AccountDelivery';
+export type { AITemplateCreate } from './models/AITemplateCreate';
+export type { AITemplateEdit } from './models/AITemplateEdit';
 export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
@@ -70,6 +72,7 @@ export type { PaginatedAccountDeliveryList } from './models/PaginatedAccountDeli
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedContentBlockList } from './models/PaginatedContentBlockList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
+export type { PaginatedTemplateInfoList } from './models/PaginatedTemplateInfoList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
 export type { PatchedDomain } from './models/PatchedDomain';
 export type { PatchedUpdateContentBlockSharing } from './models/PatchedUpdateContentBlockSharing';
@@ -81,6 +84,7 @@ export type { PatchedUpdateUser } from './models/PatchedUpdateUser';
 export type { PatchedWorkspace } from './models/PatchedWorkspace';
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
+export type { PromptSuggestions } from './models/PromptSuggestions';
 export type { RenewSubscription } from './models/RenewSubscription';
 export type { RetentionPreference } from './models/RetentionPreference';
 export type { S3Delivery } from './models/S3Delivery';
@@ -121,6 +125,7 @@ export type { WebhookDelivery } from './models/WebhookDelivery';
 export type { Workspace } from './models/Workspace';
 export type { YouSignDelivery } from './models/YouSignDelivery';
 
+export { AiService } from './services/AiService';
 export { AiChatService } from './services/AiChatService';
 export { AppendService } from './services/AppendService';
 export { AuthTokensService } from './services/AuthTokensService';

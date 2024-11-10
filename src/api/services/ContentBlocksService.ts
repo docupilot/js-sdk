@@ -6,6 +6,7 @@ import type { ContentBlockSharing } from '../models/ContentBlockSharing';
 import type { CopyContentBlock } from '../models/CopyContentBlock';
 import type { NewContentBlock } from '../models/NewContentBlock';
 import type { PaginatedContentBlockList } from '../models/PaginatedContentBlockList';
+import type { PaginatedTemplateInfoList } from '../models/PaginatedTemplateInfoList';
 import type { PatchedUpdateContentBlockSharing } from '../models/PatchedUpdateContentBlockSharing';
 import type { PatchedUpdateNewContentBlock } from '../models/PatchedUpdateNewContentBlock';
 import type { TemplateSchema } from '../models/TemplateSchema';
@@ -367,6 +368,48 @@ export class ContentBlocksService {
             url: '/api/v2/content_blocks/{id}/schema/',
             path: {
                 'id': id,
+            },
+        });
+    }
+
+    /**
+     * List content block templates
+     * @returns PaginatedTemplateInfoList
+     * @throws ApiError
+     */
+    public static listContentBlockTemplates({
+        id,
+        ordering,
+        page,
+        search,
+    }: {
+        /**
+         * A unique integer value identifying this content block.
+         */
+        id: number,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<PaginatedTemplateInfoList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/content_blocks/{id}/templates/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'ordering': ordering,
+                'page': page,
+                'search': search,
             },
         });
     }
