@@ -26,6 +26,7 @@ export class DocupilotSessionClient extends Docupilot {
   readonly AiChatService = _API.AiChatService;
   readonly UserSatisfactionSurveyService = _API.UserSatisfactionSurveyService;
   readonly AiService = _API.AiService;
+  readonly DocumentMergeHistoryService = _API.DocumentMergeHistoryService;
   configureHeadersInterceptor(getHeaders: () => Record<string, string>) {
     _API.OpenAPI.HEADERS = async (options: ApiRequestOptions) => {
       const headers = getHeaders();
