@@ -2369,12 +2369,6 @@ paths:
       - content_blocks
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewContentBlock'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/NewContentBlock'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/NewContentBlock'
@@ -2389,6 +2383,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '413':
+          content:
+            text/html:
+              schema:
+                description: Uploaded File Is Too Large.
           description: ''
         '400':
           content:
@@ -2829,12 +2829,6 @@ paths:
       - content_blocks
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
@@ -2848,6 +2842,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '413':
+          content:
+            text/html:
+              schema:
+                description: Uploaded File Is Too Large.
           description: ''
         '400':
           content:
@@ -3187,14 +3187,6 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              type: object
-              additionalProperties: {}
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              additionalProperties: {}
-          multipart/form-data:
             schema:
               type: object
               additionalProperties: {}
@@ -5085,6 +5077,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/permissions/content_block/:
+    get:
+      operationId: get_content_block_permissions
+      description: Returns content_block permissions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      - in: query
+        name: ids
+        schema:
+          type: string
+      tags:
+      - permissions
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: A dynamic JSON object with varying keys and value types
+              examples:
+                ResponseExample:
+                  value:
+                    '199':
+                    - manage
+                    - read
+                    - write
+                    '1201':
+                    - read
+                    '90':
+                    - write
+                    - read
+                  summary: Response Example
           description: ''
         '401':
           content:
@@ -8371,6 +8414,11 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        type:
+          enum:
+          - docx
+          - html
+          type: string
         created_time:
           type: string
           format: date-time

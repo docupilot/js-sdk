@@ -59,15 +59,15 @@ export class ContentBlocksService {
      * @throws ApiError
      */
     public static createContentBlock({
-        requestBody,
+        formData,
     }: {
-        requestBody: OmitReadonly<NewContentBlock>,
+        formData: OmitReadonly<NewContentBlock>,
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/content_blocks/',
-            body: requestBody,
-            mediaType: 'application/json',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
 
@@ -261,13 +261,13 @@ export class ContentBlocksService {
      */
     public static updateContentBlockData({
         id,
-        requestBody,
+        formData,
     }: {
         /**
          * A unique integer value identifying this content block.
          */
         id: number,
-        requestBody?: OmitReadonly<PatchedUpdateNewContentBlock>,
+        formData?: OmitReadonly<PatchedUpdateNewContentBlock>,
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -275,8 +275,8 @@ export class ContentBlocksService {
             path: {
                 'id': id,
             },
-            body: requestBody,
-            mediaType: 'application/json',
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
 

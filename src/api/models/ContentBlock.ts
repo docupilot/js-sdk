@@ -7,6 +7,7 @@ export type ContentBlock = {
     key?: string;
     name: string;
     description?: string | null;
+    type?: 'docx' | 'html';
     readonly created_time: string;
     readonly updated_time: string;
     readonly created_by: number;
