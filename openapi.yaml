@@ -1376,6 +1376,11 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+        description: Filter invoices by status (e.g., "paid", "unpaid").
       tags:
       - subscription
       security:
@@ -1386,6 +1391,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedInvoiceList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/new/pay-invoices/:
+    post:
+      operationId: pay_unpaid_invoices
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayUnpaidInvoices'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PayUnpaidInvoices'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PayUnpaidInvoices'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+                  paid_invoices:
+                    type: array
+                    items:
+                      type: integer
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -7759,7 +7824,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         last_used_time:
           type: string
           format: date-time
@@ -7849,7 +7913,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -8132,7 +8195,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         document_status:
           enum:
           - active
@@ -8269,7 +8331,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -8853,12 +8914,10 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         updated_time:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -9398,9 +9457,6 @@ components:
       - name
     PaginatedAccountDeliveryList:
       type: object
-      required:
-      - count
-      - results
       properties:
         count:
           type: integer
@@ -9421,9 +9477,6 @@ components:
             $ref: '#/components/schemas/AccountDelivery'
     PaginatedBulkGenList:
       type: object
-      required:
-      - count
-      - results
       properties:
         count:
           type: integer
@@ -9444,9 +9497,6 @@ components:
             $ref: '#/components/schemas/BulkGen'
     PaginatedInvoiceList:
       type: object
-      required:
-      - count
-      - results
       properties:
         count:
           type: integer
@@ -9467,9 +9517,6 @@ components:
             $ref: '#/components/schemas/Invoice'
     PaginatedMergeHistoryList:
       type: object
-      required:
-      - count
-      - results
       properties:
         count:
           type: integer
@@ -9490,9 +9537,6 @@ components:
             $ref: '#/components/schemas/MergeHistory'
     PaginatedPlansList:
       type: object
-      required:
-      - count
-      - results
       properties:
         count:
           type: integer
@@ -9513,9 +9557,6 @@ components:
             $ref: '#/components/schemas/Plans'
     PaginatedTemplateList:
       type: object
-      required:
-      - count
-      - results
       properties:
         count:
           type: integer
@@ -9838,6 +9879,19 @@ components:
         use_froala:
           type: boolean
           readOnly: true
+      description: ''
+    PayUnpaidInvoices:
+      type: object
+      properties:
+        invoice_ids:
+          type: array
+          items:
+            type: integer
+        payment_id:
+          type: string
+      required:
+      - invoice_ids
+      - payment_id
       description: ''
     Plan:
       type: object
@@ -10630,7 +10684,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         document_status:
           enum:
           - active
@@ -11002,7 +11055,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
         use_for_images:
           type: boolean
       required:

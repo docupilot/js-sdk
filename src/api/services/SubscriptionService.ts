@@ -7,6 +7,7 @@ import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
 import type { HostedPage } from '../models/HostedPage';
 import type { PaginatedInvoiceList } from '../models/PaginatedInvoiceList';
 import type { PatchedSubscriptionScheduleChange } from '../models/PatchedSubscriptionScheduleChange';
+import type { PayUnpaidInvoices } from '../models/PayUnpaidInvoices';
 import type { RenewSubscription } from '../models/RenewSubscription';
 import type { Subscription } from '../models/Subscription';
 import type { SubscriptionScheduleChange } from '../models/SubscriptionScheduleChange';
@@ -153,6 +154,7 @@ export class SubscriptionService {
         ordering,
         page,
         search,
+        status,
     }: {
         /**
          * Which field to use when ordering the results.
@@ -166,6 +168,10 @@ export class SubscriptionService {
          * A search term.
          */
         search?: string,
+        /**
+         * Filter invoices by status (e.g., "paid", "unpaid").
+         */
+        status?: string,
     }): CancelablePromise<PaginatedInvoiceList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -174,7 +180,29 @@ export class SubscriptionService {
                 'ordering': ordering,
                 'page': page,
                 'search': search,
+                'status': status,
             },
+        });
+    }
+
+    /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static payUnpaidInvoices({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<PayUnpaidInvoices>,
+    }): CancelablePromise<{
+        success?: boolean;
+        message?: string;
+        paid_invoices?: Array<number>;
+    }> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/new/pay-invoices/',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
