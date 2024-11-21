@@ -5,9 +5,9 @@
 import type { Template } from './Template';
 
 export type PaginatedTemplateList = {
-    count: number;
+    count?: number;
     next?: string | null;
     previous?: string | null;
-    results: Array<Template>;
+    results?: Array<Template>;
 };
 

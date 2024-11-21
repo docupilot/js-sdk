@@ -13,7 +13,7 @@ export type BulkGen = {
     end_time?: string | null;
     total?: number | null;
     success?: number | null;
-    readonly updated_time: string | null;
+    readonly updated_time: string;
     readonly created_by: number;
     readonly updated_by: number | null;
 };

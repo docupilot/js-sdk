@@ -84,6 +84,7 @@ export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate
 export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplateSharing';
 export type { PatchedUpdateUser } from './models/PatchedUpdateUser';
 export type { PatchedWorkspace } from './models/PatchedWorkspace';
+export type { PayUnpaidInvoices } from './models/PayUnpaidInvoices';
 export type { Plan } from './models/Plan';
 export type { PlanCredit } from './models/PlanCredit';
 export type { Plans } from './models/Plans';

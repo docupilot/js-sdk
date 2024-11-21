@@ -5,9 +5,9 @@
 import type { MergeHistory } from './MergeHistory';
 
 export type PaginatedMergeHistoryList = {
-    count: number;
+    count?: number;
     next?: string | null;
     previous?: string | null;
-    results: Array<MergeHistory>;
+    results?: Array<MergeHistory>;
 };
 
