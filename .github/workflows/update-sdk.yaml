@@ -16,28 +16,33 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.16.0]
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: recursive
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         id: setup-node
         with:
           cache: 'npm'
-          node-version: '15.14.0'
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
 
       - name: Cache node_modules
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-dependencies-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: update openapi yaml
         run: |
@@ -59,8 +64,8 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v4
         with:
-          reviewers: tiholic, ravalikab
-          assignees: tiholic, ravalikab
+          reviewers: tiholic, SumanthDocupliot, ravalikab, deekshith1856, Kat001
+          assignees: tiholic, SumanthDocupliot, ravalikab, deekshith1856, Kat001
           title: SDK Update - ${{ inputs.title_suffix }}
           body: "Changes created by [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           delete-branch: true
