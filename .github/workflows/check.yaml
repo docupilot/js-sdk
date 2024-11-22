@@ -30,6 +30,20 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('package-lock.json') }}
 
+      - name: Debug npm config1 (github.token)
+        run: npm config ls
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+
+      - name: Debug npm config2 (secrets.GITHUB_TOKEN)
+        run: npm config ls
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Debug npm config3 (no env)
+        run: npm config ls
+
+
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
         env:
