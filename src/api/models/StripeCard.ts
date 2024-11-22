@@ -9,5 +9,6 @@ export type StripeCard = {
     exp_month: number;
     exp_year: number;
     default: boolean;
+    zip: number;
 };
 
