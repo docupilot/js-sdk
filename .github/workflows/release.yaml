@@ -39,6 +39,8 @@ jobs:
 
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - run: npm run build
       - run: npm publish
