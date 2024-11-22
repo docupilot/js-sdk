@@ -812,6 +812,10 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: transfer_to
+        schema:
+          type: string
       tags:
       - team
       security:
