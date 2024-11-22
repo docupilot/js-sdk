@@ -16,46 +16,33 @@ on:
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.16.0]
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         id: setup-node
         with:
           cache: 'npm'
-          node-version: '15.14.0'
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com/
 
       - name: Cache node_modules
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('package-lock.json') }}
-
-      - name: Cache node_modules
-        id: cache-openapi-typescript-codegen-dependencies
-        uses: actions/cache@v2
-        with:
-          path: openapi-typescript-codegen/node_modules
-          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('openapi-typescript-codegen/package-lock.json') }}
-
-      - if: steps.cache-openapi-typescript-codegen-dependencies.outputs.cache-hit != 'true'
-        name: install codegen dependencies
-        run: |
-          cd openapi-typescript-codegen
-          npm i
-          cd ../
-
-      - name: codegen build
-        run: |
-          cd openapi-typescript-codegen
-          npm run build
-          cd ../
+          key: ${{ runner.os }}-dependencies-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: update openapi yaml
         run: |
@@ -77,8 +64,8 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v4
         with:
-          reviewers: tiholic, ravalikab
-          assignees: tiholic, ravalikab
+          reviewers: tiholic, SumanthDocupliot, ravalikab, deekshith1856, Kat001
+          assignees: tiholic, SumanthDocupliot, ravalikab, deekshith1856, Kat001
           title: SDK Update - ${{ inputs.title_suffix }}
           body: "Changes created by [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           delete-branch: true
