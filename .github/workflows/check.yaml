@@ -33,7 +33,7 @@ jobs:
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: lint
         run: ./node_modules/.bin/prettier --check **/*.ts
