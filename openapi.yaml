@@ -9252,10 +9252,28 @@ components:
         generated_on:
           type: string
           format: date-time
+        price:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - paid
+          - unpaid
+          type: string
+        start_date:
+          type: string
+          format: date-time
+        end_date:
+          type: string
+          format: date-time
       required:
+      - end_date
       - generated_on
       - id
       - name
+      - price
+      - start_date
+      - status
       description: ''
     MergeHistory:
       type: object
@@ -10415,6 +10433,8 @@ components:
           type: integer
         default:
           type: boolean
+        zip:
+          type: integer
       required:
       - brand
       - default
@@ -10422,6 +10442,7 @@ components:
       - exp_year
       - id
       - last4
+      - zip
       description: ''
     StripeCheckoutResponse:
       type: object
