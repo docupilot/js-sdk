@@ -812,6 +812,10 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: transfer_to
+        schema:
+          type: string
       tags:
       - team
       security:
@@ -2238,6 +2242,11 @@ paths:
       operationId: append_files
       parameters:
       - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
+      - in: header
         name: X-Workspace
         schema:
           type: string
@@ -2337,9 +2346,17 @@ paths:
           format: date-time
         description: 'DateTime in this format: 2019-05-02 16:25:12.353000'
       - in: query
-        name: template
+        name: status
         schema:
           type: string
+          enum:
+          - error
+          - pending
+          - success
+      - in: query
+        name: template
+        schema:
+          type: integer
       tags:
       - document_merge_history
       security:
@@ -4903,6 +4920,11 @@ paths:
       summary: Generate document from template
       parameters:
       - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
+      - in: header
         name: X-Workspace
         schema:
           type: string
@@ -7380,6 +7402,33 @@ components:
       - model_name
       - thread_id
       description: ''
+    ChildDocumentMergeHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        delivery_type:
+          type: string
+          maxLength: 255
+        status:
+          enum:
+          - pending
+          - success
+          - error
+          type: string
+        message:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        delivery:
+          type: integer
+          nullable: true
+      required:
+      - delivery_type
+      - id
+      - status
+      description: ''
     ChildTemplate:
       type: object
       properties:
@@ -7692,14 +7741,18 @@ components:
         executed_deliveries:
           type: array
           items:
-            $ref: '#/components/schemas/MergeHistorySerializer2'
+            $ref: '#/components/schemas/ChildDocumentMergeHistory'
         is_data_expired:
           type: string
           readOnly: true
         is_document_expired:
           type: string
           readOnly: true
+        created_file_name:
+          type: string
+          maxLength: 255
       required:
+      - created_file_name
       - executed_deliveries
       - id
       - is_data_expired
@@ -8577,30 +8630,6 @@ components:
       - id
       - status
       - template
-      description: ''
-    MergeHistorySerializer2:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        delivery_type:
-          type: string
-          maxLength: 255
-        status:
-          enum:
-          - pending
-          - success
-          - error
-          type: string
-        message:
-          type: object
-          additionalProperties: {}
-          nullable: true
-      required:
-      - delivery_type
-      - id
-      - status
       description: ''
     Meta:
       type: object

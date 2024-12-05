@@ -20,6 +20,7 @@ export class DocumentMergeHistoryService {
         ordering,
         page,
         startDate,
+        status,
         template,
     }: {
         /**
@@ -38,7 +39,8 @@ export class DocumentMergeHistoryService {
          * DateTime in this format: 2019-05-02 16:25:12.353000
          */
         startDate?: string,
-        template?: string,
+        status?: 'error' | 'pending' | 'success',
+        template?: number,
     }): CancelablePromise<PaginatedDocumentMergeHistoryList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -48,6 +50,7 @@ export class DocumentMergeHistoryService {
                 'ordering': ordering,
                 'page': page,
                 'start_date': startDate,
+                'status': status,
                 'template': template,
             },
         });

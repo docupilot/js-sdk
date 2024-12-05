@@ -18,6 +18,7 @@ export class GenerateService {
      */
     public static generateDocument({
         id,
+        xClient,
         download,
         outputType,
         requestBody,
@@ -26,6 +27,10 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
+        /**
+         * Client Origin
+         */
+        xClient?: string,
         download?: 'false' | 'file' | 'true',
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         requestBody?: Record<string, any>,
@@ -35,6 +40,9 @@ export class GenerateService {
             url: '/api/v2/templates/{id}/generate/',
             path: {
                 'id': id,
+            },
+            headers: {
+                'X-Client': xClient,
             },
             query: {
                 'download': download,
