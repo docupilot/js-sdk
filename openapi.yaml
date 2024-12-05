@@ -1503,7 +1503,9 @@ paths:
       tags:
       - workspaces
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2241,6 +2243,11 @@ paths:
     post:
       operationId: append_files
       parameters:
+      - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
       - in: header
         name: X-Workspace
         schema:
@@ -4842,6 +4849,11 @@ paths:
       operationId: generate_document
       summary: Generate document from template
       parameters:
+      - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
       - in: header
         name: X-Workspace
         schema:
