@@ -10,8 +10,8 @@ export type DocumentMergeHistory = {
     data?: Record<string, any> | null;
     readonly template: ChildTemplate | null;
     executed_deliveries: Array<ChildDocumentMergeHistory>;
-    readonly is_data_expired: string;
-    readonly is_document_expired: string;
+    readonly is_data_expired: boolean;
+    readonly is_document_expired: boolean;
     created_file_name: string;
 };
 

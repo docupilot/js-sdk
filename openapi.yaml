@@ -7743,10 +7743,10 @@ components:
           items:
             $ref: '#/components/schemas/ChildDocumentMergeHistory'
         is_data_expired:
-          type: string
+          type: boolean
           readOnly: true
         is_document_expired:
-          type: string
+          type: boolean
           readOnly: true
         created_file_name:
           type: string
