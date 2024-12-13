@@ -4,6 +4,6 @@
 
 export type TransferOwnership = {
     transfer_to: number;
-    otp: string;
+    otp: number;
 };
 
