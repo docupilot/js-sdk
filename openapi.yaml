@@ -1503,7 +1503,9 @@ paths:
       tags:
       - workspaces
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2081,10 +2083,171 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /ai/online-builder/create_template/:
+    post:
+      operationId: create_template_online_builder_ai
+      summary: create template using ai
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AITemplateCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AITemplateCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AITemplateCreate'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/online-builder/edit_template/:
+    post:
+      operationId: edit_template_online_builder_ai
+      summary: edit template using chat completion
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AITemplateEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AITemplateEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AITemplateEdit'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AITemplateEdit'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/online-builder/list_prompt_suggestions/:
+    post:
+      operationId: prompt_suggestions_online_builder_ai
+      summary: list prompt suggestions based on template name and description
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromptSuggestions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PromptSuggestions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PromptSuggestions'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptSuggestions'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/append/:
     post:
       operationId: append_files
       parameters:
+      - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
       - in: header
         name: X-Workspace
         schema:
@@ -2383,18 +2546,6 @@ paths:
         schema:
           type: integer
         required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       tags:
       - folders
       security:
@@ -2441,13 +2592,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FolderSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/FolderSharing'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/FolderSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/FolderSharing'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/FolderSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/FolderSharing'
         required: true
       security:
       - SessionAuthentication: []
@@ -2456,7 +2613,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FolderSharing'
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderSharing'
           description: ''
         '400':
           content:
@@ -4691,6 +4850,11 @@ paths:
       summary: Generate document from template
       parameters:
       - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
+      - in: header
         name: X-Workspace
         schema:
           type: string
@@ -6218,18 +6382,6 @@ paths:
           type: string
         description: Organization unique_key
         required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       - in: path
         name: template_id
         schema:
@@ -6281,13 +6433,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TemplateSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSharing'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TemplateSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSharing'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TemplateSharing'
+              type: array
+              items:
+                $ref: '#/components/schemas/TemplateSharing'
         required: true
       security:
       - SessionAuthentication: []
@@ -6296,7 +6454,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemplateSharing'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateSharing'
           description: ''
         '400':
           content:
@@ -6707,7 +6867,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BannerNotification'
+                type: array
+                items:
+                  $ref: '#/components/schemas/BannerNotification'
           description: ''
         '401':
           content:
@@ -6805,6 +6967,42 @@ paths:
           description: ''
 components:
   schemas:
+    AITemplateCreate:
+      type: object
+      properties:
+        ai_prompt:
+          type: string
+        title:
+          type: string
+          maxLength: 120
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
+        folder:
+          type: integer
+          nullable: true
+      required:
+      - ai_prompt
+      - title
+      description: ''
+    AITemplateEdit:
+      type: object
+      properties:
+        ai_prompt:
+          type: string
+          writeOnly: true
+        selected_content:
+          type: string
+          writeOnly: true
+        ai_response:
+          type: string
+          readOnly: true
+      required:
+      - ai_prompt
+      - ai_response
+      - selected_content
+      description: ''
     AcceptInvite:
       type: object
       properties:
@@ -6876,6 +7074,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         last_used_time:
           type: string
           format: date-time
@@ -6896,14 +7095,17 @@ components:
       properties:
         id:
           type: string
-        content:
+        name:
+          type: string
+        description:
           type: string
         action:
           $ref: '#/components/schemas/BannerNotificationAction'
       required:
       - action
-      - content
+      - description
       - id
+      - name
       description: ''
     BannerNotificationAction:
       type: object
@@ -6965,6 +7167,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -7086,6 +7289,8 @@ components:
           type: integer
           maximum: 2147483647
           minimum: 0
+        overage_enabled:
+          type: boolean
         documents_allowed:
           type: integer
           maximum: 9223372036854775807
@@ -7099,10 +7304,15 @@ components:
         can_extend_trial:
           type: boolean
           readOnly: true
+        subscribed_on:
+          type: string
+          readOnly: true
       required:
       - can_extend_trial
       - current_term_end
       - current_term_start
+      - overage_enabled
+      - subscribed_on
       description: ''
     ChatThreads:
       type: object
@@ -7161,6 +7371,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -7266,6 +7477,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -7885,10 +8097,12 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         updated_time:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -8438,6 +8652,9 @@ components:
       - name
     PaginatedAccountDeliveryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8458,6 +8675,9 @@ components:
             $ref: '#/components/schemas/AccountDelivery'
     PaginatedBulkGenList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8478,6 +8698,9 @@ components:
             $ref: '#/components/schemas/BulkGen'
     PaginatedMergeHistoryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8498,6 +8721,9 @@ components:
             $ref: '#/components/schemas/MergeHistory'
     PaginatedTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8747,6 +8973,10 @@ components:
         use_froala:
           type: boolean
           readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
       description: ''
     Plan:
       type: object
@@ -8803,6 +9033,25 @@ components:
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
           sftp: '#/components/schemas/SftpDelivery'
+    PromptSuggestions:
+      type: object
+      properties:
+        template_title:
+          type: string
+          writeOnly: true
+        template_description:
+          type: string
+          writeOnly: true
+          nullable: true
+        prompts:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - prompts
+      - template_title
+      description: ''
     RenewSubscription:
       type: object
       properties:
@@ -9274,6 +9523,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -9580,7 +9830,7 @@ components:
         transfer_to:
           type: integer
         otp:
-          type: string
+          type: integer
       required:
       - otp
       - transfer_to
@@ -9626,6 +9876,7 @@ components:
           - email
           - sftp
           type: string
+          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -9647,6 +9898,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -10129,8 +10381,13 @@ components:
         use_froala:
           type: boolean
           readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
       required:
       - active
+      - created_time
       - id
       - org_name
       - plan_id
