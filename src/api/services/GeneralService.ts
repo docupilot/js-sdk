@@ -17,7 +17,7 @@ export class GeneralService {
      * @returns BannerNotification
      * @throws ApiError
      */
-    public static listBannerNotifications(): CancelablePromise<BannerNotification> {
+    public static listBannerNotifications(): CancelablePromise<Array<BannerNotification>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/banner_notifications/',
