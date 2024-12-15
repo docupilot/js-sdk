@@ -713,6 +713,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/resume/:
+    post:
+      operationId: resume_subscription
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/unpaid_invoices/:
     get:
       operationId: get_chargebee_unpaid_invoices
@@ -6867,7 +6907,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BannerNotification'
+                type: array
+                items:
+                  $ref: '#/components/schemas/BannerNotification'
           description: ''
         '401':
           content:
@@ -7072,6 +7114,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         last_used_time:
           type: string
           format: date-time
@@ -7092,14 +7135,17 @@ components:
       properties:
         id:
           type: string
-        content:
+        name:
+          type: string
+        description:
           type: string
         action:
           $ref: '#/components/schemas/BannerNotificationAction'
       required:
       - action
-      - content
+      - description
       - id
+      - name
       description: ''
     BannerNotificationAction:
       type: object
@@ -7161,6 +7207,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -7364,6 +7411,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -7469,6 +7517,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -8088,10 +8137,12 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         updated_time:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -8641,6 +8692,9 @@ components:
       - name
     PaginatedAccountDeliveryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8661,6 +8715,9 @@ components:
             $ref: '#/components/schemas/AccountDelivery'
     PaginatedBulkGenList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8681,6 +8738,9 @@ components:
             $ref: '#/components/schemas/BulkGen'
     PaginatedMergeHistoryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8701,6 +8761,9 @@ components:
             $ref: '#/components/schemas/MergeHistory'
     PaginatedTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9500,6 +9563,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -9852,6 +9916,7 @@ components:
           - email
           - sftp
           type: string
+          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -9873,6 +9938,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -10575,7 +10641,7 @@ components:
           type: string
           nullable: true
           maxLength: 256
-        workspace_id:
+        yousign_workspace_id:
           type: string
           nullable: true
           maxLength: 256

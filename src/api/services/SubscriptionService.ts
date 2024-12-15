@@ -82,6 +82,17 @@ export class SubscriptionService {
     }
 
     /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static resumeSubscription(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/resume/',
+        });
+    }
+
+    /**
      * @returns HostedPage
      * @throws ApiError
      */
