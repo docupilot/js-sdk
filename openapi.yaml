@@ -2279,6 +2279,276 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /ai/word-add-in/word_error_suggestions/:
+    post:
+      operationId: word_error_suggestions
+      summary: Word Error Suggestions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordErrorSuggestions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordErrorSuggestions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordErrorSuggestions'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordErrorSuggestions'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/word-add-in/word_group_category/:
+    post:
+      operationId: word_group_category_chat_completion
+      summary: Word group category chat completion
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInAllCategory'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/word-add-in/word_prompt_suggestions/:
+    post:
+      operationId: word_prompt_suggestions
+      summary: list prompt suggestions based on File Name and Content
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordPromptSuggestions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordPromptSuggestions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordPromptSuggestions'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordPromptSuggestions'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/word-add-in/word_table_category/:
+    post:
+      operationId: word_table_category_chat_completion
+      summary: Word table category chat completion
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInAllCategory'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/word-add-in/word_text_category/:
+    post:
+      operationId: word_text_category_chat_completion
+      summary: Word text category chat completion
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInAllCategory'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInAllCategory'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/append/:
     post:
       operationId: append_files
@@ -10263,6 +10533,61 @@ components:
       - id
       - name
       - url
+    WordAddInAllCategory:
+      type: object
+      properties:
+        user_input:
+          type: string
+        word_selected_content:
+          type: string
+          writeOnly: true
+        ai_response:
+          type: string
+          readOnly: true
+      required:
+      - ai_response
+      - word_selected_content
+      description: ''
+    WordErrorSuggestions:
+      type: object
+      properties:
+        content:
+          type: string
+          maxLength: 2500
+        error:
+          type: string
+        syntax_suggestions:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - content
+      - error
+      - syntax_suggestions
+      description: ''
+    WordPromptSuggestions:
+      type: object
+      properties:
+        word_title:
+          type: string
+          writeOnly: true
+        first_page_content:
+          type: string
+          writeOnly: true
+          nullable: true
+        word_main_headings:
+          type: string
+          writeOnly: true
+          nullable: true
+        prompts:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - prompts
+      - word_title
+      description: ''
     Workspace:
       type: object
       properties:

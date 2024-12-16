@@ -5,6 +5,9 @@ import type { AITemplateCreate } from '../models/AITemplateCreate';
 import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { PromptSuggestions } from '../models/PromptSuggestions';
 import type { Template } from '../models/Template';
+import type { WordAddInAllCategory } from '../models/WordAddInAllCategory';
+import type { WordErrorSuggestions } from '../models/WordErrorSuggestions';
+import type { WordPromptSuggestions } from '../models/WordPromptSuggestions';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -62,6 +65,96 @@ export class AiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/online-builder/list_prompt_suggestions/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Word Error Suggestions
+     * @returns WordErrorSuggestions
+     * @throws ApiError
+     */
+    public static wordErrorSuggestions({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordErrorSuggestions>,
+    }): CancelablePromise<WordErrorSuggestions> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai/word-add-in/word_error_suggestions/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Word group category chat completion
+     * @returns WordAddInAllCategory
+     * @throws ApiError
+     */
+    public static wordGroupCategoryChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordAddInAllCategory>,
+    }): CancelablePromise<WordAddInAllCategory> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai/word-add-in/word_group_category/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * list prompt suggestions based on File Name and Content
+     * @returns WordPromptSuggestions
+     * @throws ApiError
+     */
+    public static wordPromptSuggestions({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordPromptSuggestions>,
+    }): CancelablePromise<WordPromptSuggestions> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai/word-add-in/word_prompt_suggestions/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Word table category chat completion
+     * @returns WordAddInAllCategory
+     * @throws ApiError
+     */
+    public static wordTableCategoryChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordAddInAllCategory>,
+    }): CancelablePromise<WordAddInAllCategory> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai/word-add-in/word_table_category/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Word text category chat completion
+     * @returns WordAddInAllCategory
+     * @throws ApiError
+     */
+    public static wordTextCategoryChatCompletion({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordAddInAllCategory>,
+    }): CancelablePromise<WordAddInAllCategory> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai/word-add-in/word_text_category/',
             body: requestBody,
             mediaType: 'application/json',
         });

@@ -113,6 +113,9 @@ export type { UserPersonalizationListViewTemplate } from './models/UserPersonali
 export type { ValidationError } from './models/ValidationError';
 export type { VerifyEmailAccountOTP } from './models/VerifyEmailAccountOTP';
 export type { WebhookDelivery } from './models/WebhookDelivery';
+export type { WordAddInAllCategory } from './models/WordAddInAllCategory';
+export type { WordErrorSuggestions } from './models/WordErrorSuggestions';
+export type { WordPromptSuggestions } from './models/WordPromptSuggestions';
 export type { Workspace } from './models/Workspace';
 export type { YouSignDelivery } from './models/YouSignDelivery';
 
