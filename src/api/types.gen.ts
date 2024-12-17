@@ -11,6 +11,7 @@ export type AccountDelivery = {
     template_info: TemplateInfo;
 };
 
+
 export type AITemplateCreate = {
     ai_prompt: string;
     title: string;
