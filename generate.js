@@ -2,11 +2,16 @@
 
 'use strict';
 
-const { program } = require('commander');
-const pkg = require('./package.json');
-const fs = require('fs');
-const yaml = require('yaml');
-const OpenAPI = require('@flackonInc/openapi-typescript-codegen');
+import pkg from './package.json' assert { type: "json" };
+
+import { program } from 'commander';
+
+import fs from 'fs';
+
+import yaml from 'yaml';
+
+import * as OpenAPI from '@hey-api/openapi-ts';
+
 
 const params = program
   .name('openapi')
@@ -45,20 +50,27 @@ for (let pathSpec of Object.values(spec.paths)) {
 }
 
 if (OpenAPI) {
-  OpenAPI.generate({
+  OpenAPI.createClient({
     input: spec,
     output: params.output,
-    httpClient: params.client,
-    clientName: params.name,
+    client: params.client,
+    // httpClient: params.client,
+    name: params.name,
     useOptions: params.useOptions,
-    useUnionTypes: params.useUnionTypes,
+    // useUnionTypes: params.useUnionTypes,
     exportCore: JSON.parse(params.exportCore) === true,
     exportServices: JSON.parse(params.exportServices) === true,
     exportModels: JSON.parse(params.exportModels) === true,
     exportSchemas: JSON.parse(params.exportSchemas) === true,
-    indent: params.indent,
-    postfix: params.postfix,
+    format: params.indent,
+    postfixServices: params.postfix,
     request: params.request,
+    plugins: [
+      {
+        asClass: true,
+        name: '@hey-api/sdk',
+      },
+    ],
   })
     .then(() => {
       process.exit(0);

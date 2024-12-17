@@ -4,15 +4,16 @@
   "description": "interact with docupilot.app APIs",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "type": "module",
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "example": "ts-node examples/basic.ts",
-    "generate.spec.node": "node generate.js --input ./openapi.yaml --output ./src/api --useOptions --useUnionTypes --client node",
-    "generate.spec.react": "node generate.js --input ./openapi.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
-    "generate.spec.browser": "node generate.js --input ./openapi.yaml --output ./src/api --useUnionTypes --client xhr",
+    "generate.spec.node": "node generate.js --input ./openapi.yaml --output ./src/api --useOptions --useUnionTypes --client legacy/node",
+    "generate.spec.react": "node generate.js --input ./openapi.yaml --output ./src/api --useOptions --useUnionTypes --client legacy/xhr",
+    "generate.spec.browser": "node generate.js --input ./openapi.yaml --output ./src/api --useUnionTypes --client legacy/xhr",
     "build": "npm run clean:dist && npm run build:web && npm run build:esm && npm run build:cjs",
     "clean:dist": "rm -rf dist/",
     "build:esm": "tsc",
@@ -39,11 +40,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@hey-api/openapi-ts": "^0.59.2",
     "@types/node-fetch": "^2.6.2",
     "braces": "^3.0.3",
+    "commander": "^12.1.0",
     "form-data": "^4.0.0",
     "node-fetch": "^2.6.7",
-    "@flackonInc/openapi-typescript-codegen": "^0.23.7",
     "prettier": "^2.7.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.1",
