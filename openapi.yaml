@@ -239,9 +239,7 @@ paths:
             schema:
               $ref: '#/components/schemas/DemoGraphic'
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -265,8 +263,8 @@ paths:
           description: ''
   /accounts/v2/demographic/show_prompt/:
     get:
-      operationId: show_prompt
-      summary: Show prompt
+      operationId: show_demographic_prompt_for_workspace_users
+      summary: Show demographic prompt for workspace users
       parameters:
       - in: header
         name: X-Workspace
@@ -277,9 +275,7 @@ paths:
       tags:
       - demographic
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -325,9 +321,7 @@ paths:
               $ref: '#/components/schemas/VerifyDomain'
         required: true
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
@@ -852,6 +846,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/resume/:
+    post:
+      operationId: resume_subscription
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/unpaid_invoices/:
     get:
       operationId: get_chargebee_unpaid_invoices
@@ -951,6 +985,10 @@ paths:
         schema:
           type: string
         required: true
+      - in: query
+        name: transfer_to
+        schema:
+          type: string
       tags:
       - team
       security:
@@ -1638,7 +1676,9 @@ paths:
       tags:
       - workspaces
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2376,6 +2416,11 @@ paths:
     post:
       operationId: append_files
       parameters:
+      - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
       - in: header
         name: X-Workspace
         schema:
@@ -4978,6 +5023,11 @@ paths:
       summary: Generate document from template
       parameters:
       - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
+      - in: header
         name: X-Workspace
         schema:
           type: string
@@ -6990,7 +7040,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BannerNotification'
+                type: array
+                items:
+                  $ref: '#/components/schemas/BannerNotification'
           description: ''
         '401':
           content:
@@ -7195,6 +7247,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         last_used_time:
           type: string
           format: date-time
@@ -7215,14 +7268,17 @@ components:
       properties:
         id:
           type: string
-        content:
+        name:
+          type: string
+        description:
           type: string
         action:
           $ref: '#/components/schemas/BannerNotificationAction'
       required:
       - action
-      - content
+      - description
       - id
+      - name
       description: ''
     BannerNotificationAction:
       type: object
@@ -7284,6 +7340,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -7487,6 +7544,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -7592,6 +7650,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -8223,10 +8282,12 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         updated_time:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         created_by:
           type: integer
           readOnly: true
@@ -8776,6 +8837,9 @@ components:
       - name
     PaginatedAccountDeliveryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8796,6 +8860,9 @@ components:
             $ref: '#/components/schemas/AccountDelivery'
     PaginatedBulkGenList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8816,6 +8883,9 @@ components:
             $ref: '#/components/schemas/BulkGen'
     PaginatedMergeHistoryList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -8836,6 +8906,9 @@ components:
             $ref: '#/components/schemas/MergeHistory'
     PaginatedTemplateList:
       type: object
+      required:
+      - count
+      - results
       properties:
         count:
           type: integer
@@ -9646,6 +9719,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         document_status:
           enum:
           - active
@@ -9998,6 +10072,7 @@ components:
           - email
           - sftp
           type: string
+          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -10019,6 +10094,7 @@ components:
           type: string
           format: date-time
           readOnly: true
+          nullable: true
         use_for_images:
           type: boolean
       required:
@@ -10558,18 +10634,19 @@ components:
           maxLength: 255
         employee_count:
           enum:
-          - 1-10
-          - 11-15
-          - 51-200
-          - 201-500
-          - 501-1000
-          - 1001-5000
-          - 5001-10000
-          - 10000+
+          - JUST ME
+          - 2 to 5
+          - 6 to 10
+          - 11 to 25
+          - 26 to 50
+          - 51 to 200
+          - 201 to 1,000
+          - 1,001 to 10,000
+          - 10,001 or more
           type: string
         industry:
           type: string
-          maxLength: 52
+          maxLength: 100
         primary_region:
           type: string
           maxLength: 100
@@ -10784,7 +10861,7 @@ components:
           type: string
           nullable: true
           maxLength: 256
-        workspace_id:
+        yousign_workspace_id:
           type: string
           nullable: true
           maxLength: 256
