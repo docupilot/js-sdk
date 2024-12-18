@@ -31,11 +31,11 @@ export class DemographicService {
     }
 
     /**
-     * Show prompt
+     * Show demographic prompt for workspace users
      * @returns ShowDemographicPrompt
      * @throws ApiError
      */
-    public static showPrompt(): CancelablePromise<ShowDemographicPrompt> {
+    public static showDemographicPromptForWorkspaceUsers(): CancelablePromise<ShowDemographicPrompt> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/demographic/show_prompt/',

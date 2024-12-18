@@ -46,7 +46,7 @@ export type YouSignDelivery = {
     timezone?: string | null;
     expiration_date?: string | null;
     custom_experience_id?: string | null;
-    workspace_id?: string | null;
+    yousign_workspace_id?: string | null;
     audit_trail_locale?: string | null;
     enable_optional_signers?: boolean;
 };

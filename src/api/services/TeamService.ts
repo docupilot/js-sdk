@@ -47,14 +47,19 @@ export class TeamService {
      */
     public static deleteTeamMember({
         id,
+        transferTo,
     }: {
         id: string,
+        transferTo?: string,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/accounts/v2/team/{id}/',
             path: {
                 'id': id,
+            },
+            query: {
+                'transfer_to': transferTo,
             },
         });
     }
