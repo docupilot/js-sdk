@@ -19,23 +19,20 @@ export class TeamService {
      */
     public static listAllTeamMembers({
         ordering,
-        search,
+        role,
     }: {
         /**
          * Which field to use when ordering the results.
          */
         ordering?: string,
-        /**
-         * A search term.
-         */
-        search?: string,
+        role?: 'admin' | 'billing_manager' | 'manager' | 'member' | 'owner',
     }): CancelablePromise<Array<TeamMember>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/team/',
             query: {
                 'ordering': ordering,
-                'search': search,
+                'role': role,
             },
         });
     }
