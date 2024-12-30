@@ -1,5 +1,5 @@
 {
-  "name": "@flackoninc/docupilot-js-sdk",
+  "name": "@docupilot/docupilot-js-sdk",
   "version": "1.0.0",
   "description": "interact with docupilot.app APIs",
   "main": "dist/cjs/index.js",
@@ -22,10 +22,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/flackonInc/docupilot-js-sdk"
+    "url": "https://github.com/docupilot/docupilot-js-sdk"
   },
   "publishConfig": {
-    "@flackoninc:registry": "https://npm.pkg.github.com"
+    "@docupilot:registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "docupilot.app",
