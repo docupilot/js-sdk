@@ -40,14 +40,15 @@ export type AuthToken = {
     readonly id: number;
     readonly token: string;
     name: string;
-    readonly created_time: string;
+    readonly created_time: (string) | null;
     readonly last_used_time: (string) | null;
     active?: boolean;
 };
 
 export type BannerNotification = {
     id: string;
-    content: string;
+    name: string;
+    description: string;
     action: BannerNotificationAction;
 };
 
@@ -67,7 +68,7 @@ export type BulkGen = {
     end_time?: (string) | null;
     total?: (number) | null;
     success?: (number) | null;
-    readonly updated_time: string;
+    readonly updated_time: (string) | null;
     readonly created_by: number;
     readonly updated_by: (number) | null;
 };
@@ -129,13 +130,25 @@ export type ChatThreads = {
     model_name: string;
 };
 
+export type ChildDocumentMergeHistory = {
+    readonly id: number;
+    delivery_type: string;
+    status: 'pending' | 'success' | 'error';
+    message?: {
+        [key: string]: unknown;
+    } | null;
+    delivery?: (number) | null;
+};
+
+export type status3 = 'pending' | 'success' | 'error';
+
 export type ChildTemplate = {
     readonly id: number;
     readonly title: string;
     description?: (string) | null;
     type?: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
     readonly created_time: string;
-    readonly updated_time: string;
+    readonly updated_time: (string) | null;
     document_status?: 'active' | 'test';
     deleted_time?: (string) | null;
     readonly created_by: number;
@@ -180,11 +193,28 @@ export type DeliveryAccount = {
         [key: string]: unknown;
     };
     readonly is_expired: boolean;
-    readonly updated_at: string;
+    readonly updated_at: (string) | null;
     use_for_images?: boolean;
 };
 
 export type type2 = 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email' | 'sftp';
+
+export type DemoGraphic = {
+    user_demographic?: ((UserDemographic) | null);
+    workspace_demographic?: ((WorkspaceDemographic) | null);
+};
+
+export type DocumentMergeHistory = {
+    readonly id: number;
+    data?: {
+        [key: string]: unknown;
+    } | null;
+    readonly template: ((ChildTemplate) | null);
+    executed_deliveries: Array<ChildDocumentMergeHistory>;
+    readonly is_data_expired: boolean;
+    readonly is_document_expired: boolean;
+    created_file_name?: (string) | null;
+};
 
 export type DocumentMergeLink = {
     readonly path: string;
@@ -360,8 +390,6 @@ export type ExportMergeHistory = {
     status?: 'pending' | 'success' | 'error';
 };
 
-export type status3 = 'pending' | 'success' | 'error';
-
 export type File = {
     readonly id: number;
     path: string;
@@ -386,8 +414,8 @@ export type FillablePdfSettings = {
 export type Folder = {
     readonly id: number;
     name: string;
-    readonly created_time: string;
-    readonly updated_time: string;
+    readonly created_time: (string) | null;
+    readonly updated_time: (string) | null;
     readonly created_by: number;
     readonly updated_by: (number) | null;
 };
@@ -587,31 +615,38 @@ export type OneDriveDelivery = {
 };
 
 export type PaginatedAccountDeliveryList = {
-    count?: number;
+    count: number;
     next?: (string) | null;
     previous?: (string) | null;
-    results?: Array<AccountDelivery>;
+    results: Array<AccountDelivery>;
 };
 
 export type PaginatedBulkGenList = {
-    count?: number;
+    count: number;
     next?: (string) | null;
     previous?: (string) | null;
-    results?: Array<BulkGen>;
+    results: Array<BulkGen>;
+};
+
+export type PaginatedDocumentMergeHistoryList = {
+    count: number;
+    next?: (string) | null;
+    previous?: (string) | null;
+    results: Array<DocumentMergeHistory>;
 };
 
 export type PaginatedMergeHistoryList = {
-    count?: number;
+    count: number;
     next?: (string) | null;
     previous?: (string) | null;
-    results?: Array<MergeHistory>;
+    results: Array<MergeHistory>;
 };
 
 export type PaginatedTemplateList = {
-    count?: number;
+    count: number;
     next?: (string) | null;
     previous?: (string) | null;
-    results?: Array<Template>;
+    results: Array<Template>;
 };
 
 export type PatchedDomain = {
@@ -759,6 +794,11 @@ export type SharingInfoTemplate = {
     readonly is_shared: boolean;
 };
 
+export type ShowDemographicPrompt = {
+    user_demographic: boolean;
+    workspace_demographic: boolean;
+};
+
 export type SignableDelivery = {
     readonly id: number;
     failure_email_recipients?: (string) | null;
@@ -827,7 +867,7 @@ export type Template = {
     description?: (string) | null;
     readonly type: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
     readonly created_time: string;
-    readonly updated_time: string;
+    readonly updated_time: (string) | null;
     document_status?: 'active' | 'test';
     readonly deleted_time: (string) | null;
     readonly created_by: number;
@@ -941,7 +981,7 @@ export type UpdateCustomerThreadOutput = {
 
 export type UpdateDeliveryAccount = {
     readonly id: number;
-    type: 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email' | 'sftp';
+    readonly type: 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email' | 'sftp';
     readonly sub_type: string;
     readonly used_by: number;
     readonly name: (string) | null;
@@ -949,7 +989,7 @@ export type UpdateDeliveryAccount = {
         [key: string]: unknown;
     };
     readonly is_expired: boolean;
-    readonly updated_at: string;
+    readonly updated_at: (string) | null;
     use_for_images?: boolean;
 };
 
@@ -977,6 +1017,12 @@ export type User = {
     is_mfa_enabled?: boolean;
 };
 
+export type UserDemographic = {
+    readonly id: number;
+    product_referral_source?: (string) | null;
+    role: string;
+};
+
 export type UserPersonalization = {
     ui_version?: 1 | 2;
     'list_view:templates'?: UserPersonalizationListViewTemplate;
@@ -996,6 +1042,11 @@ export type ValidationError = {
         [key: string]: Array<(string)>;
     };
     non_field_errors: Array<(string)>;
+};
+
+export type VerifyDomain = {
+    domain_name: string;
+    readonly show_workspace_demographic_prompt: boolean;
 };
 
 export type VerifyEmailAccountOTP = {
@@ -1039,6 +1090,16 @@ export type Workspace = {
     readonly use_froala: boolean;
     readonly created_time: string;
 };
+
+export type WorkspaceDemographic = {
+    readonly id: number;
+    domain_name: string;
+    employee_count: 'JUST ME' | '2 to 5' | '6 to 10' | '11 to 25' | '26 to 50' | '51 to 200' | '201 to 1,000' | '1,001 to 10,000' | '10,001 or more';
+    industry: string;
+    primary_region: string;
+};
+
+export type employee_count = 'JUST ME' | '2 to 5' | '6 to 10' | '11 to 25' | '26 to 50' | '51 to 200' | '201 to 1,000' | '1,001 to 10,000' | '10,001 or more';
 
 export type YouSignDelivery = {
     readonly id: number;
@@ -1088,7 +1149,7 @@ export type YouSignDelivery = {
     timezone?: (string) | null;
     expiration_date?: (string) | null;
     custom_experience_id?: (string) | null;
-    workspace_id?: (string) | null;
+    yousign_workspace_id?: (string) | null;
     audit_trail_locale?: (string) | null;
     enable_optional_signers?: boolean;
 };
@@ -1216,6 +1277,20 @@ export type DeleteAuthTokenData = {
 };
 
 export type DeleteAuthTokenResponse = (void);
+
+export type CreateDemographicData = {
+    requestBody?: OmitReadonly<DemoGraphic>;
+};
+
+export type CreateDemographicResponse = (void);
+
+export type ShowDemographicPromptForWorkspaceUsersResponse = (ShowDemographicPrompt);
+
+export type ValidateDomainAndSetDemographicData = {
+    requestBody: OmitReadonly<VerifyDomain>;
+};
+
+export type ValidateDomainAndSetDemographicResponse = (VerifyDomain);
 
 export type GetDomainData = {
     /**
@@ -1349,7 +1424,7 @@ export type GetGalleryTemplateData = {
 
 export type GetGalleryTemplateResponse = (TemplateGallery);
 
-export type ListBannerNotificationsResponse = (BannerNotification);
+export type ListBannerNotificationsResponse = (Array<BannerNotification>);
 
 export type GetAppMetaResponse = (Meta);
 
@@ -1758,6 +1833,23 @@ export type SendTestMailData = {
 
 export type SendTestMailResponse = (unknown);
 
+export type GetCreatedDocumentsMergeHistoryData = {
+    endDate?: string;
+    /**
+     * Which field to use when ordering the results.
+     */
+    ordering?: string;
+    /**
+     * A page number within the paginated result set.
+     */
+    page?: number;
+    startDate?: string;
+    status?: 'error' | 'pending' | 'success';
+    template?: number;
+};
+
+export type GetCreatedDocumentsMergeHistoryResponse = (PaginatedDocumentMergeHistoryList);
+
 export type GetFolderPermissionsData = {
     ids?: string;
 };
@@ -1802,6 +1894,10 @@ export type SubscriptionRenewRequestCreateData = {
 
 export type SubscriptionRenewRequestCreateResponse = (void);
 
+export type ResumeSubscriptionResponse = ({
+    [key: string]: unknown;
+});
+
 export type GetChargebeeUnpaidInvoicesResponse = (HostedPage);
 
 export type ListAllTeamMembersData = {
@@ -1809,10 +1905,7 @@ export type ListAllTeamMembersData = {
      * Which field to use when ordering the results.
      */
     ordering?: string;
-    /**
-     * A search term.
-     */
-    search?: string;
+    role?: 'admin' | 'billing_manager' | 'manager' | 'member' | 'owner';
 };
 
 export type ListAllTeamMembersResponse = (Array<TeamMember>);
@@ -1905,7 +1998,7 @@ export type DownloadDeliveryAttachmentData = {
     templateId: number;
 };
 
-export type DownloadDeliveryAttachmentResponse = (PolymorphicDelivery);
+export type DownloadDeliveryAttachmentResponse = ((Blob | File));
 
 export type DeleteDeliveryAttachmentData = {
     attachmentId: string;

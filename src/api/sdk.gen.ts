@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { CreateTemplateOnlineBuilderAiData, CreateTemplateOnlineBuilderAiResponse, EditTemplateOnlineBuilderAiData, EditTemplateOnlineBuilderAiResponse, PromptSuggestionsOnlineBuilderAiData, PromptSuggestionsOnlineBuilderAiResponse, ListAllChatThreadsData, ListAllChatThreadsResponse, CreateNewCustomerThreadData, CreateNewCustomerThreadResponse, AiChatThreadsRetrieveData, AiChatThreadsRetrieveResponse, UpdateCustomerThreadData, UpdateCustomerThreadResponse, AiChatThreadsDestroyData, AiChatThreadsDestroyResponse, GetMessagesForThreadData, GetMessagesForThreadResponse, UpdateCustomerThreadNameData, UpdateCustomerThreadNameResponse, AppendFilesData, AppendFilesResponse, ListAuthTokensData, ListAuthTokensResponse, CreateAuthTokenData, CreateAuthTokenResponse, UpdateAuthTokenData, UpdateAuthTokenResponse, DeleteAuthTokenData, DeleteAuthTokenResponse, GetDomainData, GetDomainResponse, VerifyDomainData, VerifyDomainResponse, ListFoldersData, ListFoldersResponse, CreateFolderData, CreateFolderResponse, ListFolderSharingData, ListFolderSharingResponse, CreateFolderSharingPermissionData, CreateFolderSharingPermissionResponse, GetFolderSharingData, GetFolderSharingResponse, UpdateFolderSharingPermissionContentData, UpdateFolderSharingPermissionContentResponse, RevokeFolderSharingPermissionData, RevokeFolderSharingPermissionResponse, UpdateFolderData, UpdateFolderResponse, DeleteFolderData, DeleteFolderResponse, GetUserCreatedFolderCountData, GetUserCreatedFolderCountResponse, FoldersSharingStatusRetrieveResponse, ListGalleryTemplatesData, ListGalleryTemplatesResponse, GetGalleryTemplateData, GetGalleryTemplateResponse, ListBannerNotificationsResponse, GetAppMetaResponse, ListSubscriptionPlansResponse, ListTimezonesResponse, GenerateDocumentData, GenerateDocumentResponse, TestDocumentGenerationData, TestDocumentGenerationResponse, GetTestDataData, GetTestDataResponse, ListGenerationLinksData, ListGenerationLinksResponse, ListBulkGenerationTasksData, ListBulkGenerationTasksResponse, GetBulkGenerationTaskData, GetBulkGenerationTaskResponse, CancelBulkGenerationTaskData, CancelBulkGenerationTaskResponse, GetBulkGenerationDraftData, GetBulkGenerationDraftResponse, SaveBulkGenerationDraftData, SaveBulkGenerationDraftResponse, TriggerBulkGenerationDraftData, TriggerBulkGenerationDraftResponse, UploadForBulkGenerationData, UploadForBulkGenerationResponse, GetCreatedDocumentsHistoryData, GetCreatedDocumentsHistoryResponse, DownloadCreatedDocumentData, DownloadCreatedDocumentResponse, RetryDeliveryData, RetryDeliveryResponse, GetCreatedExportMergeHistoryData, GetCreatedExportMergeHistoryResponse, CreateExportHistoryTaskData, CreateExportHistoryTaskResponse, DownloadCreatedExportDocumentData, DownloadCreatedExportDocumentResponse, ListInvitationData, ListInvitationResponse, CreateInvitationData, CreateInvitationResponse, RetrieveInvitationByKeyData, RetrieveInvitationByKeyResponse, DeleteInvitationData, DeleteInvitationResponse, RetrieveInvitationForAcceptData, RetrieveInvitationForAcceptResponse, AcceptInvitationData, AcceptInvitationResponse, ResendInvitationData, ResendInvitationResponse, ListDeliveryAccountsData, ListDeliveryAccountsResponse, AddDeliveryAccountData, AddDeliveryAccountResponse, InvokeIntegratorData, UpdateDeliveryAccountData, UpdateDeliveryAccountResponse, RevokeDeliveryAccountData, RevokeDeliveryAccountResponse, ListAccountDeliveriesData, ListAccountDeliveriesResponse, ListDeliveryEmailsForEmailAccountData, ListDeliveryEmailsForEmailAccountResponse, GetDocusignFoldersData, GetDocusignFoldersResponse, GetGooglePickerPayloadData, GetGooglePickerPayloadResponse, InitiateEmailAuthorizationData, InitiateEmailAuthorizationResponse, ReconnectAccountData, UpdateDeliveryAccountsUseForImagesFlagData, UpdateDeliveryAccountsUseForImagesFlagResponse, VerifyEmailOtpData, VerifyEmailOtpResponse, SendTestMailData, SendTestMailResponse, GetFolderPermissionsData, GetFolderPermissionsResponse, GetGlobalPermissionsResponse, GetTemplatePermissionsData, GetTemplatePermissionsResponse, GetUserPersonalizationResponse, UpdateUserPersonalizationData, UpdateUserPersonalizationResponse, GetSubscriptionDetailsResponse, ExtendTrialResponse, GetChargebeeHostedPageData, GetChargebeeHostedPageResponse, GetChargebeePortalSessionResponse, SubscriptionRenewRequestCreateData, SubscriptionRenewRequestCreateResponse, GetChargebeeUnpaidInvoicesResponse, ListAllTeamMembersData, ListAllTeamMembersResponse, DeleteTeamMemberData, DeleteTeamMemberResponse, ChangeRoleOfTeamMemberData, ChangeRoleOfTeamMemberResponse, TransferOwnershipToAdminUserData, TransferOwnershipToAdminUserResponse, ListTemplateDeliveriesData, ListTemplateDeliveriesResponse, CreateTemplateDeliveryData, CreateTemplateDeliveryResponse, RetrieveTemplateDeliveryData, RetrieveTemplateDeliveryResponse, UpdateTemplateDeliveryData, UpdateTemplateDeliveryResponse, DeleteTemplateDeliveryData, DeleteTemplateDeliveryResponse, UploadDeliveryAttachmentsData, UploadDeliveryAttachmentsResponse, DownloadDeliveryAttachmentData, DownloadDeliveryAttachmentResponse, DeleteDeliveryAttachmentData, DeleteDeliveryAttachmentResponse, UpgradeDocusignDeliveryData, UpgradeDocusignDeliveryResponse, ListTemplatesData, ListTemplatesResponse, CreateTemplateData, CreateTemplateResponse, GetTemplateData, GetTemplateResponse, UpdateTemplateData, UpdateTemplateResponse, UpdateTemplateContentData, UpdateTemplateContentResponse, TrashTemplateData, TrashTemplateResponse, CopyTemplateData, CopyTemplateResponse, DownloadTemplateFileData, DownloadTemplateFileResponse, UploadInlineImageOfTemplateData, UploadInlineImageOfTemplateResponse, DeleteTemplatePermanentlyData, DeleteTemplatePermanentlyResponse, RestoreTemplateFromTrashData, RestoreTemplateFromTrashResponse, GetTemplateSchemaData, GetTemplateSchemaResponse, GetDetailedTemplateSchemaData, GetDetailedTemplateSchemaResponse, ListTemplateSharingData, ListTemplateSharingResponse, CreateTemplateSharingPermissionData, CreateTemplateSharingPermissionResponse, GetTemplateSharingData, GetTemplateSharingResponse, UpdateTemplateSharingPermissionContentData, UpdateTemplateSharingPermissionContentResponse, RevokeTemplateSharingPermissionData, RevokeTemplateSharingPermissionResponse, ListAllTemplatesResponse, GetUserCreatedTemplatesCountData, GetUserCreatedTemplatesCountResponse, MoveTemplatesToAnotherFolderData, MoveTemplatesToAnotherFolderResponse, TemplatesSharingStatusRetrieveResponse, ListTrashedTemplatesResponse, InitiateAuthorizationSequenceData, InitiateAuthorizationSequenceResponse, GetMeResponse, UpdateUserProfileData, UpdateUserProfileResponse, NpsNextReminderData, NpsNextReminderResponse, NpsRatingData, NpsRatingResponse, SaveCustomerFeedbackData, SaveCustomerFeedbackResponse, ShowSurveyPromptResponse, UpdateG2ReviewUpdatedOnResponse, ListWorkspacesData, ListWorkspacesResponse, CreateWorkspaceData, CreateWorkspaceResponse, GetCsmDetailsResponse, GetCurrentWorkspaceResponse, UpdateCurrentWorkspaceData, UpdateCurrentWorkspaceResponse, DeleteCurrentWorkspaceData, DeleteCurrentWorkspaceResponse, GetWorkspaceDataRetentionPreferenceResponse, UpdateWorkspaceDataRetentionPreferenceData, UpdateWorkspaceDataRetentionPreferenceResponse } from './types.gen';
+import type { CreateTemplateOnlineBuilderAiData, CreateTemplateOnlineBuilderAiResponse, EditTemplateOnlineBuilderAiData, EditTemplateOnlineBuilderAiResponse, PromptSuggestionsOnlineBuilderAiData, PromptSuggestionsOnlineBuilderAiResponse, ListAllChatThreadsData, ListAllChatThreadsResponse, CreateNewCustomerThreadData, CreateNewCustomerThreadResponse, AiChatThreadsRetrieveData, AiChatThreadsRetrieveResponse, UpdateCustomerThreadData, UpdateCustomerThreadResponse, AiChatThreadsDestroyData, AiChatThreadsDestroyResponse, GetMessagesForThreadData, GetMessagesForThreadResponse, UpdateCustomerThreadNameData, UpdateCustomerThreadNameResponse, AppendFilesData, AppendFilesResponse, ListAuthTokensData, ListAuthTokensResponse, CreateAuthTokenData, CreateAuthTokenResponse, UpdateAuthTokenData, UpdateAuthTokenResponse, DeleteAuthTokenData, DeleteAuthTokenResponse, CreateDemographicData, CreateDemographicResponse, ShowDemographicPromptForWorkspaceUsersResponse, ValidateDomainAndSetDemographicData, ValidateDomainAndSetDemographicResponse, GetDomainData, GetDomainResponse, VerifyDomainData, VerifyDomainResponse, ListFoldersData, ListFoldersResponse, CreateFolderData, CreateFolderResponse, ListFolderSharingData, ListFolderSharingResponse, CreateFolderSharingPermissionData, CreateFolderSharingPermissionResponse, GetFolderSharingData, GetFolderSharingResponse, UpdateFolderSharingPermissionContentData, UpdateFolderSharingPermissionContentResponse, RevokeFolderSharingPermissionData, RevokeFolderSharingPermissionResponse, UpdateFolderData, UpdateFolderResponse, DeleteFolderData, DeleteFolderResponse, GetUserCreatedFolderCountData, GetUserCreatedFolderCountResponse, FoldersSharingStatusRetrieveResponse, ListGalleryTemplatesData, ListGalleryTemplatesResponse, GetGalleryTemplateData, GetGalleryTemplateResponse, ListBannerNotificationsResponse, GetAppMetaResponse, ListSubscriptionPlansResponse, ListTimezonesResponse, GenerateDocumentData, GenerateDocumentResponse, TestDocumentGenerationData, TestDocumentGenerationResponse, GetTestDataData, GetTestDataResponse, ListGenerationLinksData, ListGenerationLinksResponse, ListBulkGenerationTasksData, ListBulkGenerationTasksResponse, GetBulkGenerationTaskData, GetBulkGenerationTaskResponse, CancelBulkGenerationTaskData, CancelBulkGenerationTaskResponse, GetBulkGenerationDraftData, GetBulkGenerationDraftResponse, SaveBulkGenerationDraftData, SaveBulkGenerationDraftResponse, TriggerBulkGenerationDraftData, TriggerBulkGenerationDraftResponse, UploadForBulkGenerationData, UploadForBulkGenerationResponse, GetCreatedDocumentsHistoryData, GetCreatedDocumentsHistoryResponse, DownloadCreatedDocumentData, DownloadCreatedDocumentResponse, RetryDeliveryData, RetryDeliveryResponse, GetCreatedExportMergeHistoryData, GetCreatedExportMergeHistoryResponse, CreateExportHistoryTaskData, CreateExportHistoryTaskResponse, DownloadCreatedExportDocumentData, DownloadCreatedExportDocumentResponse, ListInvitationData, ListInvitationResponse, CreateInvitationData, CreateInvitationResponse, RetrieveInvitationByKeyData, RetrieveInvitationByKeyResponse, DeleteInvitationData, DeleteInvitationResponse, RetrieveInvitationForAcceptData, RetrieveInvitationForAcceptResponse, AcceptInvitationData, AcceptInvitationResponse, ResendInvitationData, ResendInvitationResponse, ListDeliveryAccountsData, ListDeliveryAccountsResponse, AddDeliveryAccountData, AddDeliveryAccountResponse, InvokeIntegratorData, UpdateDeliveryAccountData, UpdateDeliveryAccountResponse, RevokeDeliveryAccountData, RevokeDeliveryAccountResponse, ListAccountDeliveriesData, ListAccountDeliveriesResponse, ListDeliveryEmailsForEmailAccountData, ListDeliveryEmailsForEmailAccountResponse, GetDocusignFoldersData, GetDocusignFoldersResponse, GetGooglePickerPayloadData, GetGooglePickerPayloadResponse, InitiateEmailAuthorizationData, InitiateEmailAuthorizationResponse, ReconnectAccountData, UpdateDeliveryAccountsUseForImagesFlagData, UpdateDeliveryAccountsUseForImagesFlagResponse, VerifyEmailOtpData, VerifyEmailOtpResponse, SendTestMailData, SendTestMailResponse, GetCreatedDocumentsMergeHistoryData, GetCreatedDocumentsMergeHistoryResponse, GetFolderPermissionsData, GetFolderPermissionsResponse, GetGlobalPermissionsResponse, GetTemplatePermissionsData, GetTemplatePermissionsResponse, GetUserPersonalizationResponse, UpdateUserPersonalizationData, UpdateUserPersonalizationResponse, GetSubscriptionDetailsResponse, ExtendTrialResponse, GetChargebeeHostedPageData, GetChargebeeHostedPageResponse, GetChargebeePortalSessionResponse, SubscriptionRenewRequestCreateData, SubscriptionRenewRequestCreateResponse, ResumeSubscriptionResponse, GetChargebeeUnpaidInvoicesResponse, ListAllTeamMembersData, ListAllTeamMembersResponse, DeleteTeamMemberData, DeleteTeamMemberResponse, ChangeRoleOfTeamMemberData, ChangeRoleOfTeamMemberResponse, TransferOwnershipToAdminUserData, TransferOwnershipToAdminUserResponse, ListTemplateDeliveriesData, ListTemplateDeliveriesResponse, CreateTemplateDeliveryData, CreateTemplateDeliveryResponse, RetrieveTemplateDeliveryData, RetrieveTemplateDeliveryResponse, UpdateTemplateDeliveryData, UpdateTemplateDeliveryResponse, DeleteTemplateDeliveryData, DeleteTemplateDeliveryResponse, UploadDeliveryAttachmentsData, UploadDeliveryAttachmentsResponse, DownloadDeliveryAttachmentData, DownloadDeliveryAttachmentResponse, DeleteDeliveryAttachmentData, DeleteDeliveryAttachmentResponse, UpgradeDocusignDeliveryData, UpgradeDocusignDeliveryResponse, ListTemplatesData, ListTemplatesResponse, CreateTemplateData, CreateTemplateResponse, GetTemplateData, GetTemplateResponse, UpdateTemplateData, UpdateTemplateResponse, UpdateTemplateContentData, UpdateTemplateContentResponse, TrashTemplateData, TrashTemplateResponse, CopyTemplateData, CopyTemplateResponse, DownloadTemplateFileData, DownloadTemplateFileResponse, UploadInlineImageOfTemplateData, UploadInlineImageOfTemplateResponse, DeleteTemplatePermanentlyData, DeleteTemplatePermanentlyResponse, RestoreTemplateFromTrashData, RestoreTemplateFromTrashResponse, GetTemplateSchemaData, GetTemplateSchemaResponse, GetDetailedTemplateSchemaData, GetDetailedTemplateSchemaResponse, ListTemplateSharingData, ListTemplateSharingResponse, CreateTemplateSharingPermissionData, CreateTemplateSharingPermissionResponse, GetTemplateSharingData, GetTemplateSharingResponse, UpdateTemplateSharingPermissionContentData, UpdateTemplateSharingPermissionContentResponse, RevokeTemplateSharingPermissionData, RevokeTemplateSharingPermissionResponse, ListAllTemplatesResponse, GetUserCreatedTemplatesCountData, GetUserCreatedTemplatesCountResponse, MoveTemplatesToAnotherFolderData, MoveTemplatesToAnotherFolderResponse, TemplatesSharingStatusRetrieveResponse, ListTrashedTemplatesResponse, InitiateAuthorizationSequenceData, InitiateAuthorizationSequenceResponse, GetMeResponse, UpdateUserProfileData, UpdateUserProfileResponse, NpsNextReminderData, NpsNextReminderResponse, NpsRatingData, NpsRatingResponse, SaveCustomerFeedbackData, SaveCustomerFeedbackResponse, ShowSurveyPromptResponse, UpdateG2ReviewUpdatedOnResponse, ListWorkspacesData, ListWorkspacesResponse, CreateWorkspaceData, CreateWorkspaceResponse, GetCsmDetailsResponse, GetCurrentWorkspaceResponse, UpdateCurrentWorkspaceData, UpdateCurrentWorkspaceResponse, DeleteCurrentWorkspaceData, DeleteCurrentWorkspaceResponse, GetWorkspaceDataRetentionPreferenceResponse, UpdateWorkspaceDataRetentionPreferenceData, UpdateWorkspaceDataRetentionPreferenceResponse } from './types.gen';
 
 export class AiService {
     /**
@@ -348,6 +348,67 @@ export class AuthTokensService {
                 401: '',
                 403: '',
                 404: ''
+            }
+        });
+    }
+    
+}
+
+export class DemographicService {
+    /**
+     * Create Demographic
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns void No response body
+     * @throws ApiError
+     */
+    public static createDemographic(data: CreateDemographicData = {}): CancelablePromise<CreateDemographicResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/demographic/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: '',
+                401: '',
+                403: ''
+            }
+        });
+    }
+    
+    /**
+     * Show demographic prompt for workspace users
+     * @returns ShowDemographicPrompt
+     * @throws ApiError
+     */
+    public static showDemographicPromptForWorkspaceUsers(): CancelablePromise<ShowDemographicPromptForWorkspaceUsersResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/demographic/show_prompt/',
+            errors: {
+                401: '',
+                403: ''
+            }
+        });
+    }
+    
+    /**
+     * Verify domain and set demographic
+     * @param data The data for the request.
+     * @param data.requestBody
+     * @returns VerifyDomain
+     * @throws ApiError
+     */
+    public static validateDomainAndSetDemographic(data: ValidateDomainAndSetDemographicData): CancelablePromise<ValidateDomainAndSetDemographicResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/demographic/validate_domain_and_set_demographic/',
+            body: data.requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: '',
+                401: '',
+                403: ''
             }
         });
     }
@@ -1722,6 +1783,40 @@ export class LinkedAccountsService {
     
 }
 
+export class MergeHistoryService {
+    /**
+     * Get created documents merge history
+     * @param data The data for the request.
+     * @param data.endDate
+     * @param data.ordering Which field to use when ordering the results.
+     * @param data.page A page number within the paginated result set.
+     * @param data.startDate
+     * @param data.status
+     * @param data.template
+     * @returns PaginatedDocumentMergeHistoryList
+     * @throws ApiError
+     */
+    public static getCreatedDocumentsMergeHistory(data: GetCreatedDocumentsMergeHistoryData = {}): CancelablePromise<GetCreatedDocumentsMergeHistoryResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/merge_history/',
+            query: {
+                end_date: data.endDate,
+                ordering: data.ordering,
+                page: data.page,
+                start_date: data.startDate,
+                status: data.status,
+                template: data.template
+            },
+            errors: {
+                401: '',
+                403: ''
+            }
+        });
+    }
+    
+}
+
 export class PermissionsService {
     /**
      * Returns folder permissions
@@ -1909,6 +2004,22 @@ export class SubscriptionService {
     }
     
     /**
+     * @returns unknown
+     * @throws ApiError
+     */
+    public static resumeSubscription(): CancelablePromise<ResumeSubscriptionResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/resume/',
+            errors: {
+                400: '',
+                401: '',
+                403: ''
+            }
+        });
+    }
+    
+    /**
      * @returns HostedPage
      * @throws ApiError
      */
@@ -1930,7 +2041,7 @@ export class TeamService {
      * List all team members
      * @param data The data for the request.
      * @param data.ordering Which field to use when ordering the results.
-     * @param data.search A search term.
+     * @param data.role
      * @returns TeamMember
      * @throws ApiError
      */
@@ -1940,7 +2051,7 @@ export class TeamService {
             url: '/accounts/v2/team/',
             query: {
                 ordering: data.ordering,
-                search: data.search
+                role: data.role
             },
             errors: {
                 401: '',
@@ -2189,7 +2300,7 @@ export class TemplateDeliveryService {
      * @param data.attachmentId
      * @param data.id A unique integer value identifying this delivery.
      * @param data.templateId
-     * @returns PolymorphicDelivery
+     * @returns binary
      * @throws ApiError
      */
     public static downloadDeliveryAttachment(data: DownloadDeliveryAttachmentData): CancelablePromise<DownloadDeliveryAttachmentResponse> {
