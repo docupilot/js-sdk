@@ -12,6 +12,8 @@ import yaml from 'yaml';
 
 import * as OpenAPI from '@hey-api/openapi-ts';
 
+import * as path from 'path';
+
 
 const params = program
   .name('openapi')
@@ -72,7 +74,10 @@ if (OpenAPI) {
       },
     ],
   })
-    .then(() => {
+    .then(async() => {
+      // Path to the TypeScript file
+      const tsFilePath = path.resolve('.', 'src/api/types.gen.ts');
+      await readAndReplaceAll(tsFilePath);
       process.exit(0);
     })
     .catch((error) => {
@@ -80,3 +85,43 @@ if (OpenAPI) {
       process.exit(1);
     });
 }
+
+
+
+
+
+async function readAndReplaceAll(filePath) {
+  try {
+    // Check if the file exists
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`File not found: ${filePath}`);
+    }
+
+    // Read the TypeScript file
+    let content = await fs.promises.readFile(filePath, 'utf-8');
+
+    // Add import at the top if not already present
+    const importStatement = `import { OmitReadonly } from '../utils/OmitReadonly';`;
+    if (!content.includes(importStatement)) {
+      content = `${importStatement}\n${content}`;
+    }
+
+    // Replace all occurrences of `requestBody: abc`, `requestBody?: abc`,
+    // `requestBody: Array<abc>`, or `requestBody?: Array<abc>`
+    const updatedContent = content.replace(
+      /requestBody(\??):\s*([A-Za-z0-9_<>]+)/g,
+      (match, optional, type) => `requestBody${optional}: OmitReadonly<${type}>`
+    );
+
+    // Write the updated content back to the file
+    await fs.promises.writeFile(filePath, updatedContent, 'utf-8');
+    console.log('Import added (if not already present) and all occurrences replaced successfully.');
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+}
+
+
+
+
+
