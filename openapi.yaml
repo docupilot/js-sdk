@@ -214,6 +214,139 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/demographic/:
+    post:
+      operationId: create_demographic
+      summary: Create Demographic
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - demographic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemoGraphic'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DemoGraphic'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DemoGraphic'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/demographic/show_prompt/:
+    get:
+      operationId: show_demographic_prompt_for_workspace_users
+      summary: Show demographic prompt for workspace users
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - demographic
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowDemographicPrompt'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/demographic/validate_domain_and_set_demographic/:
+    post:
+      operationId: validate_domain_and_set_demographic
+      summary: Verify domain and set demographic
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Organization unique_key
+        required: true
+      tags:
+      - demographic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyDomain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyDomain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyDomain'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyDomain'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/invitations/:
     get:
       operationId: list_invitation
@@ -803,12 +936,16 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
+      - in: query
+        name: role
         schema:
           type: string
+          enum:
+          - admin
+          - billing_manager
+          - manager
+          - member
+          - owner
       tags:
       - team
       security:
@@ -7799,6 +7936,18 @@ components:
       - type
       - updated_at
       - used_by
+    DemoGraphic:
+      type: object
+      properties:
+        user_demographic:
+          allOf:
+          - $ref: '#/components/schemas/UserDemographic'
+          nullable: true
+        workspace_demographic:
+          allOf:
+          - $ref: '#/components/schemas/WorkspaceDemographic'
+          nullable: true
+      description: ''
     DocuSignDelivery:
       type: object
       description: ''
@@ -9588,6 +9737,17 @@ components:
       - id
       - is_shared
       description: ''
+    ShowDemographicPrompt:
+      type: object
+      properties:
+        user_demographic:
+          type: boolean
+        workspace_demographic:
+          type: boolean
+      required:
+      - user_demographic
+      - workspace_demographic
+      description: ''
     SignNowDelivery:
       type: object
       description: ''
@@ -10409,6 +10569,23 @@ components:
       - id
       - theme
       description: ''
+    UserDemographic:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_referral_source:
+          type: string
+          nullable: true
+          maxLength: 52
+        role:
+          type: string
+          maxLength: 52
+      required:
+      - id
+      - role
+      description: ''
     UserPersonalization:
       type: object
       properties:
@@ -10450,6 +10627,19 @@ components:
       required:
       - errors
       - non_field_errors
+      description: ''
+    VerifyDomain:
+      type: object
+      properties:
+        domain_name:
+          type: string
+          maxLength: 255
+        show_workspace_demographic_prompt:
+          type: boolean
+          readOnly: true
+      required:
+      - domain_name
+      - show_workspace_demographic_prompt
       description: ''
     VerifyEmailAccountOTP:
       type: object
@@ -10761,6 +10951,40 @@ components:
       - timezone
       - unique_key
       - use_froala
+      description: ''
+    WorkspaceDemographic:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        domain_name:
+          type: string
+          maxLength: 255
+        employee_count:
+          enum:
+          - JUST ME
+          - 2 to 5
+          - 6 to 10
+          - 11 to 25
+          - 26 to 50
+          - 51 to 200
+          - 201 to 1,000
+          - 1,001 to 10,000
+          - 10,001 or more
+          type: string
+        industry:
+          type: string
+          maxLength: 100
+        primary_region:
+          type: string
+          maxLength: 100
+      required:
+      - domain_name
+      - employee_count
+      - id
+      - industry
+      - primary_region
       description: ''
     YouSignDelivery:
       type: object
