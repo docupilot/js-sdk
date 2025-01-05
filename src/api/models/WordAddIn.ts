@@ -2,9 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type WordAddInAllCategory = {
+export type WordAddIn = {
     user_input?: string;
-    word_selected_content: string;
+    selected_content: string;
     readonly ai_response: string;
 };
 
