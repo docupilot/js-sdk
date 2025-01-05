@@ -2487,13 +2487,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PromptSuggestions'
+              $ref: '#/components/schemas/WordPromptSuggestions'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PromptSuggestions'
+              $ref: '#/components/schemas/WordPromptSuggestions'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PromptSuggestions'
+              $ref: '#/components/schemas/WordPromptSuggestions'
         required: true
       security:
       - OAuthAuthentication: []
@@ -2504,7 +2504,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PromptSuggestions'
+                $ref: '#/components/schemas/WordPromptSuggestions'
           description: ''
         '400':
           content:
@@ -10891,6 +10891,29 @@ components:
       required:
       - ai_response
       - selected_content
+      description: ''
+    WordPromptSuggestions:
+      type: object
+      properties:
+        title:
+          type: string
+          writeOnly: true
+        first_page_content:
+          type: string
+          writeOnly: true
+          nullable: true
+        main_headings:
+          type: string
+          writeOnly: true
+          nullable: true
+        prompts:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - prompts
+      - title
       description: ''
     Workspace:
       type: object

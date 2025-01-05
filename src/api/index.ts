@@ -122,6 +122,7 @@ export type { VerifyDomain } from './models/VerifyDomain';
 export type { VerifyEmailAccountOTP } from './models/VerifyEmailAccountOTP';
 export type { WebhookDelivery } from './models/WebhookDelivery';
 export type { WordAddIn } from './models/WordAddIn';
+export type { WordPromptSuggestions } from './models/WordPromptSuggestions';
 export type { Workspace } from './models/Workspace';
 export type { WorkspaceDemographic } from './models/WorkspaceDemographic';
 export type { YouSignDelivery } from './models/YouSignDelivery';

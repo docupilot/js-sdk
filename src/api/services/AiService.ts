@@ -7,6 +7,7 @@ import type { PromptSuggestions } from '../models/PromptSuggestions';
 import type { SyntaxSuggestions } from '../models/SyntaxSuggestions';
 import type { Template } from '../models/Template';
 import type { WordAddIn } from '../models/WordAddIn';
+import type { WordPromptSuggestions } from '../models/WordPromptSuggestions';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -89,14 +90,14 @@ export class AiService {
 
     /**
      * list prompt suggestions based on File Name and Content
-     * @returns PromptSuggestions
+     * @returns WordPromptSuggestions
      * @throws ApiError
      */
     public static promptSuggestionsWordAddInAi({
         requestBody,
     }: {
-        requestBody: OmitReadonly<PromptSuggestions>,
-    }): CancelablePromise<PromptSuggestions> {
+        requestBody: OmitReadonly<WordPromptSuggestions>,
+    }): CancelablePromise<WordPromptSuggestions> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/word-add-in/list_prompt_suggestions/',
