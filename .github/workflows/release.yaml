@@ -7,6 +7,9 @@ on:
 jobs:
   publish_release_artifacts:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.16.0]
     env:
       VERSION: ${{ github.event.release.tag_name }}
     permissions:
@@ -14,15 +17,15 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         id: setup-node
         with:
           cache: 'npm'
-          node-version: '15.14.0'
+          node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com/
 
       - name: replace_version
@@ -32,35 +35,17 @@ jobs:
 
       - name: Cache node_modules
         id: cache-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('package-lock.json') }}
-
-      - name: Cache node_modules
-        id: cache-openapi-typescript-codegen-dependencies
-        uses: actions/cache@v2
-        with:
-          path: openapi-typescript-codegen/node_modules
-          key: ${{ runner.os }}-dependencies-15.14.0-${{ hashFiles('openapi-typescript-codegen/package-lock.json') }}
-
-      - if: steps.cache-openapi-typescript-codegen-dependencies.outputs.cache-hit != 'true'
-        name: install codegen dependencies
-        run: |
-          cd openapi-typescript-codegen
-          npm i
-          cd ../
-
-      - name: codegen build
-        run: |
-          cd openapi-typescript-codegen
-          npm run build
-          cd ../
+          key: ${{ runner.os }}-dependencies-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
 
       - if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - run: npm run build
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ github.token }}

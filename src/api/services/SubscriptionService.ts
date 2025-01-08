@@ -8,7 +8,7 @@ import type { RenewSubscription } from '../models/RenewSubscription';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-import { OmitReadonly } from '../core/utils/OmitReadonly';
+import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class SubscriptionService {
 
@@ -78,6 +78,17 @@ export class SubscriptionService {
             url: '/accounts/v2/subscription/renew_request/',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static resumeSubscription(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/resume/',
         });
     }
 
