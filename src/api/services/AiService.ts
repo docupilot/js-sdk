@@ -71,18 +71,18 @@ export class AiService {
     }
 
     /**
-     * Word group chat completion
+     * Word edit template using ai
      * @returns WordAddIn
      * @throws ApiError
      */
-    public static wordGroupChatCompletion({
+    public static wordEditTemplateAi({
         requestBody,
     }: {
         requestBody: OmitReadonly<WordAddIn>,
     }): CancelablePromise<WordAddIn> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai/word-add-in/group_completion/',
+            url: '/ai/word-add-in/edit_template/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -119,42 +119,6 @@ export class AiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/word-add-in/syntax_suggestions/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Word table chat completion
-     * @returns WordAddIn
-     * @throws ApiError
-     */
-    public static wordTableChatCompletion({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<WordAddIn>,
-    }): CancelablePromise<WordAddIn> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/ai/word-add-in/table_completion/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Word text chat completion
-     * @returns WordAddIn
-     * @throws ApiError
-     */
-    public static wordTextChatCompletion({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<WordAddIn>,
-    }): CancelablePromise<WordAddIn> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/ai/word-add-in/text_completion/',
             body: requestBody,
             mediaType: 'application/json',
         });
