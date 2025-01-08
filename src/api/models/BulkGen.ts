@@ -8,7 +8,7 @@ export type BulkGen = {
     readonly id: number;
     readonly errors: Array<BulkGenTask>;
     readonly file_name: string;
-    status?: 0 | 1 | 2 | 3 | 4 | 5;
+    readonly status: 'Draft' | 'Pending' | 'In Progress' | 'Success' | 'Failed' | 'Cancelled';
     start_time?: string | null;
     end_time?: string | null;
     total?: number | null;
