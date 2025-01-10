@@ -9,7 +9,7 @@ import type { Timezone } from '../models/Timezone';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-import { OmitReadonly } from '../core/utils/OmitReadonly';
+import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class GeneralService {
 
@@ -17,7 +17,7 @@ export class GeneralService {
      * @returns BannerNotification
      * @throws ApiError
      */
-    public static listBannerNotifications(): CancelablePromise<BannerNotification> {
+    public static listBannerNotifications(): CancelablePromise<Array<BannerNotification>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/banner_notifications/',

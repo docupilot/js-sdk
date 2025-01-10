@@ -6,7 +6,7 @@ import type { AppendFiles } from '../models/AppendFiles';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-import { OmitReadonly } from '../core/utils/OmitReadonly';
+import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class AppendService {
 
@@ -16,8 +16,13 @@ export class AppendService {
      */
     public static appendFiles({
         requestBody,
+        xClient,
     }: {
         requestBody: OmitReadonly<AppendFiles>,
+        /**
+         * Client Origin
+         */
+        xClient?: string,
     }): CancelablePromise<{
         file_url?: string;
         file_name?: string;
@@ -25,6 +30,9 @@ export class AppendService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/append/',
+            headers: {
+                'X-Client': xClient,
+            },
             body: requestBody,
             mediaType: 'application/json',
         });

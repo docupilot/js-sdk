@@ -17,7 +17,7 @@ import type { UploadTemplateImage } from '../models/UploadTemplateImage';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-import { OmitReadonly } from '../core/utils/OmitReadonly';
+import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class TemplatesService {
 
@@ -354,28 +354,14 @@ export class TemplatesService {
      */
     public static listTemplateSharing({
         templateId,
-        ordering,
-        search,
     }: {
         templateId: number,
-        /**
-         * Which field to use when ordering the results.
-         */
-        ordering?: string,
-        /**
-         * A search term.
-         */
-        search?: string,
     }): CancelablePromise<Array<TemplateSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{template_id}/permissions/',
             path: {
                 'template_id': templateId,
-            },
-            query: {
-                'ordering': ordering,
-                'search': search,
             },
         });
     }
@@ -390,8 +376,8 @@ export class TemplatesService {
         requestBody,
     }: {
         templateId: number,
-        requestBody: OmitReadonly<TemplateSharing>,
-    }): CancelablePromise<TemplateSharing> {
+        requestBody: Array<TemplateSharing>,
+    }): CancelablePromise<Array<TemplateSharing>> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/templates/{template_id}/permissions/',
