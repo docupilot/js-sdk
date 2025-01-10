@@ -289,15 +289,4 @@ export class SubscriptionService {
         });
     }
 
-    /**
-     * @returns HostedPage
-     * @throws ApiError
-     */
-    public static getChargebeeUnpaidInvoices(): CancelablePromise<HostedPage> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/subscription/unpaid_invoices/',
-        });
-    }
-
 }
