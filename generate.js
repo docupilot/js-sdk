@@ -56,10 +56,8 @@ if (OpenAPI) {
     input: spec,
     output: params.output,
     client: params.client,
-    // httpClient: params.client,
     name: params.name,
     useOptions: params.useOptions,
-    // useUnionTypes: params.useUnionTypes,
     exportCore: JSON.parse(params.exportCore) === true,
     exportServices: JSON.parse(params.exportServices) === true,
     exportModels: JSON.parse(params.exportModels) === true,
@@ -77,7 +75,7 @@ if (OpenAPI) {
     .then(async() => {
       // Path to the TypeScript file
       const tsFilePath = path.resolve('.', 'src/api/types.gen.ts');
-      await readAndReplaceAll(tsFilePath);
+      await updateRequestbodyWithOmitReadonly(tsFilePath);
       process.exit(0);
     })
     .catch((error) => {
@@ -90,7 +88,7 @@ if (OpenAPI) {
 
 
 
-async function readAndReplaceAll(filePath) {
+async function updateRequestbodyWithOmitReadonly(filePath) {
   try {
     // Check if the file exists
     if (!fs.existsSync(filePath)) {
