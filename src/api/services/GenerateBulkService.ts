@@ -33,7 +33,7 @@ export class GenerateBulkService {
          * A page number within the paginated result set.
          */
         page?: number,
-        status?: 0 | 1 | 2 | 3 | 4 | 5,
+        status?: 'Cancelled' | 'Draft' | 'Failed' | 'In Progress' | 'Pending' | 'Success',
     }): CancelablePromise<PaginatedBulkGenList> {
         return __request(OpenAPI, {
             method: 'GET',
