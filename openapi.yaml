@@ -6117,12 +6117,12 @@ paths:
         schema:
           type: integer
           enum:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
+          - Cancelled
+          - Draft
+          - Failed
+          - In Progress
+          - Pending
+          - Success
       - in: path
         name: template_id
         schema:
