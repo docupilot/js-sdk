@@ -139,11 +139,11 @@ export class GenerateBulkService {
     }
 
     /**
-     * save a template mapping
-     * @returns void
+     * update a template mapping
+     * @returns BulkGenData
      * @throws ApiError
      */
-    public static saveBulkGenerationDraft({
+    public static updateBulkGenerationDraft({
         id,
         templateId,
         requestBody,
@@ -157,9 +157,9 @@ export class GenerateBulkService {
          */
         templateId: number,
         requestBody: OmitReadonly<BulkGenEdit>,
-    }): CancelablePromise<void> {
+    }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'PUT',
             url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
             path: {
                 'id': id,
