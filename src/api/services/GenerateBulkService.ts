@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { BulkGen } from '../models/BulkGen';
 import type { BulkGenData } from '../models/BulkGenData';
+import type { BulkGenEdit } from '../models/BulkGenEdit';
 import type { BulkGenUpload } from '../models/BulkGenUpload';
 import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
 
@@ -155,7 +156,7 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: Record<string, any>,
+        requestBody: OmitReadonly<BulkGenEdit>,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
