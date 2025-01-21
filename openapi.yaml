@@ -16,7 +16,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -62,7 +62,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - auth_tokens
@@ -113,7 +113,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -175,7 +175,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -223,7 +223,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - demographic
@@ -270,7 +270,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - demographic
@@ -304,7 +304,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - demographic
@@ -356,7 +356,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: is_accepted
@@ -407,7 +407,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - invitations
@@ -484,7 +484,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -617,7 +617,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -668,7 +668,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - subscription
@@ -702,7 +702,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - subscription
@@ -737,7 +737,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: plan_id
@@ -775,7 +775,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - subscription
@@ -808,7 +808,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - subscription
@@ -854,7 +854,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - subscription
@@ -894,7 +894,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - subscription
@@ -928,7 +928,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -982,7 +982,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -1035,7 +1035,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -1100,7 +1100,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - team
@@ -1385,7 +1385,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - user_satisfaction_survey
@@ -1633,7 +1633,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - workspaces
@@ -1675,7 +1675,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - workspaces
@@ -1710,7 +1710,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - workspaces
@@ -1761,7 +1761,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - workspaces
@@ -1809,7 +1809,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - workspaces
@@ -1842,7 +1842,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - workspaces
@@ -1915,7 +1915,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -1962,7 +1962,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - ai-chat
@@ -2013,7 +2013,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: thread_id
@@ -2057,7 +2057,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: thread_id
@@ -2118,7 +2118,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: thread_id
@@ -2165,7 +2165,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: thread_id
@@ -2210,7 +2210,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: thread_id
@@ -2269,7 +2269,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - ai
@@ -2321,7 +2321,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - ai
@@ -2373,7 +2373,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - ai
@@ -2429,7 +2429,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - append
@@ -2498,7 +2498,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -2546,7 +2546,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -2611,7 +2611,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -2662,7 +2662,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - folders
@@ -2716,7 +2716,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: folder_id
@@ -2756,7 +2756,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: folder_id
@@ -2827,7 +2827,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: folder_id
@@ -2877,7 +2877,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: folder_id
@@ -2944,7 +2944,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: folder_id
@@ -2997,7 +2997,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3063,7 +3063,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3113,7 +3113,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: owner_id
@@ -3152,7 +3152,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - folders
@@ -3186,7 +3186,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: end_date
@@ -3258,7 +3258,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3325,7 +3325,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3391,7 +3391,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -3434,7 +3434,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - history
@@ -3488,7 +3488,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3556,7 +3556,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -3623,7 +3623,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - linked_accounts
@@ -3676,7 +3676,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: environment
@@ -3724,7 +3724,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3787,7 +3787,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3835,7 +3835,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3901,7 +3901,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -3955,7 +3955,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4001,7 +4001,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4053,7 +4053,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4113,7 +4113,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4155,7 +4155,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4207,7 +4207,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4267,7 +4267,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - linked_accounts
@@ -4306,6 +4306,76 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /api/v2/merge_history/:
+    get:
+      operationId: get_created_documents_merge_history
+      summary: Get created documents merge history
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: end_date
+        schema:
+          type: string
+          format: date-time
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: query
+        name: start_date
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - error
+          - pending
+          - success
+      - in: query
+        name: template
+        schema:
+          type: integer
+      tags:
+      - merge_history
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedDocumentMergeHistoryList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/permissions/folder/:
     get:
       operationId: get_folder_permissions
@@ -4315,7 +4385,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: ids
@@ -4364,7 +4434,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - permissions
@@ -4398,7 +4468,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: ids
@@ -4446,7 +4516,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - personalization
@@ -4480,7 +4550,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - personalization
@@ -4526,7 +4596,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: folder
@@ -4615,7 +4685,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - templates
@@ -4669,7 +4739,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4716,7 +4786,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4781,7 +4851,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4845,7 +4915,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4895,7 +4965,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4961,7 +5031,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -4978,27 +5048,7 @@ paths:
       responses:
         '200':
           content:
-            text/html:
-              schema:
-                type: string
-                format: binary
-            application/pdf:
-              schema:
-                type: string
-                format: binary
-            image/png:
-              schema:
-                type: string
-                format: binary
-            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
-              schema:
-                type: string
-                format: binary
-            application/vnd.openxmlformats-officedocument.presentationml.presentation:
-              schema:
-                type: string
-                format: binary
-            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            application/octet-stream:
               schema:
                 type: string
                 format: binary
@@ -5035,7 +5085,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: download
@@ -5114,7 +5164,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5174,7 +5224,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5224,7 +5274,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5290,7 +5340,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5338,7 +5388,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5384,7 +5434,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5453,7 +5503,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5501,7 +5551,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -5550,7 +5600,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: template_id
@@ -5615,7 +5665,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5668,7 +5718,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5738,7 +5788,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5794,7 +5844,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -5866,7 +5916,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: attachment_id
@@ -5895,9 +5945,10 @@ paths:
       responses:
         '200':
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                $ref: '#/components/schemas/PolymorphicDelivery'
+                type: string
+                format: binary
           description: ''
         '401':
           content:
@@ -5925,7 +5976,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: attachment_id
@@ -5987,7 +6038,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6047,7 +6098,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - name: ordering
         required: false
@@ -6112,7 +6163,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6168,7 +6219,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6241,7 +6292,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6296,7 +6347,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6318,16 +6369,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
+        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -6368,7 +6417,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6445,7 +6494,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: template_id
@@ -6513,7 +6562,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: template_id
@@ -6557,7 +6606,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: template_id
@@ -6597,7 +6646,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: template_id
@@ -6668,7 +6717,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6718,7 +6767,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6785,7 +6834,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: path
         name: id
@@ -6840,7 +6889,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - templates
@@ -6878,7 +6927,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       - in: query
         name: owner_id
@@ -6918,7 +6967,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - templates
@@ -6971,7 +7020,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - templates
@@ -7005,7 +7054,7 @@ paths:
         name: X-Workspace
         schema:
           type: string
-        description: Organization unique_key
+        description: Workspace unique_key
         required: true
       tags:
       - templates
@@ -7345,6 +7394,10 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        delimiter:
+          type: string
+          nullable: true
+          maxLength: 3
         created_by:
           type: integer
           readOnly: true
@@ -7364,6 +7417,10 @@ components:
       properties:
         id:
           type: integer
+        created_by:
+          type: integer
+        updated_by:
+          type: integer
         data:
           type: object
           additionalProperties: {}
@@ -7372,11 +7429,29 @@ components:
         suggested_mapping:
           type: object
           additionalProperties: {}
+        delimiter:
+          type: string
       required:
+      - created_by
       - data
+      - delimiter
       - id
       - row_count
       - suggested_mapping
+      - updated_by
+      description: ''
+    BulkGenEdit:
+      type: object
+      properties:
+        mapping:
+          type: object
+          additionalProperties: {}
+        delimiter:
+          type: string
+          maxLength: 3
+      required:
+      - delimiter
+      - mapping
       description: ''
     BulkGenTask:
       type: object
@@ -7392,6 +7467,9 @@ components:
         file:
           type: string
           format: binary
+        delimiter:
+          type: string
+          maxLength: 3
       required:
       - file
       description: ''
@@ -7515,6 +7593,33 @@ components:
       - id
       - model_name
       - thread_id
+      description: ''
+    ChildDocumentMergeHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        delivery_type:
+          type: string
+          maxLength: 255
+        status:
+          enum:
+          - pending
+          - success
+          - error
+          type: string
+        message:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        delivery:
+          type: integer
+          nullable: true
+      required:
+      - delivery_type
+      - id
+      - status
       description: ''
     ChildTemplate:
       type: object
@@ -7824,6 +7929,42 @@ components:
       - id
       - name
       - signers
+    DocumentMergeHistory:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        data:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        template:
+          allOf:
+          - $ref: '#/components/schemas/ChildTemplate'
+          readOnly: true
+          nullable: true
+        executed_deliveries:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChildDocumentMergeHistory'
+        is_data_expired:
+          type: boolean
+          readOnly: true
+        is_document_expired:
+          type: boolean
+          readOnly: true
+        created_file_name:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - executed_deliveries
+      - id
+      - is_data_expired
+      - is_document_expired
+      - template
+      description: ''
     DocumentMergeLink:
       type: object
       properties:
@@ -8885,6 +9026,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BulkGen'
+    PaginatedDocumentMergeHistoryList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/DocumentMergeHistory'
     PaginatedMergeHistoryList:
       type: object
       required:
