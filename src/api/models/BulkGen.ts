@@ -14,7 +14,6 @@ export type BulkGen = {
     total?: number | null;
     success?: number | null;
     readonly updated_time: string | null;
-    delimiter?: string | null;
     readonly created_by: number;
     readonly updated_by: number | null;
 };

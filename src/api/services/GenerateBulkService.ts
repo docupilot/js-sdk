@@ -3,8 +3,6 @@
 /* eslint-disable */
 import type { BulkGen } from '../models/BulkGen';
 import type { BulkGenData } from '../models/BulkGenData';
-import type { BulkGenEdit } from '../models/BulkGenEdit';
-import type { BulkGenMapping } from '../models/BulkGenMapping';
 import type { BulkGenUpload } from '../models/BulkGenUpload';
 import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
 
@@ -140,11 +138,11 @@ export class GenerateBulkService {
     }
 
     /**
-     * update a template mapping
-     * @returns BulkGenData
+     * save a template mapping
+     * @returns void
      * @throws ApiError
      */
-    public static updateBulkGenerationDraft({
+    public static saveBulkGenerationDraft({
         id,
         templateId,
         requestBody,
@@ -157,43 +155,11 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody: OmitReadonly<BulkGenEdit>,
-    }): CancelablePromise<BulkGenData> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
-            path: {
-                'id': id,
-                'template_id': templateId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Get Mapping Data based on Delimiter
-     * @returns BulkGenData
-     * @throws ApiError
-     */
-    public static getMappingDataBasedOnDelimiter({
-        id,
-        templateId,
-        requestBody,
-    }: {
-        /**
-         * Task id
-         */
-        id: number,
-        /**
-         * Template id
-         */
-        templateId: number,
-        requestBody: OmitReadonly<BulkGenMapping>,
-    }): CancelablePromise<BulkGenData> {
+        requestBody?: Record<string, any>,
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/',
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -221,7 +187,7 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody: OmitReadonly<BulkGenEdit>,
+        requestBody?: Record<string, any>,
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',

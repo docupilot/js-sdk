@@ -2288,11 +2288,11 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/AITemplateCreate'
           description: ''
         '400':
           content:
@@ -6339,83 +6339,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-    put:
-      operationId: update_bulk_generation_draft
-      summary: update a template mapping
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-          format: int32
-        description: Task id
-        required: true
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - generate_bulk
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BulkGenEdit'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BulkGenEdit'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BulkGenEdit'
-        required: true
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BulkGenData'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
     post:
-      operationId: get_mapping_data_based_on_delimiter
-      summary: Get Mapping Data based on Delimiter
+      operationId: save_bulk_generation_draft
+      summary: save a template mapping
       parameters:
       - in: header
         name: X-Workspace
@@ -6443,25 +6369,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BulkGenMapping'
+              type: object
+              additionalProperties: {}
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/BulkGenMapping'
+              type: object
+              additionalProperties: {}
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/BulkGenMapping'
-        required: true
+              type: object
+              additionalProperties: {}
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BulkGenData'
-          description: ''
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -6517,14 +6441,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BulkGenEdit'
+              type: object
+              additionalProperties: {}
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/BulkGenEdit'
+              type: object
+              additionalProperties: {}
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/BulkGenEdit'
-        required: true
+              type: object
+              additionalProperties: {}
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7274,19 +7200,23 @@ components:
       properties:
         ai_prompt:
           type: string
-        title:
+          writeOnly: true
+        template_title:
           type: string
+          writeOnly: true
           maxLength: 120
-        description:
+        template_description:
           type: string
+          writeOnly: true
           nullable: true
           maxLength: 255
-        folder:
-          type: integer
-          nullable: true
+        ai_response:
+          type: string
+          readOnly: true
       required:
       - ai_prompt
-      - title
+      - ai_response
+      - template_title
       description: ''
     AITemplateEdit:
       type: object
@@ -7470,10 +7400,6 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        delimiter:
-          type: string
-          nullable: true
-          maxLength: 1
         created_by:
           type: integer
           readOnly: true
@@ -7493,10 +7419,6 @@ components:
       properties:
         id:
           type: integer
-        created_by:
-          type: integer
-        updated_by:
-          type: integer
         data:
           type: object
           additionalProperties: {}
@@ -7505,38 +7427,11 @@ components:
         suggested_mapping:
           type: object
           additionalProperties: {}
-        delimiter:
-          type: string
       required:
-      - created_by
       - data
-      - delimiter
       - id
       - row_count
       - suggested_mapping
-      - updated_by
-      description: ''
-    BulkGenEdit:
-      type: object
-      properties:
-        mapping:
-          type: object
-          additionalProperties: {}
-        delimiter:
-          type: string
-          maxLength: 1
-      required:
-      - delimiter
-      - mapping
-      description: ''
-    BulkGenMapping:
-      type: object
-      properties:
-        delimiter:
-          type: string
-          maxLength: 1
-      required:
-      - delimiter
       description: ''
     BulkGenTask:
       type: object
@@ -7552,9 +7447,6 @@ components:
         file:
           type: string
           format: binary
-        delimiter:
-          type: string
-          maxLength: 1
       required:
       - file
       description: ''

@@ -4,7 +4,6 @@
 import type { AITemplateCreate } from '../models/AITemplateCreate';
 import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { PromptSuggestions } from '../models/PromptSuggestions';
-import type { Template } from '../models/Template';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -15,14 +14,14 @@ export class AiService {
 
     /**
      * create template using ai
-     * @returns Template
+     * @returns AITemplateCreate
      * @throws ApiError
      */
     public static createTemplateOnlineBuilderAi({
         requestBody,
     }: {
         requestBody: OmitReadonly<AITemplateCreate>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<AITemplateCreate> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/online-builder/create_template/',

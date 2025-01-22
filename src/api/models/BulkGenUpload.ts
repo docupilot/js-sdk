@@ -4,6 +4,5 @@
 
 export type BulkGenUpload = {
     file: Blob;
-    delimiter?: string;
 };
 
