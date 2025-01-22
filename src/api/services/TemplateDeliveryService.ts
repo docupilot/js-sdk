@@ -172,7 +172,7 @@ export class TemplateDeliveryService {
 
     /**
      * download delivery attachment
-     * @returns PolymorphicDelivery
+     * @returns binary
      * @throws ApiError
      */
     public static downloadDeliveryAttachment({
@@ -186,7 +186,7 @@ export class TemplateDeliveryService {
          */
         id: number,
         templateId: number,
-    }): CancelablePromise<PolymorphicDelivery> {
+    }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
