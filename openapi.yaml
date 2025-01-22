@@ -6413,7 +6413,7 @@ paths:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
-    get:
+    post:
       operationId: get_mapping_data_based_on_delimiter
       summary: Get Mapping Data based on Delimiter
       parameters:
@@ -6433,15 +6433,30 @@ paths:
         name: id
         schema:
           type: integer
-        description: A unique integer value identifying this batch process.
+          format: int32
+        description: Task id
         required: true
       - in: path
         name: template_id
         schema:
-          type: string
+          type: integer
+          format: int32
+        description: Template id
         required: true
       tags:
       - generate_bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkGenMapping'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BulkGenMapping'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BulkGenMapping'
+        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -6452,6 +6467,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BulkGenData'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -7513,6 +7534,15 @@ components:
       required:
       - delimiter
       - mapping
+      description: ''
+    BulkGenMapping:
+      type: object
+      properties:
+        delimiter:
+          type: string
+          maxLength: 1
+      required:
+      - delimiter
       description: ''
     BulkGenTask:
       type: object
