@@ -205,7 +205,7 @@ export class GenerateBulkService {
 
     /**
      * Trigger a bulk generation task
-     * @returns BulkGenEdit
+     * @returns BulkGen
      * @throws ApiError
      */
     public static triggerBulkGenerationDraft({
@@ -222,7 +222,7 @@ export class GenerateBulkService {
          */
         templateId: number,
         requestBody: OmitReadonly<BulkGenEdit>,
-    }): CancelablePromise<BulkGenEdit> {
+    }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',

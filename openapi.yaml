@@ -6519,7 +6519,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BulkGenEdit'
+                $ref: '#/components/schemas/BulkGen'
           description: ''
         '400':
           content:
