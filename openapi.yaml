@@ -2288,11 +2288,11 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/AITemplateCreate'
           description: ''
         '400':
           content:
@@ -6382,12 +6382,8 @@ paths:
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BulkGenData'
-          description: ''
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -7274,19 +7270,23 @@ components:
       properties:
         ai_prompt:
           type: string
-        title:
+          writeOnly: true
+        template_title:
           type: string
+          writeOnly: true
           maxLength: 120
-        description:
+        template_description:
           type: string
+          writeOnly: true
           nullable: true
           maxLength: 255
-        folder:
-          type: integer
-          nullable: true
+        ai_response:
+          type: string
+          readOnly: true
       required:
       - ai_prompt
-      - title
+      - ai_response
+      - template_title
       description: ''
     AITemplateEdit:
       type: object
