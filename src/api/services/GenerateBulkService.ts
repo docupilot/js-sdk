@@ -171,8 +171,41 @@ export class GenerateBulkService {
     }
 
     /**
+     * Get Mapping Data based on Delimiter
+     * @returns BulkGenData
+     * @throws ApiError
+     */
+    public static getMappingDataBasedOnDelimiter({
+        id,
+        templateId,
+        delimiter,
+    }: {
+        /**
+         * A unique integer value identifying this batch process.
+         */
+        id: number,
+        templateId: string,
+        /**
+         * A single character used to delimit columns in the batch process file.
+         */
+        delimiter?: string,
+    }): CancelablePromise<BulkGenData> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            query: {
+                'delimiter': delimiter,
+            },
+        });
+    }
+
+    /**
      * Trigger a bulk generation task
-     * @returns BulkGen
+     * @returns BulkGenEdit
      * @throws ApiError
      */
     public static triggerBulkGenerationDraft({
@@ -188,8 +221,8 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: Record<string, any>,
-    }): CancelablePromise<BulkGen> {
+        requestBody: OmitReadonly<BulkGenEdit>,
+    }): CancelablePromise<BulkGenEdit> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',

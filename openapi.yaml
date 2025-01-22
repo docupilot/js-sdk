@@ -6412,6 +6412,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
+    get:
+      operationId: get_mapping_data_based_on_delimiter
+      summary: Get Mapping Data based on Delimiter
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: delimiter
+        schema:
+          type: string
+        description: A single character used to delimit columns in the batch process
+          file.
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this batch process.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - generate_bulk
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGenData'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{template_id}/generate/bulk/{id}/trigger/:
     put:
       operationId: trigger_bulk_generation_draft
@@ -6443,16 +6502,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
+        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -6462,7 +6519,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BulkGen'
+                $ref: '#/components/schemas/BulkGenEdit'
           description: ''
         '400':
           content:
@@ -7401,7 +7458,7 @@ components:
         delimiter:
           type: string
           nullable: true
-          maxLength: 3
+          maxLength: 1
         created_by:
           type: integer
           readOnly: true
