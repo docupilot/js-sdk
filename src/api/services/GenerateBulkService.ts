@@ -180,7 +180,6 @@ export class GenerateBulkService {
         id,
         templateId,
         requestBody,
-        delimiter,
     }: {
         /**
          * Task id
@@ -191,10 +190,6 @@ export class GenerateBulkService {
          */
         templateId: number,
         requestBody: OmitReadonly<BulkGenMapping>,
-        /**
-         * A single character used to delimit columns in the batch process file.
-         */
-        delimiter?: string,
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -202,9 +197,6 @@ export class GenerateBulkService {
             path: {
                 'id': id,
                 'template_id': templateId,
-            },
-            query: {
-                'delimiter': delimiter,
             },
             body: requestBody,
             mediaType: 'application/json',

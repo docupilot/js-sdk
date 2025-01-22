@@ -6423,12 +6423,6 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
-      - in: query
-        name: delimiter
-        schema:
-          type: string
-        description: A single character used to delimit columns in the batch process
-          file.
       - in: path
         name: id
         schema:
