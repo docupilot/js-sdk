@@ -6409,7 +6409,7 @@ paths:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
-    post:
+    get:
       operationId: get_mapping_data_based_on_delimiter
       summary: Get Mapping Data based on Delimiter
       parameters:
@@ -6419,6 +6419,12 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: delimiter
+        schema:
+          type: string
+        description: A single character used to delimit columns in the batch process
+          file.
       - in: path
         name: id
         schema:
@@ -6435,18 +6441,6 @@ paths:
         required: true
       tags:
       - generate_bulk
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BulkGenMapping'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/BulkGenMapping'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/BulkGenMapping'
-        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7528,15 +7522,6 @@ components:
       required:
       - delimiter
       - mapping
-      description: ''
-    BulkGenMapping:
-      type: object
-      properties:
-        delimiter:
-          type: string
-          maxLength: 1
-      required:
-      - delimiter
       description: ''
     BulkGenTask:
       type: object
