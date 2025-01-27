@@ -19,7 +19,6 @@ export type { BulkGen } from './models/BulkGen';
 export type { BulkGenData } from './models/BulkGenData';
 export type { BulkGenEdit } from './models/BulkGenEdit';
 export type { BulkGenerateMeta } from './models/BulkGenerateMeta';
-export type { BulkGenMapping } from './models/BulkGenMapping';
 export type { BulkGenTask } from './models/BulkGenTask';
 export type { BulkGenUpload } from './models/BulkGenUpload';
 export type { ChangeRole } from './models/ChangeRole';

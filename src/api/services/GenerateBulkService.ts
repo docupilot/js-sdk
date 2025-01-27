@@ -4,7 +4,6 @@
 import type { BulkGen } from '../models/BulkGen';
 import type { BulkGenData } from '../models/BulkGenData';
 import type { BulkGenEdit } from '../models/BulkGenEdit';
-import type { BulkGenMapping } from '../models/BulkGenMapping';
 import type { BulkGenUpload } from '../models/BulkGenUpload';
 import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
 
@@ -179,7 +178,7 @@ export class GenerateBulkService {
     public static getMappingDataBasedOnDelimiter({
         id,
         templateId,
-        requestBody,
+        delimiter,
     }: {
         /**
          * Task id
@@ -189,17 +188,21 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody: OmitReadonly<BulkGenMapping>,
+        /**
+         * A single character used to delimit columns in the batch process file.
+         */
+        delimiter?: string,
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
-            method: 'POST',
+            method: 'GET',
             url: '/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/',
             path: {
                 'id': id,
                 'template_id': templateId,
             },
-            body: requestBody,
-            mediaType: 'application/json',
+            query: {
+                'delimiter': delimiter,
+            },
         });
     }
 
