@@ -2,8 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BulkGenUpload = {
-    file: Blob;
-    delimiter?: string;
+export type ShowUserDomainReservationPrompt = {
+    show_prompt: boolean;
 };
 
