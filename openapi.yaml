@@ -1538,6 +1538,87 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/users/user_domain_reservation/:
+    get:
+      operationId: get_user_domain_reservation_info
+      summary: Get user domain reservation info
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - users
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowUserDomainReservationPrompt'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: update_user_domain_reservation_info
+      summary: Update user domain reservation info
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDomainReservation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserDomainReservation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserDomainReservation'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/workspaces/:
     get:
       operationId: list_workspaces
@@ -1558,7 +1639,9 @@ paths:
       tags:
       - workspaces
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -2288,11 +2371,11 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/AITemplateCreate'
           description: ''
         '400':
           content:
@@ -6117,12 +6200,12 @@ paths:
         schema:
           type: integer
           enum:
-          - Cancelled
-          - Draft
-          - Failed
-          - In Progress
-          - Pending
-          - Success
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
       - in: path
         name: template_id
         schema:
@@ -6339,9 +6422,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-    post:
-      operationId: save_bulk_generation_draft
-      summary: save a template mapping
+    put:
+      operationId: update_bulk_generation_draft
+      summary: update a template mapping
       parameters:
       - in: header
         name: X-Workspace
@@ -6369,16 +6452,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
+        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -6386,6 +6467,74 @@ paths:
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
+    get:
+      operationId: get_mapping_data_based_on_delimiter
+      summary: Get Mapping Data based on Delimiter
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: delimiter
+        schema:
+          type: string
+        description: A single character used to delimit columns in the batch process
+          file.
+      - in: path
+        name: id
+        schema:
+          type: integer
+          format: int32
+        description: Task id
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: integer
+          format: int32
+        description: Template id
+        required: true
+      tags:
+      - generate_bulk
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkGenData'
+          description: ''
         '400':
           content:
             application/json:
@@ -6441,16 +6590,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
           multipart/form-data:
             schema:
-              type: object
-              additionalProperties: {}
+              $ref: '#/components/schemas/BulkGenEdit'
+        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7200,19 +7347,23 @@ components:
       properties:
         ai_prompt:
           type: string
-        title:
+          writeOnly: true
+        template_title:
           type: string
+          writeOnly: true
           maxLength: 120
-        description:
+        template_description:
           type: string
+          writeOnly: true
           nullable: true
           maxLength: 255
-        folder:
-          type: integer
-          nullable: true
+        ai_response:
+          type: string
+          readOnly: true
       required:
       - ai_prompt
-      - title
+      - ai_response
+      - template_title
       description: ''
     AITemplateEdit:
       type: object
@@ -7364,14 +7515,15 @@ components:
           readOnly: true
         status:
           enum:
-          - Draft
-          - Pending
-          - In Progress
-          - Success
-          - Failed
-          - Cancelled
-          type: string
-          readOnly: true
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          type: integer
+          minimum: 0
+          maximum: 32767
         start_time:
           type: string
           format: date-time
@@ -7395,6 +7547,10 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        delimiter:
+          type: string
+          nullable: true
+          maxLength: 1
         created_by:
           type: integer
           readOnly: true
@@ -7407,13 +7563,16 @@ components:
       - errors
       - file_name
       - id
-      - status
       - updated_by
       - updated_time
     BulkGenData:
       type: object
       properties:
         id:
+          type: integer
+        created_by:
+          type: integer
+        updated_by:
           type: integer
         data:
           type: object
@@ -7423,11 +7582,29 @@ components:
         suggested_mapping:
           type: object
           additionalProperties: {}
+        delimiter:
+          type: string
       required:
+      - created_by
       - data
+      - delimiter
       - id
       - row_count
       - suggested_mapping
+      - updated_by
+      description: ''
+    BulkGenEdit:
+      type: object
+      properties:
+        mapping:
+          type: object
+          additionalProperties: {}
+        delimiter:
+          type: string
+          maxLength: 1
+      required:
+      - delimiter
+      - mapping
       description: ''
     BulkGenTask:
       type: object
@@ -7443,6 +7620,9 @@ components:
         file:
           type: string
           format: binary
+        delimiter:
+          type: string
+          maxLength: 1
       required:
       - file
       description: ''
@@ -9615,6 +9795,14 @@ components:
       - user_demographic
       - workspace_demographic
       description: ''
+    ShowUserDomainReservationPrompt:
+      type: object
+      properties:
+        show_prompt:
+          type: boolean
+      required:
+      - show_prompt
+      description: ''
     SignNowDelivery:
       type: object
       description: ''
@@ -10452,6 +10640,20 @@ components:
       required:
       - id
       - role
+      description: ''
+    UserDomainReservation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        subdomain:
+          type: string
+          maxLength: 255
+          minLength: 3
+      required:
+      - id
+      - subdomain
       description: ''
     UserPersonalization:
       type: object
