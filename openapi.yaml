@@ -1538,6 +1538,87 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/users/user_domain_reservation/:
+    get:
+      operationId: get_user_domain_reservation_info
+      summary: Get user domain reservation info
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - users
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowUserDomainReservationPrompt'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: update_user_domain_reservation_info
+      summary: Update user domain reservation info
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDomainReservation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserDomainReservation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserDomainReservation'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/workspaces/:
     get:
       operationId: list_workspaces
@@ -1558,7 +1639,9 @@ paths:
       tags:
       - workspaces
       security:
+      - OAuthAuthentication: []
       - SessionAuthentication: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -9712,6 +9795,14 @@ components:
       - user_demographic
       - workspace_demographic
       description: ''
+    ShowUserDomainReservationPrompt:
+      type: object
+      properties:
+        show_prompt:
+          type: boolean
+      required:
+      - show_prompt
+      description: ''
     SignNowDelivery:
       type: object
       description: ''
@@ -10549,6 +10640,20 @@ components:
       required:
       - id
       - role
+      description: ''
+    UserDomainReservation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        subdomain:
+          type: string
+          maxLength: 255
+          minLength: 3
+      required:
+      - id
+      - subdomain
       description: ''
     UserPersonalization:
       type: object
