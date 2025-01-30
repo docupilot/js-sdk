@@ -9800,6 +9800,8 @@ components:
       properties:
         show_prompt:
           type: boolean
+        suggested_domain_name:
+          type: string
       required:
       - show_prompt
       description: ''
