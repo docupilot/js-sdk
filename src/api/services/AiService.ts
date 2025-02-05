@@ -5,8 +5,7 @@ import type { AITemplateCreate } from '../models/AITemplateCreate';
 import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { PromptSuggestions } from '../models/PromptSuggestions';
 import type { SyntaxSuggestions } from '../models/SyntaxSuggestions';
-import type { Template } from '../models/Template';
-import type { WordAddIn } from '../models/WordAddIn';
+import type { WordAddInEditTemplate } from '../models/WordAddInEditTemplate';
 import type { WordPromptSuggestions } from '../models/WordPromptSuggestions';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -18,14 +17,14 @@ export class AiService {
 
     /**
      * create template using ai
-     * @returns Template
+     * @returns AITemplateCreate
      * @throws ApiError
      */
     public static createTemplateOnlineBuilderAi({
         requestBody,
     }: {
         requestBody: OmitReadonly<AITemplateCreate>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<AITemplateCreate> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/online-builder/create_template/',
@@ -72,14 +71,14 @@ export class AiService {
 
     /**
      * Word edit template using ai
-     * @returns WordAddIn
+     * @returns WordAddInEditTemplate
      * @throws ApiError
      */
     public static wordEditTemplateAi({
         requestBody,
     }: {
-        requestBody: OmitReadonly<WordAddIn>,
-    }): CancelablePromise<WordAddIn> {
+        requestBody: OmitReadonly<WordAddInEditTemplate>,
+    }): CancelablePromise<WordAddInEditTemplate> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/word-add-in/edit_template/',
