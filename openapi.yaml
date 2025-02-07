@@ -2499,6 +2499,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /ai/online-builder/test_form_fill/:
+    post:
+      operationId: test_form_fill_online_builder_ai
+      summary: fill test form using AI
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AITestFormFill'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AITestFormFill'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AITestFormFill'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AITestFormFill'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/append/:
     post:
       operationId: append_files
@@ -7381,6 +7433,21 @@ components:
       - ai_prompt
       - ai_response
       - selected_content
+      description: ''
+    AITestFormFill:
+      type: object
+      properties:
+        form_data:
+          type: object
+          additionalProperties: {}
+          writeOnly: true
+        ai_response:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+      required:
+      - ai_response
+      - form_data
       description: ''
     AcceptInvite:
       type: object

@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { AITemplateCreate } from '../models/AITemplateCreate';
 import type { AITemplateEdit } from '../models/AITemplateEdit';
+import type { AITestFormFill } from '../models/AITestFormFill';
 import type { PromptSuggestions } from '../models/PromptSuggestions';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -61,6 +62,24 @@ export class AiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ai/online-builder/list_prompt_suggestions/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * fill test form using AI
+     * @returns AITestFormFill
+     * @throws ApiError
+     */
+    public static testFormFillOnlineBuilderAi({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<AITestFormFill>,
+    }): CancelablePromise<AITestFormFill> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ai/online-builder/test_form_fill/',
             body: requestBody,
             mediaType: 'application/json',
         });

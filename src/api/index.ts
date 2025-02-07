@@ -10,6 +10,7 @@ export type { AcceptInvite } from './models/AcceptInvite';
 export type { AccountDelivery } from './models/AccountDelivery';
 export type { AITemplateCreate } from './models/AITemplateCreate';
 export type { AITemplateEdit } from './models/AITemplateEdit';
+export type { AITestFormFill } from './models/AITestFormFill';
 export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
