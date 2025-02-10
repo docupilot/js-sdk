@@ -11237,6 +11237,9 @@ components:
       in: header
       name: Authorization
       description: Token-based authentication with required prefix "Basic"
+servers:
+- url: /dashboard
+  description: Dashboard
 externalDocs:
   description: Help docs on how to use API
   url: https://help.docupilot.app/developers/api-overview

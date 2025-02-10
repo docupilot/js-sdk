@@ -19,7 +19,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: '',
+    BASE: '/dashboard',
     VERSION: '2.0',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
