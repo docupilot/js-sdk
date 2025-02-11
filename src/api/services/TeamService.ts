@@ -29,7 +29,7 @@ export class TeamService {
     }): CancelablePromise<Array<TeamMember>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/team/',
+            url: '/dashboard/accounts/v2/team/',
             query: {
                 'ordering': ordering,
                 'role': role,
@@ -51,7 +51,7 @@ export class TeamService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/accounts/v2/team/{id}/',
+            url: '/dashboard/accounts/v2/team/{id}/',
             path: {
                 'id': id,
             },
@@ -75,7 +75,7 @@ export class TeamService {
     }): CancelablePromise<TeamMember> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/accounts/v2/team/{id}/change_role/',
+            url: '/dashboard/accounts/v2/team/{id}/change_role/',
             path: {
                 'id': id,
             },
@@ -96,7 +96,7 @@ export class TeamService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/accounts/v2/team/transfer_ownership/',
+            url: '/dashboard/accounts/v2/team/transfer_ownership/',
             body: requestBody,
             mediaType: 'application/json',
         });

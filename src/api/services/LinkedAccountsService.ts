@@ -38,7 +38,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<Array<DeliveryAccount>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/',
+            url: '/dashboard/api/v2/linked_accounts/',
             query: {
                 'ordering': ordering,
                 'search': search,
@@ -59,7 +59,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/linked_accounts/',
+            url: '/dashboard/api/v2/linked_accounts/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -82,7 +82,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{integrator_type}/invoke/',
+            url: '/dashboard/api/v2/linked_accounts/{integrator_type}/invoke/',
             path: {
                 'integrator_type': integratorType,
             },
@@ -112,7 +112,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/linked_accounts/{id}/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/',
             path: {
                 'id': id,
             },
@@ -136,7 +136,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/linked_accounts/{id}/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/',
             path: {
                 'id': id,
             },
@@ -165,7 +165,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<PaginatedAccountDeliveryList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/deliveries/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/deliveries/',
             path: {
                 'id': id,
             },
@@ -191,7 +191,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<Array<string>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/delivery_emails/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/delivery_emails/',
             path: {
                 'id': id,
             },
@@ -213,7 +213,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/docusign_folders/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/docusign_folders/',
             path: {
                 'id': id,
             },
@@ -235,7 +235,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<GoogleDrivePickerPayload> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/google_picker_payload/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/google_picker_payload/',
             path: {
                 'id': id,
             },
@@ -259,7 +259,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/linked_accounts/{id}/initiate_authorization/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/initiate_authorization/',
             path: {
                 'id': id,
             },
@@ -283,7 +283,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/reconnect/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/reconnect/',
             path: {
                 'id': id,
             },
@@ -308,7 +308,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<DeliveryAccount> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/linked_accounts/{id}/toggle_use_for_images/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/toggle_use_for_images/',
             path: {
                 'id': id,
             },
@@ -332,7 +332,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/linked_accounts/{id}/verify_otp/',
+            url: '/dashboard/api/v2/linked_accounts/{id}/verify_otp/',
             path: {
                 'id': id,
             },
@@ -353,7 +353,7 @@ export class LinkedAccountsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/linked_accounts/send_test_mail/',
+            url: '/dashboard/api/v2/linked_accounts/send_test_mail/',
             body: requestBody,
             mediaType: 'application/json',
         });
