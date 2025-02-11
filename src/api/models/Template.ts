@@ -14,6 +14,7 @@ export type Template = {
     readonly updated_time: string | null;
     document_status?: 'active' | 'test';
     readonly deleted_time: string | null;
+    readonly use_froala: boolean;
     readonly created_by: number;
     readonly updated_by: number | null;
     folder?: number | null;
