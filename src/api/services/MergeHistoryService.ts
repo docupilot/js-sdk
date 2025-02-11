@@ -38,7 +38,7 @@ export class MergeHistoryService {
     }): CancelablePromise<PaginatedDocumentMergeHistoryList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/merge_history/',
+            url: '/dashboard/api/v2/merge_history/',
             query: {
                 'end_date': endDate,
                 'ordering': ordering,

@@ -1,9 +1,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AITemplateCreate } from '../models/AITemplateCreate';
+import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { ChatThreads } from '../models/ChatThreads';
 import type { CreateCustomerThreadInput } from '../models/CreateCustomerThreadInput';
 import type { CreateCustomerThreadOutput } from '../models/CreateCustomerThreadOutput';
+import type { PromptSuggestions } from '../models/PromptSuggestions';
 import type { ThreadMessages } from '../models/ThreadMessages';
 import type { UpdateCustomerThreadInput } from '../models/UpdateCustomerThreadInput';
 import type { UpdateCustomerThreadOutput } from '../models/UpdateCustomerThreadOutput';
@@ -14,7 +17,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
-export class AiChatService {
+export class DashboardService {
 
     /**
      * List all chat threads
@@ -36,7 +39,7 @@ export class AiChatService {
     }): CancelablePromise<Array<ChatThreads>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/ai-chat/threads/',
+            url: '/dashboard/ai-chat/threads/',
             query: {
                 'ordering': ordering,
                 'search': search,
@@ -56,7 +59,7 @@ export class AiChatService {
     }): CancelablePromise<CreateCustomerThreadOutput> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai-chat/threads/',
+            url: '/dashboard/ai-chat/threads/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -66,14 +69,14 @@ export class AiChatService {
      * @returns ChatThreads
      * @throws ApiError
      */
-    public static aiChatThreadsRetrieve({
+    public static dashboardAiChatThreadsRetrieve({
         threadId,
     }: {
         threadId: string,
     }): CancelablePromise<ChatThreads> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/ai-chat/threads/{thread_id}/',
+            url: '/dashboard/ai-chat/threads/{thread_id}/',
             path: {
                 'thread_id': threadId,
             },
@@ -94,7 +97,7 @@ export class AiChatService {
     }): CancelablePromise<UpdateCustomerThreadOutput> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/ai-chat/threads/{thread_id}/',
+            url: '/dashboard/ai-chat/threads/{thread_id}/',
             path: {
                 'thread_id': threadId,
             },
@@ -107,14 +110,14 @@ export class AiChatService {
      * @returns void
      * @throws ApiError
      */
-    public static aiChatThreadsDestroy({
+    public static dashboardAiChatThreadsDestroy({
         threadId,
     }: {
         threadId: string,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/ai-chat/threads/{thread_id}/',
+            url: '/dashboard/ai-chat/threads/{thread_id}/',
             path: {
                 'thread_id': threadId,
             },
@@ -133,7 +136,7 @@ export class AiChatService {
     }): CancelablePromise<ThreadMessages> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/ai-chat/threads/{thread_id}/messages/',
+            url: '/dashboard/ai-chat/threads/{thread_id}/messages/',
             path: {
                 'thread_id': threadId,
             },
@@ -154,10 +157,64 @@ export class AiChatService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/ai-chat/threads/{thread_id}/update_thread_name/',
+            url: '/dashboard/ai-chat/threads/{thread_id}/update_thread_name/',
             path: {
                 'thread_id': threadId,
             },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * create template using ai
+     * @returns AITemplateCreate
+     * @throws ApiError
+     */
+    public static createTemplateOnlineBuilderAi({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<AITemplateCreate>,
+    }): CancelablePromise<AITemplateCreate> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/ai/online-builder/create_template/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * edit template using chat completion
+     * @returns AITemplateEdit
+     * @throws ApiError
+     */
+    public static editTemplateOnlineBuilderAi({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<AITemplateEdit>,
+    }): CancelablePromise<AITemplateEdit> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/ai/online-builder/edit_template/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * list prompt suggestions based on template name and description
+     * @returns PromptSuggestions
+     * @throws ApiError
+     */
+    public static promptSuggestionsOnlineBuilderAi({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<PromptSuggestions>,
+    }): CancelablePromise<PromptSuggestions> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/ai/online-builder/list_prompt_suggestions/',
             body: requestBody,
             mediaType: 'application/json',
         });

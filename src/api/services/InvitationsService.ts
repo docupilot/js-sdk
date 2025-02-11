@@ -33,7 +33,7 @@ export class InvitationsService {
     }): CancelablePromise<Array<Invitation>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/invitations/',
+            url: '/dashboard/accounts/v2/invitations/',
             query: {
                 'is_accepted': isAccepted,
                 'ordering': ordering,
@@ -54,7 +54,7 @@ export class InvitationsService {
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/invitations/',
+            url: '/dashboard/accounts/v2/invitations/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -72,7 +72,7 @@ export class InvitationsService {
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/invitations/{invite_key}/get_by_key/',
+            url: '/dashboard/accounts/v2/invitations/{invite_key}/get_by_key/',
             path: {
                 'invite_key': inviteKey,
             },
@@ -94,7 +94,7 @@ export class InvitationsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/accounts/v2/invitations/{id}/',
+            url: '/dashboard/accounts/v2/invitations/{id}/',
             path: {
                 'id': id,
             },
@@ -116,7 +116,7 @@ export class InvitationsService {
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/invitations/{id}/accept_invitation/',
+            url: '/dashboard/accounts/v2/invitations/{id}/accept_invitation/',
             path: {
                 'id': id,
             },
@@ -138,7 +138,7 @@ export class InvitationsService {
     }): CancelablePromise<AcceptInvite> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/invitations/{id}/accept_invitation/',
+            url: '/dashboard/accounts/v2/invitations/{id}/accept_invitation/',
             path: {
                 'id': id,
             },
@@ -160,7 +160,7 @@ export class InvitationsService {
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/invitations/{id}/resend_invitation/',
+            url: '/dashboard/accounts/v2/invitations/{id}/resend_invitation/',
             path: {
                 'id': id,
             },
