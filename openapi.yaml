@@ -7816,6 +7816,8 @@ components:
           type: string
           format: date-time
           nullable: true
+        use_froala:
+          type: boolean
         created_by:
           type: integer
           readOnly: true
@@ -9476,9 +9478,6 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
-        use_froala:
-          type: boolean
-          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -10061,6 +10060,9 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        use_froala:
+          type: boolean
+          readOnly: true
         created_by:
           type: integer
           readOnly: true
@@ -10080,6 +10082,7 @@ components:
       - type
       - updated_by
       - updated_time
+      - use_froala
     TemplateCount:
       type: object
       properties:
@@ -10949,9 +10952,6 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
-        use_froala:
-          type: boolean
-          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -10966,7 +10966,6 @@ components:
       - role
       - timezone
       - unique_key
-      - use_froala
       description: ''
     WorkspaceDemographic:
       type: object
