@@ -127,9 +127,10 @@ export type { Workspace } from './models/Workspace';
 export type { WorkspaceDemographic } from './models/WorkspaceDemographic';
 export type { YouSignDelivery } from './models/YouSignDelivery';
 
+export { AiService } from './services/AiService';
+export { AiChatService } from './services/AiChatService';
 export { AppendService } from './services/AppendService';
 export { AuthTokensService } from './services/AuthTokensService';
-export { DashboardService } from './services/DashboardService';
 export { DemographicService } from './services/DemographicService';
 export { DomainService } from './services/DomainService';
 export { FoldersService } from './services/FoldersService';

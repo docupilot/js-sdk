@@ -1,12 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AITemplateCreate } from '../models/AITemplateCreate';
-import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { ChatThreads } from '../models/ChatThreads';
 import type { CreateCustomerThreadInput } from '../models/CreateCustomerThreadInput';
 import type { CreateCustomerThreadOutput } from '../models/CreateCustomerThreadOutput';
-import type { PromptSuggestions } from '../models/PromptSuggestions';
 import type { ThreadMessages } from '../models/ThreadMessages';
 import type { UpdateCustomerThreadInput } from '../models/UpdateCustomerThreadInput';
 import type { UpdateCustomerThreadOutput } from '../models/UpdateCustomerThreadOutput';
@@ -17,7 +14,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
-export class DashboardService {
+export class AiChatService {
 
     /**
      * List all chat threads
@@ -69,7 +66,7 @@ export class DashboardService {
      * @returns ChatThreads
      * @throws ApiError
      */
-    public static dashboardAiChatThreadsRetrieve({
+    public static aiChatThreadsRetrieve({
         threadId,
     }: {
         threadId: string,
@@ -110,7 +107,7 @@ export class DashboardService {
      * @returns void
      * @throws ApiError
      */
-    public static dashboardAiChatThreadsDestroy({
+    public static aiChatThreadsDestroy({
         threadId,
     }: {
         threadId: string,
@@ -161,60 +158,6 @@ export class DashboardService {
             path: {
                 'thread_id': threadId,
             },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * create template using ai
-     * @returns AITemplateCreate
-     * @throws ApiError
-     */
-    public static createTemplateOnlineBuilderAi({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<AITemplateCreate>,
-    }): CancelablePromise<AITemplateCreate> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/ai/online-builder/create_template/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * edit template using chat completion
-     * @returns AITemplateEdit
-     * @throws ApiError
-     */
-    public static editTemplateOnlineBuilderAi({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<AITemplateEdit>,
-    }): CancelablePromise<AITemplateEdit> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/ai/online-builder/edit_template/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * list prompt suggestions based on template name and description
-     * @returns PromptSuggestions
-     * @throws ApiError
-     */
-    public static promptSuggestionsOnlineBuilderAi({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<PromptSuggestions>,
-    }): CancelablePromise<PromptSuggestions> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/ai/online-builder/list_prompt_suggestions/',
             body: requestBody,
             mediaType: 'application/json',
         });
