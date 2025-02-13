@@ -54,6 +54,28 @@ export class GenerateService {
     }
 
     /**
+     * Generates a test data used for testing template
+     * @returns Template
+     * @throws ApiError
+     */
+    public static generateTestData({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{id}/generate_test_data/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
      * Test document generation
      * @returns Template
      * @throws ApiError
