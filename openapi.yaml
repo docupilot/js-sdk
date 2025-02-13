@@ -1989,360 +1989,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /ai-chat/threads/:
-    get:
-      operationId: list_all_chat_threads
-      summary: List all chat threads
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChatThreads'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-    post:
-      operationId: create_new_customer_thread
-      summary: create new customer thread
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerThreadInput'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerThreadInput'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerThreadInput'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateCustomerThreadOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /ai-chat/threads/{thread_id}/:
-    get:
-      operationId: ai_chat_threads_retrieve
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChatThreads'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    put:
-      operationId: update_customer_thread
-      summary: update existing customer thread
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomerThreadInput'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomerThreadInput'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomerThreadInput'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdateCustomerThreadOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    delete:
-      operationId: ai_chat_threads_destroy
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /ai-chat/threads/{thread_id}/messages/:
-    get:
-      operationId: get_messages_for_thread
-      summary: Get all messages for a thread
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ThreadMessages'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /ai-chat/threads/{thread_id}/update_thread_name/:
-    put:
-      operationId: update_customer_thread_name
-      summary: update customer thread name
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateThreadName'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateThreadName'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateThreadName'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /ai/online-builder/create_template/:
     post:
       operationId: create_template_online_builder_ai
@@ -5238,6 +4884,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{id}/generate_test_data/:
+    get:
+      operationId: generate_test_data
+      summary: Generates a test data used for testing template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - generate
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{id}/inline_image/:
     post:
       operationId: upload_inline_image_of_template
@@ -7722,31 +7414,6 @@ components:
       - overage_enabled
       - subscribed_on
       description: ''
-    ChatThreads:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        thread_id:
-          type: string
-          maxLength: 200
-        thread_name:
-          type: string
-          nullable: true
-          maxLength: 200
-        tokens_used:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        model_name:
-          type: string
-          maxLength: 200
-      required:
-      - id
-      - model_name
-      - thread_id
-      description: ''
     ChildDocumentMergeHistory:
       type: object
       properties:
@@ -7844,29 +7511,6 @@ components:
           maxLength: 120
       required:
       - title
-      description: ''
-    CreateCustomerThreadInput:
-      type: object
-      properties:
-        message:
-          type: string
-          writeOnly: true
-      required:
-      - message
-      description: ''
-    CreateCustomerThreadOutput:
-      type: object
-      properties:
-        output_message:
-          type: string
-        thread_id:
-          type: integer
-        thread_display_name:
-          type: string
-      required:
-      - output_message
-      - thread_display_name
-      - thread_id
       description: ''
     DeleteCurrentWorkspace:
       type: object
@@ -10332,15 +9976,6 @@ components:
       required:
       - id
       - user
-    ThreadMessages:
-      type: object
-      properties:
-        messages:
-          type: object
-          additionalProperties: {}
-      required:
-      - messages
-      description: ''
     Timezone:
       type: object
       properties:
@@ -10372,23 +10007,6 @@ components:
           type: string
       required:
       - detail
-      description: ''
-    UpdateCustomerThreadInput:
-      type: object
-      properties:
-        message:
-          type: string
-          writeOnly: true
-      required:
-      - message
-      description: ''
-    UpdateCustomerThreadOutput:
-      type: object
-      properties:
-        output_message:
-          type: string
-      required:
-      - output_message
       description: ''
     UpdateDeliveryAccount:
       type: object
@@ -10440,15 +10058,6 @@ components:
       - type
       - updated_at
       - used_by
-    UpdateThreadName:
-      type: object
-      properties:
-        thread_name:
-          type: string
-          writeOnly: true
-      required:
-      - thread_name
-      description: ''
     UploadTemplateImage:
       type: object
       properties:
