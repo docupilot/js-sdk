@@ -116,6 +116,8 @@ export type { ValidationError } from './models/ValidationError';
 export type { VerifyDomain } from './models/VerifyDomain';
 export type { VerifyEmailAccountOTP } from './models/VerifyEmailAccountOTP';
 export type { WebhookDelivery } from './models/WebhookDelivery';
+export type { WordAddInPromptSuggestions } from './models/WordAddInPromptSuggestions';
+export type { WordAddInTemplateEdit } from './models/WordAddInTemplateEdit';
 export type { Workspace } from './models/Workspace';
 export type { WorkspaceDemographic } from './models/WorkspaceDemographic';
 export type { YouSignDelivery } from './models/YouSignDelivery';
