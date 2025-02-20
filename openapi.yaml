@@ -2145,6 +2145,114 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /ai/word-add-in/edit_template/:
+    post:
+      operationId: edit_word_template_using_ai
+      summary: Edit word template using ai
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInTemplateEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInTemplateEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInTemplateEdit'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInTemplateEdit'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /ai/word-add-in/list_prompt_suggestions/:
+    post:
+      operationId: prompt_suggestions_word_add_in_ai
+      summary: list prompt suggestions based on File Name and Content
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInPromptSuggestions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInPromptSuggestions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInPromptSuggestions'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInPromptSuggestions'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/append/:
     post:
       operationId: append_files
@@ -10406,6 +10514,54 @@ components:
       - id
       - name
       - url
+    WordAddInPromptSuggestions:
+      type: object
+      properties:
+        title:
+          type: string
+          writeOnly: true
+        first_page_content:
+          type: string
+          writeOnly: true
+          nullable: true
+        main_headings:
+          type: string
+          writeOnly: true
+          nullable: true
+        prompts:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - prompts
+      - title
+      description: ''
+    WordAddInTemplateEdit:
+      type: object
+      properties:
+        user_input:
+          type: string
+          writeOnly: true
+        content_type:
+          enum:
+          - text
+          - group
+          - table
+          type: string
+          writeOnly: true
+        selected_content:
+          type: string
+          writeOnly: true
+        ai_response:
+          type: string
+          readOnly: true
+      required:
+      - ai_response
+      - content_type
+      - selected_content
+      - user_input
+      description: ''
     Workspace:
       type: object
       properties:
