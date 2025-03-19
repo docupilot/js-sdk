@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
+import type { HubspotModuleSchema } from '../models/HubspotModuleSchema';
 import type { PaginatedAccountDeliveryList } from '../models/PaginatedAccountDeliveryList';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
 import type { SendTestSmtpMail } from '../models/SendTestSmtpMail';
@@ -243,6 +244,32 @@ export class LinkedAccountsService {
     }
 
     /**
+     * get hubspot module tokens
+     * @returns HubspotModuleSchema
+     * @throws ApiError
+     */
+    public static getHubspotModuleTokens({
+        id,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+        requestBody: OmitReadonly<HubspotModuleSchema>,
+    }): CancelablePromise<HubspotModuleSchema> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/linked_accounts/{id}/hubspot_module_schema/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * Initiate email authorization
      * @returns void
      * @throws ApiError
@@ -265,6 +292,28 @@ export class LinkedAccountsService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * get hubspot modules
+     * @returns DeliveryAccount
+     * @throws ApiError
+     */
+    public static getHubspotModules({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<DeliveryAccount> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/modules/',
+            path: {
+                'id': id,
+            },
         });
     }
 
