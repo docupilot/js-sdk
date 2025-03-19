@@ -15,6 +15,7 @@ export class DocupilotSessionClient extends Docupilot {
   readonly SubscriptionService = _API.SubscriptionService;
   readonly TemplateDeliveryService = _API.TemplateDeliveryService;
   readonly TemplatesService = _API.TemplatesService;
+  readonly TemplateVersioningService= _API.TemplateVersioningService;
   readonly UsersService = _API.UsersService;
   readonly WorkspacesService = _API.WorkspacesService;
   readonly InvitationsService = _API.InvitationsService;
