@@ -8,6 +8,7 @@ import type { EmailDelivery } from './EmailDelivery';
 import type { EversignDelivery } from './EversignDelivery';
 import type { GoogleDriveDelivery } from './GoogleDriveDelivery';
 import type { HelloSignDelivery } from './HelloSignDelivery';
+import type { HubspotDelivery } from './HubspotDelivery';
 import type { OneDriveDelivery } from './OneDriveDelivery';
 import type { S3Delivery } from './S3Delivery';
 import type { SftpDelivery } from './SftpDelivery';
@@ -16,5 +17,5 @@ import type { SignNowDelivery } from './SignNowDelivery';
 import type { WebhookDelivery } from './WebhookDelivery';
 import type { YouSignDelivery } from './YouSignDelivery';
 
-export type PolymorphicDelivery = (EmailDelivery | WebhookDelivery | DropboxDelivery | OneDriveDelivery | SignNowDelivery | GoogleDriveDelivery | S3Delivery | HelloSignDelivery | DocuSignDelivery | EversignDelivery | SignableDelivery | YouSignDelivery | SftpDelivery);
+export type PolymorphicDelivery = (EmailDelivery | WebhookDelivery | DropboxDelivery | OneDriveDelivery | SignNowDelivery | GoogleDriveDelivery | S3Delivery | HelloSignDelivery | DocuSignDelivery | EversignDelivery | SignableDelivery | YouSignDelivery | SftpDelivery | HubspotDelivery);
 

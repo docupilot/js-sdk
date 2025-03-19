@@ -57,6 +57,7 @@ export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload
 export type { HelloSignDelivery } from './models/HelloSignDelivery';
 export type { HostedPage } from './models/HostedPage';
 export type { HubspotAssociation } from './models/HubspotAssociation';
+export type { HubspotDelivery } from './models/HubspotDelivery';
 export type { HubspotModuleSchema } from './models/HubspotModuleSchema';
 export type { HubspotProperty } from './models/HubspotProperty';
 export type { InitiateAuthorizationSequence } from './models/InitiateAuthorizationSequence';
@@ -73,7 +74,6 @@ export type { PaginatedAccountDeliveryList } from './models/PaginatedAccountDeli
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedDocumentMergeHistoryList } from './models/PaginatedDocumentMergeHistoryList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
-export type { PaginatedTemplateHubspotModuleMappingList } from './models/PaginatedTemplateHubspotModuleMappingList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
 export type { PatchedDomain } from './models/PatchedDomain';
 export type { PatchedUpdateFolderSharing } from './models/PatchedUpdateFolderSharing';
@@ -140,7 +140,6 @@ export { GenerateService } from './services/GenerateService';
 export { GenerateBulkService } from './services/GenerateBulkService';
 export { HistoryService } from './services/HistoryService';
 export { HubspotService } from './services/HubspotService';
-export { HubspotMappingService } from './services/HubspotMappingService';
 export { InvitationsService } from './services/InvitationsService';
 export { LinkedAccountsService } from './services/LinkedAccountsService';
 export { MergeHistoryService } from './services/MergeHistoryService';

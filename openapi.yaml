@@ -3605,463 +3605,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{linked_account_pk}/hubspot_mapping/:
-    get:
-      operationId: list_template_hubspot_module_mappings
-      summary: Get template hubspot module mappings
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      tags:
-      - hubspot mapping
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedTemplateHubspotModuleMappingList'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-    post:
-      operationId: create_template_hubspot_module_mapping
-      summary: Create a hubspot module mapping
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{linked_account_pk}/hubspot_mapping/{id}/:
-    get:
-      operationId: get_template_hubspot_module_mapping
-      summary: Get specific template hubspot module mapping
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this template hubspot module
-          mapping.
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    put:
-      operationId: update_template_hubspot_module_mapping
-      summary: Update a specific hubspot module mapping
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this template hubspot module
-          mapping.
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    delete:
-      operationId: delete_template_hubspot_module_mapping
-      summary: Delete a specific hubspot module mapping
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this template hubspot module
-          mapping.
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{linked_account_pk}/hubspot_mapping/{id}/generate/:
-    post:
-      operationId: generate_document_from_hubspot
-      description: Generate document from hubspot
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this template hubspot module
-          mapping.
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-        required: true
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenerateDocumentFromHubspot'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{linked_account_pk}/hubspot_mapping/hubspot_module_schema/:
-    post:
-      operationId: get_hubspot_module_tokens
-      description: get hubspot module tokens
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/HubspotModuleSchema'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/HubspotModuleSchema'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/HubspotModuleSchema'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HubspotModuleSchema'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{linked_account_pk}/hubspot_mapping/modules/:
-    get:
-      operationId: get_hubspot_modules
-      description: get hubspot modules
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: linked_account_pk
-        schema:
-          type: integer
-        required: true
-      tags:
-      - hubspot mapping
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemplateHubspotModuleMapping'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /api/v2/linked_accounts/{id}/:
     put:
       operationId: update_delivery_account
@@ -4392,6 +3935,70 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/linked_accounts/{id}/hubspot_module_schema/:
+    post:
+      operationId: get_hubspot_module_tokens
+      description: get hubspot module tokens
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HubspotModuleSchema'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/HubspotModuleSchema'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/HubspotModuleSchema'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HubspotModuleSchema'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/{id}/initiate_authorization/:
     post:
       operationId: initiate_email_authorization
@@ -4433,6 +4040,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/linked_accounts/{id}/modules/:
+    get:
+      operationId: get_hubspot_modules
+      description: get hubspot modules
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryAccount'
           description: ''
         '401':
           content:
@@ -5503,6 +5156,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{id}/generate_from_hubspot/:
+    post:
+      operationId: generate_document_from_hubspot
+      description: Generate document from hubspot
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateDocumentFromHubspot'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{id}/generate_test_data/:
     get:
       operationId: generate_test_data
@@ -5585,6 +5276,168 @@ paths:
               schema:
                 description: Uploaded File Is Too Large.
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/templates/{id}/link_to_hubspot/:
+    get:
+      operationId: link_template_to_hubspot_2
+      description: link template to hubspot
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - hubspot
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateHubspotModuleMapping'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    post:
+      operationId: link_template_to_hubspot_3
+      description: link template to hubspot
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - hubspot
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TemplateHubspotModuleMapping'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateHubspotModuleMapping'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: link_template_to_hubspot
+      description: link template to hubspot
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - hubspot
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -8325,6 +8178,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -8510,6 +8364,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -8606,6 +8461,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -8738,6 +8594,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -8954,11 +8811,10 @@ components:
     GenerateDocumentFromHubspot:
       type: object
       properties:
-        preview_url:
+        message:
           type: string
-          nullable: true
       required:
-      - preview_url
+      - message
       description: ''
     GlobalPermission:
       type: object
@@ -9022,6 +8878,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -9112,6 +8969,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -9182,6 +9040,46 @@ components:
       - name
       - type
       description: ''
+    HubspotDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          enum:
+          - webhook
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hubspot
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        account:
+          type: integer
+          nullable: true
+        path:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+      required:
+      - account
+      - id
+      - name
     HubspotModuleSchema:
       type: object
       properties:
@@ -9460,6 +9358,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -9581,29 +9480,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MergeHistory'
-    PaginatedTemplateHubspotModuleMappingList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/TemplateHubspotModuleMapping'
     PaginatedTemplateList:
       type: object
       required:
@@ -9899,6 +9775,7 @@ components:
       - $ref: '#/components/schemas/SignableDelivery'
       - $ref: '#/components/schemas/YouSignDelivery'
       - $ref: '#/components/schemas/SftpDelivery'
+      - $ref: '#/components/schemas/HubspotDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -9915,6 +9792,7 @@ components:
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
           sftp: '#/components/schemas/SftpDelivery'
+          hubspot: '#/components/schemas/HubspotDelivery'
     PromptSuggestions:
       type: object
       properties:
@@ -9976,6 +9854,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -10103,6 +9982,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -10225,6 +10105,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -10316,6 +10197,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -10488,6 +10370,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -10537,32 +10420,18 @@ components:
     TemplateHubspotModuleMapping:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        description:
-          type: string
-          nullable: true
-          maxLength: 512
         module_name:
           type: string
           maxLength: 52
         module_id:
           type: string
           maxLength: 52
-        create_note:
-          type: boolean
-        template:
+        linked_account:
           type: integer
       required:
-      - id
+      - linked_account
       - module_id
       - module_name
-      - name
-      - template
       description: ''
     TemplateInfo:
       type: object
@@ -11131,6 +11000,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable
@@ -11578,6 +11448,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - hubspot
           - hellosign
           - aws_s3
           - signable

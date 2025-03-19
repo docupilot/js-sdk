@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type GenerateDocumentFromHubspot = {
-    preview_url: string | null;
+    message: string;
 };
 
