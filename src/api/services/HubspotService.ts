@@ -11,18 +11,6 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class HubspotService {
 
     /**
-     * install hubspot callback
-     * @returns any No response body
-     * @throws ApiError
-     */
-    public static installHubspotCallback(): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/hubspot/install_callback/',
-        });
-    }
-
-    /**
      * install hubspot workspace selection
      * @returns any No response body
      * @throws ApiError
@@ -35,11 +23,11 @@ export class HubspotService {
     }
 
     /**
-     * link template to hubspot
+     * Retrieve the HubSpot mapping for the template.
      * @returns TemplateHubspotModuleMapping
      * @throws ApiError
      */
-    public static linkTemplateToHubspot2({
+    public static getHubspotMapping({
         id,
     }: {
         /**
@@ -57,11 +45,11 @@ export class HubspotService {
     }
 
     /**
-     * link template to hubspot
+     * Create or update the HubSpot mapping for the template.
      * @returns TemplateHubspotModuleMapping
      * @throws ApiError
      */
-    public static linkTemplateToHubspot3({
+    public static createOrUpdateHubspotMapping({
         id,
         requestBody,
     }: {
@@ -83,11 +71,11 @@ export class HubspotService {
     }
 
     /**
-     * link template to hubspot
+     * Delete the HubSpot mapping for the template.
      * @returns void
      * @throws ApiError
      */
-    public static linkTemplateToHubspot({
+    public static deleteHubspotMapping({
         id,
     }: {
         /**
