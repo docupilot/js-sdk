@@ -11,6 +11,18 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class HubspotService {
 
     /**
+     * install hubspot callback
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static installHubspotCallback(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/hubspot/install_callback/',
+        });
+    }
+
+    /**
      * install hubspot workspace selection
      * @returns any No response body
      * @throws ApiError

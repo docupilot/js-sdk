@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type HubspotAssociation = {
-    name: string;
-    type: string;
+    module_name: string;
+    module_id: string;
 };
 

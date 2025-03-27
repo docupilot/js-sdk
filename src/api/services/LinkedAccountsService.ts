@@ -250,22 +250,21 @@ export class LinkedAccountsService {
      */
     public static getHubspotModuleTokens({
         id,
-        requestBody,
+        moduleId,
     }: {
         /**
          * A unique integer value identifying this delivery account.
          */
         id: number,
-        requestBody: OmitReadonly<HubspotModuleSchema>,
+        moduleId: string,
     }): CancelablePromise<HubspotModuleSchema> {
         return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/linked_accounts/{id}/hubspot_module_schema/',
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/hubspot-module-schema/{module_id}/',
             path: {
                 'id': id,
+                'module_id': moduleId,
             },
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 
@@ -292,28 +291,6 @@ export class LinkedAccountsService {
             },
             body: requestBody,
             mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * get hubspot modules
-     * @returns DeliveryAccount
-     * @throws ApiError
-     */
-    public static getHubspotModules({
-        id,
-    }: {
-        /**
-         * A unique integer value identifying this delivery account.
-         */
-        id: number,
-    }): CancelablePromise<DeliveryAccount> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v2/linked_accounts/{id}/modules/',
-            path: {
-                'id': id,
-            },
         });
     }
 
