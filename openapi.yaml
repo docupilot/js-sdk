@@ -3384,6 +3384,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/hubspot/install_callback/:
+    post:
+      operationId: install_hubspot_callback
+      description: install hubspot callback
+      tags:
+      - hubspot
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /api/v2/hubspot/install_workspace_selection/:
     get:
       operationId: install_hubspot_workspace_selection
@@ -3906,8 +3935,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/hubspot_module_schema/:
-    post:
+  /api/v2/linked_accounts/{id}/hubspot-module-schema/{module_id}/:
+    get:
       operationId: get_hubspot_module_tokens
       description: get hubspot module tokens
       parameters:
@@ -3923,20 +3952,13 @@ paths:
           type: integer
         description: A unique integer value identifying this delivery account.
         required: true
+      - in: path
+        name: module_id
+        schema:
+          type: string
+        required: true
       tags:
       - linked_accounts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/HubspotModuleSchema'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/HubspotModuleSchema'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/HubspotModuleSchema'
-        required: true
       security:
       - SessionAuthentication: []
       responses:
@@ -3945,12 +3967,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HubspotModuleSchema'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -4011,52 +4027,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/linked_accounts/{id}/modules/:
-    get:
-      operationId: get_hubspot_modules
-      description: get hubspot modules
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this delivery account.
-        required: true
-      tags:
-      - linked_accounts
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeliveryAccount'
           description: ''
         '401':
           content:
@@ -8010,15 +7980,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
         sub_type:
           type: string
           readOnly: true
@@ -8029,6 +7990,25 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hubspot
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
         credentials:
           type: object
           additionalProperties: {}
@@ -9003,13 +8983,13 @@ components:
     HubspotAssociation:
       type: object
       properties:
-        name:
+        module_name:
           type: string
-        type:
+        module_id:
           type: string
       required:
-      - name
-      - type
+      - module_id
+      - module_name
       description: ''
     HubspotDelivery:
       type: object
@@ -9074,9 +9054,6 @@ components:
     HubspotModuleSchema:
       type: object
       properties:
-        module_type_id:
-          type: string
-          writeOnly: true
         properties:
           type: array
           items:
@@ -9089,7 +9066,6 @@ components:
           readOnly: true
       required:
       - associations
-      - module_type_id
       - properties
       description: ''
     HubspotProperty:
@@ -10411,9 +10387,6 @@ components:
     TemplateHubspotModuleMapping:
       type: object
       properties:
-        module_name:
-          type: string
-          maxLength: 52
         module_id:
           type: string
           maxLength: 52
@@ -10422,7 +10395,6 @@ components:
       required:
       - linked_account
       - module_id
-      - module_name
       description: ''
     TemplateInfo:
       type: object
@@ -10638,16 +10610,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
-          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -10658,6 +10620,26 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hubspot
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+          readOnly: true
         credentials:
           type: object
           additionalProperties: {}
