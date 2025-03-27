@@ -8010,15 +8010,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
         sub_type:
           type: string
           readOnly: true
@@ -8029,6 +8020,24 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
         credentials:
           type: object
           additionalProperties: {}
@@ -10638,16 +10647,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
-          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -10658,6 +10657,25 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+          readOnly: true
         credentials:
           type: object
           additionalProperties: {}
