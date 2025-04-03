@@ -5231,6 +5231,10 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: integer
       tags:
       - templates
       security:
@@ -5279,6 +5283,10 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: integer
       tags:
       - templates
       security:
@@ -7204,6 +7212,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{template_id}/versions/{id}/set_as_live_version/:
+    post:
+      operationId: set_template_version_live
+      summary: Set a template version to live version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{template_id}/versions/{id}/toggle_starred/:
     post:
       operationId: toggle_template_version_starred
@@ -7280,12 +7347,6 @@ paths:
         name: folder
         schema:
           type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
       - in: query
         name: output_type
         schema:
@@ -7298,12 +7359,6 @@ paths:
           - png
           - pptx
           - xlsx
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       - in: query
         name: status
         schema:
@@ -8123,15 +8178,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
         sub_type:
           type: string
           readOnly: true
@@ -8142,6 +8188,24 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
         credentials:
           type: object
           additionalProperties: {}
@@ -10619,6 +10683,8 @@ components:
           nullable: true
         starred:
           type: boolean
+        live:
+          type: boolean
         created_time:
           type: string
           format: date-time
@@ -10670,16 +10736,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
-          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -10690,6 +10746,25 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+          readOnly: true
         credentials:
           type: object
           additionalProperties: {}

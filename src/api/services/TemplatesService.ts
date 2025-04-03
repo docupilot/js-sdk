@@ -310,17 +310,22 @@ export class TemplatesService {
      */
     public static getTemplateSchema({
         id,
+        versionId,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
+        versionId?: number,
     }): CancelablePromise<TemplateSchema> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{id}/schema/',
             path: {
                 'id': id,
+            },
+            query: {
+                'version_id': versionId,
             },
         });
     }
@@ -332,17 +337,22 @@ export class TemplatesService {
      */
     public static getDetailedTemplateSchema({
         id,
+        versionId,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
+        versionId?: number,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{id}/schema/detail/',
             path: {
                 'id': id,
+            },
+            query: {
+                'version_id': versionId,
             },
         });
     }
@@ -476,22 +486,12 @@ export class TemplatesService {
      */
     public static listAllTemplates({
         folder,
-        ordering,
         outputType,
-        search,
         status,
         type,
     }: {
         folder?: number,
-        /**
-         * Which field to use when ordering the results.
-         */
-        ordering?: string,
         outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
-        /**
-         * A search term.
-         */
-        search?: string,
         status?: 'active' | 'test',
         type?: string,
     }): CancelablePromise<Array<Template>> {
@@ -500,9 +500,7 @@ export class TemplatesService {
             url: '/api/v2/templates/all/',
             query: {
                 'folder': folder,
-                'ordering': ordering,
                 'output_type': outputType,
-                'search': search,
                 'status': status,
                 'type': type,
             },

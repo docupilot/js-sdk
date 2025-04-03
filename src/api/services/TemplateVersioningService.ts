@@ -207,6 +207,31 @@ export class TemplateVersioningService {
     }
 
     /**
+     * Set a template version to live version
+     * @returns TemplateVersion
+     * @throws ApiError
+     */
+    public static setTemplateVersionLive({
+        id,
+        templateId,
+    }: {
+        /**
+         * A unique integer value identifying this document content.
+         */
+        id: number,
+        templateId: string,
+    }): CancelablePromise<TemplateVersion> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{template_id}/versions/{id}/set_as_live_version/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+        });
+    }
+
+    /**
      * Toggle template version starred
      * @returns TemplateVersion
      * @throws ApiError
