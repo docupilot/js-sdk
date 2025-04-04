@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
-import type { GenerateDocumentFromHubspot } from '../models/GenerateDocumentFromHubspot';
 import type { MoveTemplate } from '../models/MoveTemplate';
 import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
@@ -224,28 +223,6 @@ export class TemplatesService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{id}/download/',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
-     * Generate document from hubspot
-     * @returns GenerateDocumentFromHubspot
-     * @throws ApiError
-     */
-    public static generateDocumentFromHubspot({
-        id,
-    }: {
-        /**
-         * A unique integer value identifying this document.
-         */
-        id: number,
-    }): CancelablePromise<GenerateDocumentFromHubspot> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/templates/{id}/generate_from_hubspot/',
             path: {
                 'id': id,
             },

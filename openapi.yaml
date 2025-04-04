@@ -4318,6 +4318,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /api/v2/merge_history/{id}/:
+    get:
+      operationId: merge_history_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document merge history.
+        required: true
+      tags:
+      - merge_history
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentMergeHistory'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/permissions/folder/:
     get:
       operationId: get_folder_permissions
@@ -4898,6 +4945,63 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{id}/async_generate/:
+    post:
+      operationId: async_generate_document
+      summary: 'Async Generate document from template '
+      parameters:
+      - in: header
+        name: X-Client
+        schema:
+          type: string
+        description: Client Origin
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - generate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              additionalProperties: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AsyncDocumentGenerate'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{id}/copy/:
     post:
       operationId: copy_template
@@ -5090,44 +5194,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /api/v2/templates/{id}/generate_from_hubspot/:
-    post:
-      operationId: generate_document_from_hubspot
-      description: Generate document from hubspot
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenerateDocumentFromHubspot'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
           description: ''
         '404':
           content:
@@ -7567,6 +7633,14 @@ components:
       required:
       - files
       description: ''
+    AsyncDocumentGenerate:
+      type: object
+      properties:
+        document_merge_history_id:
+          type: integer
+      required:
+      - document_merge_history_id
+      description: ''
     AttachmentsConfig:
       type: object
       properties:
@@ -8220,6 +8294,16 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        message:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        status:
+          enum:
+          - pending
+          - success
+          - error
+          type: string
       required:
       - executed_deliveries
       - id
@@ -8758,14 +8842,6 @@ components:
       required:
       - id
       - name
-      description: ''
-    GenerateDocumentFromHubspot:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-      - message
       description: ''
     GlobalPermission:
       type: object

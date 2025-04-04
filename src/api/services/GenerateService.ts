@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AsyncDocumentGenerate } from '../models/AsyncDocumentGenerate';
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
 import type { Template } from '../models/Template';
 
@@ -10,6 +11,40 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class GenerateService {
+
+    /**
+     * Async Generate document from template
+     * @returns AsyncDocumentGenerate
+     * @throws ApiError
+     */
+    public static asyncGenerateDocument({
+        id,
+        xClient,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+        /**
+         * Client Origin
+         */
+        xClient?: string,
+        requestBody?: Record<string, any>,
+    }): CancelablePromise<AsyncDocumentGenerate> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{id}/async_generate/',
+            path: {
+                'id': id,
+            },
+            headers: {
+                'X-Client': xClient,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
 
     /**
      * Generate document from template
