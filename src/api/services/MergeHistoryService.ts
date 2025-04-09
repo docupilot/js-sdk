@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { DocumentMergeHistory } from '../models/DocumentMergeHistory';
 import type { PaginatedDocumentMergeHistoryList } from '../models/PaginatedDocumentMergeHistoryList';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -46,6 +47,27 @@ export class MergeHistoryService {
                 'start_date': startDate,
                 'status': status,
                 'template': template,
+            },
+        });
+    }
+
+    /**
+     * @returns DocumentMergeHistory
+     * @throws ApiError
+     */
+    public static mergeHistoryRetrieve({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document merge history.
+         */
+        id: number,
+    }): CancelablePromise<DocumentMergeHistory> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/merge_history/{id}/',
+            path: {
+                'id': id,
             },
         });
     }
