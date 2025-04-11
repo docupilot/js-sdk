@@ -310,13 +310,13 @@ export class TemplatesService {
      */
     public static getTemplateSchema({
         id,
-        versionId,
+        versionType,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        versionId?: number,
+        versionType?: 'latest' | 'live',
     }): CancelablePromise<TemplateSchema> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -325,7 +325,7 @@ export class TemplatesService {
                 'id': id,
             },
             query: {
-                'version_id': versionId,
+                'version_type': versionType,
             },
         });
     }
@@ -337,13 +337,13 @@ export class TemplatesService {
      */
     public static getDetailedTemplateSchema({
         id,
-        versionId,
+        versionType,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        versionId?: number,
+        versionType?: 'latest' | 'live',
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -352,7 +352,7 @@ export class TemplatesService {
                 'id': id,
             },
             query: {
-                'version_id': versionId,
+                'version_type': versionType,
             },
         });
     }
