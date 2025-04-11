@@ -5232,9 +5232,12 @@ paths:
         description: A unique integer value identifying this document.
         required: true
       - in: query
-        name: version_id
+        name: version_type
         schema:
-          type: integer
+          type: string
+          enum:
+          - latest
+          - live
       tags:
       - templates
       security:
@@ -5284,9 +5287,12 @@ paths:
         description: A unique integer value identifying this document.
         required: true
       - in: query
-        name: version_id
+        name: version_type
         schema:
-          type: integer
+          type: string
+          enum:
+          - latest
+          - live
       tags:
       - templates
       security:
@@ -5456,6 +5462,26 @@ paths:
           type: integer
           format: int32
         required: true
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sftp
+          - sign_now
+          - signable
+          - webhook
+          - yousign
+          - zoho_crm
       tags:
       - template_delivery
       security:
