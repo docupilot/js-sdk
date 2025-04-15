@@ -12,7 +12,8 @@ export type Invitation = {
     readonly created_at: string;
     readonly expires_at: string;
     readonly accepted_at: string | null;
-    readonly is_accepted: boolean;
+    readonly is_accepted: boolean | null;
     readonly invite_key: string;
+    organization?: number | null;
 };
 

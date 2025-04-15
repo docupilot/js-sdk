@@ -4,6 +4,8 @@
 import type { AITemplateCreate } from '../models/AITemplateCreate';
 import type { AITemplateEdit } from '../models/AITemplateEdit';
 import type { PromptSuggestions } from '../models/PromptSuggestions';
+import type { WordAddInPromptSuggestions } from '../models/WordAddInPromptSuggestions';
+import type { WordAddInTemplateEdit } from '../models/WordAddInTemplateEdit';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -61,6 +63,42 @@ export class AiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/ai/online-builder/list_prompt_suggestions/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Edit word template using ai
+     * @returns WordAddInTemplateEdit
+     * @throws ApiError
+     */
+    public static editWordTemplateUsingAi({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordAddInTemplateEdit>,
+    }): CancelablePromise<WordAddInTemplateEdit> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/ai/word-add-in/edit_template/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * list prompt suggestions based on File Name and Content
+     * @returns WordAddInPromptSuggestions
+     * @throws ApiError
+     */
+    public static promptSuggestionsWordAddInAi({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<WordAddInPromptSuggestions>,
+    }): CancelablePromise<WordAddInPromptSuggestions> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/ai/word-add-in/list_prompt_suggestions/',
             body: requestBody,
             mediaType: 'application/json',
         });
