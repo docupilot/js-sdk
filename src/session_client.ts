@@ -23,7 +23,6 @@ export class DocupilotSessionClient extends Docupilot {
   readonly AppendService = _API.AppendService;
   readonly DomainService = _API.DomainService;
   readonly GalleryTemplatesService = _API.GalleryTemplatesService;
-  readonly AiChatService = _API.AiChatService;
   readonly UserSatisfactionSurveyService = _API.UserSatisfactionSurveyService;
   readonly AiService = _API.AiService;
   readonly DemographicService = _API.DemographicService;
