@@ -450,31 +450,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/accounts/v2/invitations/{invite_key}/get_by_key/:
-    get:
-      operationId: retrieve_invitation_by_key
-      summary: Get Invitation
-      parameters:
-      - in: path
-        name: invite_key
-        schema:
-          type: string
-        required: true
-      tags:
-      - invitations
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/accounts/v2/invitations/{id}/:
     delete:
       operationId: delete_invitation
@@ -499,91 +474,6 @@ paths:
       responses:
         '204':
           description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/accounts/v2/invitations/{id}/accept_invitation/:
-    get:
-      operationId: retrieve_invitation_for_accept
-      summary: retrieve invitation for accept
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this invitation.
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    post:
-      operationId: accept_invitation
-      summary: Accept invitation
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this invitation.
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AcceptInvite'
-          description: ''
         '400':
           content:
             application/json:
@@ -973,59 +863,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/accounts/v2/team/{id}/:
-    delete:
-      operationId: delete_team_member
-      summary: delete team member
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      - in: query
-        name: transfer_to
-        schema:
-          type: string
-      tags:
-      - team
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/accounts/v2/team/{id}/change_role/:
     put:
       operationId: change_role_of_team_member
@@ -1056,6 +893,59 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeRole'
         required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/accounts/v2/team/{id}/toggle_active_status/:
+    patch:
+      operationId: activate_deactivate_user
+      summary: Activate or Deactivate a User
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - team
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -1989,360 +1879,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/ai-chat/threads/:
-    get:
-      operationId: list_all_chat_threads
-      summary: List all chat threads
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChatThreads'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-    post:
-      operationId: create_new_customer_thread
-      summary: create new customer thread
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerThreadInput'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerThreadInput'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/CreateCustomerThreadInput'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateCustomerThreadOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/ai-chat/threads/{thread_id}/:
-    get:
-      operationId: ai_chat_threads_retrieve
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ChatThreads'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    put:
-      operationId: update_customer_thread
-      summary: update existing customer thread
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomerThreadInput'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomerThreadInput'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateCustomerThreadInput'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UpdateCustomerThreadOutput'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    delete:
-      operationId: ai_chat_threads_destroy
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/ai-chat/threads/{thread_id}/messages/:
-    get:
-      operationId: get_messages_for_thread
-      summary: Get all messages for a thread
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ThreadMessages'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/ai-chat/threads/{thread_id}/update_thread_name/:
-    put:
-      operationId: update_customer_thread_name
-      summary: update customer thread name
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: thread_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - ai-chat
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateThreadName'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateThreadName'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateThreadName'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/ai/online-builder/create_template/:
     post:
       operationId: create_template_online_builder_ai
@@ -2480,6 +2016,114 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PromptSuggestions'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/ai/word-add-in/edit_template/:
+    post:
+      operationId: edit_word_template_using_ai
+      summary: Edit word template using ai
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInTemplateEdit'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInTemplateEdit'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInTemplateEdit'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInTemplateEdit'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/ai/word-add-in/list_prompt_suggestions/:
+    post:
+      operationId: prompt_suggestions_word_add_in_ai
+      summary: list prompt suggestions based on File Name and Content
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - ai
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WordAddInPromptSuggestions'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WordAddInPromptSuggestions'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WordAddInPromptSuggestions'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WordAddInPromptSuggestions'
           description: ''
         '400':
           content:
@@ -3186,46 +2830,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/api/v2/folders/count/:
-    get:
-      operationId: get_user_created_folder_count
-      summary: Get the count of folders created by the user.
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: query
-        name: owner_id
-        schema:
-          type: string
-        description: Owner Id of resource
-        required: true
-      tags:
-      - folders
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FolderCount'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/folders/sharing_status/:
     get:
@@ -5238,6 +4842,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/templates/{id}/generate_test_data/:
+    get:
+      operationId: generate_test_data
+      summary: Generates a test data used for testing template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - generate
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/templates/{id}/inline_image/:
     post:
       operationId: upload_inline_image_of_template
@@ -5648,6 +5298,26 @@ paths:
           type: integer
           format: int32
         required: true
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sftp
+          - sign_now
+          - signable
+          - webhook
+          - yousign
+          - zoho_crm
       tags:
       - template_delivery
       security:
@@ -7040,6 +6710,33 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: folder
+        schema:
+          type: integer
+      - in: query
+        name: output_type
+        schema:
+          type: string
+          enum:
+          - docx
+          - html
+          - jpeg
+          - pdf
+          - png
+          - pptx
+          - xlsx
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - test
+      - in: query
+        name: type
+        schema:
+          type: string
       tags:
       - templates
       security:
@@ -7054,46 +6751,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Template'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/api/v2/templates/count/:
-    get:
-      operationId: get_user_created_templates_count
-      summary: Get the count of templates created by the user.
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: query
-        name: owner_id
-        schema:
-          type: string
-        description: Owner Id of resource
-        required: true
-      tags:
-      - templates
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TemplateCount'
           description: ''
         '401':
           content:
@@ -7381,14 +7038,6 @@ components:
       - ai_prompt
       - ai_response
       - selected_content
-      description: ''
-    AcceptInvite:
-      type: object
-      properties:
-        workspace_unique_key:
-          type: string
-      required:
-      - workspace_unique_key
       description: ''
     AccountDelivery:
       type: object
@@ -7722,31 +7371,6 @@ components:
       - overage_enabled
       - subscribed_on
       description: ''
-    ChatThreads:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        thread_id:
-          type: string
-          maxLength: 200
-        thread_name:
-          type: string
-          nullable: true
-          maxLength: 200
-        tokens_used:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        model_name:
-          type: string
-          maxLength: 200
-      required:
-      - id
-      - model_name
-      - thread_id
-      description: ''
     ChildDocumentMergeHistory:
       type: object
       properties:
@@ -7816,6 +7440,8 @@ components:
           type: string
           format: date-time
           nullable: true
+        use_froala:
+          type: boolean
         created_by:
           type: integer
           readOnly: true
@@ -7843,29 +7469,6 @@ components:
       required:
       - title
       description: ''
-    CreateCustomerThreadInput:
-      type: object
-      properties:
-        message:
-          type: string
-          writeOnly: true
-      required:
-      - message
-      description: ''
-    CreateCustomerThreadOutput:
-      type: object
-      properties:
-        output_message:
-          type: string
-        thread_id:
-          type: integer
-        thread_display_name:
-          type: string
-      required:
-      - output_message
-      - thread_display_name
-      - thread_id
-      description: ''
     DeleteCurrentWorkspace:
       type: object
       properties:
@@ -7882,15 +7485,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
         sub_type:
           type: string
           readOnly: true
@@ -7901,6 +7495,24 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
         credentials:
           type: object
           additionalProperties: {}
@@ -8600,14 +8212,6 @@ components:
       - name
       - updated_by
       - updated_time
-    FolderCount:
-      type: object
-      properties:
-        folders_count:
-          type: integer
-      required:
-      - folders_count
-      description: ''
     FolderSharing:
       type: object
       description: ''
@@ -8910,9 +8514,13 @@ components:
         is_accepted:
           type: boolean
           readOnly: true
+          nullable: true
         invite_key:
           type: string
           readOnly: true
+        organization:
+          type: integer
+          nullable: true
       required:
       - accepted_at
       - created_at
@@ -9476,9 +9084,6 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
-        use_froala:
-          type: boolean
-          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -10061,6 +9666,9 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        use_froala:
+          type: boolean
+          readOnly: true
         created_by:
           type: integer
           readOnly: true
@@ -10080,14 +9688,7 @@ components:
       - type
       - updated_by
       - updated_time
-    TemplateCount:
-      type: object
-      properties:
-        templates_count:
-          type: integer
-      required:
-      - templates_count
-      description: ''
+      - use_froala
     TemplateDelivery:
       type: object
       properties:
@@ -10329,15 +9930,6 @@ components:
       required:
       - id
       - user
-    ThreadMessages:
-      type: object
-      properties:
-        messages:
-          type: object
-          additionalProperties: {}
-      required:
-      - messages
-      description: ''
     Timezone:
       type: object
       properties:
@@ -10370,39 +9962,12 @@ components:
       required:
       - detail
       description: ''
-    UpdateCustomerThreadInput:
-      type: object
-      properties:
-        message:
-          type: string
-          writeOnly: true
-      required:
-      - message
-      description: ''
-    UpdateCustomerThreadOutput:
-      type: object
-      properties:
-        output_message:
-          type: string
-      required:
-      - output_message
-      description: ''
     UpdateDeliveryAccount:
       type: object
       description: ''
       properties:
         id:
           type: integer
-          readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
           readOnly: true
         sub_type:
           type: string
@@ -10414,6 +9979,25 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+          readOnly: true
         credentials:
           type: object
           additionalProperties: {}
@@ -10437,15 +10021,6 @@ components:
       - type
       - updated_at
       - used_by
-    UpdateThreadName:
-      type: object
-      properties:
-        thread_name:
-          type: string
-          writeOnly: true
-      required:
-      - thread_name
-      description: ''
     UploadTemplateImage:
       type: object
       properties:
@@ -10794,6 +10369,54 @@ components:
       - id
       - name
       - url
+    WordAddInPromptSuggestions:
+      type: object
+      properties:
+        title:
+          type: string
+          writeOnly: true
+        first_page_content:
+          type: string
+          writeOnly: true
+          nullable: true
+        main_headings:
+          type: string
+          writeOnly: true
+          nullable: true
+        prompts:
+          type: array
+          items:
+            type: string
+          readOnly: true
+      required:
+      - prompts
+      - title
+      description: ''
+    WordAddInTemplateEdit:
+      type: object
+      properties:
+        user_input:
+          type: string
+          writeOnly: true
+        content_type:
+          enum:
+          - text
+          - group
+          - table
+          type: string
+          writeOnly: true
+        selected_content:
+          type: string
+          writeOnly: true
+        ai_response:
+          type: string
+          readOnly: true
+      required:
+      - ai_response
+      - content_type
+      - selected_content
+      - user_input
+      description: ''
     Workspace:
       type: object
       properties:
@@ -10949,9 +10572,6 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
-        use_froala:
-          type: boolean
-          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -10966,7 +10586,6 @@ components:
       - role
       - timezone
       - unique_key
-      - use_froala
       description: ''
     WorkspaceDemographic:
       type: object

@@ -38,30 +38,6 @@ export class TeamService {
     }
 
     /**
-     * delete team member
-     * @returns void
-     * @throws ApiError
-     */
-    public static deleteTeamMember({
-        id,
-        transferTo,
-    }: {
-        id: string,
-        transferTo?: string,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/dashboard/accounts/v2/team/{id}/',
-            path: {
-                'id': id,
-            },
-            query: {
-                'transfer_to': transferTo,
-            },
-        });
-    }
-
-    /**
      * Change role of team member.
      * @returns TeamMember
      * @throws ApiError
@@ -81,6 +57,25 @@ export class TeamService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Activate or Deactivate a User
+     * @returns TeamMember
+     * @throws ApiError
+     */
+    public static activateDeactivateUser({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<TeamMember> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/accounts/v2/team/{id}/toggle_active_status/',
+            path: {
+                'id': id,
+            },
         });
     }
 

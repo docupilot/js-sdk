@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Folder } from '../models/Folder';
-import type { FolderCount } from '../models/FolderCount';
 import type { FolderSharing } from '../models/FolderSharing';
 import type { PatchedUpdateFolderSharing } from '../models/PatchedUpdateFolderSharing';
 import type { SharingInfoFolder } from '../models/SharingInfoFolder';
@@ -223,28 +222,6 @@ export class FoldersService {
             url: '/dashboard/api/v2/folders/{id}/',
             path: {
                 'id': id,
-            },
-        });
-    }
-
-    /**
-     * Get the count of folders created by the user.
-     * @returns FolderCount
-     * @throws ApiError
-     */
-    public static getUserCreatedFolderCount({
-        ownerId,
-    }: {
-        /**
-         * Owner Id of resource
-         */
-        ownerId: string,
-    }): CancelablePromise<FolderCount> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/api/v2/folders/count/',
-            query: {
-                'owner_id': ownerId,
             },
         });
     }
