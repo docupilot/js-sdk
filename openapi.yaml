@@ -928,9 +928,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/accounts/v2/team/{id}/toggle_active_status/:
+  /dashboard/accounts/v2/team/{id}/toggle_user_status/:
     patch:
-      operationId: activate_deactivate_user
+      operationId: toggle_user_status
       summary: Activate or Deactivate a User
       parameters:
       - in: header
@@ -9613,8 +9613,10 @@ components:
           - member
           - billing_manager
           type: string
-        is_deleted:
-          type: boolean
+        deactivated_at:
+          type: string
+          format: date-time
+          nullable: true
       required:
       - id
       - user
