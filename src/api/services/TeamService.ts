@@ -65,14 +65,14 @@ export class TeamService {
      * @returns TeamMember
      * @throws ApiError
      */
-    public static activateDeactivateUser({
+    public static toggleUserStatus({
         id,
     }: {
         id: number,
     }): CancelablePromise<TeamMember> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/dashboard/accounts/v2/team/{id}/toggle_active_status/',
+            url: '/dashboard/accounts/v2/team/{id}/toggle_user_status/',
             path: {
                 'id': id,
             },
