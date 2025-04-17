@@ -5448,6 +5448,26 @@ paths:
           type: integer
           format: int32
         required: true
+      - in: query
+        name: type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sftp
+          - sign_now
+          - signable
+          - webhook
+          - yousign
+          - zoho_crm
       tags:
       - template_delivery
       security:
@@ -6840,6 +6860,33 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: folder
+        schema:
+          type: integer
+      - in: query
+        name: output_type
+        schema:
+          type: string
+          enum:
+          - docx
+          - html
+          - jpeg
+          - pdf
+          - png
+          - pptx
+          - xlsx
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - active
+          - test
+      - in: query
+        name: type
+        schema:
+          type: string
       tags:
       - templates
       security:
@@ -7515,11 +7562,19 @@ components:
         subscribed_on:
           type: string
           readOnly: true
+        signnow_credits_allowed:
+          type: integer
+          readOnly: true
+        signnow_credits_used:
+          type: integer
+          readOnly: true
       required:
       - can_extend_trial
       - current_term_end
       - current_term_start
       - overage_enabled
+      - signnow_credits_allowed
+      - signnow_credits_used
       - subscribed_on
       description: ''
     ChildDocumentMergeHistory:
@@ -7636,15 +7691,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
         sub_type:
           type: string
           readOnly: true
@@ -7655,6 +7701,24 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
         credentials:
           type: object
           additionalProperties: {}
@@ -10123,16 +10187,6 @@ components:
         id:
           type: integer
           readOnly: true
-        type:
-          enum:
-          - hellosign
-          - aws_s3
-          - signable
-          - yousign
-          - email
-          - sftp
-          type: string
-          readOnly: true
         sub_type:
           type: string
           readOnly: true
@@ -10143,6 +10197,25 @@ components:
           type: string
           readOnly: true
           nullable: true
+        type:
+          enum:
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - zoho
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+          readOnly: true
         credentials:
           type: object
           additionalProperties: {}
