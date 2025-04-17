@@ -474,10 +474,26 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static listAllTemplates(): CancelablePromise<Array<Template>> {
+    public static listAllTemplates({
+        folder,
+        outputType,
+        status,
+        type,
+    }: {
+        folder?: number,
+        outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        status?: 'active' | 'test',
+        type?: string,
+    }): CancelablePromise<Array<Template>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/all/',
+            query: {
+                'folder': folder,
+                'output_type': outputType,
+                'status': status,
+                'type': type,
+            },
         });
     }
 
