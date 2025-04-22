@@ -15,5 +15,6 @@ export type S3Delivery = {
     bucket: string;
     key_prefix?: string | null;
     region?: string | null;
+    object_metadata?: Record<string, any> | null;
 };
 

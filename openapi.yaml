@@ -9449,6 +9449,10 @@ components:
           type: string
           nullable: true
           maxLength: 50
+        object_metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - account
       - bucket
