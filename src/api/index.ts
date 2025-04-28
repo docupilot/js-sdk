@@ -135,7 +135,7 @@ export { AppendService } from './services/AppendService';
 export { AuthTokensService } from './services/AuthTokensService';
 export { DemographicService } from './services/DemographicService';
 export { DomainService } from './services/DomainService';
-export { EnvelopesService } from './services/EnvelopesService';
+export { EsignService } from './services/EsignService';
 export { FoldersService } from './services/FoldersService';
 export { GalleryTemplatesService } from './services/GalleryTemplatesService';
 export { GeneralService } from './services/GeneralService';

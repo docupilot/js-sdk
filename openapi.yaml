@@ -7106,7 +7106,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /envelopes/:
+  /esign/envelopes/:
     get:
       operationId: list_envelopes
       summary: Get list of envelopes
@@ -7136,7 +7136,7 @@ paths:
         schema:
           type: string
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7160,7 +7160,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /envelopes/{id}/:
+  /esign/envelopes/{id}/:
     patch:
       operationId: update_envelope_config
       summary: Update envelope config
@@ -7178,7 +7178,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       requestBody:
         content:
           application/json:
@@ -7242,7 +7242,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7274,7 +7274,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/cancel/:
+  /esign/envelopes/{id}/cancel/:
     post:
       operationId: cancel_envelope
       summary: Cancel an Envelope
@@ -7292,7 +7292,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       requestBody:
         content:
           application/json:
@@ -7340,7 +7340,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/details/:
+  /esign/envelopes/{id}/details/:
     get:
       operationId: envelope_details
       summary: details of an envelope
@@ -7358,7 +7358,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7388,7 +7388,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/download/:
+  /esign/envelopes/{id}/download/:
     get:
       operationId: download_envelope_file
       summary: Download envelope file
@@ -7418,7 +7418,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7449,7 +7449,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/email_copy/:
+  /esign/envelopes/{id}/email_copy/:
     post:
       operationId: send_copy_via_email
       summary: send copy via email
@@ -7467,7 +7467,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       requestBody:
         content:
           application/json:
@@ -7511,7 +7511,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/history/:
+  /esign/envelopes/{id}/history/:
     get:
       operationId: envelope_history
       summary: envelope history
@@ -7529,7 +7529,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7559,7 +7559,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/permanent_delete/:
+  /esign/envelopes/{id}/permanent_delete/:
     delete:
       operationId: delete_envelope_permanently
       summary: Delete a envelope permanently from trash
@@ -7577,7 +7577,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7609,7 +7609,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/preview/:
+  /esign/envelopes/{id}/preview/:
     get:
       operationId: preview_envelope
       summary: preview Envelope
@@ -7627,7 +7627,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7657,7 +7657,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/{id}/restore/:
+  /esign/envelopes/{id}/restore/:
     post:
       operationId: restore_envelope_from_trash
       summary: Restore a envelope from trash
@@ -7675,7 +7675,7 @@ paths:
         description: A unique integer value identifying this envelope.
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7711,7 +7711,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /envelopes/trash/:
+  /esign/envelopes/trash/:
     get:
       operationId: list_trashed_envelopes
       summary: List all envelopes in trash.
@@ -7723,7 +7723,7 @@ paths:
         description: Workspace unique_key
         required: true
       tags:
-      - envelopes
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -9089,6 +9089,9 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        folder:
+          type: integer
+          nullable: true
       required:
       - created_time
       - deleted_time
@@ -9200,6 +9203,9 @@ components:
         workspace:
           type: integer
         updated_by:
+          type: integer
+          nullable: true
+        folder:
           type: integer
           nullable: true
       required:

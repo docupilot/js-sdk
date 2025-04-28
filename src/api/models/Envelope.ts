@@ -34,5 +34,6 @@ export type Envelope = {
     void_reason?: string | null;
     workspace: number;
     readonly updated_by: number | null;
+    folder?: number | null;
 };
 
