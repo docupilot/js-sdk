@@ -12,11 +12,13 @@ export type ChargebeeSubscription = {
     unpaid_invoices?: number;
     max_allowed_unpaid_invoices?: number;
     overage_enabled: boolean;
-    documents_allowed?: number;
-    documents_created?: number;
+    readonly documents_allowed: number;
+    readonly documents_created: number;
     readonly can_extend_trial: boolean;
     readonly subscribed_on: string;
     readonly signnow_credits_allowed: number;
     readonly signnow_credits_used: number;
+    readonly signatures_allowed: number;
+    readonly signatures_used: number;
 };
 
