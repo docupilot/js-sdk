@@ -43,5 +43,6 @@ export type EnvelopeDetails = {
     id_doc?: string | null;
     workspace: number;
     updated_by?: number | null;
+    folder?: number | null;
 };
 

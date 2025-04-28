@@ -12,7 +12,7 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
-export class EnvelopesService {
+export class EsignService {
 
     /**
      * Get list of envelopes
@@ -39,7 +39,7 @@ export class EnvelopesService {
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/envelopes/',
+            url: '/esign/envelopes/',
             query: {
                 'ordering': ordering,
                 'page': page,
@@ -65,7 +65,7 @@ export class EnvelopesService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/envelopes/{id}/',
+            url: '/esign/envelopes/{id}/',
             path: {
                 'id': id,
             },
@@ -89,7 +89,7 @@ export class EnvelopesService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/envelopes/{id}/',
+            url: '/esign/envelopes/{id}/',
             path: {
                 'id': id,
             },
@@ -113,7 +113,7 @@ export class EnvelopesService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/envelopes/{id}/cancel/',
+            url: '/esign/envelopes/{id}/cancel/',
             path: {
                 'id': id,
             },
@@ -137,7 +137,7 @@ export class EnvelopesService {
     }): CancelablePromise<EnvelopeDetails> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/envelopes/{id}/details/',
+            url: '/esign/envelopes/{id}/details/',
             path: {
                 'id': id,
             },
@@ -166,7 +166,7 @@ export class EnvelopesService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/envelopes/{id}/download/',
+            url: '/esign/envelopes/{id}/download/',
             path: {
                 'id': id,
             },
@@ -194,7 +194,7 @@ export class EnvelopesService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/envelopes/{id}/email_copy/',
+            url: '/esign/envelopes/{id}/email_copy/',
             path: {
                 'id': id,
             },
@@ -218,7 +218,7 @@ export class EnvelopesService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/envelopes/{id}/history/',
+            url: '/esign/envelopes/{id}/history/',
             path: {
                 'id': id,
             },
@@ -240,7 +240,7 @@ export class EnvelopesService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/envelopes/{id}/permanent_delete/',
+            url: '/esign/envelopes/{id}/permanent_delete/',
             path: {
                 'id': id,
             },
@@ -262,7 +262,7 @@ export class EnvelopesService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/envelopes/{id}/preview/',
+            url: '/esign/envelopes/{id}/preview/',
             path: {
                 'id': id,
             },
@@ -284,7 +284,7 @@ export class EnvelopesService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/envelopes/{id}/restore/',
+            url: '/esign/envelopes/{id}/restore/',
             path: {
                 'id': id,
             },
@@ -299,7 +299,7 @@ export class EnvelopesService {
     public static listTrashedEnvelopes(): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/envelopes/trash/',
+            url: '/esign/envelopes/trash/',
         });
     }
 
