@@ -10974,8 +10974,6 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        account:
-          type: integer
         signers:
           type: array
           minItems: 1
@@ -11064,7 +11062,6 @@ components:
           nullable: true
           description: 'ex: P1D to warn 1 day before expiry'
       required:
-      - account
       - id
       - name
       - signers

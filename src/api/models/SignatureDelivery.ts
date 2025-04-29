@@ -5,7 +5,6 @@
 export type SignatureDelivery = {
     readonly id: number;
     failure_email_recipients?: string | null;
-    account: number;
     signers: Array<{
         order?: number;
         name: string;
