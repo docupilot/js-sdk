@@ -19,6 +19,7 @@ export type Envelope = {
      */
     reminder_frequency?: string | null;
     warn_before?: string | null;
+    readonly last_reminded_at: string | null;
     readonly created_time: string;
     readonly updated_time: string;
     readonly deleted_time: string | null;

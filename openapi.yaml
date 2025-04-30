@@ -9049,6 +9049,11 @@ components:
           type: string
           format: date-time
           nullable: true
+        last_reminded_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         created_time:
           type: string
           format: date-time
@@ -9097,6 +9102,7 @@ components:
       - deleted_time
       - envelope_id
       - id
+      - last_reminded_at
       - name
       - updated_by
       - updated_time
@@ -9156,6 +9162,10 @@ components:
           nullable: true
           description: 'ex: P3D to send follow up reminders every 3 days'
         warn_before:
+          type: string
+          format: date-time
+          nullable: true
+        last_reminded_at:
           type: string
           format: date-time
           nullable: true
@@ -10981,7 +10991,7 @@ components:
             type: object
             properties:
               order:
-                type: number
+                type: string
               name:
                 type: string
                 minLength: 3
@@ -10989,9 +10999,19 @@ components:
                 type: string
                 format: email
             required:
-            - id
             - name
             - email
+        expiry:
+          type: integer
+        first_reminder:
+          type: integer
+          nullable: true
+        reminder_frequency:
+          type: integer
+          nullable: true
+        warn_before:
+          type: integer
+          nullable: true
         name:
           type: string
           maxLength: 255
@@ -11045,23 +11065,8 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
-        expiry:
-          type: string
-          nullable: true
-          description: 'ex: P7D for 7 days'
-        first_reminder:
-          type: string
-          nullable: true
-          description: 'ex: P3D to send first reminder 3 days after'
-        reminder_frequency:
-          type: string
-          nullable: true
-          description: 'ex: P1D to send follow up reminders every 1 day'
-        warn_before:
-          type: string
-          nullable: true
-          description: 'ex: P1D to warn 1 day before expiry'
       required:
+      - expiry
       - id
       - name
       - signers
