@@ -2831,6 +2831,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/folders/count/:
+    get:
+      operationId: get_user_created_folder_count
+      summary: Get the count of folders created by the user.
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: owner_id
+        schema:
+          type: string
+        description: Owner Id of resource
+        required: true
+      tags:
+      - folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderCount'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/api/v2/folders/sharing_status/:
     get:
       operationId: folders_sharing_status_retrieve
@@ -4789,6 +4829,10 @@ paths:
         description: A unique integer value identifying this document.
         required: true
       - in: query
+        name: includeUrl
+        schema:
+          type: boolean
+      - in: query
         name: output_type
         schema:
           type: string
@@ -6416,6 +6460,113 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+    post:
+      operationId: create_template_merge_link
+      summary: Create template merge link.
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - generate
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentMergeLink'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/merge_links/{id}/:
+    delete:
+      operationId: delete_template_merge_link
+      description: Delete template merge link.
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document merge link.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - generate
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/templates/{template_id}/permissions/:
     get:
       operationId: list_template_sharing
@@ -6751,6 +6902,46 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Template'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/api/v2/templates/count/:
+    get:
+      operationId: get_user_created_templates_count
+      summary: Get the count of templates created by the user.
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: owner_id
+        schema:
+          type: string
+        description: Owner Id of resource
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateCount'
           description: ''
         '401':
           content:
@@ -7364,11 +7555,19 @@ components:
         subscribed_on:
           type: string
           readOnly: true
+        signnow_credits_allowed:
+          type: integer
+          readOnly: true
+        signnow_credits_used:
+          type: integer
+          readOnly: true
       required:
       - can_extend_trial
       - current_term_end
       - current_term_start
       - overage_enabled
+      - signnow_credits_allowed
+      - signnow_credits_used
       - subscribed_on
       description: ''
     ChildDocumentMergeHistory:
@@ -7733,10 +7932,14 @@ components:
     DocumentMergeLink:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         path:
           type: string
           readOnly: true
       required:
+      - id
       - path
       description: ''
     Domain:
@@ -8212,6 +8415,14 @@ components:
       - name
       - updated_by
       - updated_time
+    FolderCount:
+      type: object
+      properties:
+        folders_count:
+          type: integer
+      required:
+      - folders_count
+      description: ''
     FolderSharing:
       type: object
       description: ''
@@ -9239,6 +9450,10 @@ components:
           type: string
           nullable: true
           maxLength: 50
+        object_metadata:
+          type: object
+          additionalProperties: {}
+          nullable: true
       required:
       - account
       - bucket
@@ -9691,6 +9906,14 @@ components:
       - updated_by
       - updated_time
       - use_froala
+    TemplateCount:
+      type: object
+      properties:
+        templates_count:
+          type: integer
+      required:
+      - templates_count
+      description: ''
     TemplateDelivery:
       type: object
       properties:

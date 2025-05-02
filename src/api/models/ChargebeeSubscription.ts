@@ -16,5 +16,7 @@ export type ChargebeeSubscription = {
     documents_created?: number;
     readonly can_extend_trial: boolean;
     readonly subscribed_on: string;
+    readonly signnow_credits_allowed: number;
+    readonly signnow_credits_used: number;
 };
 

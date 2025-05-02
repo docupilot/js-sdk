@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type DocumentMergeLink = {
+    readonly id: number;
     readonly path: string;
 };
 
