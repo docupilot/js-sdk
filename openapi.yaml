@@ -8071,19 +8071,11 @@ components:
         subscribed_on:
           type: string
           readOnly: true
-        signnow_credits_allowed:
-          type: integer
-          readOnly: true
-        signnow_credits_used:
-          type: integer
-          readOnly: true
       required:
       - can_extend_trial
       - current_term_end
       - current_term_start
       - overage_enabled
-      - signnow_credits_allowed
-      - signnow_credits_used
       - subscribed_on
       description: ''
     ChildDocumentMergeHistory:
@@ -9999,10 +9991,6 @@ components:
           type: string
           nullable: true
           maxLength: 50
-        object_metadata:
-          type: object
-          additionalProperties: {}
-          nullable: true
       required:
       - account
       - bucket
