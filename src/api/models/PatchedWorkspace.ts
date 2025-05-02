@@ -12,7 +12,6 @@ export type PatchedWorkspace = {
     readonly plan_status?: string;
     readonly active?: boolean;
     mfa_enforced?: boolean;
-    readonly use_froala?: boolean;
     readonly created_time?: string;
 };
 
