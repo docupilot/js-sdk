@@ -3413,6 +3413,7 @@ paths:
           type: string
           enum:
           - aws_s3
+          - azure_storage
           - docu_sign
           - dropbox
           - email
@@ -3692,6 +3693,7 @@ paths:
           type: string
           enum:
           - aws_s3
+          - azure_storage
           - docu_sign
           - dropbox
           - email
@@ -5458,6 +5460,7 @@ paths:
           type: string
           enum:
           - aws_s3
+          - azure_storage
           - docu_sign
           - dropbox
           - email
@@ -7427,6 +7430,75 @@ components:
       - name
       - token
       description: ''
+    AzureStorageDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          - azure_storage
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        storage_type:
+          enum:
+          - blob
+          - file
+          type: string
+        resource_name:
+          type: string
+          description: Azure blob container or file share name.
+          maxLength: 64
+      required:
+      - account
+      - id
+      - name
+      - resource_name
+      - storage_type
     BannerNotification:
       type: object
       properties:
@@ -7829,6 +7901,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         credentials:
           type: object
@@ -7956,6 +8029,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -8145,6 +8219,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -8241,6 +8316,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -8373,6 +8449,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -8648,6 +8725,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -8738,6 +8816,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -9043,6 +9122,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -9453,6 +9533,7 @@ components:
       - $ref: '#/components/schemas/SignableDelivery'
       - $ref: '#/components/schemas/YouSignDelivery'
       - $ref: '#/components/schemas/SftpDelivery'
+      - $ref: '#/components/schemas/AzureStorageDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -9469,6 +9550,7 @@ components:
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
           sftp: '#/components/schemas/SftpDelivery'
+          azure_storage: '#/components/schemas/AzureStorageDelivery'
     PromptSuggestions:
       type: object
       properties:
@@ -9536,6 +9618,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -9667,6 +9750,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -9789,6 +9873,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -9880,6 +9965,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -10052,6 +10138,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
           readOnly: true
       required:
@@ -10333,6 +10420,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
           readOnly: true
         credentials:
@@ -10674,6 +10762,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
@@ -11121,6 +11210,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         success_callback_url:
           type: string
