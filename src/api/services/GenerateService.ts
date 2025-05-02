@@ -20,6 +20,7 @@ export class GenerateService {
         id,
         xClient,
         download,
+        includeUrl,
         outputType,
         requestBody,
     }: {
@@ -32,6 +33,7 @@ export class GenerateService {
          */
         xClient?: string,
         download?: 'false' | 'file' | 'true',
+        includeUrl?: boolean,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         requestBody?: Record<string, any>,
     }): CancelablePromise<Template> {
@@ -46,10 +48,33 @@ export class GenerateService {
             },
             query: {
                 'download': download,
+                'includeUrl': includeUrl,
                 'output_type': outputType,
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Generates a test data used for testing template
+     * @returns Template
+     * @throws ApiError
+     */
+    public static generateTestData({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{id}/generate_test_data/',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -121,6 +146,50 @@ export class GenerateService {
             method: 'GET',
             url: '/api/v2/templates/{template_id}/merge_links/',
             path: {
+                'template_id': templateId,
+            },
+        });
+    }
+
+    /**
+     * Create template merge link.
+     * @returns DocumentMergeLink
+     * @throws ApiError
+     */
+    public static createTemplateMergeLink({
+        templateId,
+    }: {
+        templateId: string,
+    }): CancelablePromise<DocumentMergeLink> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/v2/templates/{template_id}/merge_links/',
+            path: {
+                'template_id': templateId,
+            },
+        });
+    }
+
+    /**
+     * Delete template merge link.
+     * @returns void
+     * @throws ApiError
+     */
+    public static deleteTemplateMergeLink({
+        id,
+        templateId,
+    }: {
+        /**
+         * A unique integer value identifying this document merge link.
+         */
+        id: number,
+        templateId: string,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/api/v2/templates/{template_id}/merge_links/{id}/',
+            path: {
+                'id': id,
                 'template_id': templateId,
             },
         });
