@@ -23,6 +23,7 @@ export class EsignService {
         ordering,
         page,
         search,
+        status,
     }: {
         /**
          * Which field to use when ordering the results.
@@ -36,6 +37,7 @@ export class EsignService {
          * A search term.
          */
         search?: string,
+        status?: 'completed' | 'created' | 'declined' | 'pending' | 'voided',
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -44,6 +46,7 @@ export class EsignService {
                 'ordering': ordering,
                 'page': page,
                 'search': search,
+                'status': status,
             },
         });
     }
@@ -98,27 +101,23 @@ export class EsignService {
 
     /**
      * Cancel an Envelope
-     * @returns Envelope
+     * @returns void
      * @throws ApiError
      */
     public static cancelEnvelope({
         id,
-        requestBody,
     }: {
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-        requestBody: OmitReadonly<Envelope>,
-    }): CancelablePromise<Envelope> {
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/esign/envelopes/{id}/cancel/',
             path: {
                 'id': id,
             },
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 

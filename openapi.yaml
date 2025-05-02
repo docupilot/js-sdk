@@ -7135,6 +7135,16 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - completed
+          - created
+          - declined
+          - pending
+          - voided
       tags:
       - esign
       security:
@@ -7293,29 +7303,13 @@ paths:
         required: true
       tags:
       - esign
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Envelope'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Envelope'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Envelope'
-        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Envelope'
-          description: ''
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -11001,17 +10995,6 @@ components:
             required:
             - name
             - email
-        expiry:
-          type: integer
-        first_reminder:
-          type: integer
-          nullable: true
-        reminder_frequency:
-          type: integer
-          nullable: true
-        warn_before:
-          type: integer
-          nullable: true
         name:
           type: string
           maxLength: 255
@@ -11065,6 +11048,25 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
+        expiry:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        first_reminder:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        reminder_frequency:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
+        warn_before:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          nullable: true
       required:
       - expiry
       - id
