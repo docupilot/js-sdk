@@ -37,7 +37,12 @@ export class EsignService {
          * A search term.
          */
         search?: string,
-        status?: 'completed' | 'created' | 'declined' | 'pending' | 'voided',
+        /**
+         * Multiple values may be separated by commas.
+         *
+         *
+         */
+        status?: Array<'completed' | 'created' | 'declined' | 'pending' | 'voided'>,
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -284,6 +289,28 @@ export class EsignService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/esign/envelopes/{id}/restore/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Send a reminder for Envelope Signers
+     * @returns void
+     * @throws ApiError
+     */
+    public static sendReminder({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/esign/envelopes/{id}/send_reminder/',
             path: {
                 'id': id,
             },
