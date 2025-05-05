@@ -7138,13 +7138,20 @@ paths:
       - in: query
         name: status
         schema:
-          type: string
-          enum:
-          - completed
-          - created
-          - declined
-          - pending
-          - voided
+          type: array
+          items:
+            type: string
+            enum:
+            - completed
+            - created
+            - declined
+            - pending
+            - voided
+        description: |+
+          Multiple values may be separated by commas.
+
+        explode: false
+        style: form
       tags:
       - esign
       security:
@@ -7681,6 +7688,56 @@ paths:
               schema:
                 $ref: '#/components/schemas/Envelope'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/send_reminder/:
+    post:
+      operationId: send_reminder
+      summary: Send a reminder for Envelope Signers
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -9023,8 +9080,10 @@ components:
           - completed
           type: string
         cc:
-          type: string
-          nullable: true
+          type: array
+          items:
+            type: string
+            maxLength: 1000
         sequenced_signing:
           type: boolean
         expiry:
@@ -9139,8 +9198,10 @@ components:
           - completed
           type: string
         cc:
-          type: string
-          nullable: true
+          type: array
+          items:
+            type: string
+            maxLength: 1000
         sequenced_signing:
           type: boolean
         expiry:
@@ -10647,10 +10708,13 @@ components:
           nullable: true
           maxLength: 512
         emails:
-          type: string
+          type: array
+          items:
+            type: string
+            format: email
           nullable: true
-          maxLength: 512
       required:
+      - emails
       - subject
       description: ''
     SendTestSmtpMail:
@@ -10995,6 +11059,17 @@ components:
             required:
             - name
             - email
+        expiry:
+          type: integer
+        first_reminder:
+          type: integer
+          nullable: true
+        reminder_frequency:
+          type: integer
+          nullable: true
+        warn_before:
+          type: integer
+          nullable: true
         name:
           type: string
           maxLength: 255
@@ -11048,25 +11123,6 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
-        expiry:
-          type: integer
-          maximum: 32767
-          minimum: 0
-        first_reminder:
-          type: integer
-          maximum: 32767
-          minimum: 0
-          nullable: true
-        reminder_frequency:
-          type: integer
-          maximum: 32767
-          minimum: 0
-          nullable: true
-        warn_before:
-          type: integer
-          maximum: 32767
-          minimum: 0
-          nullable: true
       required:
       - expiry
       - id

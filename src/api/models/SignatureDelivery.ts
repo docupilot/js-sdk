@@ -10,6 +10,10 @@ export type SignatureDelivery = {
         name: string;
         email: string;
     }>;
+    expiry: number;
+    first_reminder?: number | null;
+    reminder_frequency?: number | null;
+    warn_before?: number | null;
     name: string;
     type?: 'signature';
     success_callback_url?: string | null;
@@ -21,9 +25,5 @@ export type SignatureDelivery = {
     cc?: Array<string>;
     sequenced_signing?: boolean;
     enable_optional_signers?: boolean;
-    expiry: number;
-    first_reminder?: number | null;
-    reminder_frequency?: number | null;
-    warn_before?: number | null;
 };
 

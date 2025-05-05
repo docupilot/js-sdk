@@ -5,6 +5,6 @@
 export type SendEnvelopeViaEmail = {
     subject: string;
     description?: string | null;
-    emails?: string | null;
+    emails: Array<string> | null;
 };
 

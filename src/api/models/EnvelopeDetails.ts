@@ -14,7 +14,7 @@ export type EnvelopeDetails = {
     sn_invite_id?: string | null;
     name: string;
     status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
-    cc?: string | null;
+    cc?: Array<string>;
     sequenced_signing?: boolean;
     expiry?: string | null;
     /**
