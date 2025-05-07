@@ -13,10 +13,9 @@ export type AzureStorageDelivery = {
     success_callback_headers?: Record<string, any> | null;
     last_used_on?: string | null;
     path?: string | null;
-    storage_type: 'blob' | 'file';
     /**
      * Azure blob container or file share name.
      */
-    resource_name: string;
+    container_name: string;
 };
 
