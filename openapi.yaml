@@ -7484,21 +7484,15 @@ components:
         path:
           type: string
           nullable: true
-        storage_type:
-          enum:
-          - blob
-          - file
-          type: string
-        resource_name:
+        container_name:
           type: string
           description: Azure blob container or file share name.
           maxLength: 64
       required:
       - account
+      - container_name
       - id
       - name
-      - resource_name
-      - storage_type
     BannerNotification:
       type: object
       properties:
