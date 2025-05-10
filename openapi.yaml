@@ -9663,9 +9663,12 @@ components:
           type: boolean
         api_settings:
           type: boolean
+        eSignatures:
+          type: boolean
       required:
       - api_settings
       - billing
+      - eSignatures
       - folders
       - integrations
       - reports
