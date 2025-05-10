@@ -13,7 +13,7 @@ export type { AITemplateEdit } from './models/AITemplateEdit';
 export type { AppendFiles } from './models/AppendFiles';
 export type { AttachmentsConfig } from './models/AttachmentsConfig';
 export type { AuthToken } from './models/AuthToken';
-export type { AzureStorageDelivery } from './models/AzureStorageDelivery';
+export type { AzureBlobStorageDelivery } from './models/AzureBlobStorageDelivery';
 export type { BannerNotification } from './models/BannerNotification';
 export type { BannerNotificationAction } from './models/BannerNotificationAction';
 export type { BulkGen } from './models/BulkGen';
