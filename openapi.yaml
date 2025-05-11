@@ -3413,6 +3413,7 @@ paths:
           type: string
           enum:
           - aws_s3
+          - azure_storage
           - docu_sign
           - dropbox
           - email
@@ -3692,6 +3693,7 @@ paths:
           type: string
           enum:
           - aws_s3
+          - azure_storage
           - docu_sign
           - dropbox
           - email
@@ -5152,6 +5154,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/templates/{id}/preview/:
+    get:
+      operationId: preview_template
+      summary: Preview template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/templates/{id}/restore/:
     put:
       operationId: restore_template_from_trash
@@ -5458,6 +5507,7 @@ paths:
           type: string
           enum:
           - aws_s3
+          - azure_blob_storage
           - docu_sign
           - dropbox
           - email
@@ -7427,6 +7477,69 @@ components:
       - name
       - token
       description: ''
+    AzureBlobStorageDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        path:
+          type: string
+          nullable: true
+        container_name:
+          type: string
+          description: Azure blob container name.
+          maxLength: 64
+      required:
+      - account
+      - container_name
+      - id
+      - name
     BannerNotification:
       type: object
       properties:
@@ -7829,6 +7942,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
         credentials:
           type: object
@@ -7942,6 +8056,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8131,6 +8246,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8227,6 +8343,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8359,6 +8476,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8634,6 +8752,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8724,6 +8843,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9029,6 +9149,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9453,6 +9574,7 @@ components:
       - $ref: '#/components/schemas/SignableDelivery'
       - $ref: '#/components/schemas/YouSignDelivery'
       - $ref: '#/components/schemas/SftpDelivery'
+      - $ref: '#/components/schemas/AzureBlobStorageDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -9469,6 +9591,7 @@ components:
           signable: '#/components/schemas/SignableDelivery'
           yousign: '#/components/schemas/YouSignDelivery'
           sftp: '#/components/schemas/SftpDelivery'
+          azure_blob_storage: '#/components/schemas/AzureBlobStorageDelivery'
     PromptSuggestions:
       type: object
       properties:
@@ -9522,6 +9645,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9653,6 +9777,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9775,6 +9900,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9866,6 +9992,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10038,6 +10165,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10333,6 +10461,7 @@ components:
           - yousign
           - email
           - sftp
+          - azure_storage
           type: string
           readOnly: true
         credentials:
@@ -10660,6 +10789,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
@@ -11107,6 +11237,7 @@ components:
         type:
           enum:
           - webhook
+          - azure_blob_storage
           - docu_sign
           - sign_now
           - zoho_crm
