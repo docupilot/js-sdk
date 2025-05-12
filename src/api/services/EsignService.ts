@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { Envelope } from '../models/Envelope';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
+import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
@@ -111,11 +112,13 @@ export class EsignService {
      */
     public static cancelEnvelope({
         id,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
+        requestBody: OmitReadonly<EnvelopeVoid>,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -123,6 +126,8 @@ export class EsignService {
             path: {
                 'id': id,
             },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
@@ -318,14 +323,21 @@ export class EsignService {
     }
 
     /**
-     * List all envelopes in trash.
-     * @returns Envelope
+     * List all envelopes in trash
+     * @returns PaginatedEnvelopeList
      * @throws ApiError
      */
-    public static listTrashedEnvelopes(): CancelablePromise<Envelope> {
+    public static listTrashedEnvelopes({
+        page,
+    }: {
+        page?: number,
+    }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/esign/envelopes/trash/',
+            query: {
+                'page': page,
+            },
         });
     }
 

@@ -4,6 +4,7 @@
 
 export type Envelope = {
     readonly id: number;
+    readonly pending_signers_count: number;
     readonly envelope_id: string;
     name: string;
     status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
@@ -26,14 +27,11 @@ export type Envelope = {
     archived_time?: string | null;
     voided_at?: string | null;
     /**
-     * ex: Reason provided by the signer during declining
+     * ex: Reason for Declining or Voiding provided by signer or sender respectively
      */
-    decline_reason?: string | null;
-    /**
-     * Will store the auto-expiry message or the reason provided by user when voiding manually
-     */
-    void_reason?: string | null;
+    reason?: string | null;
     workspace: number;
+    sender: number;
     readonly updated_by: number | null;
     folder?: number | null;
 };

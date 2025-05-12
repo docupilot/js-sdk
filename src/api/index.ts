@@ -44,6 +44,7 @@ export type { Envelope } from './models/Envelope';
 export type { EnvelopeDetails } from './models/EnvelopeDetails';
 export type { EnvelopeDocuments } from './models/EnvelopeDocuments';
 export type { EnvelopeRecipient } from './models/EnvelopeRecipient';
+export type { EnvelopeVoid } from './models/EnvelopeVoid';
 export type { EversignDelivery } from './models/EversignDelivery';
 export type { ExportMergeHistory } from './models/ExportMergeHistory';
 export type { File } from './models/File';

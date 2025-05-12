@@ -33,16 +33,13 @@ export type EnvelopeDetails = {
     archived_time?: string | null;
     voided_at?: string | null;
     /**
-     * ex: Reason provided by the signer during declining
+     * ex: Reason for Declining or Voiding provided by signer or sender respectively
      */
-    decline_reason?: string | null;
-    /**
-     * Will store the auto-expiry message or the reason provided by user when voiding manually
-     */
-    void_reason?: string | null;
+    reason?: string | null;
     audit_log_doc?: string | null;
     id_doc?: string | null;
     workspace: number;
+    sender: number;
     updated_by?: number | null;
     folder?: number | null;
 };
