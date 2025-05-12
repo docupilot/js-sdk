@@ -7310,6 +7310,18 @@ paths:
         required: true
       tags:
       - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeVoid'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeVoid'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeVoid'
+        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -7765,7 +7777,7 @@ paths:
   /esign/envelopes/trash/:
     get:
       operationId: list_trashed_envelopes
-      summary: List all envelopes in trash.
+      summary: List all envelopes in trash
       parameters:
       - in: header
         name: X-Workspace
@@ -7773,6 +7785,10 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: page
+        schema:
+          type: integer
       tags:
       - esign
       security:
@@ -7784,7 +7800,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Envelope'
+                $ref: '#/components/schemas/PaginatedEnvelopeList'
           description: ''
         '401':
           content:
@@ -9065,6 +9081,9 @@ components:
         id:
           type: integer
           readOnly: true
+        pending_signers_count:
+          type: integer
+          readOnly: true
         envelope_id:
           type: string
           readOnly: true
@@ -9128,20 +9147,16 @@ components:
           type: string
           format: date-time
           nullable: true
-        decline_reason:
+        reason:
           type: string
           nullable: true
-          description: 'ex: Reason provided by the signer during declining'
-          minLength: 4
-          maxLength: 500
-        void_reason:
-          type: string
-          nullable: true
-          description: Will store the auto-expiry message or the reason provided by
-            user when voiding manually
+          description: 'ex: Reason for Declining or Voiding provided by signer or
+            sender respectively'
           minLength: 4
           maxLength: 500
         workspace:
+          type: integer
+        sender:
           type: integer
         updated_by:
           type: integer
@@ -9157,6 +9172,8 @@ components:
       - id
       - last_reminded_at
       - name
+      - pending_signers_count
+      - sender
       - updated_by
       - updated_time
       - workspace
@@ -9244,17 +9261,11 @@ components:
           type: string
           format: date-time
           nullable: true
-        decline_reason:
+        reason:
           type: string
           nullable: true
-          description: 'ex: Reason provided by the signer during declining'
-          minLength: 4
-          maxLength: 500
-        void_reason:
-          type: string
-          nullable: true
-          description: Will store the auto-expiry message or the reason provided by
-            user when voiding manually
+          description: 'ex: Reason for Declining or Voiding provided by signer or
+            sender respectively'
           minLength: 4
           maxLength: 500
         audit_log_doc:
@@ -9266,6 +9277,8 @@ components:
           format: uri
           nullable: true
         workspace:
+          type: integer
+        sender:
           type: integer
         updated_by:
           type: integer
@@ -9280,6 +9293,7 @@ components:
       - id
       - name
       - recipients
+      - sender
       - updated_time
       - workspace
       description: ''
@@ -9363,6 +9377,15 @@ components:
       - subject
       - updated_time
       - workspace
+      description: ''
+    EnvelopeVoid:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 255
+      required:
+      - reason
       description: ''
     EversignDelivery:
       type: object
@@ -11051,6 +11074,8 @@ components:
           items:
             type: object
             properties:
+              id:
+                type: string
               order:
                 type: string
               name:
@@ -11060,6 +11085,7 @@ components:
                 type: string
                 format: email
             required:
+            - id
             - name
             - email
         expiry:
