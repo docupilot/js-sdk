@@ -221,6 +221,28 @@ export class LinkedAccountsService {
     }
 
     /**
+     * List google drive templates
+     * @returns number An array of template ids
+     * @throws ApiError
+     */
+    public static listGoogleDriveTemplates({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<Array<number>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/linked_accounts/{id}/google_drive_templates/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
      * Get google picker payload
      * @returns GoogleDrivePickerPayload
      * @throws ApiError

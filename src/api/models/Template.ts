@@ -10,6 +10,7 @@ export type Template = {
     title: string;
     description?: string | null;
     readonly type: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
+    readonly source: 'local' | 'google';
     readonly created_time: string;
     readonly updated_time: string | null;
     document_status?: 'active' | 'test';

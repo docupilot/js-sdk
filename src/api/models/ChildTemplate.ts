@@ -7,6 +7,7 @@ export type ChildTemplate = {
     readonly title: string;
     description?: string | null;
     type?: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
+    source?: 'local' | 'google';
     readonly created_time: string;
     readonly updated_time: string | null;
     document_status?: 'active' | 'test';

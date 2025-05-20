@@ -3384,6 +3384,142 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/integration/google-drive/template/:
+    post:
+      operationId: create_google_drive_template
+      summary: Create Google Drive template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleDriveTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GoogleDriveTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GoogleDriveTemplate'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleDriveTemplate'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /api/v2/integration/google-drive/template/stop-all-watches/:
+    post:
+      operationId: stop_all_watches_google_drive_files
+      summary: Stop all watches for a linked Google Drive account
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopAllWatchesGoogleDriveTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StopAllWatchesGoogleDriveTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StopAllWatchesGoogleDriveTemplate'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /api/v2/integration/google-drive/template/stop-watch/:
+    post:
+      operationId: stop_watch_google_drive_file
+      summary: Stop watching a Google Drive file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - integration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopWatchGoogleDriveTemplate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StopWatchGoogleDriveTemplate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StopWatchGoogleDriveTemplate'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
   /api/v2/linked_accounts/:
     get:
       operationId: list_delivery_accounts
@@ -3813,6 +3949,54 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeliveryAccount'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /api/v2/linked_accounts/{id}/google_drive_templates/:
+    get:
+      operationId: list_google_drive_templates
+      description: List google drive templates
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: integer
+          description: An array of template ids
         '401':
           content:
             application/json:
@@ -7852,6 +8036,11 @@ components:
           - g_presentation
           - g_spreadsheet
           type: string
+        source:
+          enum:
+          - local
+          - google
+          type: string
         created_time:
           type: string
           format: date-time
@@ -8808,6 +8997,27 @@ components:
           type: string
       required:
       - payload
+      description: ''
+    GoogleDriveTemplate:
+      type: object
+      properties:
+        accountId:
+          type: string
+          writeOnly: true
+        fileId:
+          type: string
+          writeOnly: true
+        fileName:
+          type: string
+          writeOnly: true
+        templateId:
+          type: string
+          readOnly: true
+      required:
+      - accountId
+      - fileId
+      - fileName
+      - templateId
       description: ''
     HelloSignDelivery:
       type: object
@@ -10042,6 +10252,24 @@ components:
       - id
       - name
       - parties
+    StopAllWatchesGoogleDriveTemplate:
+      type: object
+      properties:
+        accountId:
+          type: string
+          writeOnly: true
+      required:
+      - accountId
+      description: ''
+    StopWatchGoogleDriveTemplate:
+      type: object
+      properties:
+        templateId:
+          type: string
+          writeOnly: true
+      required:
+      - templateId
+      description: ''
     SurveyPrompt:
       type: object
       properties:
@@ -10103,6 +10331,12 @@ components:
           - g_spreadsheet
           type: string
           readOnly: true
+        source:
+          enum:
+          - local
+          - google
+          type: string
+          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -10140,6 +10374,7 @@ components:
       - created_time
       - deleted_time
       - id
+      - source
       - title
       - type
       - updated_by
