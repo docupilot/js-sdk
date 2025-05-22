@@ -3414,6 +3414,7 @@ paths:
           enum:
           - aws_s3
           - azure_storage
+          - box
           - docu_sign
           - dropbox
           - email
@@ -3526,7 +3527,7 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|zoho$
+          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|box|zoho$
         required: true
       tags:
       - linked_accounts
@@ -3664,6 +3665,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /api/v2/linked_accounts/{id}/box_drive_picker_payload/:
+    get:
+      operationId: get_box_drive_picker_payload
+      description: Get box drive picker payload
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BoxDrivePickerPayload'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /api/v2/linked_accounts/{id}/deliveries/:
     get:
       operationId: list_account_deliveries
@@ -3694,6 +3747,7 @@ paths:
           enum:
           - aws_s3
           - azure_storage
+          - box
           - docu_sign
           - dropbox
           - email
@@ -4214,6 +4268,73 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /api/v2/merge_history/{id}/download/:
+    get:
+      operationId: download_created_document_using_document_merge_history
+      summary: download generated document if available
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document merge history.
+        required: true
+      tags:
+      - merge_history
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.presentationml.presentation:
+              schema:
+                type: string
+                format: binary
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /api/v2/permissions/folder/:
     get:
@@ -5508,6 +5629,7 @@ paths:
           enum:
           - aws_s3
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - dropbox
           - email
@@ -7497,6 +7619,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7568,6 +7691,76 @@ components:
       required:
       - attributes
       - text
+      description: ''
+    BoxDriveDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        folder:
+          type: string
+        folder_id:
+          type: string
+          nullable: true
+          maxLength: 100
+      required:
+      - account
+      - id
+      - name
+    BoxDrivePickerPayload:
+      type: object
+      properties:
+        payload:
+          type: string
+      required:
+      - payload
       description: ''
     BulkGen:
       type: object
@@ -7737,8 +7930,8 @@ components:
       properties:
         plan_id:
           type: string
+          readOnly: true
           nullable: true
-          maxLength: 255
         status:
           enum:
           - a
@@ -7747,13 +7940,15 @@ components:
           - c
           - p
           type: string
+          readOnly: true
         trial_end:
           type: string
           format: date-time
+          readOnly: true
         billing_period_unit:
           type: string
+          readOnly: true
           nullable: true
-          maxLength: 255
         current_term_start:
           type: string
           readOnly: true
@@ -7762,24 +7957,18 @@ components:
           readOnly: true
         unpaid_invoices:
           type: integer
-          maximum: 2147483647
-          minimum: 0
+          readOnly: true
         max_allowed_unpaid_invoices:
           type: integer
-          maximum: 2147483647
-          minimum: 0
+          readOnly: true
         overage_enabled:
           type: boolean
         documents_allowed:
           type: integer
-          maximum: 9223372036854775807
-          minimum: -9223372036854775808
-          format: int64
+          readOnly: true
         documents_created:
           type: integer
-          maximum: 9223372036854775807
-          minimum: -9223372036854775808
-          format: int64
+          readOnly: true
         can_extend_trial:
           type: boolean
           readOnly: true
@@ -7793,13 +7982,21 @@ components:
           type: integer
           readOnly: true
       required:
+      - billing_period_unit
       - can_extend_trial
       - current_term_end
       - current_term_start
+      - documents_allowed
+      - documents_created
+      - max_allowed_unpaid_invoices
       - overage_enabled
+      - plan_id
       - signnow_credits_allowed
       - signnow_credits_used
+      - status
       - subscribed_on
+      - trial_end
+      - unpaid_invoices
       description: ''
     ChildDocumentMergeHistory:
       type: object
@@ -7935,6 +8132,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - box
           - zoho
           - hellosign
           - aws_s3
@@ -8057,6 +8255,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8247,6 +8446,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8344,6 +8544,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8477,6 +8678,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8753,6 +8955,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8844,6 +9047,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9150,6 +9354,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9575,6 +9780,7 @@ components:
       - $ref: '#/components/schemas/YouSignDelivery'
       - $ref: '#/components/schemas/SftpDelivery'
       - $ref: '#/components/schemas/AzureBlobStorageDelivery'
+      - $ref: '#/components/schemas/BoxDriveDelivery'
       discriminator:
         propertyName: type
         mapping:
@@ -9592,6 +9798,7 @@ components:
           yousign: '#/components/schemas/YouSignDelivery'
           sftp: '#/components/schemas/SftpDelivery'
           azure_blob_storage: '#/components/schemas/AzureBlobStorageDelivery'
+          box_drive: '#/components/schemas/BoxDriveDelivery'
     PromptSuggestions:
       type: object
       properties:
@@ -9646,6 +9853,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9778,6 +9986,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9901,6 +10110,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9993,6 +10203,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10166,6 +10377,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10454,6 +10666,7 @@ components:
           - podio
           - one_drive
           - eversign
+          - box
           - zoho
           - hellosign
           - aws_s3
@@ -10790,6 +11003,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
@@ -11238,6 +11452,7 @@ components:
           enum:
           - webhook
           - azure_blob_storage
+          - box_drive
           - docu_sign
           - sign_now
           - zoho_crm
