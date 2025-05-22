@@ -3,14 +3,14 @@
 /* eslint-disable */
 
 export type ChargebeeSubscription = {
-    plan_id?: string | null;
-    status?: 'a' | 't' | 'e' | 'c' | 'p';
-    trial_end?: string;
-    billing_period_unit?: string | null;
+    readonly plan_id: string | null;
+    readonly status: 'a' | 't' | 'e' | 'c' | 'p';
+    readonly trial_end: string;
+    readonly billing_period_unit: string | null;
     readonly current_term_start: string;
     readonly current_term_end: string;
-    unpaid_invoices?: number;
-    max_allowed_unpaid_invoices?: number;
+    readonly unpaid_invoices: number;
+    readonly max_allowed_unpaid_invoices: number;
     overage_enabled: boolean;
     readonly documents_allowed: number;
     readonly documents_created: number;

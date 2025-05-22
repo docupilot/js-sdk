@@ -2,19 +2,17 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type S3Delivery = {
+export type BoxDriveDelivery = {
     readonly id: number;
     failure_email_recipients?: string | null;
     account: number;
     name: string;
-    type?: 'aws_s3';
+    type?: 'box_drive';
     success_callback_url?: string | null;
     success_callback_payload?: Record<string, any> | null;
     success_callback_headers?: Record<string, any> | null;
     last_used_on?: string | null;
-    bucket: string;
-    key_prefix?: string | null;
-    region?: string | null;
-    object_metadata?: Record<string, any> | null;
+    folder?: string;
+    folder_id?: string | null;
 };
 
