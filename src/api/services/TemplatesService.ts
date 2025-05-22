@@ -278,6 +278,28 @@ export class TemplatesService {
     }
 
     /**
+     * Preview template
+     * @returns binary
+     * @throws ApiError
+     */
+    public static previewTemplate({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{id}/preview/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
      * Restore a template from trash
      * @returns Template
      * @throws ApiError
