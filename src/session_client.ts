@@ -27,8 +27,6 @@ export class DocupilotSessionClient extends Docupilot {
   readonly AiService = _API.AiService;
   readonly DemographicService = _API.DemographicService;
   readonly EsignService = _API.EsignService;
-  readonly SignService = _API.SignService;
-  readonly SignnowWebhookService = _API.SignnowWebhookService;
 
   configureHeadersInterceptor(getHeaders: () => Record<string, string>) {
     _API.OpenAPI.HEADERS = async (options: ApiRequestOptions) => {
