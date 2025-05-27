@@ -54,6 +54,7 @@ export type { FolderSharing } from './models/FolderSharing';
 export type { ForbiddenError } from './models/ForbiddenError';
 export type { GalleryCategory } from './models/GalleryCategory';
 export type { GlobalPermission } from './models/GlobalPermission';
+export type { GoogleCloudStorageDelivery } from './models/GoogleCloudStorageDelivery';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
 export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload';
 export type { HelloSignDelivery } from './models/HelloSignDelivery';

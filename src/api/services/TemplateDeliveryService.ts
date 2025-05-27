@@ -27,7 +27,7 @@ export class TemplateDeliveryService {
          * Which field to use when ordering the results.
          */
         ordering?: string,
-        type?: 'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'webhook' | 'yousign' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_cloud_storage' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'webhook' | 'yousign' | 'zoho_crm',
     }): CancelablePromise<Array<TemplateDelivery>> {
         return __request(OpenAPI, {
             method: 'GET',

@@ -3419,6 +3419,7 @@ paths:
           - dropbox
           - email
           - eversign
+          - google_cloud_storage
           - google_drive
           - hellosign
           - one_drive
@@ -3752,6 +3753,7 @@ paths:
           - dropbox
           - email
           - eversign
+          - google_cloud_storage
           - google_drive
           - hellosign
           - one_drive
@@ -5634,6 +5636,7 @@ paths:
           - dropbox
           - email
           - eversign
+          - google_cloud_storage
           - google_drive
           - hellosign
           - one_drive
@@ -7625,6 +7628,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -7718,6 +7722,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8129,6 +8134,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8261,6 +8267,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8452,6 +8459,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8550,6 +8558,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8684,6 +8693,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8935,6 +8945,67 @@ components:
       - workspace:delete
       - workspace:update
       description: ''
+    GoogleCloudStorageDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - google_cloud_storage
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        bucket_name:
+          type: string
+          description: Google Cloud Storage Bucket Name
+        folder:
+          type: string
+          description: Allowed upload folder path
+      required:
+      - bucket_name
+      - id
+      - name
     GoogleDriveDelivery:
       type: object
       description: ''
@@ -8961,6 +9032,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9053,6 +9125,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9360,6 +9433,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9772,6 +9846,7 @@ components:
       - $ref: '#/components/schemas/OneDriveDelivery'
       - $ref: '#/components/schemas/SignNowDelivery'
       - $ref: '#/components/schemas/GoogleDriveDelivery'
+      - $ref: '#/components/schemas/GoogleCloudStorageDelivery'
       - $ref: '#/components/schemas/S3Delivery'
       - $ref: '#/components/schemas/HelloSignDelivery'
       - $ref: '#/components/schemas/DocuSignDelivery'
@@ -9790,6 +9865,7 @@ components:
           one_drive: '#/components/schemas/OneDriveDelivery'
           sign_now: '#/components/schemas/SignNowDelivery'
           google_drive: '#/components/schemas/GoogleDriveDelivery'
+          google_cloud_storage: '#/components/schemas/GoogleCloudStorageDelivery'
           aws_s3: '#/components/schemas/S3Delivery'
           hellosign: '#/components/schemas/HelloSignDelivery'
           docu_sign: '#/components/schemas/DocuSignDelivery'
@@ -9859,6 +9935,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9992,6 +10069,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10116,6 +10194,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10209,6 +10288,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10383,6 +10463,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10663,6 +10744,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -11009,6 +11091,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -11458,6 +11541,7 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
+          - google_cloud_storage
           - podio
           - one_drive
           - eversign
