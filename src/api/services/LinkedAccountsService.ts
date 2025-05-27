@@ -35,7 +35,7 @@ export class LinkedAccountsService {
          * A search term.
          */
         search?: string,
-        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_cloud_storage' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
     }): CancelablePromise<Array<DeliveryAccount>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -184,7 +184,7 @@ export class LinkedAccountsService {
          * A page number within the paginated result set.
          */
         page?: number,
-        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_cloud_storage' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
     }): CancelablePromise<PaginatedAccountDeliveryList> {
         return __request(OpenAPI, {
             method: 'GET',
