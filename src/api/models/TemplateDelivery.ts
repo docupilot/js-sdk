@@ -5,6 +5,6 @@
 export type TemplateDelivery = {
     readonly id: number;
     name: string;
-    readonly type: 'webhook' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'sign_now' | 'zoho_crm' | 'dropbox' | 'google_drive' | 'google_cloud_storage' | 'podio' | 'one_drive' | 'eversign' | 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email' | 'sftp';
+    readonly type: 'webhook' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'sign_now' | 'zoho_crm' | 'dropbox' | 'google_drive' | 'podio' | 'one_drive' | 'eversign' | 'hellosign' | 'aws_s3' | 'signable' | 'yousign' | 'email' | 'sftp' | 'google_cloud_storage';
 };
 

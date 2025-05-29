@@ -7628,7 +7628,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -7638,6 +7637,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -7722,7 +7722,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -7732,6 +7731,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -8134,7 +8134,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8147,6 +8146,7 @@ components:
           - email
           - sftp
           - azure_storage
+          - google_cloud_storage
           type: string
         credentials:
           type: object
@@ -8267,7 +8267,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8277,6 +8276,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -8459,7 +8459,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8469,6 +8468,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -8558,7 +8558,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8568,6 +8567,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -8693,7 +8693,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8703,6 +8702,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -8956,6 +8956,8 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        account:
+          type: integer
         name:
           type: string
           maxLength: 255
@@ -8969,7 +8971,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -8979,6 +8980,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -9003,6 +9005,7 @@ components:
           type: string
           description: Allowed upload folder path
       required:
+      - account
       - bucket_name
       - id
       - name
@@ -9032,7 +9035,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9042,6 +9044,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -9125,7 +9128,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9135,6 +9137,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -9433,7 +9436,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9443,6 +9445,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -9935,7 +9938,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -9945,6 +9947,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -10069,7 +10072,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10079,6 +10081,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -10194,7 +10197,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10204,6 +10206,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -10288,7 +10291,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10298,6 +10300,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -10463,7 +10466,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10473,6 +10475,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
           readOnly: true
       required:
@@ -10744,7 +10747,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -10757,6 +10759,7 @@ components:
           - email
           - sftp
           - azure_storage
+          - google_cloud_storage
           type: string
           readOnly: true
         credentials:
@@ -11091,7 +11094,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -11101,6 +11103,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -11541,7 +11544,6 @@ components:
           - zoho_crm
           - dropbox
           - google_drive
-          - google_cloud_storage
           - podio
           - one_drive
           - eversign
@@ -11551,6 +11553,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
