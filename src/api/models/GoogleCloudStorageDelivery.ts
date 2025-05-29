@@ -5,6 +5,7 @@
 export type GoogleCloudStorageDelivery = {
     readonly id: number;
     failure_email_recipients?: string | null;
+    account: number;
     name: string;
     type?: 'google_cloud_storage';
     success_callback_url?: string | null;
