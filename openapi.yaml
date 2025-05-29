@@ -9391,31 +9391,27 @@ components:
           type: string
           format: date-time
           nullable: true
-        last_reminded_at:
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        deleted_at:
           type: string
           format: date-time
           readOnly: true
           nullable: true
-        created_time:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_time:
-          type: string
-          format: date-time
-          readOnly: true
-        deleted_time:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        archived_time:
+        archived_at:
           type: string
           format: date-time
           nullable: true
         voided_at:
           type: string
           format: date-time
+          readOnly: true
           nullable: true
         reason:
           type: string
@@ -9436,16 +9432,16 @@ components:
           type: integer
           nullable: true
       required:
-      - created_time
-      - deleted_time
+      - created_at
+      - deleted_at
       - envelope_id
       - id
-      - last_reminded_at
       - name
       - pending_signers_count
       - sender
+      - updated_at
       - updated_by
-      - updated_time
+      - voided_at
       - workspace
       description: ''
     EnvelopeDetails:
@@ -9507,23 +9503,19 @@ components:
           type: string
           format: date-time
           nullable: true
-        last_reminded_at:
-          type: string
-          format: date-time
-          nullable: true
-        created_time:
+        created_at:
           type: string
           format: date-time
           readOnly: true
-        updated_time:
+        updated_at:
           type: string
           format: date-time
           readOnly: true
-        deleted_time:
+        deleted_at:
           type: string
           format: date-time
           nullable: true
-        archived_time:
+        archived_at:
           type: string
           format: date-time
           nullable: true
@@ -9557,14 +9549,14 @@ components:
           type: integer
           nullable: true
       required:
-      - created_time
+      - created_at
       - documents
       - envelope_id
       - id
       - name
       - recipients
       - sender
-      - updated_time
+      - updated_at
       - workspace
       description: ''
     EnvelopeDocuments:
@@ -9618,25 +9610,34 @@ components:
         status:
           enum:
           - created
+          - failed
           - sent
           - viewed
           - completed
           - declined
           type: string
-        created_time:
+        created_at:
           type: string
           format: date-time
           readOnly: true
-        updated_time:
+        updated_at:
           type: string
           format: date-time
           readOnly: true
+        invited_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_reminded_at:
+          type: string
+          format: date-time
+          nullable: true
         workspace:
           type: integer
         envelope:
           type: integer
       required:
-      - created_time
+      - created_at
       - email_address
       - email_body
       - envelope
@@ -9645,7 +9646,7 @@ components:
       - order
       - recipient_id
       - subject
-      - updated_time
+      - updated_at
       - workspace
       description: ''
     EnvelopeVoid:
@@ -10598,6 +10599,19 @@ components:
           type: string
           format: date-time
           nullable: true
+        first_reminder:
+          type: integer
+          nullable: true
+          description: Days after sending invite to send first reminder
+        reminder_frequency:
+          type: integer
+          nullable: true
+          description: Frequency in days for follow-up reminders
+        warn_before:
+          type: string
+          format: date-time
+          nullable: true
+          description: Days before expiry to send warning
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -11382,6 +11396,9 @@ components:
             - id
             - name
             - email
+        use_default_reminders:
+          type: boolean
+          default: false
         expiry:
           type: integer
         first_reminder:
@@ -11449,7 +11466,6 @@ components:
         enable_optional_signers:
           type: boolean
       required:
-      - expiry
       - id
       - name
       - signers

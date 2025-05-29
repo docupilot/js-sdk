@@ -26,11 +26,10 @@ export type EnvelopeDetails = {
      */
     reminder_frequency?: string | null;
     warn_before?: string | null;
-    last_reminded_at?: string | null;
-    readonly created_time: string;
-    readonly updated_time: string;
-    deleted_time?: string | null;
-    archived_time?: string | null;
+    readonly created_at: string;
+    readonly updated_at: string;
+    deleted_at?: string | null;
+    archived_at?: string | null;
     voided_at?: string | null;
     /**
      * ex: Reason for Declining or Voiding provided by signer or sender respectively
