@@ -11276,6 +11276,7 @@ components:
           readOnly: true
         domain_name:
           type: string
+          nullable: true
           maxLength: 255
         employee_count:
           enum:
@@ -11296,7 +11297,6 @@ components:
           type: string
           maxLength: 100
       required:
-      - domain_name
       - employee_count
       - id
       - industry
