@@ -160,14 +160,12 @@ export class EsignService {
      */
     public static downloadEnvelopeFile({
         id,
-        format,
         history,
     }: {
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-        format?: 'json' | 'octet-stream',
         /**
          * Whether to include history in the response
          */
@@ -180,7 +178,6 @@ export class EsignService {
                 'id': id,
             },
             query: {
-                'format': format,
                 'history': history,
             },
         });

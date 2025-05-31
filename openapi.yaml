@@ -7696,13 +7696,6 @@ paths:
         description: Workspace unique_key
         required: true
       - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - octet-stream
-      - in: query
         name: history
         schema:
           type: boolean
