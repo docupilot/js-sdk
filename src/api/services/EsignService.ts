@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { Envelope } from '../models/Envelope';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
+import type { EnvelopeHistory } from '../models/EnvelopeHistory';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
@@ -213,7 +214,7 @@ export class EsignService {
 
     /**
      * envelope history
-     * @returns Envelope
+     * @returns EnvelopeHistory
      * @throws ApiError
      */
     public static envelopeHistory({
@@ -223,7 +224,7 @@ export class EsignService {
          * A unique integer value identifying this envelope.
          */
         id: number,
-    }): CancelablePromise<Envelope> {
+    }): CancelablePromise<EnvelopeHistory> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/esign/envelopes/{id}/history/',
