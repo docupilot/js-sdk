@@ -7828,7 +7828,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Envelope'
+                $ref: '#/components/schemas/EnvelopeHistory'
           description: ''
         '401':
           content:
@@ -9317,6 +9317,23 @@ components:
       - top
       - width
       description: ''
+    ESignReminderConfig:
+      type: object
+      properties:
+        expiry:
+          type: integer
+        first_reminder:
+          type: integer
+        reminder_frequency:
+          type: integer
+        warn_before:
+          type: integer
+      required:
+      - expiry
+      - first_reminder
+      - reminder_frequency
+      - warn_before
+      description: ''
     EmailDelivery:
       type: object
       description: ''
@@ -9666,6 +9683,47 @@ components:
       - document
       - id
       - workspace
+      description: ''
+    EnvelopeHistory:
+      type: object
+      properties:
+        envelope_id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        status:
+          enum:
+          - created
+          - pending
+          - voided
+          - declined
+          - completed
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        signers:
+          type: string
+          readOnly: true
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryRecord'
+          readOnly: true
+      required:
+      - created_at
+      - envelope_id
+      - history
+      - name
+      - signers
       description: ''
     EnvelopeRecipient:
       type: object
@@ -10256,6 +10314,55 @@ components:
       - id
       - name
       - signers
+    HistoryRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        event_name:
+          enum:
+          - created
+          - invited
+          - send_failed
+          - resent
+          - viewed
+          - signed
+          - completed
+          - declined
+          - voided
+          type: string
+        event_meta:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        server_time:
+          type: string
+          format: date-time
+        client_time:
+          type: string
+          format: date-time
+        ip_address:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when this history log was created
+        workspace:
+          type: integer
+        recipient:
+          type: integer
+          nullable: true
+      required:
+      - client_time
+      - created_at
+      - event_name
+      - id
+      - server_time
+      - workspace
+      description: ''
     HostedPage:
       type: object
       properties:
@@ -10408,8 +10515,11 @@ components:
           $ref: '#/components/schemas/BulkGenerateMeta'
         iam:
           type: string
+        esign_reminder_defaults:
+          $ref: '#/components/schemas/ESignReminderConfig'
       required:
       - batch_process_max_allowed_test_rows
+      - esign_reminder_defaults
       - file_uploads
       - iam
       description: ''
