@@ -15,6 +15,7 @@ export type EnvelopeRecipient = {
     readonly updated_at: string;
     invited_at?: string | null;
     last_reminded_at?: string | null;
+    completed_at?: string | null;
     workspace: number;
     envelope: number;
 };

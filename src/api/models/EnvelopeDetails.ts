@@ -28,6 +28,7 @@ export type EnvelopeDetails = {
     warn_before?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
+    readonly completed_at: string;
     deleted_at?: string | null;
     archived_at?: string | null;
     voided_at?: string | null;

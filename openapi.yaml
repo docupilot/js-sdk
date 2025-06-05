@@ -7946,6 +7946,61 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /esign/envelopes/{id}/recipient/{recipient_id}/:
+    put:
+      operationId: update_recipient_email
+      summary: Update the email of an envelope recipient
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      - in: path
+        name: recipient_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRecipientEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateRecipientEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateRecipientEmail'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /esign/envelopes/{id}/restore/:
     post:
       operationId: restore_envelope_from_trash
@@ -8049,6 +8104,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/envelopes/count/:
+    get:
+      operationId: envelope_count_by_status
+      summary: Get envelope count grouped by status
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeStatusCountResponse'
+          description: Counts of envelopes grouped by status.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
   /esign/envelopes/trash/:
     get:
@@ -9392,6 +9477,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
         deleted_at:
           type: string
           format: date-time
@@ -9425,6 +9514,7 @@ components:
           type: integer
           nullable: true
       required:
+      - completed_at
       - created_at
       - deleted_at
       - envelope_id
@@ -9504,6 +9594,10 @@ components:
           type: string
           format: date-time
           readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
         deleted_at:
           type: string
           format: date-time
@@ -9542,6 +9636,7 @@ components:
           type: integer
           nullable: true
       required:
+      - completed_at
       - created_at
       - documents
       - envelope_id
@@ -9567,11 +9662,8 @@ components:
           nullable: true
         workspace:
           type: integer
-        envelope:
-          type: integer
       required:
       - document
-      - envelope
       - id
       - workspace
       description: ''
@@ -9625,6 +9717,10 @@ components:
           type: string
           format: date-time
           nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
         workspace:
           type: integer
         envelope:
@@ -9641,6 +9737,26 @@ components:
       - subject
       - updated_at
       - workspace
+      description: ''
+    EnvelopeStatusCountResponse:
+      type: object
+      properties:
+        created:
+          type: integer
+        pending:
+          type: integer
+        voided:
+          type: integer
+        declined:
+          type: integer
+        completed:
+          type: integer
+      required:
+      - completed
+      - created
+      - declined
+      - pending
+      - voided
       description: ''
     EnvelopeVoid:
       type: object
@@ -11910,6 +12026,15 @@ components:
       - type
       - updated_at
       - used_by
+    UpdateRecipientEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      description: ''
     UploadTemplateImage:
       type: object
       properties:
@@ -12487,6 +12612,7 @@ components:
           readOnly: true
         domain_name:
           type: string
+          nullable: true
           maxLength: 255
         employee_count:
           enum:
@@ -12507,7 +12633,6 @@ components:
           type: string
           maxLength: 100
       required:
-      - domain_name
       - employee_count
       - id
       - industry
