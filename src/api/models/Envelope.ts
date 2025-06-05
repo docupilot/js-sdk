@@ -22,6 +22,7 @@ export type Envelope = {
     warn_before?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
+    readonly completed_at: string;
     readonly deleted_at: string | null;
     archived_at?: string | null;
     readonly voided_at: string | null;

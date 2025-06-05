@@ -3,10 +3,12 @@
 /* eslint-disable */
 import type { Envelope } from '../models/Envelope';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
+import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
+import type { UpdateRecipientEmail } from '../models/UpdateRecipientEmail';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -276,6 +278,35 @@ export class EsignService {
     }
 
     /**
+     * Update the email of an envelope recipient
+     * @returns void
+     * @throws ApiError
+     */
+    public static updateRecipientEmail({
+        id,
+        recipientId,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        recipientId: string,
+        requestBody: OmitReadonly<UpdateRecipientEmail>,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/esign/envelopes/{id}/recipient/{recipient_id}/',
+            path: {
+                'id': id,
+                'recipient_id': recipientId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * Restore a envelope from trash
      * @returns Envelope
      * @throws ApiError
@@ -316,6 +347,18 @@ export class EsignService {
             path: {
                 'id': id,
             },
+        });
+    }
+
+    /**
+     * Get envelope count grouped by status
+     * @returns EnvelopeStatusCountResponse Counts of envelopes grouped by status.
+     * @throws ApiError
+     */
+    public static envelopeCountByStatus(): CancelablePromise<EnvelopeStatusCountResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/esign/envelopes/envelopes/count/',
         });
     }
 

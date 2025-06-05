@@ -7,6 +7,5 @@ export type EnvelopeDocuments = {
     document: string;
     signed_copy?: string | null;
     workspace: number;
-    envelope: number;
 };
 
