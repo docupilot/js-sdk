@@ -7830,6 +7830,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/EnvelopeHistory'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
         '401':
           content:
             application/json:
@@ -9670,19 +9676,12 @@ components:
         id:
           type: integer
           readOnly: true
-        document:
+        document_name:
           type: string
-          format: uri
-        signed_copy:
-          type: string
-          format: uri
-          nullable: true
-        workspace:
-          type: integer
+          readOnly: true
       required:
-      - document
+      - document_name
       - id
-      - workspace
       description: ''
     EnvelopeHistory:
       type: object
@@ -9711,7 +9710,9 @@ components:
           format: date-time
           readOnly: true
         signers:
-          type: string
+          type: array
+          items:
+            type: string
           readOnly: true
         history:
           type: array
@@ -10350,18 +10351,16 @@ components:
           format: date-time
           readOnly: true
           description: Timestamp when this history log was created
-        workspace:
-          type: integer
-        recipient:
-          type: integer
-          nullable: true
+        recipient_email:
+          type: string
+          readOnly: true
       required:
       - client_time
       - created_at
       - event_name
       - id
+      - recipient_email
       - server_time
-      - workspace
       description: ''
     HostedPage:
       type: object
