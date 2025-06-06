@@ -27,5 +27,6 @@ export type SignatureDelivery = {
     cc?: Array<string>;
     sequenced_signing?: boolean;
     enable_optional_signers?: boolean;
+    sender: number;
 };
 

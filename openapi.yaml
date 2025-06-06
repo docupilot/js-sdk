@@ -11683,9 +11683,12 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
+        sender:
+          type: integer
       required:
       - id
       - name
+      - sender
       - signers
     SurveyPrompt:
       type: object
