@@ -10,7 +10,7 @@ export type EnvelopeHistory = {
     status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
     cc?: Array<string>;
     readonly created_at: string;
-    readonly signers: string;
+    readonly signers: Array<string>;
     readonly history: Array<HistoryRecord>;
 };
 

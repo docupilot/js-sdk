@@ -4,8 +4,6 @@
 
 export type EnvelopeDocuments = {
     readonly id: number;
-    document: string;
-    signed_copy?: string | null;
-    workspace: number;
+    readonly document_name: string;
 };
 
