@@ -8111,7 +8111,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/envelopes/count/:
+  /esign/envelopes/count/:
     get:
       operationId: envelope_count_by_status
       summary: Get envelope count grouped by status
@@ -9644,10 +9644,6 @@ components:
           type: string
           format: uri
           nullable: true
-        id_doc:
-          type: string
-          format: uri
-          nullable: true
         workspace:
           type: integer
         sender:
@@ -9719,11 +9715,15 @@ components:
           items:
             $ref: '#/components/schemas/HistoryRecord'
           readOnly: true
+        sender_email:
+          type: string
+          readOnly: true
       required:
       - created_at
       - envelope_id
       - history
       - name
+      - sender_email
       - signers
       description: ''
     EnvelopeRecipient:
@@ -10351,15 +10351,15 @@ components:
           format: date-time
           readOnly: true
           description: Timestamp when this history log was created
-        recipient_email:
+        actor:
           type: string
           readOnly: true
       required:
+      - actor
       - client_time
       - created_at
       - event_name
       - id
-      - recipient_email
       - server_time
       description: ''
     HostedPage:

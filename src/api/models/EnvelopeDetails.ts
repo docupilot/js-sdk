@@ -37,7 +37,6 @@ export type EnvelopeDetails = {
      */
     reason?: string | null;
     audit_log_doc?: string | null;
-    id_doc?: string | null;
     workspace: number;
     sender: number;
     updated_by?: number | null;

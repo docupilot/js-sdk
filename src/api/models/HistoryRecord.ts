@@ -13,6 +13,6 @@ export type HistoryRecord = {
      * Timestamp when this history log was created
      */
     readonly created_at: string;
-    readonly recipient_email: string;
+    readonly actor: string;
 };
 

@@ -359,7 +359,7 @@ export class EsignService {
     public static envelopeCountByStatus(): CancelablePromise<EnvelopeStatusCountResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/envelopes/count/',
+            url: '/esign/envelopes/count/',
         });
     }
 
