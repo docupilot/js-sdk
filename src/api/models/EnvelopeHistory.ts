@@ -12,5 +12,6 @@ export type EnvelopeHistory = {
     readonly created_at: string;
     readonly signers: Array<string>;
     readonly history: Array<HistoryRecord>;
+    readonly sender_email: string;
 };
 
