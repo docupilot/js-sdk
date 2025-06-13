@@ -5644,6 +5644,7 @@ paths:
           - sftp
           - sign_now
           - signable
+          - signature
           - webhook
           - yousign
           - zoho_crm
@@ -7391,6 +7392,798 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /esign/envelopes/:
+    get:
+      operationId: list_envelopes
+      summary: Get list of envelopes
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - completed
+            - created
+            - declined
+            - pending
+            - voided
+        description: |+
+          Multiple values may be separated by commas.
+
+        explode: false
+        style: form
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnvelopeList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /esign/envelopes/{id}/:
+    patch:
+      operationId: update_envelope_config
+      summary: Update envelope config
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeUpdate'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: trash_envelope
+      summary: Move envelope to trash
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/cancel/:
+    post:
+      operationId: cancel_envelope
+      summary: Cancel an Envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeVoid'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeVoid'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeVoid'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/details/:
+    get:
+      operationId: envelope_details
+      summary: details of an envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDetails'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/download/:
+    get:
+      operationId: download_envelope_file
+      summary: Download envelope file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: history
+        schema:
+          type: boolean
+        description: Whether to include history in the response
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/email_copy/:
+    post:
+      operationId: send_copy_via_email
+      summary: send copy via email
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEnvelopeViaEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEnvelopeViaEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEnvelopeViaEmail'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/history/:
+    get:
+      operationId: envelope_history
+      summary: envelope history
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeHistory'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/permanent_delete/:
+    delete:
+      operationId: delete_envelope_permanently
+      summary: Delete a envelope permanently from trash
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/preview/:
+    get:
+      operationId: preview_envelope
+      summary: preview Envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/recipient/{recipient_id}/:
+    put:
+      operationId: update_recipient_email
+      summary: Update the email of an envelope recipient
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      - in: path
+        name: recipient_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRecipientEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateRecipientEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateRecipientEmail'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/restore/:
+    post:
+      operationId: restore_envelope_from_trash
+      summary: Restore a envelope from trash
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/send_reminder/:
+    post:
+      operationId: send_reminder
+      summary: Send a reminder for Envelope Signers
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/count/:
+    get:
+      operationId: envelope_count_by_status
+      summary: Get envelope count grouped by status
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeStatusCountResponse'
+          description: Counts of envelopes grouped by status.
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /esign/envelopes/trash/:
+    get:
+      operationId: list_trashed_envelopes
+      summary: List all envelopes in trash
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: page
+        schema:
+          type: integer
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnvelopeList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /meta/:
     get:
       operationId: get_app_meta
@@ -7623,6 +8416,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7717,6 +8511,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -7986,6 +8781,12 @@ components:
         signnow_credits_used:
           type: integer
           readOnly: true
+        signatures_allowed:
+          type: integer
+          readOnly: true
+        signatures_used:
+          type: integer
+          readOnly: true
       required:
       - billing_period_unit
       - can_extend_trial
@@ -7996,6 +8797,8 @@ components:
       - max_allowed_unpaid_invoices
       - overage_enabled
       - plan_id
+      - signatures_allowed
+      - signatures_used
       - signnow_credits_allowed
       - signnow_credits_used
       - status
@@ -8262,6 +9065,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8454,6 +9258,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8526,6 +9331,23 @@ components:
       - top
       - width
       description: ''
+    ESignReminderConfig:
+      type: object
+      properties:
+        expiry:
+          type: integer
+        first_reminder:
+          type: integer
+        reminder_frequency:
+          type: integer
+        warn_before:
+          type: integer
+      required:
+      - expiry
+      - first_reminder
+      - reminder_frequency
+      - warn_before
+      description: ''
     EmailDelivery:
       type: object
       description: ''
@@ -8553,6 +9375,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8632,6 +9455,386 @@ components:
       required:
       - attachments
       description: ''
+    Envelope:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        pending_signers_count:
+          type: integer
+          readOnly: true
+        envelope_id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        status:
+          enum:
+          - created
+          - pending
+          - voided
+          - declined
+          - completed
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+        sequenced_signing:
+          type: boolean
+        expiry:
+          type: string
+          format: date-time
+          nullable: true
+        first_reminder:
+          type: string
+          nullable: true
+          description: 'ex: P3D to send first reminders after 3 days of sending invite'
+        reminder_frequency:
+          type: string
+          nullable: true
+          description: 'ex: P3D to send follow up reminders every 3 days'
+        warn_before:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+        deleted_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        archived_at:
+          type: string
+          format: date-time
+          nullable: true
+        voided_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        reason:
+          type: string
+          nullable: true
+          description: 'ex: Reason for Declining or Voiding provided by signer or
+            sender respectively'
+          minLength: 4
+          maxLength: 500
+        workspace:
+          type: integer
+        sender:
+          type: integer
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        folder:
+          type: integer
+          nullable: true
+      required:
+      - completed_at
+      - created_at
+      - deleted_at
+      - envelope_id
+      - id
+      - name
+      - pending_signers_count
+      - sender
+      - updated_at
+      - updated_by
+      - voided_at
+      - workspace
+      description: ''
+    EnvelopeDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        documents:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeDocuments'
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeRecipient'
+        envelope_id:
+          type: string
+          readOnly: true
+        sn_envelope_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        sn_invite_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        name:
+          type: string
+          maxLength: 255
+        status:
+          enum:
+          - created
+          - pending
+          - voided
+          - declined
+          - completed
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+        sequenced_signing:
+          type: boolean
+        expiry:
+          type: string
+          format: date-time
+          nullable: true
+        first_reminder:
+          type: string
+          nullable: true
+          description: 'ex: P3D to send first reminders after 3 days of sending invite'
+        reminder_frequency:
+          type: string
+          nullable: true
+          description: 'ex: P3D to send follow up reminders every 3 days'
+        warn_before:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+        archived_at:
+          type: string
+          format: date-time
+          nullable: true
+        voided_at:
+          type: string
+          format: date-time
+          nullable: true
+        reason:
+          type: string
+          nullable: true
+          description: 'ex: Reason for Declining or Voiding provided by signer or
+            sender respectively'
+          minLength: 4
+          maxLength: 500
+        audit_log_doc:
+          type: string
+          format: uri
+          nullable: true
+        workspace:
+          type: integer
+        sender:
+          type: integer
+        updated_by:
+          type: integer
+          nullable: true
+        folder:
+          type: integer
+          nullable: true
+      required:
+      - completed_at
+      - created_at
+      - documents
+      - envelope_id
+      - id
+      - name
+      - recipients
+      - sender
+      - updated_at
+      - workspace
+      description: ''
+    EnvelopeDocuments:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        document_name:
+          type: string
+          readOnly: true
+      required:
+      - document_name
+      - id
+      description: ''
+    EnvelopeHistory:
+      type: object
+      properties:
+        envelope_id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        status:
+          enum:
+          - created
+          - pending
+          - voided
+          - declined
+          - completed
+          type: string
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        signers:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryRecord'
+          readOnly: true
+        sender_email:
+          type: string
+          readOnly: true
+      required:
+      - created_at
+      - envelope_id
+      - history
+      - name
+      - sender_email
+      - signers
+      description: ''
+    EnvelopeRecipient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        recipient_id:
+          type: string
+          readOnly: true
+        email_address:
+          type: string
+          format: email
+          maxLength: 254
+        subject:
+          type: string
+          maxLength: 255
+        email_body:
+          type: string
+        name:
+          type: string
+          maxLength: 255
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        status:
+          enum:
+          - created
+          - failed
+          - sent
+          - viewed
+          - completed
+          - declined
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        invited_at:
+          type: string
+          format: date-time
+          nullable: true
+        last_reminded_at:
+          type: string
+          format: date-time
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          nullable: true
+        workspace:
+          type: integer
+        envelope:
+          type: integer
+      required:
+      - created_at
+      - email_address
+      - email_body
+      - envelope
+      - id
+      - name
+      - order
+      - recipient_id
+      - subject
+      - updated_at
+      - workspace
+      description: ''
+    EnvelopeStatusCountResponse:
+      type: object
+      properties:
+        created:
+          type: integer
+        pending:
+          type: integer
+        voided:
+          type: integer
+        declined:
+          type: integer
+        completed:
+          type: integer
+      required:
+      - completed
+      - created
+      - declined
+      - pending
+      - voided
+      description: ''
+    EnvelopeVoid:
+      type: object
+      properties:
+        reason:
+          type: string
+          maxLength: 255
+      required:
+      - reason
+      description: ''
     EversignDelivery:
       type: object
       description: ''
@@ -8688,6 +9891,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -8933,9 +10137,12 @@ components:
           type: boolean
         api_settings:
           type: boolean
+        eSignatures:
+          type: boolean
       required:
       - api_settings
       - billing
+      - eSignatures
       - folders
       - integrations
       - reports
@@ -8966,6 +10173,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9030,6 +10238,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9123,6 +10332,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9182,6 +10392,53 @@ components:
       - id
       - name
       - signers
+    HistoryRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        event_name:
+          enum:
+          - created
+          - invited
+          - send_failed
+          - resent
+          - viewed
+          - signed
+          - completed
+          - declined
+          - voided
+          type: string
+        event_meta:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        server_time:
+          type: string
+          format: date-time
+        client_time:
+          type: string
+          format: date-time
+        ip_address:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when this history log was created
+        actor:
+          type: string
+          readOnly: true
+      required:
+      - actor
+      - client_time
+      - created_at
+      - event_name
+      - id
+      - server_time
+      description: ''
     HostedPage:
       type: object
       properties:
@@ -9334,8 +10591,11 @@ components:
           $ref: '#/components/schemas/BulkGenerateMeta'
         iam:
           type: string
+        esign_reminder_defaults:
+          $ref: '#/components/schemas/ESignReminderConfig'
       required:
       - batch_process_max_allowed_test_rows
+      - esign_reminder_defaults
       - file_uploads
       - iam
       description: ''
@@ -9431,6 +10691,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -9538,6 +10799,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentMergeHistory'
+    PaginatedEnvelopeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Envelope'
     PaginatedMergeHistoryList:
       type: object
       required:
@@ -9603,6 +10887,27 @@ components:
         spf_record:
           type: string
           readOnly: true
+      description: ''
+    PatchedEnvelopeUpdate:
+      type: object
+      properties:
+        expiry:
+          type: string
+          format: date-time
+          nullable: true
+        first_reminder:
+          type: integer
+          nullable: true
+          description: Days after sending invite to send first reminder
+        reminder_frequency:
+          type: integer
+          nullable: true
+          description: Frequency in days for follow-up reminders
+        warn_before:
+          type: string
+          format: date-time
+          nullable: true
+          description: Days before expiry to send warning
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -9845,6 +11150,7 @@ components:
       oneOf:
       - $ref: '#/components/schemas/EmailDelivery'
       - $ref: '#/components/schemas/WebhookDelivery'
+      - $ref: '#/components/schemas/SignatureDelivery'
       - $ref: '#/components/schemas/DropboxDelivery'
       - $ref: '#/components/schemas/OneDriveDelivery'
       - $ref: '#/components/schemas/SignNowDelivery'
@@ -9864,6 +11170,7 @@ components:
         mapping:
           email: '#/components/schemas/EmailDelivery'
           webhook: '#/components/schemas/WebhookDelivery'
+          signature: '#/components/schemas/SignatureDelivery'
           dropbox: '#/components/schemas/DropboxDelivery'
           one_drive: '#/components/schemas/OneDriveDelivery'
           sign_now: '#/components/schemas/SignNowDelivery'
@@ -9933,6 +11240,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10016,6 +11324,26 @@ components:
       required:
       - action_name
       description: ''
+    SendEnvelopeViaEmail:
+      type: object
+      properties:
+        subject:
+          type: string
+          maxLength: 512
+        description:
+          type: string
+          nullable: true
+          maxLength: 512
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+          nullable: true
+      required:
+      - emails
+      - subject
+      description: ''
     SendTestSmtpMail:
       type: object
       properties:
@@ -10067,6 +11395,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10192,6 +11521,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10286,6 +11616,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10336,6 +11667,114 @@ components:
       - id
       - name
       - parties
+    SignatureDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        signers:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              order:
+                type: string
+              name:
+                type: string
+                minLength: 3
+              email:
+                type: string
+                format: email
+            required:
+            - id
+            - name
+            - email
+        use_default_reminders:
+          type: boolean
+          default: false
+        expiry:
+          type: integer
+        first_reminder:
+          type: integer
+          nullable: true
+        reminder_frequency:
+          type: integer
+          nullable: true
+        warn_before:
+          type: integer
+          nullable: true
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - signature
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          - google_cloud_storage
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        subject:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        cc:
+          type: array
+          items:
+            type: string
+            maxLength: 1000
+        sequenced_signing:
+          type: boolean
+        enable_optional_signers:
+          type: boolean
+        sender:
+          type: integer
+      required:
+      - id
+      - name
+      - sender
+      - signers
     SurveyPrompt:
       type: object
       properties:
@@ -10461,6 +11900,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -10785,6 +12225,15 @@ components:
       - type
       - updated_at
       - used_by
+    UpdateRecipientEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      description: ''
     UploadTemplateImage:
       type: object
       properties:
@@ -11089,6 +12538,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
@@ -11362,6 +12812,7 @@ components:
           readOnly: true
         domain_name:
           type: string
+          nullable: true
           maxLength: 255
         employee_count:
           enum:
@@ -11382,7 +12833,6 @@ components:
           type: string
           maxLength: 100
       required:
-      - domain_name
       - employee_count
       - id
       - industry
@@ -11539,6 +12989,7 @@ components:
           - webhook
           - azure_blob_storage
           - box_drive
+          - signature
           - docu_sign
           - sign_now
           - zoho_crm
