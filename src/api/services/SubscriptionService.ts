@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AddonPurchase } from '../models/AddonPurchase';
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
 import type { HostedPage } from '../models/HostedPage';
 import type { RenewSubscription } from '../models/RenewSubscription';
@@ -11,6 +12,34 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class SubscriptionService {
+
+    /**
+     * @returns ChargebeeSubscription
+     * @throws ApiError
+     */
+    public static subscriptionAddonPricingInfoRetrieve(): CancelablePromise<ChargebeeSubscription> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/addon_pricing_info/',
+        });
+    }
+
+    /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static purchaseAddon({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<AddonPurchase>,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/v2/subscription/buy_addon/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
 
     /**
      * @returns ChargebeeSubscription

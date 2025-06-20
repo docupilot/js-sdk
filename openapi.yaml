@@ -660,6 +660,90 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/subscription/addon_pricing_info/:
+    get:
+      operationId: subscription_addon_pricing_info_retrieve
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargebeeSubscription'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/buy_addon/:
+    post:
+      operationId: purchase_addon
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddonPurchase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddonPurchase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddonPurchase'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -8332,6 +8416,20 @@ components:
       - id
       - name
       - template_info
+      description: ''
+    AddonPurchase:
+      type: object
+      properties:
+        addon_id:
+          enum:
+          - esignature
+          - signnow
+          type: string
+        quantity:
+          type: integer
+      required:
+      - addon_id
+      - quantity
       description: ''
     AppendFiles:
       type: object
