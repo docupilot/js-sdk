@@ -8895,7 +8895,7 @@ components:
       properties:
         title:
           type: string
-          maxLength: 120
+          maxLength: 255
       required:
       - title
       description: ''
@@ -9513,6 +9513,10 @@ components:
           type: string
           format: date-time
           nullable: true
+        declined_at:
+          type: string
+          format: date-time
+          nullable: true
         voided_at:
           type: string
           format: date-time
@@ -9529,6 +9533,9 @@ components:
           type: integer
         sender:
           type: integer
+        voided_by:
+          type: integer
+          nullable: true
         updated_by:
           type: integer
           readOnly: true
@@ -9629,6 +9636,10 @@ components:
           type: string
           format: date-time
           nullable: true
+        declined_at:
+          type: string
+          format: date-time
+          nullable: true
         voided_at:
           type: string
           format: date-time
@@ -9648,6 +9659,9 @@ components:
           type: integer
         sender:
           type: integer
+        voided_by:
+          type: integer
+          nullable: true
         updated_by:
           type: integer
           nullable: true
@@ -10548,7 +10562,7 @@ components:
           nullable: true
         title:
           type: string
-          maxLength: 120
+          maxLength: 255
         output_type:
           enum:
           - html
@@ -11734,7 +11748,7 @@ components:
           $ref: '#/components/schemas/TemplateSettings'
         title:
           type: string
-          maxLength: 120
+          maxLength: 255
         description:
           type: string
           nullable: true

@@ -31,6 +31,7 @@ export type EnvelopeDetails = {
     readonly completed_at: string;
     deleted_at?: string | null;
     archived_at?: string | null;
+    declined_at?: string | null;
     voided_at?: string | null;
     /**
      * ex: Reason for Declining or Voiding provided by signer or sender respectively
@@ -39,6 +40,7 @@ export type EnvelopeDetails = {
     audit_log_doc?: string | null;
     workspace: number;
     sender: number;
+    voided_by?: number | null;
     updated_by?: number | null;
     folder?: number | null;
 };
