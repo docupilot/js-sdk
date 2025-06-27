@@ -3,7 +3,10 @@
 /* eslint-disable */
 
 export type PatchedEnvelopeUpdate = {
-    expiry?: string | null;
+    /**
+     * Expiry date and time for the envelope
+     */
+    expiry?: string;
     /**
      * Days after sending invite to send first reminder
      */
@@ -15,6 +18,6 @@ export type PatchedEnvelopeUpdate = {
     /**
      * Days before expiry to send warning
      */
-    warn_before?: string | null;
+    warn_before?: string;
 };
 

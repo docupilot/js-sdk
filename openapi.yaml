@@ -10830,7 +10830,7 @@ components:
         expiry:
           type: string
           format: date-time
-          nullable: true
+          description: Expiry date and time for the envelope
         first_reminder:
           type: integer
           nullable: true
@@ -10842,7 +10842,6 @@ components:
         warn_before:
           type: string
           format: date-time
-          nullable: true
           description: Days before expiry to send warning
       description: ''
     PatchedUpdateFolderSharing:
@@ -11615,9 +11614,9 @@ components:
             type: object
             properties:
               id:
-                type: string
+                type: number
               order:
-                type: string
+                type: number
               name:
                 type: string
                 minLength: 3
