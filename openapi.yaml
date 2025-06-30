@@ -662,7 +662,7 @@ paths:
           description: ''
   /accounts/v2/subscription/addon_pricing_info/:
     get:
-      operationId: subscription_addon_pricing_info_retrieve
+      operationId: addon_pricing_info
       parameters:
       - in: header
         name: X-Workspace
@@ -670,6 +670,18 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
       tags:
       - subscription
       security:
@@ -679,7 +691,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AddonPricingInfo'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddonPricingInfo'
           description: ''
         '401':
           content:

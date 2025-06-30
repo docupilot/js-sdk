@@ -18,10 +18,26 @@ export class SubscriptionService {
      * @returns AddonPricingInfo
      * @throws ApiError
      */
-    public static subscriptionAddonPricingInfoRetrieve(): CancelablePromise<AddonPricingInfo> {
+    public static addonPricingInfo({
+        ordering,
+        search,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<Array<AddonPricingInfo>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/addon_pricing_info/',
+            query: {
+                'ordering': ordering,
+                'search': search,
+            },
         });
     }
 
