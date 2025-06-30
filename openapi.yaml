@@ -679,7 +679,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ChargebeeSubscription'
+                $ref: '#/components/schemas/AddonPricingInfo'
           description: ''
         '401':
           content:
@@ -8417,6 +8417,30 @@ components:
       - name
       - template_info
       description: ''
+    AddonPricingInfo:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        type:
+          enum:
+          - recurring
+          - one_time
+          type: string
+        allowed_quantities:
+          type: array
+          items:
+            type: integer
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddonTier'
+      required:
+      - addon_id
+      - allowed_quantities
+      - tiers
+      - type
+      description: ''
     AddonPurchase:
       type: object
       properties:
@@ -8430,6 +8454,18 @@ components:
       required:
       - addon_id
       - quantity
+      description: ''
+    AddonTier:
+      type: object
+      properties:
+        upto:
+          type: string
+        price:
+          type: number
+          format: double
+      required:
+      - price
+      - upto
       description: ''
     AppendFiles:
       type: object
@@ -8993,7 +9029,7 @@ components:
       properties:
         title:
           type: string
-          maxLength: 120
+          maxLength: 255
       required:
       - title
       description: ''
@@ -9611,6 +9647,10 @@ components:
           type: string
           format: date-time
           nullable: true
+        declined_at:
+          type: string
+          format: date-time
+          nullable: true
         voided_at:
           type: string
           format: date-time
@@ -9627,6 +9667,9 @@ components:
           type: integer
         sender:
           type: integer
+        voided_by:
+          type: integer
+          nullable: true
         updated_by:
           type: integer
           readOnly: true
@@ -9727,6 +9770,10 @@ components:
           type: string
           format: date-time
           nullable: true
+        declined_at:
+          type: string
+          format: date-time
+          nullable: true
         voided_at:
           type: string
           format: date-time
@@ -9746,6 +9793,9 @@ components:
           type: integer
         sender:
           type: integer
+        voided_by:
+          type: integer
+          nullable: true
         updated_by:
           type: integer
           nullable: true
@@ -10646,7 +10696,7 @@ components:
           nullable: true
         title:
           type: string
-          maxLength: 120
+          maxLength: 255
         output_type:
           enum:
           - html
@@ -10914,7 +10964,7 @@ components:
         expiry:
           type: string
           format: date-time
-          nullable: true
+          description: Expiry date and time for the envelope
         first_reminder:
           type: integer
           nullable: true
@@ -10926,7 +10976,6 @@ components:
         warn_before:
           type: string
           format: date-time
-          nullable: true
           description: Days before expiry to send warning
       description: ''
     PatchedUpdateFolderSharing:
@@ -11699,9 +11748,9 @@ components:
             type: object
             properties:
               id:
-                type: string
+                type: number
               order:
-                type: string
+                type: number
               name:
                 type: string
                 minLength: 3
@@ -11832,7 +11881,7 @@ components:
           $ref: '#/components/schemas/TemplateSettings'
         title:
           type: string
-          maxLength: 120
+          maxLength: 255
         description:
           type: string
           nullable: true
