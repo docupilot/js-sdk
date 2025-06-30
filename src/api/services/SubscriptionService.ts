@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AddonPricingInfo } from '../models/AddonPricingInfo';
 import type { AddonPurchase } from '../models/AddonPurchase';
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
 import type { HostedPage } from '../models/HostedPage';
@@ -14,10 +15,10 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class SubscriptionService {
 
     /**
-     * @returns ChargebeeSubscription
+     * @returns AddonPricingInfo
      * @throws ApiError
      */
-    public static subscriptionAddonPricingInfoRetrieve(): CancelablePromise<ChargebeeSubscription> {
+    public static subscriptionAddonPricingInfoRetrieve(): CancelablePromise<AddonPricingInfo> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/v2/subscription/addon_pricing_info/',
