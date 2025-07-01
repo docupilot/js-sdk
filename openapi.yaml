@@ -5384,6 +5384,13 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
       - in: path
         name: id
         schema:
@@ -8924,6 +8931,9 @@ components:
         signnow_credits_used:
           type: integer
           readOnly: true
+        trial_signatures_allowed:
+          type: integer
+          readOnly: true
         signatures_allowed:
           type: integer
           readOnly: true
@@ -8947,6 +8957,7 @@ components:
       - status
       - subscribed_on
       - trial_end
+      - trial_signatures_allowed
       - unpaid_invoices
       description: ''
     ChildDocumentMergeHistory:
