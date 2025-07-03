@@ -8,6 +8,9 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AcceptInvite } from './models/AcceptInvite';
 export type { AccountDelivery } from './models/AccountDelivery';
+export type { AddonPricingInfo } from './models/AddonPricingInfo';
+export type { AddonPurchase } from './models/AddonPurchase';
+export type { AddonTier } from './models/AddonTier';
 export type { AITemplateCreate } from './models/AITemplateCreate';
 export type { AITemplateEdit } from './models/AITemplateEdit';
 export type { AppendFiles } from './models/AppendFiles';

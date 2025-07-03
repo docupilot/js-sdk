@@ -660,6 +660,104 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /accounts/v2/subscription/addon_pricing_info/:
+    get:
+      operationId: addon_pricing_info
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AddonPricingInfo'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/v2/subscription/buy_addon/:
+    post:
+      operationId: purchase_addon
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - subscription
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddonPurchase'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AddonPurchase'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AddonPurchase'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -5286,6 +5384,13 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
       - in: path
         name: id
         schema:
@@ -8333,6 +8438,56 @@ components:
       - name
       - template_info
       description: ''
+    AddonPricingInfo:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        type:
+          enum:
+          - recurring
+          - one_time
+          type: string
+        allowed_quantities:
+          type: array
+          items:
+            type: integer
+        tiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddonTier'
+      required:
+      - addon_id
+      - allowed_quantities
+      - tiers
+      - type
+      description: ''
+    AddonPurchase:
+      type: object
+      properties:
+        addon_id:
+          enum:
+          - esignature
+          - signnow
+          type: string
+        quantity:
+          type: integer
+      required:
+      - addon_id
+      - quantity
+      description: ''
+    AddonTier:
+      type: object
+      properties:
+        upto:
+          type: string
+        price:
+          type: number
+          format: double
+      required:
+      - price
+      - upto
+      description: ''
     AppendFiles:
       type: object
       properties:
@@ -8776,6 +8931,9 @@ components:
         signnow_credits_used:
           type: integer
           readOnly: true
+        trial_signatures_allowed:
+          type: integer
+          readOnly: true
         signatures_allowed:
           type: integer
           readOnly: true
@@ -8799,6 +8957,7 @@ components:
       - status
       - subscribed_on
       - trial_end
+      - trial_signatures_allowed
       - unpaid_invoices
       description: ''
     ChildDocumentMergeHistory:
@@ -11641,6 +11800,8 @@ components:
         warn_before:
           type: integer
           nullable: true
+        sender:
+          type: integer
         name:
           type: string
           maxLength: 255
@@ -11696,8 +11857,6 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
-        sender:
-          type: integer
       required:
       - id
       - name

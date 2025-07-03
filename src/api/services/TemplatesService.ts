@@ -284,17 +284,22 @@ export class TemplatesService {
      */
     public static previewTemplate({
         id,
+        format,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
+        format?: 'json' | 'octet-stream',
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/{id}/preview/',
             path: {
                 'id': id,
+            },
+            query: {
+                'format': format,
             },
         });
     }

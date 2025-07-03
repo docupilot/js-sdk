@@ -18,6 +18,7 @@ export type ChargebeeSubscription = {
     readonly subscribed_on: string;
     readonly signnow_credits_allowed: number;
     readonly signnow_credits_used: number;
+    readonly trial_signatures_allowed: number;
     readonly signatures_allowed: number;
     readonly signatures_used: number;
 };

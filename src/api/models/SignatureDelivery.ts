@@ -16,6 +16,7 @@ export type SignatureDelivery = {
     first_reminder?: number | null;
     reminder_frequency?: number | null;
     warn_before?: number | null;
+    sender: number;
     name: string;
     type?: 'signature';
     success_callback_url?: string | null;
@@ -27,6 +28,5 @@ export type SignatureDelivery = {
     cc?: Array<string>;
     sequenced_signing?: boolean;
     enable_optional_signers?: boolean;
-    sender: number;
 };
 
