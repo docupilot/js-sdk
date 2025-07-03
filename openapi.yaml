@@ -984,6 +984,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/v2/subscription/subscription_months_remaining/:
+    get:
+      operationId: subscription_months_remaining
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/v2/subscription/unpaid_invoices/:
     get:
       operationId: get_chargebee_unpaid_invoices
@@ -11800,6 +11834,8 @@ components:
         warn_before:
           type: integer
           nullable: true
+        sender:
+          type: integer
         name:
           type: string
           maxLength: 255
@@ -11855,8 +11891,6 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
-        sender:
-          type: integer
       required:
       - id
       - name

@@ -139,6 +139,17 @@ export class SubscriptionService {
     }
 
     /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static subscriptionMonthsRemaining(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/v2/subscription/subscription_months_remaining/',
+        });
+    }
+
+    /**
      * @returns HostedPage
      * @throws ApiError
      */
