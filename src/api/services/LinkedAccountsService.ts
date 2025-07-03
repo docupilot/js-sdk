@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { BoxDrivePickerPayload } from '../models/BoxDrivePickerPayload';
 import type { DeliveryAccount } from '../models/DeliveryAccount';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
 import type { PaginatedAccountDeliveryList } from '../models/PaginatedAccountDeliveryList';
@@ -34,7 +35,7 @@ export class LinkedAccountsService {
          * A search term.
          */
         search?: string,
-        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
     }): CancelablePromise<Array<DeliveryAccount>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -144,6 +145,28 @@ export class LinkedAccountsService {
     }
 
     /**
+     * Get box drive picker payload
+     * @returns BoxDrivePickerPayload
+     * @throws ApiError
+     */
+    public static getBoxDrivePickerPayload({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<BoxDrivePickerPayload> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/linked_accounts/{id}/box_drive_picker_payload/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
      * List account deliveries
      * @returns PaginatedAccountDeliveryList
      * @throws ApiError
@@ -161,7 +184,7 @@ export class LinkedAccountsService {
          * A page number within the paginated result set.
          */
         page?: number,
-        type?: 'aws_s3' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
     }): CancelablePromise<PaginatedAccountDeliveryList> {
         return __request(OpenAPI, {
             method: 'GET',

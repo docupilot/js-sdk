@@ -50,4 +50,26 @@ export class MergeHistoryService {
         });
     }
 
+    /**
+     * download generated document if available
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadCreatedDocumentUsingDocumentMergeHistory({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document merge history.
+         */
+        id: number,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/merge_history/{id}/download/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
 }

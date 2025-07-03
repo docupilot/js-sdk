@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { AddonPricingInfo } from '../models/AddonPricingInfo';
+import type { AddonPurchase } from '../models/AddonPurchase';
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
 import type { HostedPage } from '../models/HostedPage';
 import type { RenewSubscription } from '../models/RenewSubscription';
@@ -11,6 +13,50 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class SubscriptionService {
+
+    /**
+     * @returns AddonPricingInfo
+     * @throws ApiError
+     */
+    public static addonPricingInfo({
+        ordering,
+        search,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<Array<AddonPricingInfo>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/accounts/v2/subscription/addon_pricing_info/',
+            query: {
+                'ordering': ordering,
+                'search': search,
+            },
+        });
+    }
+
+    /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static purchaseAddon({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<AddonPurchase>,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/accounts/v2/subscription/buy_addon/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
 
     /**
      * @returns ChargebeeSubscription
