@@ -64,8 +64,8 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v4
         with:
-          reviewers: tiholic, SumanthDocupliot, ravalikab, deekshith1856, Kat001
-          assignees: tiholic, SumanthDocupliot, ravalikab, deekshith1856, Kat001
+          reviewers: tiholic, SumanthDocupliot, ravalikab, deekshith1856
+          assignees: tiholic, SumanthDocupliot, ravalikab, deekshith1856
           title: SDK Update - ${{ inputs.title_suffix }}
           body: "Changes created by [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           delete-branch: true
