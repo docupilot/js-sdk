@@ -13,5 +13,6 @@ export type GlobalPermission = {
     integrations: boolean;
     reports: boolean;
     api_settings: boolean;
+    eSignatures: boolean;
 };
 
