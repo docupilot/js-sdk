@@ -7463,6 +7463,12 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
       tags:
       - templates
       security:
@@ -7474,7 +7480,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/PaginatedTemplateList'
           description: ''
         '401':
           content:
