@@ -575,13 +575,23 @@ export class TemplatesService {
 
     /**
      * List all templates in trash.
-     * @returns Template
+     * @returns PaginatedTemplateList
      * @throws ApiError
      */
-    public static listTrashedTemplates(): CancelablePromise<Template> {
+    public static listTrashedTemplates({
+        page,
+    }: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+    }): CancelablePromise<PaginatedTemplateList> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/v2/templates/trash/',
+            query: {
+                'page': page,
+            },
         });
     }
 
