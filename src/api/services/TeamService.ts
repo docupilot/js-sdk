@@ -3,7 +3,6 @@
 /* eslint-disable */
 import type { ChangeRole } from '../models/ChangeRole';
 import type { TeamMember } from '../models/TeamMember';
-import type { TransferOwnership } from '../models/TransferOwnership';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -76,24 +75,6 @@ export class TeamService {
             path: {
                 'id': id,
             },
-        });
-    }
-
-    /**
-     * Transfer Ownership To Admin User
-     * @returns void
-     * @throws ApiError
-     */
-    public static transferOwnershipToAdminUser({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<TransferOwnership>,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/dashboard/accounts/v2/team/transfer_ownership/',
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 

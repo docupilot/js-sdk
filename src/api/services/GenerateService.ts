@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
 import type { Template } from '../models/Template';
+import type { TemplateTestResponse } from '../models/TemplateTestResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -80,7 +81,7 @@ export class GenerateService {
 
     /**
      * Test document generation
-     * @returns Template
+     * @returns TemplateTestResponse
      * @throws ApiError
      */
     public static testDocumentGeneration({
@@ -94,7 +95,7 @@ export class GenerateService {
         id: number,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         requestBody?: Record<string, any>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<TemplateTestResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/templates/{id}/test/',
