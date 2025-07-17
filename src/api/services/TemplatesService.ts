@@ -3,10 +3,12 @@
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
 import type { MoveTemplate } from '../models/MoveTemplate';
+import type { MoveTemplateResponse } from '../models/MoveTemplateResponse';
 import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
 import type { PatchedUpdateTemplateSharing } from '../models/PatchedUpdateTemplateSharing';
+import type { RestoreTemplateResponse } from '../models/RestoreTemplateResponse';
 import type { SharingInfoTemplate } from '../models/SharingInfoTemplate';
 import type { Template } from '../models/Template';
 import type { TemplateCount } from '../models/TemplateCount';
@@ -306,27 +308,23 @@ export class TemplatesService {
 
     /**
      * Restore a template from trash
-     * @returns Template
+     * @returns RestoreTemplateResponse
      * @throws ApiError
      */
     public static restoreTemplateFromTrash({
         id,
-        requestBody,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: OmitReadonly<Template>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<RestoreTemplateResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/api/v2/templates/{id}/restore/',
             path: {
                 'id': id,
             },
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 
@@ -548,14 +546,14 @@ export class TemplatesService {
 
     /**
      * Move templates to another folder
-     * @returns Template
+     * @returns MoveTemplateResponse
      * @throws ApiError
      */
     public static moveTemplatesToAnotherFolder({
         requestBody,
     }: {
         requestBody: OmitReadonly<MoveTemplate>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<MoveTemplateResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v2/templates/move/',

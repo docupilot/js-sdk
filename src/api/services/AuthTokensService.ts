@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AuthToken } from '../models/AuthToken';
+import type { NewAuthTokenResponse } from '../models/NewAuthTokenResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -38,14 +39,14 @@ export class AuthTokensService {
     }
 
     /**
-     * @returns AuthToken
+     * @returns NewAuthTokenResponse
      * @throws ApiError
      */
     public static createAuthToken({
         requestBody,
     }: {
         requestBody: OmitReadonly<AuthToken>,
-    }): CancelablePromise<AuthToken> {
+    }): CancelablePromise<NewAuthTokenResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/v2/auth_tokens/',

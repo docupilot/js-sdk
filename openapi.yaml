@@ -85,7 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AuthToken'
+                $ref: '#/components/schemas/NewAuthTokenResponse'
           description: ''
         '400':
           content:
@@ -5480,18 +5480,6 @@ paths:
         required: true
       tags:
       - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Template'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Template'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Template'
-        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -5501,7 +5489,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/RestoreTemplateResponse'
           description: ''
         '400':
           content:
@@ -5660,11 +5648,11 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/TemplateTestResponse'
           description: ''
         '400':
           content:
@@ -7407,11 +7395,11 @@ paths:
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '200':
+        '207':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/MoveTemplateResponse'
           description: ''
         '400':
           content:
@@ -9089,6 +9077,9 @@ components:
         title:
           type: string
           maxLength: 255
+        folder:
+          type: integer
+          nullable: true
       required:
       - title
       description: ''
@@ -9220,7 +9211,6 @@ components:
               email_address:
                 type: string
                 format: email
-                minLength: 2
               country_code:
                 type: string
               phone_number:
@@ -10743,6 +10733,57 @@ components:
       - new_folder_id
       - template_ids
       description: ''
+    MoveTemplateResponse:
+      type: object
+      properties:
+        success:
+          type: array
+          items:
+            type: integer
+          description: List of successfully moved template IDs
+        failures:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/TemplateMoveFailureDetail'
+          description: Mapping of failed template IDs to error messages
+      required:
+      - failures
+      - success
+      description: ''
+    NewAuthTokenResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        token:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        last_used_time:
+          type: string
+          format: date-time
+          nullable: true
+        active:
+          type: boolean
+        secret:
+          type: string
+          readOnly: true
+          nullable: true
+      required:
+      - created_time
+      - id
+      - name
+      - secret
+      - token
+      description: ''
     NewTemplate:
       type: object
       description: ''
@@ -11336,6 +11377,14 @@ components:
         upgrade_message:
           type: string
           maxLength: 200
+      description: ''
+    RestoreTemplateResponse:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
       description: ''
     RetentionPreference:
       type: object
@@ -11938,6 +11987,10 @@ components:
           readOnly: true
         preferences:
           $ref: '#/components/schemas/TemplateSettings'
+        folder:
+          allOf:
+          - $ref: '#/components/schemas/Folder'
+          readOnly: true
         title:
           type: string
           maxLength: 255
@@ -11986,13 +12039,11 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        folder:
-          type: integer
-          nullable: true
       required:
       - created_by
       - created_time
       - deleted_time
+      - folder
       - id
       - title
       - type
@@ -12096,6 +12147,14 @@ components:
       - name
       - status
       - type
+      description: ''
+    TemplateMoveFailureDetail:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
       description: ''
     TemplateSchema:
       type: object
@@ -12251,6 +12310,18 @@ components:
       required:
       - id
       - user
+    TemplateTestResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
+      description: ''
     Timezone:
       type: object
       properties:
