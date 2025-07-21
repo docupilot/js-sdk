@@ -4,6 +4,6 @@
 
 export type CopyTemplate = {
     title: string;
-    folder?: number | null;
+    folder: number | null;
 };
 

@@ -9087,6 +9087,7 @@ components:
           type: integer
           nullable: true
       required:
+      - folder
       - title
       description: ''
     DeleteCurrentWorkspace:
