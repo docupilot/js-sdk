@@ -35,6 +35,7 @@ export type { CopyTemplate } from './models/CopyTemplate';
 export type { CSMDetails } from './models/CSMDetails';
 export type { DeleteCurrentWorkspace } from './models/DeleteCurrentWorkspace';
 export type { DeliveryAccount } from './models/DeliveryAccount';
+export type { DeliveryCount } from './models/DeliveryCount';
 export type { DemoGraphic } from './models/DemoGraphic';
 export type { DocumentMergeHistory } from './models/DocumentMergeHistory';
 export type { DocumentMergeLink } from './models/DocumentMergeLink';
