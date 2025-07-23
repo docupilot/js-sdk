@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
+import type { DeliveryCount } from '../models/DeliveryCount';
 import type { MoveTemplate } from '../models/MoveTemplate';
 import type { MoveTemplateResponse } from '../models/MoveTemplateResponse';
 import type { NewTemplate } from '../models/NewTemplate';
@@ -206,6 +207,28 @@ export class TemplatesService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get the count of deliveries linked to a template
+     * @returns DeliveryCount
+     * @throws ApiError
+     */
+    public static getTemplateDeliveryCount({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<DeliveryCount> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v2/templates/{id}/delivery_count/',
+            path: {
+                'id': id,
+            },
         });
     }
 
