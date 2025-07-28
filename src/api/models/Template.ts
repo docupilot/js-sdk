@@ -8,7 +8,7 @@ import type { TemplateSettings } from './TemplateSettings';
 export type Template = {
     readonly id: number;
     preferences?: TemplateSettings;
-    readonly folder: Folder;
+    folder?: Folder | null;
     title: string;
     description?: string | null;
     readonly type: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
