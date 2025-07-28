@@ -12076,7 +12076,7 @@ components:
         folder:
           allOf:
           - $ref: '#/components/schemas/Folder'
-          readOnly: true
+          nullable: true
         title:
           type: string
           maxLength: 255
@@ -12129,7 +12129,6 @@ components:
       - created_by
       - created_time
       - deleted_time
-      - folder
       - id
       - title
       - type
