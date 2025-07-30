@@ -6,6 +6,7 @@ import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
+import type { PaginatedEnvelopeAttachmentList } from '../models/PaginatedEnvelopeAttachmentList';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
@@ -104,6 +105,36 @@ export class EsignService {
             url: '/esign/envelopes/{id}/',
             path: {
                 'id': id,
+            },
+        });
+    }
+
+    /**
+     * Download an individual attachment
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadAttachment({
+        attachmentId,
+        id,
+        format,
+    }: {
+        attachmentId: string,
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/esign/envelopes/{id}/attachment/{attachment_id}/download/',
+            path: {
+                'attachment_id': attachmentId,
+                'id': id,
+            },
+            query: {
+                'format': format,
             },
         });
     }
@@ -304,6 +335,61 @@ export class EsignService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get attachments uploaded by a specific recipient
+     * @returns PaginatedEnvelopeAttachmentList List of attachments uploaded by the recipient.
+     * @throws ApiError
+     */
+    public static recipientAttachments({
+        id,
+        recipientId,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        recipientId: string,
+    }): CancelablePromise<PaginatedEnvelopeAttachmentList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/esign/envelopes/{id}/recipient/{recipient_id}/attachments/',
+            path: {
+                'id': id,
+                'recipient_id': recipientId,
+            },
+        });
+    }
+
+    /**
+     * Download all attachments of an envelope recipient as a zip file
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadRecipientAttachments({
+        id,
+        recipientId,
+        format,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        recipientId: string,
+        format?: 'json' | 'zip',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/esign/envelopes/{id}/recipient/{recipient_id}/attachments/download/',
+            path: {
+                'id': id,
+                'recipient_id': recipientId,
+            },
+            query: {
+                'format': format,
+            },
         });
     }
 
