@@ -7753,6 +7753,76 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /esign/envelopes/{id}/attachment/{attachment_id}/download/:
+    get:
+      operationId: download_attachment
+      summary: Download an individual attachment
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: attachment_id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /esign/envelopes/{id}/cancel/:
     post:
       operationId: cancel_envelope
@@ -8183,6 +8253,135 @@ paths:
         '404':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/recipient/{recipient_id}/attachments/:
+    get:
+      operationId: recipient_attachments
+      summary: Get attachments uploaded by a specific recipient
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      - in: path
+        name: recipient_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnvelopeAttachmentList'
+          description: List of attachments uploaded by the recipient.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /esign/envelopes/{id}/recipient/{recipient_id}/attachments/download/:
+    get:
+      operationId: download_recipient_attachments
+      summary: Download all attachments of an envelope recipient as a zip file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - zip
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      - in: path
+        name: recipient_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/zip:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -9291,6 +9490,7 @@ components:
               email_address:
                 type: string
                 format: email
+                minLength: 5
               country_code:
                 type: string
               phone_number:
@@ -9826,6 +10026,45 @@ components:
       - voided_at
       - workspace
       description: ''
+    EnvelopeAttachment:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          description: Name of the attachment
+        attachment:
+          type: string
+          format: uri
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the file was uploaded
+        uploaded_by:
+          type: integer
+          readOnly: true
+          description: Envelope recipient who uploaded the attachment
+        uploaded_by_name:
+          type: string
+          readOnly: true
+        uploaded_by_email:
+          type: string
+          format: email
+          readOnly: true
+      required:
+      - attachment
+      - created_at
+      - id
+      - name
+      - uploaded_by
+      - uploaded_by_email
+      - uploaded_by_name
     EnvelopeDetails:
       type: object
       properties:
@@ -11055,6 +11294,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentMergeHistory'
+    PaginatedEnvelopeAttachmentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeAttachment'
     PaginatedEnvelopeList:
       type: object
       required:
