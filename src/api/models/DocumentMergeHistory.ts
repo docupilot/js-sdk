@@ -13,5 +13,6 @@ export type DocumentMergeHistory = {
     readonly is_data_expired: boolean;
     readonly is_document_expired: boolean;
     created_file_name?: string | null;
+    readonly created_time: string | null;
 };
 
