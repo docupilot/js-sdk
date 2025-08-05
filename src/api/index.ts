@@ -87,7 +87,6 @@ export type { OneDriveDelivery } from './models/OneDriveDelivery';
 export type { PaginatedAccountDeliveryList } from './models/PaginatedAccountDeliveryList';
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedDocumentMergeHistoryList } from './models/PaginatedDocumentMergeHistoryList';
-export type { PaginatedEnvelopeAttachmentList } from './models/PaginatedEnvelopeAttachmentList';
 export type { PaginatedEnvelopeList } from './models/PaginatedEnvelopeList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';

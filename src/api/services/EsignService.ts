@@ -2,11 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { Envelope } from '../models/Envelope';
+import type { EnvelopeAttachment } from '../models/EnvelopeAttachment';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
-import type { PaginatedEnvelopeAttachmentList } from '../models/PaginatedEnvelopeAttachmentList';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
@@ -340,7 +340,7 @@ export class EsignService {
 
     /**
      * Get attachments uploaded by a specific recipient
-     * @returns PaginatedEnvelopeAttachmentList List of attachments uploaded by the recipient.
+     * @returns EnvelopeAttachment List of attachments uploaded by the recipient.
      * @throws ApiError
      */
     public static recipientAttachments({
@@ -352,7 +352,7 @@ export class EsignService {
          */
         id: number,
         recipientId: string,
-    }): CancelablePromise<PaginatedEnvelopeAttachmentList> {
+    }): CancelablePromise<Array<EnvelopeAttachment>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/esign/envelopes/{id}/recipient/{recipient_id}/attachments/',

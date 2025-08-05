@@ -17,6 +17,7 @@ export type EnvelopeAttachment = {
      * Envelope recipient who uploaded the attachment
      */
     readonly uploaded_by: number;
+    readonly field_label: string;
     readonly uploaded_by_name: string;
     readonly uploaded_by_email: string;
 };

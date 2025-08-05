@@ -8289,7 +8289,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedEnvelopeAttachmentList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvelopeAttachment'
           description: List of attachments uploaded by the recipient.
         '400':
           content:
@@ -10050,6 +10052,9 @@ components:
           type: integer
           readOnly: true
           description: Envelope recipient who uploaded the attachment
+        field_label:
+          type: string
+          readOnly: true
         uploaded_by_name:
           type: string
           readOnly: true
@@ -10060,6 +10065,7 @@ components:
       required:
       - attachment
       - created_at
+      - field_label
       - id
       - name
       - uploaded_by
@@ -11294,29 +11300,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentMergeHistory'
-    PaginatedEnvelopeAttachmentList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvelopeAttachment'
     PaginatedEnvelopeList:
       type: object
       required:
