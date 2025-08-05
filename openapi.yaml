@@ -4954,6 +4954,52 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/templates/{id}/delivery_count/:
+    get:
+      operationId: get_template_delivery_count
+      summary: Get the count of deliveries linked to a template
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryCount'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/templates/{id}/download/:
     get:
       operationId: download_template_file
@@ -8827,8 +8873,26 @@ components:
           type: integer
           readOnly: true
         delivery_type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - signature
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
           type: string
-          maxLength: 255
         status:
           enum:
           - pending
@@ -8919,6 +8983,7 @@ components:
           type: integer
           nullable: true
       required:
+      - folder
       - title
       description: ''
     DeleteCurrentWorkspace:
@@ -8990,6 +9055,15 @@ components:
       - type
       - updated_at
       - used_by
+    DeliveryCount:
+      type: object
+      properties:
+        delivery_count:
+          type: integer
+          description: Number of deliveries linked to the template
+      required:
+      - delivery_count
+      description: ''
     DemoGraphic:
       type: object
       properties:
@@ -9049,6 +9123,7 @@ components:
               email_address:
                 type: string
                 format: email
+                minLength: 5
               country_code:
                 type: string
               phone_number:
@@ -9179,7 +9254,13 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
       required:
+      - created_time
       - executed_deliveries
       - id
       - is_data_expired
@@ -11826,7 +11907,7 @@ components:
         folder:
           allOf:
           - $ref: '#/components/schemas/Folder'
-          readOnly: true
+          nullable: true
         title:
           type: string
           maxLength: 255
@@ -11879,7 +11960,6 @@ components:
       - created_by
       - created_time
       - deleted_time
-      - folder
       - id
       - title
       - type
