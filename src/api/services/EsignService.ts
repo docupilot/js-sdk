@@ -258,22 +258,27 @@ export class EsignService {
 
     /**
      * preview Envelope
-     * @returns Envelope
+     * @returns binary
      * @throws ApiError
      */
     public static previewEnvelope({
         id,
+        format,
     }: {
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-    }): CancelablePromise<Envelope> {
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/envelopes/{id}/preview/',
             path: {
                 'id': id,
+            },
+            query: {
+                'format': format,
             },
         });
     }

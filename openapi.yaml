@@ -550,6 +550,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/accounts/v2/organization/current/:
+    get:
+      operationId: get_current_organization
+      summary: get current organization details
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - organization
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/accounts/v2/subscription/addon_pricing_info/:
     get:
       operationId: addon_pricing_info
@@ -7934,6 +7970,13 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
       - in: path
         name: id
         schema:
@@ -7949,13 +7992,17 @@ paths:
       responses:
         '200':
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                $ref: '#/components/schemas/Envelope'
+                type: string
+                format: binary
           description: ''
         '401':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
@@ -7964,10 +8011,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -10814,6 +10867,21 @@ components:
       - account
       - id
       - name
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+        logo:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+      required:
+      - logo
+      - name
+      description: ''
     PaginatedAccountDeliveryList:
       type: object
       required:
