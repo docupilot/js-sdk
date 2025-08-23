@@ -26,7 +26,7 @@ export class AiService {
     }): CancelablePromise<AITemplateCreate> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai/online-builder/create_template/',
+            url: '/dashboard/ai/online-builder/create_template/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -44,7 +44,7 @@ export class AiService {
     }): CancelablePromise<AITemplateEdit> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai/online-builder/edit_template/',
+            url: '/dashboard/ai/online-builder/edit_template/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -62,7 +62,7 @@ export class AiService {
     }): CancelablePromise<PromptSuggestions> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai/online-builder/list_prompt_suggestions/',
+            url: '/dashboard/ai/online-builder/list_prompt_suggestions/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -80,7 +80,7 @@ export class AiService {
     }): CancelablePromise<WordAddInTemplateEdit> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai/word-add-in/edit_template/',
+            url: '/dashboard/ai/word-add-in/edit_template/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -98,7 +98,7 @@ export class AiService {
     }): CancelablePromise<WordAddInPromptSuggestions> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/ai/word-add-in/list_prompt_suggestions/',
+            url: '/dashboard/ai/word-add-in/list_prompt_suggestions/',
             body: requestBody,
             mediaType: 'application/json',
         });
