@@ -50,7 +50,7 @@ export class EsignService {
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/',
+            url: '/dashboard/esign/envelopes/',
             query: {
                 'ordering': ordering,
                 'page': page,
@@ -77,7 +77,7 @@ export class EsignService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/esign/envelopes/{id}/',
+            url: '/dashboard/esign/envelopes/{id}/',
             path: {
                 'id': id,
             },
@@ -101,7 +101,7 @@ export class EsignService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/esign/envelopes/{id}/',
+            url: '/dashboard/esign/envelopes/{id}/',
             path: {
                 'id': id,
             },
@@ -125,7 +125,7 @@ export class EsignService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/esign/envelopes/{id}/cancel/',
+            url: '/dashboard/esign/envelopes/{id}/cancel/',
             path: {
                 'id': id,
             },
@@ -149,7 +149,7 @@ export class EsignService {
     }): CancelablePromise<EnvelopeDetails> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/{id}/details/',
+            url: '/dashboard/esign/envelopes/{id}/details/',
             path: {
                 'id': id,
             },
@@ -176,7 +176,7 @@ export class EsignService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/{id}/download/',
+            url: '/dashboard/esign/envelopes/{id}/download/',
             path: {
                 'id': id,
             },
@@ -203,7 +203,7 @@ export class EsignService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/esign/envelopes/{id}/email_copy/',
+            url: '/dashboard/esign/envelopes/{id}/email_copy/',
             path: {
                 'id': id,
             },
@@ -227,7 +227,7 @@ export class EsignService {
     }): CancelablePromise<EnvelopeHistory> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/{id}/history/',
+            url: '/dashboard/esign/envelopes/{id}/history/',
             path: {
                 'id': id,
             },
@@ -249,7 +249,7 @@ export class EsignService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/esign/envelopes/{id}/permanent_delete/',
+            url: '/dashboard/esign/envelopes/{id}/permanent_delete/',
             path: {
                 'id': id,
             },
@@ -258,22 +258,27 @@ export class EsignService {
 
     /**
      * preview Envelope
-     * @returns Envelope
+     * @returns binary
      * @throws ApiError
      */
     public static previewEnvelope({
         id,
+        format,
     }: {
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-    }): CancelablePromise<Envelope> {
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/{id}/preview/',
+            url: '/dashboard/esign/envelopes/{id}/preview/',
             path: {
                 'id': id,
+            },
+            query: {
+                'format': format,
             },
         });
     }
@@ -297,7 +302,7 @@ export class EsignService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/esign/envelopes/{id}/recipient/{recipient_id}/',
+            url: '/dashboard/esign/envelopes/{id}/recipient/{recipient_id}/',
             path: {
                 'id': id,
                 'recipient_id': recipientId,
@@ -322,7 +327,7 @@ export class EsignService {
     }): CancelablePromise<Envelope> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/esign/envelopes/{id}/restore/',
+            url: '/dashboard/esign/envelopes/{id}/restore/',
             path: {
                 'id': id,
             },
@@ -344,7 +349,7 @@ export class EsignService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/esign/envelopes/{id}/send_reminder/',
+            url: '/dashboard/esign/envelopes/{id}/send_reminder/',
             path: {
                 'id': id,
             },
@@ -359,7 +364,7 @@ export class EsignService {
     public static envelopeCountByStatus(): CancelablePromise<EnvelopeStatusCountResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/count/',
+            url: '/dashboard/esign/envelopes/count/',
         });
     }
 
@@ -375,7 +380,7 @@ export class EsignService {
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/esign/envelopes/trash/',
+            url: '/dashboard/esign/envelopes/trash/',
             query: {
                 'page': page,
             },

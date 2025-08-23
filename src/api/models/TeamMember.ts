@@ -8,6 +8,6 @@ export type TeamMember = {
     readonly id: number;
     readonly user: User;
     role?: 'owner' | 'admin' | 'manager' | 'member' | 'billing_manager';
-    is_deleted?: boolean;
+    deactivated_at?: string | null;
 };
 

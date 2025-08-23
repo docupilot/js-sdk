@@ -34,7 +34,7 @@ export class WorkspacesService {
     }): CancelablePromise<Array<Workspace>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/workspaces/',
+            url: '/dashboard/accounts/v2/workspaces/',
             query: {
                 'ordering': ordering,
                 'search': search,
@@ -54,7 +54,7 @@ export class WorkspacesService {
     }): CancelablePromise<Workspace> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/workspaces/',
+            url: '/dashboard/accounts/v2/workspaces/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -68,7 +68,7 @@ export class WorkspacesService {
     public static getCsmDetails(): CancelablePromise<CSMDetails> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/workspaces/csm_details/',
+            url: '/dashboard/accounts/v2/workspaces/csm_details/',
         });
     }
 
@@ -80,7 +80,7 @@ export class WorkspacesService {
     public static getCurrentWorkspace(): CancelablePromise<Workspace> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/workspaces/current/',
+            url: '/dashboard/accounts/v2/workspaces/current/',
         });
     }
 
@@ -96,7 +96,7 @@ export class WorkspacesService {
     }): CancelablePromise<PatchedWorkspace> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/accounts/v2/workspaces/current/',
+            url: '/dashboard/accounts/v2/workspaces/current/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -114,7 +114,7 @@ export class WorkspacesService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/workspaces/current/delete/',
+            url: '/dashboard/accounts/v2/workspaces/current/delete/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -128,7 +128,7 @@ export class WorkspacesService {
     public static getWorkspaceDataRetentionPreference(): CancelablePromise<RetentionPreference> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/workspaces/retention_preference/',
+            url: '/dashboard/accounts/v2/workspaces/retention_preference/',
         });
     }
 
@@ -144,7 +144,7 @@ export class WorkspacesService {
     }): CancelablePromise<RetentionPreference> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/accounts/v2/workspaces/retention_preference/',
+            url: '/dashboard/accounts/v2/workspaces/retention_preference/',
             body: requestBody,
             mediaType: 'application/json',
         });

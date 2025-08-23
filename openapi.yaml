@@ -1,14 +1,14 @@
 openapi: 3.0.3
 info:
   title: Docupilot V2 APIs
-  version: '2.0'
+  version: '3.0'
   description: Docupilot V2 APIs
   termsOfService: https://docupilot.app/terms-and-conditions/
   contact:
     name: Team Docupilot
     email: support@docupilot.app
 paths:
-  /accounts/v2/auth_tokens/:
+  /dashboard/accounts/v2/auth_tokens/:
     get:
       operationId: list_auth_tokens
       parameters:
@@ -105,7 +105,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/auth_tokens/{id}/:
+  /dashboard/accounts/v2/auth_tokens/{id}/:
     put:
       operationId: update_auth_token
       parameters:
@@ -214,7 +214,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/demographic/:
+  /dashboard/accounts/v2/demographic/:
     post:
       operationId: create_demographic
       summary: Create Demographic
@@ -261,7 +261,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/demographic/show_prompt/:
+  /dashboard/accounts/v2/demographic/show_prompt/:
     get:
       operationId: show_demographic_prompt_for_workspace_users
       summary: Show demographic prompt for workspace users
@@ -295,7 +295,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/demographic/validate_domain_and_set_demographic/:
+  /dashboard/accounts/v2/demographic/validate_domain_and_set_demographic/:
     post:
       operationId: validate_domain_and_set_demographic
       summary: Verify domain and set demographic
@@ -347,7 +347,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/invitations/:
+  /dashboard/accounts/v2/invitations/:
     get:
       operationId: list_invitation
       summary: Get list of Invitation
@@ -450,32 +450,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/invitations/{invite_key}/get_by_key/:
-    get:
-      operationId: retrieve_invitation_by_key
-      summary: Get Invitation
-      parameters:
-      - in: path
-        name: invite_key
-        schema:
-          type: string
-        required: true
-      tags:
-      - invitations
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /accounts/v2/invitations/{id}/:
+  /dashboard/accounts/v2/invitations/{id}/:
     delete:
       operationId: delete_invitation
       summary: Delete Invitation
@@ -523,92 +498,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/invitations/{id}/accept_invitation/:
-    get:
-      operationId: retrieve_invitation_for_accept
-      summary: retrieve invitation for accept
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this invitation.
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-    post:
-      operationId: accept_invitation
-      summary: Accept invitation
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this invitation.
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AcceptInvite'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /accounts/v2/invitations/{id}/resend_invitation/:
+  /dashboard/accounts/v2/invitations/{id}/resend_invitation/:
     post:
       operationId: resend_invitation
       summary: Resend invitation
@@ -660,7 +550,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/subscription/addon_pricing_info/:
+  /dashboard/accounts/v2/organization/current/:
+    get:
+      operationId: get_current_organization
+      summary: get current organization details
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - organization
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/accounts/v2/subscription/addon_pricing_info/:
     get:
       operationId: addon_pricing_info
       parameters:
@@ -707,7 +633,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/buy_addon/:
+  /dashboard/accounts/v2/subscription/buy_addon/:
     post:
       operationId: purchase_addon
       parameters:
@@ -758,7 +684,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/details/:
+  /dashboard/accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
       parameters:
@@ -791,7 +717,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/extend_trial/:
+  /dashboard/accounts/v2/subscription/extend_trial/:
     post:
       operationId: extend_trial
       summary: Extend trial
@@ -827,7 +753,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/hosted_page/:
+  /dashboard/accounts/v2/subscription/hosted_page/:
     get:
       operationId: get_chargebee_hosted_page
       parameters:
@@ -865,7 +791,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/portal_session/:
+  /dashboard/accounts/v2/subscription/portal_session/:
     get:
       operationId: get_chargebee_portal_session
       parameters:
@@ -898,7 +824,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/remaining_months/:
+  /dashboard/accounts/v2/subscription/remaining_months/:
     get:
       operationId: get_subscription_remaining_months
       parameters:
@@ -932,7 +858,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/renew_request/:
+  /dashboard/accounts/v2/subscription/renew_request/:
     post:
       operationId: subscription_renew_request_create
       parameters:
@@ -978,7 +904,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/resume/:
+  /dashboard/accounts/v2/subscription/resume/:
     post:
       operationId: resume_subscription
       parameters:
@@ -1018,7 +944,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/subscription/unpaid_invoices/:
+  /dashboard/accounts/v2/subscription/unpaid_invoices/:
     get:
       operationId: get_chargebee_unpaid_invoices
       parameters:
@@ -1051,7 +977,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/team/:
+  /dashboard/accounts/v2/team/:
     get:
       operationId: list_all_team_members
       summary: List all team members
@@ -1105,60 +1031,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/team/{id}/:
-    delete:
-      operationId: delete_team_member
-      summary: delete team member
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      - in: query
-        name: transfer_to
-        schema:
-          type: string
-      tags:
-      - team
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /accounts/v2/team/{id}/change_role/:
+  /dashboard/accounts/v2/team/{id}/change_role/:
     put:
       operationId: change_role_of_team_member
       summary: Change role of team member.
@@ -1223,10 +1096,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/team/transfer_ownership/:
-    put:
-      operationId: transfer_ownership_to_admin_user
-      summary: Transfer Ownership To Admin User
+  /dashboard/accounts/v2/team/{id}/toggle_user_status/:
+    patch:
+      operationId: toggle_user_status
+      summary: Activate or Deactivate a User
       parameters:
       - in: header
         name: X-Workspace
@@ -1234,27 +1107,24 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
       tags:
       - team
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransferOwnership'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TransferOwnership'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TransferOwnership'
-        required: true
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '204':
-          description: No response body
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+          description: ''
         '400':
           content:
             application/json:
@@ -1273,7 +1143,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/template_gallery/:
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/accounts/v2/template_gallery/:
     get:
       operationId: list_gallery_templates
       summary: Get list of galery templates
@@ -1321,7 +1197,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/template_gallery/{id}/:
+  /dashboard/accounts/v2/template_gallery/{id}/:
     get:
       operationId: get_gallery_template
       summary: Get one template
@@ -1363,7 +1239,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/g2_review/:
+  /dashboard/accounts/v2/user_satisfaction_survey/g2_review/:
     get:
       operationId: g2_review
       summary: Redirect to G2 Review Page
@@ -1386,7 +1262,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/nps_next_reminder/:
+  /dashboard/accounts/v2/user_satisfaction_survey/nps_next_reminder/:
     post:
       operationId: nps_next_reminder
       summary: Update the next NPS reminder time
@@ -1427,7 +1303,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/nps_rating/:
+  /dashboard/accounts/v2/user_satisfaction_survey/nps_rating/:
     post:
       operationId: nps_rating
       summary: Update NPS rating
@@ -1467,7 +1343,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/save_user_feedback/:
+  /dashboard/accounts/v2/user_satisfaction_survey/save_user_feedback/:
     post:
       operationId: save_customer_feedback
       summary: Save customer feedback
@@ -1508,7 +1384,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/show_survey_prompt/:
+  /dashboard/accounts/v2/user_satisfaction_survey/show_survey_prompt/:
     get:
       operationId: show_survey_prompt
       summary: Show survey prompt
@@ -1542,7 +1418,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/:
+  /dashboard/accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/:
     post:
       operationId: update_g2_review_updated_on
       summary: Update g2_review_updated_on
@@ -1571,7 +1447,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/users/initiate_authorization_sequence/:
+  /dashboard/accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
       summary: Initiate a re-authorization sequence that would verify authenticity
@@ -1607,7 +1483,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
-  /accounts/v2/users/me/:
+  /dashboard/accounts/v2/users/me/:
     get:
       operationId: get_me
       summary: get logged in user details
@@ -1630,7 +1506,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
-  /accounts/v2/users/update_user_profile/:
+  /dashboard/accounts/v2/users/update_user_profile/:
     patch:
       operationId: update_user_profile
       summary: Update User Profile
@@ -1670,7 +1546,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/users/user_domain_reservation/:
+  /dashboard/accounts/v2/users/user_domain_reservation/:
     get:
       operationId: get_user_domain_reservation_info
       summary: Get user domain reservation info
@@ -1751,7 +1627,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/workspaces/:
+  /dashboard/accounts/v2/workspaces/:
     get:
       operationId: list_workspaces
       summary: Get list of Workspaces
@@ -1839,7 +1715,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/workspaces/csm_details/:
+  /dashboard/accounts/v2/workspaces/csm_details/:
     get:
       operationId: get_csm_details
       description: Returns csm details for given workspace
@@ -1881,7 +1757,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/workspaces/current/:
+  /dashboard/accounts/v2/workspaces/current/:
     get:
       operationId: get_current_workspace
       summary: get current workspace details
@@ -1967,7 +1843,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/workspaces/current/delete/:
+  /dashboard/accounts/v2/workspaces/current/delete/:
     post:
       operationId: delete_current_workspace
       summary: Delete a workspace and other related data permanently
@@ -2015,7 +1891,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /accounts/v2/workspaces/retention_preference/:
+  /dashboard/accounts/v2/workspaces/retention_preference/:
     get:
       operationId: get_workspace_data_retention_preference
       summary: get workspace data retention preference
@@ -2121,7 +1997,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /ai/online-builder/create_template/:
+  /dashboard/ai/online-builder/create_template/:
     post:
       operationId: create_template_online_builder_ai
       summary: create template using ai
@@ -2173,7 +2049,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /ai/online-builder/edit_template/:
+  /dashboard/ai/online-builder/edit_template/:
     post:
       operationId: edit_template_online_builder_ai
       summary: edit template using chat completion
@@ -2225,7 +2101,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /ai/online-builder/list_prompt_suggestions/:
+  /dashboard/ai/online-builder/list_prompt_suggestions/:
     post:
       operationId: prompt_suggestions_online_builder_ai
       summary: list prompt suggestions based on template name and description
@@ -2277,7 +2153,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /ai/word-add-in/edit_template/:
+  /dashboard/ai/word-add-in/edit_template/:
     post:
       operationId: edit_word_template_using_ai
       summary: Edit word template using ai
@@ -2331,7 +2207,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /ai/word-add-in/list_prompt_suggestions/:
+  /dashboard/ai/word-add-in/list_prompt_suggestions/:
     post:
       operationId: prompt_suggestions_word_add_in_ai
       summary: list prompt suggestions based on File Name and Content
@@ -2385,7 +2261,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/append/:
+  /dashboard/api/v2/append/:
     post:
       operationId: append_files
       parameters:
@@ -2458,7 +2334,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/domain/{id}/:
+  /dashboard/api/v2/domain/{id}/:
     get:
       operationId: get_domain
       summary: Get one domain
@@ -2506,7 +2382,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/domain/{id}/verify/:
+  /dashboard/api/v2/domain/{id}/verify/:
     patch:
       operationId: verify_domain
       summary: verify domain
@@ -2571,7 +2447,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/folders/:
+  /dashboard/api/v2/folders/:
     get:
       operationId: list_folders
       summary: Get list of folders
@@ -2676,7 +2552,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/folders/{folder_id}/permissions/:
+  /dashboard/api/v2/folders/{folder_id}/permissions/:
     get:
       operationId: list_folder_sharing
       summary: Get all shared permissions for specific folder
@@ -2787,7 +2663,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/folders/{folder_id}/permissions/{id}/:
+  /dashboard/api/v2/folders/{folder_id}/permissions/{id}/:
     get:
       operationId: get_folder_sharing
       summary: Get specific permission details for given folder
@@ -2957,7 +2833,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/folders/{id}/:
+  /dashboard/api/v2/folders/{id}/:
     put:
       operationId: update_folder
       summary: Updates a folder
@@ -3073,7 +2949,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/folders/count/:
+  /dashboard/api/v2/folders/count/:
     get:
       operationId: get_user_created_folder_count
       summary: Get the count of folders created by the user.
@@ -3113,7 +2989,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/folders/sharing_status/:
+  /dashboard/api/v2/folders/sharing_status/:
     get:
       operationId: folders_sharing_status_retrieve
       parameters:
@@ -3146,7 +3022,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/history/:
+  /dashboard/api/v2/history/:
     get:
       operationId: get_created_documents_history
       summary: Get created documents history
@@ -3218,7 +3094,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/history/{id}/download/:
+  /dashboard/api/v2/history/{id}/download/:
     get:
       operationId: download_created_document
       summary: download generated document if available
@@ -3285,7 +3161,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/history/{id}/retry_delivery/:
+  /dashboard/api/v2/history/{id}/retry_delivery/:
     post:
       operationId: retry_delivery
       summary: retry failed documents delivery
@@ -3351,7 +3227,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/history/export/:
+  /dashboard/api/v2/history/export/:
     get:
       operationId: get_created_export_merge_history
       summary: Get created export history
@@ -3448,7 +3324,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/history/export/{id}/download/:
+  /dashboard/api/v2/history/export/{id}/download/:
     get:
       operationId: download_created_export_document
       summary: download generated export document if available
@@ -3516,7 +3392,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/:
+  /dashboard/api/v2/linked_accounts/:
     get:
       operationId: list_delivery_accounts
       summary: Get list of linked accounts
@@ -3637,7 +3513,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/linked_accounts/{integrator_type}/invoke/:
+  /dashboard/api/v2/linked_accounts/{integrator_type}/invoke/:
     get:
       operationId: invoke_integrator
       description: Redirects to oauth endpoint to add a new linked account of given
@@ -3686,7 +3562,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/:
+  /dashboard/api/v2/linked_accounts/{id}/:
     put:
       operationId: update_delivery_account
       summary: Refresh linked account
@@ -3797,7 +3673,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/box_drive_picker_payload/:
+  /dashboard/api/v2/linked_accounts/{id}/box_drive_picker_payload/:
     get:
       operationId: get_box_drive_picker_payload
       description: Get box drive picker payload
@@ -3849,7 +3725,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/deliveries/:
+  /dashboard/api/v2/linked_accounts/{id}/deliveries/:
     get:
       operationId: list_account_deliveries
       description: List account deliveries
@@ -3917,7 +3793,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/linked_accounts/{id}/delivery_emails/:
+  /dashboard/api/v2/linked_accounts/{id}/delivery_emails/:
     get:
       operationId: list_delivery_emails_for_email_account
       description: List delivery emails for email account
@@ -3971,7 +3847,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/docusign_folders/:
+  /dashboard/api/v2/linked_accounts/{id}/docusign_folders/:
     get:
       operationId: get_docusign_folders
       description: Get docusign folders
@@ -4017,7 +3893,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/google_picker_payload/:
+  /dashboard/api/v2/linked_accounts/{id}/google_picker_payload/:
     get:
       operationId: get_google_picker_payload
       description: Get google picker payload
@@ -4069,7 +3945,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/initiate_authorization/:
+  /dashboard/api/v2/linked_accounts/{id}/initiate_authorization/:
     post:
       operationId: initiate_email_authorization
       description: Initiate email authorization
@@ -4129,7 +4005,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/reconnect/:
+  /dashboard/api/v2/linked_accounts/{id}/reconnect/:
     get:
       operationId: reconnect_account
       description: Redirects to oauth endpoint for re-connecting an account
@@ -4171,7 +4047,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/toggle_use_for_images/:
+  /dashboard/api/v2/linked_accounts/{id}/toggle_use_for_images/:
     post:
       operationId: update_delivery_accounts_use_for_images_flag
       description: Update delivery accounts use for images flag
@@ -4223,7 +4099,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/{id}/verify_otp/:
+  /dashboard/api/v2/linked_accounts/{id}/verify_otp/:
     put:
       operationId: verify_email_otp
       description: Verify email otp
@@ -4283,7 +4159,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/linked_accounts/send_test_mail/:
+  /dashboard/api/v2/linked_accounts/send_test_mail/:
     post:
       operationId: Send test mail
       description: send_test_mail
@@ -4331,7 +4207,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/merge_history/:
+  /dashboard/api/v2/merge_history/:
     get:
       operationId: get_created_documents_merge_history
       summary: Get created documents merge history
@@ -4401,7 +4277,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/merge_history/{id}/download/:
+  /dashboard/api/v2/merge_history/{id}/download/:
     get:
       operationId: download_created_document_using_document_merge_history
       summary: download generated document if available
@@ -4468,7 +4344,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/permissions/folder/:
+  /dashboard/api/v2/permissions/folder/:
     get:
       operationId: get_folder_permissions
       description: Returns folder permissions
@@ -4517,7 +4393,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/permissions/global/:
+  /dashboard/api/v2/permissions/global/:
     get:
       operationId: get_global_permissions
       description: Returns permission for each role
@@ -4551,7 +4427,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/permissions/template/:
+  /dashboard/api/v2/permissions/template/:
     get:
       operationId: get_template_permissions
       description: Returns template permissions
@@ -4600,7 +4476,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/personalization/:
+  /dashboard/api/v2/personalization/:
     get:
       operationId: get_user_personalization
       parameters:
@@ -4679,7 +4555,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
-  /api/v2/templates/:
+  /dashboard/api/v2/templates/:
     get:
       operationId: list_templates
       summary: Get list of templates
@@ -4822,7 +4698,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/{id}/:
+  /dashboard/api/v2/templates/{id}/:
     get:
       operationId: get_template
       summary: Get one template
@@ -5048,7 +4924,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/copy/:
+  /dashboard/api/v2/templates/{id}/copy/:
     post:
       operationId: copy_template
       summary: Copy template including preferences, deliveries
@@ -5114,7 +4990,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/delivery_count/:
+  /dashboard/api/v2/templates/{id}/delivery_count/:
     get:
       operationId: get_template_delivery_count
       summary: Get the count of deliveries linked to a template
@@ -5160,7 +5036,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/download/:
+  /dashboard/api/v2/templates/{id}/download/:
     get:
       operationId: download_template_file
       summary: Download template file
@@ -5209,7 +5085,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/generate/:
+  /dashboard/api/v2/templates/{id}/generate/:
     post:
       operationId: generate_document
       summary: Generate document from template
@@ -5297,7 +5173,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/generate_test_data/:
+  /dashboard/api/v2/templates/{id}/generate_test_data/:
     get:
       operationId: generate_test_data
       summary: Generates a test data used for testing template
@@ -5343,7 +5219,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/inline_image/:
+  /dashboard/api/v2/templates/{id}/inline_image/:
     post:
       operationId: upload_inline_image_of_template
       summary: Upload inline image of template
@@ -5403,7 +5279,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/permanent_delete/:
+  /dashboard/api/v2/templates/{id}/permanent_delete/:
     delete:
       operationId: delete_template_permanently
       summary: Delete a template permanently from trash
@@ -5453,7 +5329,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/preview/:
+  /dashboard/api/v2/templates/{id}/preview/:
     get:
       operationId: preview_template
       summary: Preview template
@@ -5507,7 +5383,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/restore/:
+  /dashboard/api/v2/templates/{id}/restore/:
     put:
       operationId: restore_template_from_trash
       summary: Restore a template from trash
@@ -5561,7 +5437,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/schema/:
+  /dashboard/api/v2/templates/{id}/schema/:
     get:
       operationId: get_template_schema
       summary: Get template schema
@@ -5609,7 +5485,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/schema/detail/:
+  /dashboard/api/v2/templates/{id}/schema/detail/:
     get:
       operationId: get_detailed_template_schema
       summary: Get template split schema
@@ -5655,7 +5531,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/test/:
+  /dashboard/api/v2/templates/{id}/test/:
     post:
       operationId: test_document_generation
       summary: Test document generation
@@ -5724,7 +5600,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{id}/test_data/:
+  /dashboard/api/v2/templates/{id}/test_data/:
     get:
       operationId: get_test_data
       summary: Get test data used for testing template
@@ -5772,7 +5648,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/deliveries/:
+  /dashboard/api/v2/templates/{template_id}/deliveries/:
     get:
       operationId: list_template_deliveries
       summary: Get deliveries configured under this template
@@ -5909,7 +5785,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/deliveries/{id}/:
+  /dashboard/api/v2/templates/{template_id}/deliveries/{id}/:
     get:
       operationId: retrieve_template_delivery
       summary: Get delivery
@@ -6088,7 +5964,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/deliveries/{id}/attachments/:
+  /dashboard/api/v2/templates/{template_id}/deliveries/{id}/attachments/:
     post:
       operationId: upload_delivery_attachments
       summary: upload email delivery attachments
@@ -6160,7 +6036,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/:
+  /dashboard/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/:
     get:
       operationId: download_delivery_attachment
       summary: download delivery attachment
@@ -6282,7 +6158,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/deliveries/{id}/upgrade_docusign/:
+  /dashboard/api/v2/templates/{template_id}/deliveries/{id}/upgrade_docusign/:
     post:
       operationId: upgrade_docusign_delivery
       summary: Upgrade docusign delivery api version
@@ -6342,7 +6218,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/:
     get:
       operationId: list_bulk_generation_tasks
       summary: List bulk generation tasks
@@ -6407,7 +6283,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/{id}/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/:
     get:
       operationId: get_bulk_generation_task
       summary: Get bulk generation task
@@ -6463,7 +6339,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/{id}/cancel/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/cancel/:
     put:
       operationId: cancel_bulk_generation_task
       summary: Cancel a bulk generation task
@@ -6536,7 +6412,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/{id}/draft/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/draft/:
     get:
       operationId: get_bulk_generation_draft
       summary: Get a task saved as draft
@@ -6661,7 +6537,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/:
     get:
       operationId: get_mapping_data_based_on_delimiter
       summary: Get Mapping Data based on Delimiter
@@ -6729,7 +6605,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/{id}/trigger/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/:
     put:
       operationId: trigger_bulk_generation_draft
       summary: Trigger a bulk generation task
@@ -6803,7 +6679,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/generate/bulk/upload/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/upload/:
     post:
       operationId: upload_for_bulk_generation
       description: This will create a task in DRAFT mode.
@@ -6871,7 +6747,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/merge_links/:
+  /dashboard/api/v2/templates/{template_id}/merge_links/:
     get:
       operationId: list_generation_links
       description: URL to create document will be {host}/{path}
@@ -6968,7 +6844,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/merge_links/{id}/:
+  /dashboard/api/v2/templates/{template_id}/merge_links/{id}/:
     delete:
       operationId: delete_template_merge_link
       description: Delete template merge link.
@@ -7023,7 +6899,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/permissions/:
+  /dashboard/api/v2/templates/{template_id}/permissions/:
     get:
       operationId: list_template_sharing
       summary: Get all shared permissions for specific template
@@ -7134,7 +7010,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/{template_id}/permissions/{id}/:
+  /dashboard/api/v2/templates/{template_id}/permissions/{id}/:
     get:
       operationId: get_template_sharing
       summary: Get specific permission details for given template
@@ -7304,7 +7180,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /api/v2/templates/all/:
+  /dashboard/api/v2/templates/all/:
     get:
       operationId: list_all_templates
       description: Will return all templates without pagination, excluding templates
@@ -7371,7 +7247,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/count/:
+  /dashboard/api/v2/templates/count/:
     get:
       operationId: get_user_created_templates_count
       summary: Get the count of templates created by the user.
@@ -7411,7 +7287,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/move/:
+  /dashboard/api/v2/templates/move/:
     post:
       operationId: move_templates_to_another_folder
       description: Move templates to another folder
@@ -7465,7 +7341,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/sharing_status/:
+  /dashboard/api/v2/templates/sharing_status/:
     get:
       operationId: templates_sharing_status_retrieve
       parameters:
@@ -7498,7 +7374,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /api/v2/templates/trash/:
+  /dashboard/api/v2/templates/trash/:
     get:
       operationId: list_trashed_templates
       summary: List all templates in trash.
@@ -7540,7 +7416,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /banner_notifications/:
+  /dashboard/banner_notifications/:
     get:
       operationId: list_banner_notifications
       tags:
@@ -7568,7 +7444,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /esign/envelopes/:
+  /dashboard/esign/envelopes/:
     get:
       operationId: list_envelopes
       summary: Get list of envelopes
@@ -7639,7 +7515,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /esign/envelopes/{id}/:
+  /dashboard/esign/envelopes/{id}/:
     patch:
       operationId: update_envelope_config
       summary: Update envelope config
@@ -7753,7 +7629,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/cancel/:
+  /dashboard/esign/envelopes/{id}/cancel/:
     post:
       operationId: cancel_envelope
       summary: Cancel an Envelope
@@ -7815,7 +7691,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/details/:
+  /dashboard/esign/envelopes/{id}/details/:
     get:
       operationId: envelope_details
       summary: details of an envelope
@@ -7863,7 +7739,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/download/:
+  /dashboard/esign/envelopes/{id}/download/:
     get:
       operationId: download_envelope_file
       summary: Download envelope file
@@ -7917,7 +7793,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/email_copy/:
+  /dashboard/esign/envelopes/{id}/email_copy/:
     post:
       operationId: send_copy_via_email
       summary: send copy via email
@@ -7979,7 +7855,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/history/:
+  /dashboard/esign/envelopes/{id}/history/:
     get:
       operationId: envelope_history
       summary: envelope history
@@ -8033,7 +7909,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/permanent_delete/:
+  /dashboard/esign/envelopes/{id}/permanent_delete/:
     delete:
       operationId: delete_envelope_permanently
       summary: Delete a envelope permanently from trash
@@ -8083,7 +7959,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/preview/:
+  /dashboard/esign/envelopes/{id}/preview/:
     get:
       operationId: preview_envelope
       summary: preview Envelope
@@ -8094,6 +7970,13 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
       - in: path
         name: id
         schema:
@@ -8109,13 +7992,17 @@ paths:
       responses:
         '200':
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                $ref: '#/components/schemas/Envelope'
+                type: string
+                format: binary
           description: ''
         '401':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
@@ -8124,14 +8011,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/recipient/{recipient_id}/:
+  /dashboard/esign/envelopes/{id}/recipient/{recipient_id}/:
     put:
       operationId: update_recipient_email
       summary: Update the email of an envelope recipient
@@ -8186,7 +8079,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/restore/:
+  /dashboard/esign/envelopes/{id}/restore/:
     post:
       operationId: restore_envelope_from_trash
       summary: Restore a envelope from trash
@@ -8240,7 +8133,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/{id}/send_reminder/:
+  /dashboard/esign/envelopes/{id}/send_reminder/:
     post:
       operationId: send_reminder
       summary: Send a reminder for Envelope Signers
@@ -8290,7 +8183,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /esign/envelopes/count/:
+  /dashboard/esign/envelopes/count/:
     get:
       operationId: envelope_count_by_status
       summary: Get envelope count grouped by status
@@ -8320,7 +8213,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
-  /esign/envelopes/trash/:
+  /dashboard/esign/envelopes/trash/:
     get:
       operationId: list_trashed_envelopes
       summary: List all envelopes in trash
@@ -8360,7 +8253,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /meta/:
+  /dashboard/meta/:
     get:
       operationId: get_app_meta
       tags:
@@ -8386,7 +8279,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /plans/:
+  /dashboard/plans/:
     get:
       operationId: list_subscription_plans
       tags:
@@ -8414,7 +8307,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /tz/:
+  /dashboard/tz/:
     get:
       operationId: list_timezones
       tags:
@@ -8483,14 +8376,6 @@ components:
       - ai_prompt
       - ai_response
       - selected_content
-      description: ''
-    AcceptInvite:
-      type: object
-      properties:
-        workspace_unique_key:
-          type: string
-      required:
-      - workspace_unique_key
       description: ''
     AccountDelivery:
       type: object
@@ -9291,6 +9176,7 @@ components:
               email_address:
                 type: string
                 format: email
+                minLength: 5
               country_code:
                 type: string
               phone_number:
@@ -10670,15 +10556,6 @@ components:
         id:
           type: integer
           readOnly: true
-        workspace:
-          type: string
-          readOnly: true
-        sender:
-          type: string
-          readOnly: true
-        expired:
-          type: string
-          readOnly: true
         email:
           type: string
           format: email
@@ -10698,19 +10575,23 @@ components:
           type: string
           format: date-time
           readOnly: true
-        accepted_at:
+        workspace:
           type: string
-          format: date-time
           readOnly: true
-          nullable: true
         is_accepted:
           type: boolean
           readOnly: true
+          nullable: true
         invite_key:
           type: string
           readOnly: true
+        sender:
+          type: string
+          readOnly: true
+        expired:
+          type: string
+          readOnly: true
       required:
-      - accepted_at
       - created_at
       - email
       - expired
@@ -10986,6 +10867,21 @@ components:
       - account
       - id
       - name
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+          readOnly: true
+        logo:
+          type: string
+          format: uri
+          readOnly: true
+          nullable: true
+      required:
+      - logo
+      - name
+      description: ''
     PaginatedAccountDeliveryList:
       type: object
       required:
@@ -11372,6 +11268,7 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
+          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -12058,8 +11955,10 @@ components:
           - member
           - billing_manager
           type: string
-        is_deleted:
-          type: boolean
+        deactivated_at:
+          type: string
+          format: date-time
+          nullable: true
       required:
       - id
       - user
@@ -12420,17 +12319,6 @@ components:
       - name
       - tz
       description: ''
-    TransferOwnership:
-      type: object
-      properties:
-        transfer_to:
-          type: integer
-        otp:
-          type: integer
-      required:
-      - otp
-      - transfer_to
-      description: ''
     UnauthenticatedError:
       type: object
       properties:
@@ -12531,14 +12419,14 @@ components:
           description: globally unique identifier for user
         first_name:
           type: string
-          maxLength: 150
+          readOnly: true
         last_name:
           type: string
-          maxLength: 150
+          readOnly: true
         email:
           type: string
           format: email
-          maxLength: 255
+          readOnly: true
         timezone:
           enum:
           - Pacific/Midway
@@ -12666,10 +12554,11 @@ components:
           - Pacific/Apia
           - Pacific/Kiritimati
           type: string
+          readOnly: true
         locale:
           type: string
+          readOnly: true
           nullable: true
-          maxLength: 5
         theme:
           enum:
           - light
@@ -12680,14 +12569,28 @@ components:
         g2_verified:
           type: boolean
           readOnly: true
+        role:
+          enum:
+          - owner
+          - admin
+          - member
+          type: string
+          readOnly: true
         is_mfa_enabled:
           type: boolean
+          readOnly: true
       required:
       - email
+      - first_name
       - g2_verified
       - guid
       - id
+      - is_mfa_enabled
+      - last_name
+      - locale
+      - role
       - theme
+      - timezone
       description: ''
     UserDemographic:
       type: object
@@ -13063,6 +12966,7 @@ components:
           readOnly: true
         mfa_enforced:
           type: boolean
+          readOnly: true
         created_time:
           type: string
           format: date-time
@@ -13071,6 +12975,7 @@ components:
       - active
       - created_time
       - id
+      - mfa_enforced
       - org_name
       - plan_id
       - plan_status
