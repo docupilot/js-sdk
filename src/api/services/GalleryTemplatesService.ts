@@ -32,7 +32,7 @@ export class GalleryTemplatesService {
     }): CancelablePromise<Array<TemplateGallery>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/template_gallery/',
+            url: '/dashboard/accounts/v2/template_gallery/',
             query: {
                 'category': category,
                 'ordering': ordering,
@@ -56,7 +56,7 @@ export class GalleryTemplatesService {
     }): CancelablePromise<TemplateGallery> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/template_gallery/{id}/',
+            url: '/dashboard/accounts/v2/template_gallery/{id}/',
             path: {
                 'id': id,
             },

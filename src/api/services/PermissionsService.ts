@@ -22,7 +22,7 @@ export class PermissionsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/permissions/folder/',
+            url: '/dashboard/api/v2/permissions/folder/',
             query: {
                 'ids': ids,
             },
@@ -37,7 +37,7 @@ export class PermissionsService {
     public static getGlobalPermissions(): CancelablePromise<GlobalPermission> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/permissions/global/',
+            url: '/dashboard/api/v2/permissions/global/',
         });
     }
 
@@ -53,7 +53,7 @@ export class PermissionsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/permissions/template/',
+            url: '/dashboard/api/v2/permissions/template/',
             query: {
                 'ids': ids,
             },

@@ -24,7 +24,7 @@ export class DemographicService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/demographic/',
+            url: '/dashboard/accounts/v2/demographic/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -38,7 +38,7 @@ export class DemographicService {
     public static showDemographicPromptForWorkspaceUsers(): CancelablePromise<ShowDemographicPrompt> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/demographic/show_prompt/',
+            url: '/dashboard/accounts/v2/demographic/show_prompt/',
         });
     }
 
@@ -54,7 +54,7 @@ export class DemographicService {
     }): CancelablePromise<VerifyDomain> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/demographic/validate_domain_and_set_demographic/',
+            url: '/dashboard/accounts/v2/demographic/validate_domain_and_set_demographic/',
             body: requestBody,
             mediaType: 'application/json',
         });

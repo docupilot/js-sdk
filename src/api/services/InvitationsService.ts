@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AcceptInvite } from '../models/AcceptInvite';
 import type { Invitation } from '../models/Invitation';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -33,7 +32,7 @@ export class InvitationsService {
     }): CancelablePromise<Array<Invitation>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/invitations/',
+            url: '/dashboard/accounts/v2/invitations/',
             query: {
                 'is_accepted': isAccepted,
                 'ordering': ordering,
@@ -54,28 +53,9 @@ export class InvitationsService {
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/invitations/',
+            url: '/dashboard/accounts/v2/invitations/',
             body: requestBody,
             mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Get Invitation
-     * @returns Invitation
-     * @throws ApiError
-     */
-    public static retrieveInvitationByKey({
-        inviteKey,
-    }: {
-        inviteKey: string,
-    }): CancelablePromise<Invitation> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/invitations/{invite_key}/get_by_key/',
-            path: {
-                'invite_key': inviteKey,
-            },
         });
     }
 
@@ -94,51 +74,7 @@ export class InvitationsService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/accounts/v2/invitations/{id}/',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
-     * retrieve invitation for accept
-     * @returns Invitation
-     * @throws ApiError
-     */
-    public static retrieveInvitationForAccept({
-        id,
-    }: {
-        /**
-         * A unique integer value identifying this invitation.
-         */
-        id: number,
-    }): CancelablePromise<Invitation> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/v2/invitations/{id}/accept_invitation/',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
-     * Accept invitation
-     * @returns AcceptInvite
-     * @throws ApiError
-     */
-    public static acceptInvitation({
-        id,
-    }: {
-        /**
-         * A unique integer value identifying this invitation.
-         */
-        id: number,
-    }): CancelablePromise<AcceptInvite> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/accounts/v2/invitations/{id}/accept_invitation/',
+            url: '/dashboard/accounts/v2/invitations/{id}/',
             path: {
                 'id': id,
             },
@@ -160,7 +96,7 @@ export class InvitationsService {
     }): CancelablePromise<Invitation> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/invitations/{id}/resend_invitation/',
+            url: '/dashboard/accounts/v2/invitations/{id}/resend_invitation/',
             path: {
                 'id': id,
             },

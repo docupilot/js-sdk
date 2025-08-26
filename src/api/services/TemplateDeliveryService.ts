@@ -31,7 +31,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<Array<TemplateDelivery>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/deliveries/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/',
             path: {
                 'template_id': templateId,
             },
@@ -56,7 +56,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/deliveries/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/',
             path: {
                 'template_id': templateId,
             },
@@ -82,7 +82,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -109,7 +109,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -136,7 +136,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -163,7 +163,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/attachments/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -192,7 +192,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
             path: {
                 'attachment_id': attachmentId,
                 'id': id,
@@ -220,7 +220,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/attachments/{attachment_id}/',
             path: {
                 'attachment_id': attachmentId,
                 'id': id,
@@ -246,7 +246,7 @@ export class TemplateDeliveryService {
     }): CancelablePromise<PolymorphicDelivery> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/deliveries/{id}/upgrade_docusign/',
+            url: '/dashboard/api/v2/templates/{template_id}/deliveries/{id}/upgrade_docusign/',
             path: {
                 'id': id,
                 'template_id': templateId,

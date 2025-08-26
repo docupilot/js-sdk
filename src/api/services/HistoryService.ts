@@ -46,7 +46,7 @@ export class HistoryService {
     }): CancelablePromise<PaginatedMergeHistoryList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/history/',
+            url: '/dashboard/api/v2/history/',
             query: {
                 'end_date': endDate,
                 'ordering': ordering,
@@ -73,7 +73,7 @@ export class HistoryService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/history/{id}/download/',
+            url: '/dashboard/api/v2/history/{id}/download/',
             path: {
                 'id': id,
             },
@@ -97,7 +97,7 @@ export class HistoryService {
     }): CancelablePromise<MergeHistory> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/history/{id}/retry_delivery/',
+            url: '/dashboard/api/v2/history/{id}/retry_delivery/',
             path: {
                 'id': id,
             },
@@ -121,7 +121,7 @@ export class HistoryService {
     }): CancelablePromise<Array<ExportMergeHistory>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/history/export/',
+            url: '/dashboard/api/v2/history/export/',
             query: {
                 'ordering': ordering,
             },
@@ -140,7 +140,7 @@ export class HistoryService {
     }): CancelablePromise<ExportMergeHistory> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/history/export/',
+            url: '/dashboard/api/v2/history/export/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -161,7 +161,7 @@ export class HistoryService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/history/export/{id}/download/',
+            url: '/dashboard/api/v2/history/export/{id}/download/',
             path: {
                 'id': id,
             },

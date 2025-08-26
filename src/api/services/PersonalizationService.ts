@@ -17,7 +17,7 @@ export class PersonalizationService {
     public static getUserPersonalization(): CancelablePromise<Array<UserPersonalization>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/personalization/',
+            url: '/dashboard/api/v2/personalization/',
         });
     }
 
@@ -32,7 +32,7 @@ export class PersonalizationService {
     }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/personalization/',
+            url: '/dashboard/api/v2/personalization/',
             body: requestBody,
             mediaType: 'application/json',
         });

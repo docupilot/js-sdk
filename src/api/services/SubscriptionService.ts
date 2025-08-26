@@ -33,7 +33,7 @@ export class SubscriptionService {
     }): CancelablePromise<Array<AddonPricingInfo>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/subscription/addon_pricing_info/',
+            url: '/dashboard/accounts/v2/subscription/addon_pricing_info/',
             query: {
                 'ordering': ordering,
                 'search': search,
@@ -52,7 +52,7 @@ export class SubscriptionService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/subscription/buy_addon/',
+            url: '/dashboard/accounts/v2/subscription/buy_addon/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -65,7 +65,7 @@ export class SubscriptionService {
     public static getSubscriptionDetails(): CancelablePromise<ChargebeeSubscription> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/subscription/details/',
+            url: '/dashboard/accounts/v2/subscription/details/',
         });
     }
 
@@ -77,7 +77,7 @@ export class SubscriptionService {
     public static extendTrial(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/subscription/extend_trial/',
+            url: '/dashboard/accounts/v2/subscription/extend_trial/',
         });
     }
 
@@ -92,7 +92,7 @@ export class SubscriptionService {
     }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/subscription/hosted_page/',
+            url: '/dashboard/accounts/v2/subscription/hosted_page/',
             query: {
                 'plan_id': planId,
             },
@@ -106,7 +106,7 @@ export class SubscriptionService {
     public static getChargebeePortalSession(): CancelablePromise<ChargebeeSubscription> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/subscription/portal_session/',
+            url: '/dashboard/accounts/v2/subscription/portal_session/',
         });
     }
 
@@ -117,7 +117,7 @@ export class SubscriptionService {
     public static getSubscriptionRemainingMonths(): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/subscription/remaining_months/',
+            url: '/dashboard/accounts/v2/subscription/remaining_months/',
         });
     }
 
@@ -132,7 +132,7 @@ export class SubscriptionService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/subscription/renew_request/',
+            url: '/dashboard/accounts/v2/subscription/renew_request/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -145,7 +145,7 @@ export class SubscriptionService {
     public static resumeSubscription(): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/subscription/resume/',
+            url: '/dashboard/accounts/v2/subscription/resume/',
         });
     }
 
@@ -156,7 +156,7 @@ export class SubscriptionService {
     public static getChargebeeUnpaidInvoices(): CancelablePromise<HostedPage> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/subscription/unpaid_invoices/',
+            url: '/dashboard/accounts/v2/subscription/unpaid_invoices/',
         });
     }
 
