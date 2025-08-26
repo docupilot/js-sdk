@@ -10873,6 +10873,9 @@ components:
         name:
           type: string
           readOnly: true
+        subdomain:
+          type: string
+          readOnly: true
         logo:
           type: string
           format: uri
@@ -10881,6 +10884,7 @@ components:
       required:
       - logo
       - name
+      - subdomain
       description: ''
     PaginatedAccountDeliveryList:
       type: object
