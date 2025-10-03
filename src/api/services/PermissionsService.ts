@@ -11,25 +11,6 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class PermissionsService {
 
     /**
-     * Returns content_block permissions
-     * @returns any
-     * @throws ApiError
-     */
-    public static getContentBlockPermissions({
-        ids,
-    }: {
-        ids?: string,
-    }): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v2/permissions/content_block/',
-            query: {
-                'ids': ids,
-            },
-        });
-    }
-
-    /**
      * Returns folder permissions
      * @returns any
      * @throws ApiError
