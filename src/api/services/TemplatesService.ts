@@ -2,11 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
+import type { DeliveryCount } from '../models/DeliveryCount';
 import type { MoveTemplate } from '../models/MoveTemplate';
+import type { MoveTemplateResponse } from '../models/MoveTemplateResponse';
 import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
 import type { PatchedUpdateTemplateSharing } from '../models/PatchedUpdateTemplateSharing';
+import type { RestoreTemplateResponse } from '../models/RestoreTemplateResponse';
 import type { SharingInfoTemplate } from '../models/SharingInfoTemplate';
 import type { Template } from '../models/Template';
 import type { TemplateCount } from '../models/TemplateCount';
@@ -54,7 +57,7 @@ export class TemplatesService {
     }): CancelablePromise<PaginatedTemplateList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/',
+            url: '/dashboard/api/v2/templates/',
             query: {
                 'folder': folder,
                 'ordering': ordering,
@@ -79,7 +82,7 @@ export class TemplatesService {
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/',
+            url: '/dashboard/api/v2/templates/',
             formData: formData,
             mediaType: 'multipart/form-data',
         });
@@ -100,7 +103,7 @@ export class TemplatesService {
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{id}/',
+            url: '/dashboard/api/v2/templates/{id}/',
             path: {
                 'id': id,
             },
@@ -124,7 +127,7 @@ export class TemplatesService {
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{id}/',
+            url: '/dashboard/api/v2/templates/{id}/',
             path: {
                 'id': id,
             },
@@ -150,7 +153,7 @@ export class TemplatesService {
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/v2/templates/{id}/',
+            url: '/dashboard/api/v2/templates/{id}/',
             path: {
                 'id': id,
             },
@@ -174,7 +177,7 @@ export class TemplatesService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/templates/{id}/',
+            url: '/dashboard/api/v2/templates/{id}/',
             path: {
                 'id': id,
             },
@@ -198,12 +201,34 @@ export class TemplatesService {
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{id}/copy/',
+            url: '/dashboard/api/v2/templates/{id}/copy/',
             path: {
                 'id': id,
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get the count of deliveries linked to a template
+     * @returns DeliveryCount
+     * @throws ApiError
+     */
+    public static getTemplateDeliveryCount({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<DeliveryCount> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/templates/{id}/delivery_count/',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -222,7 +247,7 @@ export class TemplatesService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{id}/download/',
+            url: '/dashboard/api/v2/templates/{id}/download/',
             path: {
                 'id': id,
             },
@@ -246,7 +271,7 @@ export class TemplatesService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{id}/inline_image/',
+            url: '/dashboard/api/v2/templates/{id}/inline_image/',
             path: {
                 'id': id,
             },
@@ -270,7 +295,7 @@ export class TemplatesService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/templates/{id}/permanent_delete/',
+            url: '/dashboard/api/v2/templates/{id}/permanent_delete/',
             path: {
                 'id': id,
             },
@@ -278,28 +303,51 @@ export class TemplatesService {
     }
 
     /**
-     * Restore a template from trash
-     * @returns Template
+     * Preview template
+     * @returns binary
      * @throws ApiError
      */
-    public static restoreTemplateFromTrash({
+    public static previewTemplate({
         id,
-        requestBody,
+        format,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        requestBody: OmitReadonly<Template>,
-    }): CancelablePromise<Template> {
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/v2/templates/{id}/restore/',
+            method: 'GET',
+            url: '/dashboard/api/v2/templates/{id}/preview/',
             path: {
                 'id': id,
             },
-            body: requestBody,
-            mediaType: 'application/json',
+            query: {
+                'format': format,
+            },
+        });
+    }
+
+    /**
+     * Restore a template from trash
+     * @returns RestoreTemplateResponse
+     * @throws ApiError
+     */
+    public static restoreTemplateFromTrash({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<RestoreTemplateResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/dashboard/api/v2/templates/{id}/restore/',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -318,7 +366,7 @@ export class TemplatesService {
     }): CancelablePromise<TemplateSchema> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{id}/schema/',
+            url: '/dashboard/api/v2/templates/{id}/schema/',
             path: {
                 'id': id,
             },
@@ -340,7 +388,7 @@ export class TemplatesService {
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{id}/schema/detail/',
+            url: '/dashboard/api/v2/templates/{id}/schema/detail/',
             path: {
                 'id': id,
             },
@@ -359,7 +407,7 @@ export class TemplatesService {
     }): CancelablePromise<Array<TemplateSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/permissions/',
+            url: '/dashboard/api/v2/templates/{template_id}/permissions/',
             path: {
                 'template_id': templateId,
             },
@@ -380,7 +428,7 @@ export class TemplatesService {
     }): CancelablePromise<Array<TemplateSharing>> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/permissions/',
+            url: '/dashboard/api/v2/templates/{template_id}/permissions/',
             path: {
                 'template_id': templateId,
             },
@@ -406,7 +454,7 @@ export class TemplatesService {
     }): CancelablePromise<TemplateSharing> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/permissions/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -433,7 +481,7 @@ export class TemplatesService {
     }): CancelablePromise<TemplateSharing> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/v2/templates/{template_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/permissions/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -460,7 +508,7 @@ export class TemplatesService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/templates/{template_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/permissions/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -474,10 +522,26 @@ export class TemplatesService {
      * @returns Template
      * @throws ApiError
      */
-    public static listAllTemplates(): CancelablePromise<Array<Template>> {
+    public static listAllTemplates({
+        folder,
+        outputType,
+        status,
+        type,
+    }: {
+        folder?: number,
+        outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        status?: 'active' | 'test',
+        type?: string,
+    }): CancelablePromise<Array<Template>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/all/',
+            url: '/dashboard/api/v2/templates/all/',
+            query: {
+                'folder': folder,
+                'output_type': outputType,
+                'status': status,
+                'type': type,
+            },
         });
     }
 
@@ -496,7 +560,7 @@ export class TemplatesService {
     }): CancelablePromise<TemplateCount> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/count/',
+            url: '/dashboard/api/v2/templates/count/',
             query: {
                 'owner_id': ownerId,
             },
@@ -505,17 +569,17 @@ export class TemplatesService {
 
     /**
      * Move templates to another folder
-     * @returns Template
+     * @returns MoveTemplateResponse
      * @throws ApiError
      */
     public static moveTemplatesToAnotherFolder({
         requestBody,
     }: {
         requestBody: OmitReadonly<MoveTemplate>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<MoveTemplateResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/move/',
+            url: '/dashboard/api/v2/templates/move/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -528,19 +592,29 @@ export class TemplatesService {
     public static templatesSharingStatusRetrieve(): CancelablePromise<SharingInfoTemplate> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/sharing_status/',
+            url: '/dashboard/api/v2/templates/sharing_status/',
         });
     }
 
     /**
      * List all templates in trash.
-     * @returns Template
+     * @returns PaginatedTemplateList
      * @throws ApiError
      */
-    public static listTrashedTemplates(): CancelablePromise<Template> {
+    public static listTrashedTemplates({
+        page,
+    }: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+    }): CancelablePromise<PaginatedTemplateList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/trash/',
+            url: '/dashboard/api/v2/templates/trash/',
+            query: {
+                'page': page,
+            },
         });
     }
 

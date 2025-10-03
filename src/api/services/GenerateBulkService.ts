@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { BulkGen } from '../models/BulkGen';
 import type { BulkGenData } from '../models/BulkGenData';
+import type { BulkGenEdit } from '../models/BulkGenEdit';
 import type { BulkGenUpload } from '../models/BulkGenUpload';
 import type { PaginatedBulkGenList } from '../models/PaginatedBulkGenList';
 
@@ -37,7 +38,7 @@ export class GenerateBulkService {
     }): CancelablePromise<PaginatedBulkGenList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/',
             path: {
                 'template_id': templateId,
             },
@@ -69,7 +70,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -99,7 +100,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/cancel/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/cancel/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -129,7 +130,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -138,11 +139,11 @@ export class GenerateBulkService {
     }
 
     /**
-     * save a template mapping
+     * update a template mapping
      * @returns void
      * @throws ApiError
      */
-    public static saveBulkGenerationDraft({
+    public static updateBulkGenerationDraft({
         id,
         templateId,
         requestBody,
@@ -155,17 +156,53 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: Record<string, any>,
+        requestBody: OmitReadonly<BulkGenEdit>,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
+            method: 'PUT',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
             path: {
                 'id': id,
                 'template_id': templateId,
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get Mapping Data based on Delimiter
+     * @returns BulkGenData
+     * @throws ApiError
+     */
+    public static getMappingDataBasedOnDelimiter({
+        id,
+        templateId,
+        delimiter,
+    }: {
+        /**
+         * Task id
+         */
+        id: number,
+        /**
+         * Template id
+         */
+        templateId: number,
+        /**
+         * A single character used to delimit columns in the batch process file.
+         */
+        delimiter?: string,
+    }): CancelablePromise<BulkGenData> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            query: {
+                'delimiter': delimiter,
+            },
         });
     }
 
@@ -187,11 +224,11 @@ export class GenerateBulkService {
          * Template id
          */
         templateId: number,
-        requestBody?: Record<string, any>,
+        requestBody: OmitReadonly<BulkGenEdit>,
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -219,7 +256,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/generate/bulk/upload/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/upload/',
             path: {
                 'template_id': templateId,
             },

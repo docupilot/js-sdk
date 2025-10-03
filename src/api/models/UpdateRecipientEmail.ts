@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateCustomerThreadInput = {
-    message: string;
+export type UpdateRecipientEmail = {
+    email: string;
 };
 

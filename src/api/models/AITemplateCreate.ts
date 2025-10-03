@@ -4,8 +4,8 @@
 
 export type AITemplateCreate = {
     ai_prompt: string;
-    title: string;
-    description?: string | null;
-    folder?: number | null;
+    template_title: string;
+    template_description?: string | null;
+    readonly ai_response: string;
 };
 

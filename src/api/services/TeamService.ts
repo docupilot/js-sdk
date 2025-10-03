@@ -3,7 +3,6 @@
 /* eslint-disable */
 import type { ChangeRole } from '../models/ChangeRole';
 import type { TeamMember } from '../models/TeamMember';
-import type { TransferOwnership } from '../models/TransferOwnership';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -19,42 +18,20 @@ export class TeamService {
      */
     public static listAllTeamMembers({
         ordering,
-        search,
+        role,
     }: {
         /**
          * Which field to use when ordering the results.
          */
         ordering?: string,
-        /**
-         * A search term.
-         */
-        search?: string,
+        role?: 'admin' | 'billing_manager' | 'manager' | 'member' | 'owner',
     }): CancelablePromise<Array<TeamMember>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/team/',
+            url: '/dashboard/accounts/v2/team/',
             query: {
                 'ordering': ordering,
-                'search': search,
-            },
-        });
-    }
-
-    /**
-     * delete team member
-     * @returns void
-     * @throws ApiError
-     */
-    public static deleteTeamMember({
-        id,
-    }: {
-        id: string,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/accounts/v2/team/{id}/',
-            path: {
-                'id': id,
+                'role': role,
             },
         });
     }
@@ -73,7 +50,7 @@ export class TeamService {
     }): CancelablePromise<TeamMember> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/accounts/v2/team/{id}/change_role/',
+            url: '/dashboard/accounts/v2/team/{id}/change_role/',
             path: {
                 'id': id,
             },
@@ -83,20 +60,21 @@ export class TeamService {
     }
 
     /**
-     * Transfer Ownership To Admin User
-     * @returns void
+     * Activate or Deactivate a User
+     * @returns TeamMember
      * @throws ApiError
      */
-    public static transferOwnershipToAdminUser({
-        requestBody,
+    public static toggleUserStatus({
+        id,
     }: {
-        requestBody: OmitReadonly<TransferOwnership>,
-    }): CancelablePromise<void> {
+        id: number,
+    }): CancelablePromise<TeamMember> {
         return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/accounts/v2/team/transfer_ownership/',
-            body: requestBody,
-            mediaType: 'application/json',
+            method: 'PATCH',
+            url: '/dashboard/accounts/v2/team/{id}/toggle_user_status/',
+            path: {
+                'id': id,
+            },
         });
     }
 

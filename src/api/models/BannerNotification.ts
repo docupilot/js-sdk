@@ -6,7 +6,8 @@ import type { BannerNotificationAction } from './BannerNotificationAction';
 
 export type BannerNotification = {
     id: string;
-    content: string;
+    name: string;
+    description: string;
     action: BannerNotificationAction;
 };
 

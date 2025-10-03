@@ -6,7 +6,7 @@ const { program } = require('commander');
 const pkg = require('./package.json');
 const fs = require('fs');
 const yaml = require('yaml');
-const OpenAPI = require('openapi-typescript-codegen');
+const OpenAPI = require('@docupilot/openapi-typescript-codegen');
 
 const params = program
   .name('openapi')

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateThreadName = {
-    thread_name: string;
+export type RestoreTemplateResponse = {
+    status: string;
 };
 

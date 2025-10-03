@@ -2,7 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type AcceptInvite = {
-    workspace_unique_key: string;
+export type AddonTier = {
+    upto: string;
+    price: number;
 };
 

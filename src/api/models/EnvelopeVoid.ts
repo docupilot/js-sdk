@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateCustomerThreadOutput = {
-    output_message: string;
+export type EnvelopeVoid = {
+    reason: string;
 };
 
