@@ -9,7 +9,7 @@ export type ContentBlock = {
     description?: string | null;
     type?: 'docx' | 'html';
     readonly created_time: string;
-    readonly updated_time: string;
+    readonly updated_time: string | null;
     readonly created_by: number;
     readonly updated_by: number | null;
 };

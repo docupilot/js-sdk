@@ -5,9 +5,9 @@
 import type { ContentBlock } from './ContentBlock';
 
 export type PaginatedContentBlockList = {
-    count?: number;
+    count: number;
     next?: string | null;
     previous?: string | null;
-    results?: Array<ContentBlock>;
+    results: Array<ContentBlock>;
 };
 

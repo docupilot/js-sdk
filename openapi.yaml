@@ -4494,8 +4494,7 @@ paths:
           name: environment
           schema:
             type: string
-          description: 'sub-type of integrator. For example: sandbox or production for
-          docu_sign'
+          description: 'sub-type of integrator. For example: sandbox or production for docu_sign'
         - in: path
           name: integrator_type
           schema:

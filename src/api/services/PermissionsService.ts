@@ -22,7 +22,7 @@ export class PermissionsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/permissions/content_block/',
+            url: '/dashboard/api/v2/permissions/content_block/',
             query: {
                 'ids': ids,
             },

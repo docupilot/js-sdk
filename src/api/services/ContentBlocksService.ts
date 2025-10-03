@@ -44,7 +44,7 @@ export class ContentBlocksService {
     }): CancelablePromise<PaginatedContentBlockList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/',
+            url: '/dashboard/api/v2/content_blocks/',
             query: {
                 'ordering': ordering,
                 'page': page,
@@ -65,7 +65,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/content_blocks/',
+            url: '/dashboard/api/v2/content_blocks/',
             formData: formData,
             mediaType: 'multipart/form-data',
         });
@@ -93,7 +93,7 @@ export class ContentBlocksService {
     }): CancelablePromise<Array<ContentBlockSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{content_block_id}/permissions/',
+            url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/',
             path: {
                 'content_block_id': contentBlockId,
             },
@@ -118,7 +118,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlockSharing> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/content_blocks/{content_block_id}/permissions/',
+            url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/',
             path: {
                 'content_block_id': contentBlockId,
             },
@@ -144,7 +144,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlockSharing> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{content_block_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/{id}/',
             path: {
                 'content_block_id': contentBlockId,
                 'id': id,
@@ -171,7 +171,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlockSharing> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/v2/content_blocks/{content_block_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/{id}/',
             path: {
                 'content_block_id': contentBlockId,
                 'id': id,
@@ -198,7 +198,7 @@ export class ContentBlocksService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/content_blocks/{content_block_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/{id}/',
             path: {
                 'content_block_id': contentBlockId,
                 'id': id,
@@ -221,7 +221,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{id}/',
             path: {
                 'id': id,
             },
@@ -245,7 +245,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/content_blocks/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{id}/',
             path: {
                 'id': id,
             },
@@ -271,7 +271,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/v2/content_blocks/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{id}/',
             path: {
                 'id': id,
             },
@@ -295,7 +295,7 @@ export class ContentBlocksService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/content_blocks/{id}/',
+            url: '/dashboard/api/v2/content_blocks/{id}/',
             path: {
                 'id': id,
             },
@@ -319,7 +319,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/content_blocks/{id}/copy/',
+            url: '/dashboard/api/v2/content_blocks/{id}/copy/',
             path: {
                 'id': id,
             },
@@ -343,7 +343,7 @@ export class ContentBlocksService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{id}/download/',
+            url: '/dashboard/api/v2/content_blocks/{id}/download/',
             path: {
                 'id': id,
             },
@@ -365,7 +365,7 @@ export class ContentBlocksService {
     }): CancelablePromise<TemplateSchema> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{id}/schema/',
+            url: '/dashboard/api/v2/content_blocks/{id}/schema/',
             path: {
                 'id': id,
             },
@@ -402,7 +402,7 @@ export class ContentBlocksService {
     }): CancelablePromise<PaginatedTemplateInfoList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{id}/templates/',
+            url: '/dashboard/api/v2/content_blocks/{id}/templates/',
             path: {
                 'id': id,
             },
@@ -431,7 +431,7 @@ export class ContentBlocksService {
     }): CancelablePromise<TestContentBlock> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/content_blocks/{id}/test/',
+            url: '/dashboard/api/v2/content_blocks/{id}/test/',
             path: {
                 'id': id,
             },
@@ -455,7 +455,7 @@ export class ContentBlocksService {
     }): CancelablePromise<ContentBlock> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/content_blocks/{id}/test_data/',
+            url: '/dashboard/api/v2/content_blocks/{id}/test_data/',
             path: {
                 'id': id,
             },

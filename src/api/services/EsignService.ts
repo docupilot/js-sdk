@@ -162,9 +162,11 @@ export class EsignService {
      * @throws ApiError
      */
     public static downloadEnvelopeFile({
+        documentId,
         id,
         history,
     }: {
+        documentId: string,
         /**
          * A unique integer value identifying this envelope.
          */
@@ -176,12 +178,43 @@ export class EsignService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/dashboard/esign/envelopes/{id}/download/',
+            url: '/dashboard/esign/envelopes/{id}/documents/{document_id}/download/',
             path: {
+                'document_id': documentId,
                 'id': id,
             },
             query: {
                 'history': history,
+            },
+        });
+    }
+
+    /**
+     * Preview Envelope
+     * @returns binary
+     * @throws ApiError
+     */
+    public static previewEnvelope({
+        documentId,
+        id,
+        format,
+    }: {
+        documentId: string,
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        format?: 'json' | 'pdf',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/documents/{document_id}/preview/',
+            path: {
+                'document_id': documentId,
+                'id': id,
+            },
+            query: {
+                'format': format,
             },
         });
     }
@@ -252,33 +285,6 @@ export class EsignService {
             url: '/dashboard/esign/envelopes/{id}/permanent_delete/',
             path: {
                 'id': id,
-            },
-        });
-    }
-
-    /**
-     * preview Envelope
-     * @returns binary
-     * @throws ApiError
-     */
-    public static previewEnvelope({
-        id,
-        format,
-    }: {
-        /**
-         * A unique integer value identifying this envelope.
-         */
-        id: number,
-        format?: 'json' | 'octet-stream',
-    }): CancelablePromise<Blob> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/esign/envelopes/{id}/preview/',
-            path: {
-                'id': id,
-            },
-            query: {
-                'format': format,
             },
         });
     }

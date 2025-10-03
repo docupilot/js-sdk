@@ -16,7 +16,8 @@ export type Template = {
     readonly updated_time: string | null;
     document_status?: 'active' | 'test';
     readonly deleted_time: string | null;
-    readonly use_froala: boolean;
+    use_froala?: boolean;
+    docserver_version?: 'V1' | 'V2';
     readonly created_by: number;
     readonly updated_by: number | null;
 };
