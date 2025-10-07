@@ -554,13 +554,6 @@ paths:
     get:
       operationId: get_current_organization
       summary: get current organization details
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
       tags:
       - organization
       security:
@@ -7739,7 +7732,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/esign/envelopes/{id}/download/:
+  /dashboard/esign/envelopes/{id}/documents/{document_id}/download/:
     get:
       operationId: download_envelope_file
       summary: Download envelope file
@@ -7749,6 +7742,11 @@ paths:
         schema:
           type: string
         description: Workspace unique_key
+        required: true
+      - in: path
+        name: document_id
+        schema:
+          type: string
         required: true
       - in: query
         name: history
@@ -7790,6 +7788,85 @@ paths:
         '404':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/documents/{document_id}/preview/:
+    get:
+      operationId: preview_envelope
+      summary: Preview Envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - pdf
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/pdf:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -7956,71 +8033,6 @@ paths:
         '404':
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/esign/envelopes/{id}/preview/:
-    get:
-      operationId: preview_envelope
-      summary: preview Envelope
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - octet-stream
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this envelope.
-        required: true
-      tags:
-      - esign
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/octet-stream:
-              schema:
-                type: string
-                format: binary
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -8893,6 +8905,9 @@ components:
         trial_signatures_allowed:
           type: integer
           readOnly: true
+        trial_signatures_used:
+          type: integer
+          readOnly: true
         signatures_allowed:
           type: integer
           readOnly: true
@@ -8917,6 +8932,7 @@ components:
       - subscribed_on
       - trial_end
       - trial_signatures_allowed
+      - trial_signatures_used
       - unpaid_invoices
       description: ''
     ChildDocumentMergeHistory:
@@ -9305,14 +9321,13 @@ components:
           readOnly: true
         created_file_name:
           type: string
-          nullable: true
           maxLength: 255
         created_time:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
       required:
+      - created_file_name
       - created_time
       - executed_deliveries
       - id
@@ -10621,6 +10636,10 @@ components:
           type: boolean
         document_expired:
           type: boolean
+        mode:
+          type: string
+        created_file_name:
+          type: string
         delivery_type:
           type: string
           maxLength: 255
@@ -10634,17 +10653,10 @@ components:
           type: string
           format: date-time
           readOnly: true
-        created_file_name:
-          type: string
-          maxLength: 255
         message:
           type: object
           additionalProperties: {}
           nullable: true
-        mode:
-          type: string
-          nullable: true
-          maxLength: 255
         callback_status:
           enum:
           - success
@@ -10666,6 +10678,7 @@ components:
       - delivery_type
       - document_expired
       - id
+      - mode
       - status
       - template
       description: ''
@@ -11125,7 +11138,7 @@ components:
           readOnly: true
         org_name:
           type: string
-          maxLength: 255
+          maxLength: 60
         unique_key:
           type: string
           readOnly: true
@@ -12823,7 +12836,7 @@ components:
           readOnly: true
         org_name:
           type: string
-          maxLength: 255
+          maxLength: 60
         unique_key:
           type: string
           readOnly: true
