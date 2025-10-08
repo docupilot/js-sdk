@@ -7478,9 +7478,8 @@ paths:
             - declined
             - pending
             - voided
-        description: |+
-          Multiple values may be separated by commas.
-
+            - waiting_for_me
+        description: Filter by status
         explode: false
         style: form
       tags:
@@ -7748,11 +7747,6 @@ paths:
         schema:
           type: string
         required: true
-      - in: query
-        name: history
-        schema:
-          type: boolean
-        description: Whether to include history in the response
       - in: path
         name: id
         schema:
@@ -7867,6 +7861,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
             application/pdf:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/download/:
+    get:
+      operationId: download_envelope
+      summary: Download all envelope documents
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: history
+        schema:
+          type: boolean
+        description: Whether to include history in the response
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -9625,6 +9673,11 @@ components:
         pending_signers_count:
           type: integer
           readOnly: true
+        signing_link:
+          type: string
+          format: uri
+          nullable: true
+          readOnly: true
         envelope_id:
           type: string
           readOnly: true
@@ -9638,6 +9691,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -9722,6 +9776,7 @@ components:
       - name
       - pending_signers_count
       - sender
+      - signing_link
       - updated_at
       - updated_by
       - voided_at
@@ -9762,6 +9817,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -9879,6 +9935,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -9994,12 +10051,15 @@ components:
           type: integer
         completed:
           type: integer
+        waiting_for_me:
+          type: integer
       required:
       - completed
       - created
       - declined
       - pending
       - voided
+      - waiting_for_me
       description: ''
     EnvelopeVoid:
       type: object
