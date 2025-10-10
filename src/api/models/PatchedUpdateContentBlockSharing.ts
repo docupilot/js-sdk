@@ -4,7 +4,7 @@
 
 export type PatchedUpdateContentBlockSharing = {
     readonly id?: number;
-    permission?: 'write' | 'manage';
+    permission?: 'read' | 'write' | 'manage';
     readonly user?: number;
 };
 
