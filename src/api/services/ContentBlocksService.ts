@@ -78,28 +78,14 @@ export class ContentBlocksService {
      */
     public static listContentBlockSharing({
         contentBlockId,
-        ordering,
-        search,
     }: {
         contentBlockId: number,
-        /**
-         * Which field to use when ordering the results.
-         */
-        ordering?: string,
-        /**
-         * A search term.
-         */
-        search?: string,
     }): CancelablePromise<Array<ContentBlockSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/',
             path: {
                 'content_block_id': contentBlockId,
-            },
-            query: {
-                'ordering': ordering,
-                'search': search,
             },
         });
     }
@@ -114,8 +100,8 @@ export class ContentBlocksService {
         requestBody,
     }: {
         contentBlockId: number,
-        requestBody: OmitReadonly<ContentBlockSharing>,
-    }): CancelablePromise<ContentBlockSharing> {
+        requestBody: Array<ContentBlockSharing>,
+    }): CancelablePromise<Array<ContentBlockSharing>> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/content_blocks/{content_block_id}/permissions/',
