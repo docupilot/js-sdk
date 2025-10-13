@@ -9,6 +9,7 @@ import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
+import type { SigningLinkResponse } from '../models/SigningLinkResponse';
 import type { UpdateRecipientEmail } from '../models/UpdateRecipientEmail';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -376,6 +377,28 @@ export class EsignService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/esign/envelopes/{id}/send_reminder/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get signing link for the envelope (sender self-sign)
+     * @returns SigningLinkResponse Signing link for the sender if available. Null otherwise.
+     * @throws ApiError
+     */
+    public static getSigningLink({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+    }): CancelablePromise<SigningLinkResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/signing-link/',
             path: {
                 'id': id,
             },

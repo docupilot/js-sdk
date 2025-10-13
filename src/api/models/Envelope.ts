@@ -5,7 +5,7 @@
 export type Envelope = {
     readonly id: number;
     readonly pending_signers_count: number;
-    readonly signing_link: string | null;
+    readonly is_waiting_for_me: boolean;
     readonly envelope_id: string;
     name: string;
     status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me';
