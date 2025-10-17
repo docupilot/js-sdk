@@ -9,6 +9,7 @@ import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
+import type { SigningLinkResponse } from '../models/SigningLinkResponse';
 import type { UpdateRecipientEmail } from '../models/UpdateRecipientEmail';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -42,11 +43,9 @@ export class EsignService {
          */
         search?: string,
         /**
-         * Multiple values may be separated by commas.
-         *
-         *
+         * Filter by status
          */
-        status?: Array<'completed' | 'created' | 'declined' | 'pending' | 'voided'>,
+        status?: Array<'completed' | 'created' | 'declined' | 'pending' | 'voided' | 'waiting_for_me'>,
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -164,17 +163,12 @@ export class EsignService {
     public static downloadEnvelopeFile({
         documentId,
         id,
-        history,
     }: {
         documentId: string,
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-        /**
-         * Whether to include history in the response
-         */
-        history?: boolean,
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -182,9 +176,6 @@ export class EsignService {
             path: {
                 'document_id': documentId,
                 'id': id,
-            },
-            query: {
-                'history': history,
             },
         });
     }
@@ -215,6 +206,36 @@ export class EsignService {
             },
             query: {
                 'format': format,
+            },
+        });
+    }
+
+    /**
+     * Download all envelope documents
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadEnvelope({
+        id,
+        history,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        /**
+         * Whether to include history in the response
+         */
+        history?: boolean,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/download/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'history': history,
             },
         });
     }
@@ -356,6 +377,28 @@ export class EsignService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/esign/envelopes/{id}/send_reminder/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get signing link for the envelope (sender self-sign)
+     * @returns SigningLinkResponse Signing link for the sender if available. Null otherwise.
+     * @throws ApiError
+     */
+    public static getSigningLink({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+    }): CancelablePromise<SigningLinkResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/signing-link/',
             path: {
                 'id': id,
             },

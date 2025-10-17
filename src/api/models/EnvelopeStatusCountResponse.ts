@@ -8,5 +8,6 @@ export type EnvelopeStatusCountResponse = {
     voided: number;
     declined: number;
     completed: number;
+    waiting_for_me: number;
 };
 
