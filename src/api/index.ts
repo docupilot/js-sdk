@@ -114,6 +114,7 @@ export type { ShowDemographicPrompt } from './models/ShowDemographicPrompt';
 export type { ShowUserDomainReservationPrompt } from './models/ShowUserDomainReservationPrompt';
 export type { SignableDelivery } from './models/SignableDelivery';
 export type { SignatureDelivery } from './models/SignatureDelivery';
+export type { SigningLinkResponse } from './models/SigningLinkResponse';
 export type { SignNowDelivery } from './models/SignNowDelivery';
 export type { SurveyPrompt } from './models/SurveyPrompt';
 export type { TeamMember } from './models/TeamMember';

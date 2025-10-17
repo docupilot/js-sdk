@@ -7,7 +7,7 @@ import type { HistoryRecord } from './HistoryRecord';
 export type EnvelopeHistory = {
     readonly envelope_id: string;
     name: string;
-    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
+    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me';
     cc?: Array<string>;
     readonly created_at: string;
     readonly signers: Array<string>;
