@@ -13,7 +13,7 @@ export type EnvelopeDetails = {
     sn_envelope_id?: string | null;
     sn_invite_id?: string | null;
     name: string;
-    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
+    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me';
     cc?: Array<string>;
     sequenced_signing?: boolean;
     expiry?: string | null;
@@ -38,6 +38,7 @@ export type EnvelopeDetails = {
      */
     reason?: string | null;
     audit_log_doc?: string | null;
+    source?: 1 | 2;
     workspace: number;
     sender: number;
     voided_by?: number | null;

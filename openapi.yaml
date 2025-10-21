@@ -554,13 +554,6 @@ paths:
     get:
       operationId: get_current_organization
       summary: get current organization details
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
       tags:
       - organization
       security:
@@ -7485,9 +7478,8 @@ paths:
             - declined
             - pending
             - voided
-        description: |+
-          Multiple values may be separated by commas.
-
+            - waiting_for_me
+        description: Filter by status
         explode: false
         style: form
       tags:
@@ -7514,6 +7506,370 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_envelope
+      summary: Create a new envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateEnvelope'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateEnvelope'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Envelope'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/envelopes/{envelope_id}/documents/{id}/:
+    patch:
+      operationId: update_envelope_document
+      summary: Update envelope document
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDocuments'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{envelope_id}/recipients/:
+    get:
+      operationId: list_envelope_recipients
+      summary: Get list of envelope recipients
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnvelopeRecipientList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_envelope_recipient
+      summary: Create a new envelope recipient
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnvelopeRecipient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateEnvelopeRecipient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateEnvelopeRecipient'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeRecipient'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{envelope_id}/recipients/{id}/:
+    patch:
+      operationId: update_envelope_recipient
+      summary: Partial update of envelope recipient
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateEnvelopeRecipient'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateEnvelopeRecipient'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateEnvelopeRecipient'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeRecipient'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_envelope_recipient
+      summary: Delete an envelope recipient
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /dashboard/esign/envelopes/{id}/:
     patch:
@@ -7739,10 +8095,143 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/esign/envelopes/{id}/download/:
+  /dashboard/esign/envelopes/{id}/documents/{document_id}/download/:
     get:
       operationId: download_envelope_file
       summary: Download envelope file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/documents/{document_id}/preview/:
+    get:
+      operationId: preview_envelope
+      summary: Preview Envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - pdf
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/download/:
+    get:
+      operationId: download_envelope
+      summary: Download all envelope documents
       parameters:
       - in: header
         name: X-Workspace
@@ -7770,7 +8259,7 @@ paths:
       responses:
         '200':
           content:
-            application/octet-stream:
+            application/zip:
               schema:
                 type: string
                 format: binary
@@ -7959,71 +8448,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/esign/envelopes/{id}/preview/:
-    get:
-      operationId: preview_envelope
-      summary: preview Envelope
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - octet-stream
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this envelope.
-        required: true
-      tags:
-      - esign
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/octet-stream:
-              schema:
-                type: string
-                format: binary
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/esign/envelopes/{id}/recipient/{recipient_id}/:
     put:
       operationId: update_recipient_email
@@ -8133,6 +8557,67 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/esign/envelopes/{id}/send/:
+    post:
+      operationId: send_envelope
+      summary: Send an Envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeUpdate'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/esign/envelopes/{id}/send_reminder/:
     post:
       operationId: send_reminder
@@ -8159,6 +8644,60 @@ paths:
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/signing-link/:
+    get:
+      operationId: get_signing_link
+      summary: Get signing link for the envelope (sender self-sign)
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningLinkResponse'
+          description: Signing link for the sender if available. Null otherwise.
         '400':
           content:
             application/json:
@@ -8893,6 +9432,9 @@ components:
         trial_signatures_allowed:
           type: integer
           readOnly: true
+        trial_signatures_used:
+          type: integer
+          readOnly: true
         signatures_allowed:
           type: integer
           readOnly: true
@@ -8917,6 +9459,7 @@ components:
       - subscribed_on
       - trial_end
       - trial_signatures_allowed
+      - trial_signatures_used
       - unpaid_invoices
       description: ''
     ChildDocumentMergeHistory:
@@ -9038,6 +9581,38 @@ components:
       required:
       - folder
       - title
+      description: ''
+    CreateEnvelope:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        attachments:
+          type: array
+          items:
+            type: string
+            format: binary
+          writeOnly: true
+          maxItems: 3
+      required:
+      - attachments
+      - name
+      description: ''
+    CreateEnvelopeRecipient:
+      type: object
+      properties:
+        email_address:
+          type: string
+          format: email
+          maxLength: 254
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+      required:
+      - email_address
+      - order
       description: ''
     DeleteCurrentWorkspace:
       type: object
@@ -9305,14 +9880,13 @@ components:
           readOnly: true
         created_file_name:
           type: string
-          nullable: true
           maxLength: 255
         created_time:
           type: string
           format: date-time
           readOnly: true
-          nullable: true
       required:
+      - created_file_name
       - created_time
       - executed_deliveries
       - id
@@ -9610,6 +10184,15 @@ components:
         pending_signers_count:
           type: integer
           readOnly: true
+        is_waiting_for_me:
+          type: boolean
+          readOnly: true
+        source:
+          type: string
+          enum:
+          - DOC_GEN
+          - MANUAL_SEND
+          readOnly: true
         envelope_id:
           type: string
           readOnly: true
@@ -9623,6 +10206,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -9704,9 +10288,11 @@ components:
       - deleted_at
       - envelope_id
       - id
+      - is_waiting_for_me
       - name
       - pending_signers_count
       - sender
+      - source
       - updated_at
       - updated_by
       - voided_at
@@ -9747,6 +10333,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -9810,6 +10397,13 @@ components:
           type: string
           format: uri
           nullable: true
+        source:
+          enum:
+          - 1
+          - 2
+          type: integer
+          minimum: -2147483648
+          maximum: 2147483647
         workspace:
           type: integer
         sender:
@@ -9844,8 +10438,14 @@ components:
         document_name:
           type: string
           readOnly: true
+        fields_meta:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+          nullable: true
       required:
       - document_name
+      - fields_meta
       - id
       description: ''
     EnvelopeHistory:
@@ -9864,6 +10464,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -9979,12 +10580,47 @@ components:
           type: integer
         completed:
           type: integer
+        waiting_for_me:
+          type: integer
       required:
       - completed
       - created
       - declined
       - pending
       - voided
+      - waiting_for_me
+      description: ''
+    EnvelopeUpdate:
+      type: object
+      properties:
+        expiry:
+          type: string
+          format: date-time
+          description: Expiry date and time for the envelope
+        first_reminder:
+          type: integer
+          nullable: true
+          description: Days after sending invite to send first reminder
+        reminder_frequency:
+          type: integer
+          nullable: true
+          description: Frequency in days for follow-up reminders
+        warn_before:
+          type: string
+          format: date-time
+          description: Days before expiry to send warning
+        sequenced_signing:
+          type: boolean
+        use_default_reminders:
+          type: boolean
+          writeOnly: true
+          default: false
+        cc:
+          type: array
+          items:
+            type: string
+            format: email
+          nullable: true
       description: ''
     EnvelopeVoid:
       type: object
@@ -10621,6 +11257,10 @@ components:
           type: boolean
         document_expired:
           type: boolean
+        mode:
+          type: string
+        created_file_name:
+          type: string
         delivery_type:
           type: string
           maxLength: 255
@@ -10634,17 +11274,10 @@ components:
           type: string
           format: date-time
           readOnly: true
-        created_file_name:
-          type: string
-          maxLength: 255
         message:
           type: object
           additionalProperties: {}
           nullable: true
-        mode:
-          type: string
-          nullable: true
-          maxLength: 255
         callback_status:
           enum:
           - success
@@ -10666,6 +11299,7 @@ components:
       - delivery_type
       - document_expired
       - id
+      - mode
       - status
       - template
       description: ''
@@ -10873,6 +11507,9 @@ components:
         name:
           type: string
           readOnly: true
+        subdomain:
+          type: string
+          readOnly: true
         logo:
           type: string
           format: uri
@@ -10881,6 +11518,7 @@ components:
       required:
       - logo
       - name
+      - subdomain
       description: ''
     PaginatedAccountDeliveryList:
       type: object
@@ -10974,6 +11612,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Envelope'
+    PaginatedEnvelopeRecipientList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeRecipient'
     PaginatedMergeHistoryList:
       type: object
       required:
@@ -11040,6 +11701,14 @@ components:
           type: string
           readOnly: true
       description: ''
+    PatchedEnvelopeDocumentsUpdate:
+      type: object
+      properties:
+        fields_meta:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      description: ''
     PatchedEnvelopeUpdate:
       type: object
       properties:
@@ -11059,6 +11728,26 @@ components:
           type: string
           format: date-time
           description: Days before expiry to send warning
+        sequenced_signing:
+          type: boolean
+        use_default_reminders:
+          type: boolean
+          writeOnly: true
+          default: false
+        cc:
+          type: array
+          items:
+            type: string
+            format: email
+          nullable: true
+      description: ''
+    PatchedUpdateEnvelopeRecipient:
+      type: object
+      properties:
+        order:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
       description: ''
     PatchedUpdateFolderSharing:
       type: object
@@ -11121,7 +11810,7 @@ components:
           readOnly: true
         org_name:
           type: string
-          maxLength: 255
+          maxLength: 60
         unique_key:
           type: string
           readOnly: true
@@ -11928,6 +12617,15 @@ components:
       - name
       - sender
       - signers
+    SigningLinkResponse:
+      type: object
+      properties:
+        signing_link:
+          type: string
+          format: uri
+      required:
+      - signing_link
+      description: ''
     SurveyPrompt:
       type: object
       properties:
@@ -12819,7 +13517,7 @@ components:
           readOnly: true
         org_name:
           type: string
-          maxLength: 255
+          maxLength: 60
         unique_key:
           type: string
           readOnly: true

@@ -1,14 +1,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CreateEnvelope } from '../models/CreateEnvelope';
+import type { CreateEnvelopeRecipient } from '../models/CreateEnvelopeRecipient';
 import type { Envelope } from '../models/Envelope';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
+import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
+import type { EnvelopeRecipient } from '../models/EnvelopeRecipient';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
+import type { EnvelopeUpdate } from '../models/EnvelopeUpdate';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
+import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
+import type { PatchedEnvelopeDocumentsUpdate } from '../models/PatchedEnvelopeDocumentsUpdate';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
+import type { PatchedUpdateEnvelopeRecipient } from '../models/PatchedUpdateEnvelopeRecipient';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
+import type { SigningLinkResponse } from '../models/SigningLinkResponse';
 import type { UpdateRecipientEmail } from '../models/UpdateRecipientEmail';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -42,11 +51,9 @@ export class EsignService {
          */
         search?: string,
         /**
-         * Multiple values may be separated by commas.
-         *
-         *
+         * Filter by status
          */
-        status?: Array<'completed' | 'created' | 'declined' | 'pending' | 'voided'>,
+        status?: Array<'completed' | 'created' | 'declined' | 'pending' | 'voided' | 'waiting_for_me'>,
     }): CancelablePromise<PaginatedEnvelopeList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -56,6 +63,160 @@ export class EsignService {
                 'page': page,
                 'search': search,
                 'status': status,
+            },
+        });
+    }
+
+    /**
+     * Create a new envelope
+     * @returns Envelope
+     * @throws ApiError
+     */
+    public static createEnvelope({
+        formData,
+    }: {
+        formData: OmitReadonly<CreateEnvelope>,
+    }): CancelablePromise<Envelope> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelopes/',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+        });
+    }
+
+    /**
+     * Update envelope document
+     * @returns EnvelopeDocuments
+     * @throws ApiError
+     */
+    public static updateEnvelopeDocument({
+        envelopeId,
+        id,
+        requestBody,
+    }: {
+        envelopeId: string,
+        id: string,
+        requestBody?: OmitReadonly<PatchedEnvelopeDocumentsUpdate>,
+    }): CancelablePromise<EnvelopeDocuments> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/esign/envelopes/{envelope_id}/documents/{id}/',
+            path: {
+                'envelope_id': envelopeId,
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get list of envelope recipients
+     * @returns PaginatedEnvelopeRecipientList
+     * @throws ApiError
+     */
+    public static listEnvelopeRecipients({
+        envelopeId,
+        ordering,
+        page,
+        search,
+    }: {
+        envelopeId: string,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<PaginatedEnvelopeRecipientList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{envelope_id}/recipients/',
+            path: {
+                'envelope_id': envelopeId,
+            },
+            query: {
+                'ordering': ordering,
+                'page': page,
+                'search': search,
+            },
+        });
+    }
+
+    /**
+     * Create a new envelope recipient
+     * @returns EnvelopeRecipient
+     * @throws ApiError
+     */
+    public static createEnvelopeRecipient({
+        envelopeId,
+        requestBody,
+    }: {
+        envelopeId: string,
+        requestBody: OmitReadonly<CreateEnvelopeRecipient>,
+    }): CancelablePromise<EnvelopeRecipient> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelopes/{envelope_id}/recipients/',
+            path: {
+                'envelope_id': envelopeId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Partial update of envelope recipient
+     * @returns EnvelopeRecipient
+     * @throws ApiError
+     */
+    public static updateEnvelopeRecipient({
+        envelopeId,
+        id,
+        requestBody,
+    }: {
+        envelopeId: string,
+        id: string,
+        requestBody?: OmitReadonly<PatchedUpdateEnvelopeRecipient>,
+    }): CancelablePromise<EnvelopeRecipient> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/esign/envelopes/{envelope_id}/recipients/{id}/',
+            path: {
+                'envelope_id': envelopeId,
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Delete an envelope recipient
+     * @returns void
+     * @throws ApiError
+     */
+    public static deleteEnvelopeRecipient({
+        envelopeId,
+        id,
+    }: {
+        envelopeId: string,
+        id: string,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/dashboard/esign/envelopes/{envelope_id}/recipients/{id}/',
+            path: {
+                'envelope_id': envelopeId,
+                'id': id,
             },
         });
     }
@@ -162,6 +323,61 @@ export class EsignService {
      * @throws ApiError
      */
     public static downloadEnvelopeFile({
+        documentId,
+        id,
+    }: {
+        documentId: string,
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/documents/{document_id}/download/',
+            path: {
+                'document_id': documentId,
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Preview Envelope
+     * @returns binary
+     * @throws ApiError
+     */
+    public static previewEnvelope({
+        documentId,
+        id,
+        format,
+    }: {
+        documentId: string,
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        format?: 'json' | 'pdf',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/documents/{document_id}/preview/',
+            path: {
+                'document_id': documentId,
+                'id': id,
+            },
+            query: {
+                'format': format,
+            },
+        });
+    }
+
+    /**
+     * Download all envelope documents
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadEnvelope({
         id,
         history,
     }: {
@@ -257,33 +473,6 @@ export class EsignService {
     }
 
     /**
-     * preview Envelope
-     * @returns binary
-     * @throws ApiError
-     */
-    public static previewEnvelope({
-        id,
-        format,
-    }: {
-        /**
-         * A unique integer value identifying this envelope.
-         */
-        id: number,
-        format?: 'json' | 'octet-stream',
-    }): CancelablePromise<Blob> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/esign/envelopes/{id}/preview/',
-            path: {
-                'id': id,
-            },
-            query: {
-                'format': format,
-            },
-        });
-    }
-
-    /**
      * Update the email of an envelope recipient
      * @returns void
      * @throws ApiError
@@ -335,6 +524,32 @@ export class EsignService {
     }
 
     /**
+     * Send an Envelope
+     * @returns void
+     * @throws ApiError
+     */
+    public static sendEnvelope({
+        id,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        requestBody?: OmitReadonly<EnvelopeUpdate>,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelopes/{id}/send/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * Send a reminder for Envelope Signers
      * @returns void
      * @throws ApiError
@@ -350,6 +565,28 @@ export class EsignService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/esign/envelopes/{id}/send_reminder/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get signing link for the envelope (sender self-sign)
+     * @returns SigningLinkResponse Signing link for the sender if available. Null otherwise.
+     * @throws ApiError
+     */
+    public static getSigningLink({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+    }): CancelablePromise<SigningLinkResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/signing-link/',
             path: {
                 'id': id,
             },

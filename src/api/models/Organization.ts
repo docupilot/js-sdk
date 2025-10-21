@@ -4,6 +4,7 @@
 
 export type Organization = {
     readonly name: string;
+    readonly subdomain: string;
     readonly logo: string | null;
 };
 
