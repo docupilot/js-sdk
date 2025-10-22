@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PatchedEnvelopeUpdate = {
+export type EnvelopeUpdate = {
     /**
      * Expiry date and time for the envelope
      */

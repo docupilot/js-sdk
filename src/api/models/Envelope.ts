@@ -6,6 +6,7 @@ export type Envelope = {
     readonly id: number;
     readonly pending_signers_count: number;
     readonly is_waiting_for_me: boolean;
+    readonly source: 'DOC_GEN' | 'MANUAL_SEND';
     readonly envelope_id: string;
     name: string;
     status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me';
