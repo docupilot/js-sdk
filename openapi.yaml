@@ -3079,10 +3079,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/api/v2/content_blocks/{id}/schema/:
+  /dashboard/api/v2/content_blocks/{id}/preview/:
     get:
-      operationId: get_content_block_schema
-      summary: Get content block schema
+      operationId: preview_content_block_file
+      summary: Preview content block file
       parameters:
       - in: header
         name: X-Workspace
@@ -3090,6 +3090,13 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
       - in: path
         name: id
         schema:
@@ -3099,15 +3106,14 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
-      - tokenAuth: []
       responses:
         '200':
           content:
-            application/json:
+            application/octet-stream:
               schema:
-                $ref: '#/components/schemas/TemplateSchema'
+                type: string
+                format: binary
           description: ''
         '401':
           content:
@@ -3126,6 +3132,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/content_blocks/{id}/schema/:
+    get:
+      operationId: get_content_block_schema
+      summary: Get content block schema
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateSchema'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/content_blocks/{id}/templates/:
     get:
@@ -8497,9 +8559,8 @@ paths:
             - declined
             - pending
             - voided
-        description: |+
-          Multiple values may be separated by commas.
-
+            - waiting_for_me
+        description: Filter by status
         explode: false
         style: form
       tags:
@@ -8767,11 +8828,6 @@ paths:
         schema:
           type: string
         required: true
-      - in: query
-        name: history
-        schema:
-          type: boolean
-        description: Whether to include history in the response
       - in: path
         name: id
         schema:
@@ -8886,6 +8942,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
             application/pdf:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/download/:
+    get:
+      operationId: download_envelope
+      summary: Download all envelope documents
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: history
+        schema:
+          type: boolean
+        description: Whether to include history in the response
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -9190,6 +9300,60 @@ paths:
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/signing-link/:
+    get:
+      operationId: get_signing_link
+      summary: Get signing link for the envelope (sender self-sign)
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningLinkResponse'
+          description: Signing link for the sender if available. Null otherwise.
         '400':
           content:
             application/json:
@@ -10072,7 +10236,7 @@ components:
           type: string
         name:
           type: string
-          maxLength: 120
+          maxLength: 255
         description:
           type: string
           nullable: true
@@ -10122,14 +10286,13 @@ components:
           type: integer
       required:
       - id
-      - permission
       - user
     CopyContentBlock:
       type: object
       properties:
         name:
           type: string
-          maxLength: 120
+          maxLength: 255
         description:
           type: string
           nullable: true
@@ -10720,6 +10883,9 @@ components:
         pending_signers_count:
           type: integer
           readOnly: true
+        is_waiting_for_me:
+          type: boolean
+          readOnly: true
         envelope_id:
           type: string
           readOnly: true
@@ -10733,6 +10899,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -10814,6 +10981,7 @@ components:
       - deleted_at
       - envelope_id
       - id
+      - is_waiting_for_me
       - name
       - pending_signers_count
       - sender
@@ -10857,6 +11025,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -10974,6 +11143,7 @@ components:
           - voided
           - declined
           - completed
+          - waiting_for_me
           type: string
         cc:
           type: array
@@ -11089,12 +11259,15 @@ components:
           type: integer
         completed:
           type: integer
+        waiting_for_me:
+          type: integer
       required:
       - completed
       - created
       - declined
       - pending
       - voided
+      - waiting_for_me
       description: ''
     EnvelopeVoid:
       type: object
@@ -11863,6 +12036,11 @@ components:
       type: object
       description: ''
       properties:
+        name:
+          type: string
+          maxLength: 255
+        key:
+          type: string
         file:
           type: string
           format: binary
@@ -11870,11 +12048,9 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        name:
-          type: string
-          maxLength: 120
       required:
       - file
+      - key
       - name
     NewTemplate:
       type: object
@@ -11883,16 +12059,12 @@ components:
         file:
           type: string
           format: binary
-        description:
-          type: string
-          nullable: true
-          maxLength: 255
-        title:
-          type: string
-          maxLength: 255
         folder:
           type: integer
           nullable: true
+        title:
+          type: string
+          maxLength: 255
         output_type:
           enum:
           - html
@@ -11903,6 +12075,10 @@ components:
           - pptx
           - xlsx
           type: string
+        description:
+          type: string
+          nullable: true
+          maxLength: 255
         template_gallery_id:
           type: integer
       required:
@@ -12271,6 +12447,9 @@ components:
       type: object
       description: ''
       properties:
+        name:
+          type: string
+          maxLength: 255
         file:
           type: string
           format: binary
@@ -13126,6 +13305,15 @@ components:
       - name
       - sender
       - signers
+    SigningLinkResponse:
+      type: object
+      properties:
+        signing_link:
+          type: string
+          format: uri
+      required:
+      - signing_link
+      description: ''
     SurveyPrompt:
       type: object
       properties:
@@ -13214,11 +13402,7 @@ components:
           nullable: true
         use_froala:
           type: boolean
-        docserver_version:
-          enum:
-          - V1
-          - V2
-          type: string
+          readOnly: true
         created_by:
           type: integer
           readOnly: true
@@ -13235,6 +13419,7 @@ components:
       - type
       - updated_by
       - updated_time
+      - use_froala
     TemplateCount:
       type: object
       properties:
