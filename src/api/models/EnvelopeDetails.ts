@@ -38,6 +38,7 @@ export type EnvelopeDetails = {
      */
     reason?: string | null;
     audit_log_doc?: string | null;
+    source?: 1 | 2;
     workspace: number;
     sender: number;
     voided_by?: number | null;
