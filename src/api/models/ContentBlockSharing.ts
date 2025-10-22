@@ -4,7 +4,7 @@
 
 export type ContentBlockSharing = {
     readonly id: number;
-    permission: 'read' | 'write' | 'manage';
+    permission?: 'read' | 'write' | 'manage';
     user: number;
 };
 

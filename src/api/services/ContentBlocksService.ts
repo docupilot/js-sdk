@@ -337,23 +337,64 @@ export class ContentBlocksService {
     }
 
     /**
+     * Preview content block file
+     * @returns binary
+     * @throws ApiError
+     */
+    public static previewContentBlockFile({
+        id,
+        format,
+    }: {
+        /**
+         * A unique integer value identifying this content block.
+         */
+        id: number,
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/content_blocks/{id}/preview/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'format': format,
+            },
+        });
+    }
+
+    /**
      * Get content block schema
      * @returns TemplateSchema
      * @throws ApiError
      */
     public static getContentBlockSchema({
         id,
+        ordering,
+        search,
     }: {
         /**
          * A unique integer value identifying this content block.
          */
         id: number,
-    }): CancelablePromise<TemplateSchema> {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<Array<TemplateSchema>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/content_blocks/{id}/schema/',
             path: {
                 'id': id,
+            },
+            query: {
+                'ordering': ordering,
+                'search': search,
             },
         });
     }
