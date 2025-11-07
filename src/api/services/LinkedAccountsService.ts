@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { BoxDrivePickerPayload } from '../models/BoxDrivePickerPayload';
 import type { DeliveryAccount } from '../models/DeliveryAccount';
+import type { DocuSignFolder } from '../models/DocuSignFolder';
 import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayload';
 import type { PaginatedAccountDeliveryList } from '../models/PaginatedAccountDeliveryList';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
@@ -223,7 +224,7 @@ export class LinkedAccountsService {
 
     /**
      * Get docusign folders
-     * @returns DeliveryAccount
+     * @returns DocuSignFolder
      * @throws ApiError
      */
     public static getDocusignFolders({
@@ -233,7 +234,7 @@ export class LinkedAccountsService {
          * A unique integer value identifying this delivery account.
          */
         id: number,
-    }): CancelablePromise<DeliveryAccount> {
+    }): CancelablePromise<Array<DocuSignFolder>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/linked_accounts/{id}/docusign_folders/',
