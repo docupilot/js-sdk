@@ -14,6 +14,7 @@ import type { SharingInfoTemplate } from '../models/SharingInfoTemplate';
 import type { Template } from '../models/Template';
 import type { TemplateCount } from '../models/TemplateCount';
 import type { TemplateSchema } from '../models/TemplateSchema';
+import type { TemplateSchemaDetail } from '../models/TemplateSchemaDetail';
 import type { TemplateSharing } from '../models/TemplateSharing';
 import type { UploadTemplateImage } from '../models/UploadTemplateImage';
 
@@ -375,7 +376,7 @@ export class TemplatesService {
 
     /**
      * Get template split schema
-     * @returns Template
+     * @returns TemplateSchemaDetail
      * @throws ApiError
      */
     public static getDetailedTemplateSchema({
@@ -385,7 +386,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<TemplateSchemaDetail> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/schema/detail/',

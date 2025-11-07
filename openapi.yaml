@@ -3866,7 +3866,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeliveryAccount'
+                type: array
+                items:
+                  $ref: '#/components/schemas/DocuSignFolder'
           description: ''
         '401':
           content:
@@ -5192,7 +5194,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                type: object
+                additionalProperties: {}
           description: ''
         '401':
           content:
@@ -5504,7 +5507,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                $ref: '#/components/schemas/TemplateSchemaDetail'
           description: ''
         '401':
           content:
@@ -5621,7 +5624,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
+                type: object
+                additionalProperties: {}
           description: ''
         '401':
           content:
@@ -9853,6 +9857,47 @@ components:
       - id
       - name
       - signers
+    DocuSignFolder:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        owner:
+          $ref: '#/components/schemas/DocuSignFolderOwner'
+        folderId:
+          type: string
+        uri:
+          type: string
+        itemCount:
+          type: string
+        hasSubFolders:
+          type: string
+      required:
+      - folderId
+      - hasSubFolders
+      - itemCount
+      - name
+      - owner
+      - type
+      - uri
+      description: ''
+    DocuSignFolderOwner:
+      type: object
+      properties:
+        userName:
+          type: string
+        userId:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - userId
+      - userName
+      description: ''
     DocumentMergeHistory:
       type: object
       properties:
@@ -10934,9 +10979,12 @@ components:
           type: boolean
         eSignatures:
           type: boolean
+        delivery:create:
+          type: boolean
       required:
       - api_settings
       - billing
+      - delivery:create
       - eSignatures
       - folders
       - integrations
@@ -12866,6 +12914,21 @@ components:
       - generics
       - name
       - type
+      description: ''
+    TemplateSchemaDetail:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateSchema'
+        other:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateSchema'
+      required:
+      - content
+      - other
       description: ''
     TemplateSettings:
       type: object

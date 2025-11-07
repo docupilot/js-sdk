@@ -59,7 +59,7 @@ export class GenerateService {
 
     /**
      * Generates a test data used for testing template
-     * @returns Template
+     * @returns any
      * @throws ApiError
      */
     public static generateTestData({
@@ -69,7 +69,7 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/generate_test_data/',
@@ -112,7 +112,7 @@ export class GenerateService {
 
     /**
      * Get test data used for testing template
-     * @returns Template
+     * @returns any
      * @throws ApiError
      */
     public static getTestData({
@@ -122,7 +122,7 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/test_data/',
