@@ -5,5 +5,6 @@
 export type CopyContentBlock = {
     name: string;
     description?: string | null;
+    key: string;
 };
 

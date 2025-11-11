@@ -3357,6 +3357,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/content_blocks/schema/by-key/:
+    get:
+      operationId: fetch_schema_by_key
+      summary: Get content block schema by API name (key)
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: key
+        schema:
+          type: string
+        description: API name (key) of the content block
+        required: true
+      tags:
+      - content_blocks
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlock'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/domain/{id}/:
     get:
       operationId: get_domain
@@ -10726,7 +10762,11 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        key:
+          type: string
+          maxLength: 255
       required:
+      - key
       - name
       description: ''
     CopyTemplate:
