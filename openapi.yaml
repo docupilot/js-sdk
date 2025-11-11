@@ -3385,7 +3385,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContentBlock'
+                $ref: '#/components/schemas/TemplateSchema'
           description: ''
         '404':
           content:
@@ -11509,8 +11509,6 @@ components:
             sender respectively'
           minLength: 4
           maxLength: 500
-        workspace:
-          type: integer
         sender:
           type: integer
         voided_by:
@@ -11537,7 +11535,6 @@ components:
       - updated_at
       - updated_by
       - voided_at
-      - workspace
       description: ''
     EnvelopeDetails:
       type: object
@@ -12175,9 +12172,12 @@ components:
           type: boolean
         eSignatures:
           type: boolean
+        delivery:create:
+          type: boolean
       required:
       - api_settings
       - billing
+      - delivery:create
       - eSignatures
       - folders
       - integrations
@@ -14183,6 +14183,10 @@ components:
           - object
           - generic
           type: string
+        r_type:
+          enum:
+          - content_block
+          type: string
         generics:
           enum:
           - string
@@ -14198,6 +14202,7 @@ components:
       - fields
       - generics
       - name
+      - r_type
       - type
       description: ''
     TemplateSchemaDetail:
@@ -14207,12 +14212,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TemplateSchema'
+        content_blocks_schema:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/TemplateSchema'
+          description: A mapping of content block keys to their respective schema.
         other:
           type: array
           items:
             $ref: '#/components/schemas/TemplateSchema'
       required:
       - content
+      - content_blocks_schema
       - other
       description: ''
     TemplateSettings:
