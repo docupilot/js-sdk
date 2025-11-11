@@ -491,7 +491,7 @@ export class ContentBlocksService {
 
     /**
      * Get content block schema by API name (key)
-     * @returns ContentBlock
+     * @returns TemplateSchema
      * @throws ApiError
      */
     public static fetchSchemaByKey({
@@ -501,7 +501,7 @@ export class ContentBlocksService {
          * API name (key) of the content block
          */
         key: string,
-    }): CancelablePromise<ContentBlock> {
+    }): CancelablePromise<TemplateSchema> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/content_blocks/schema/by-key/',

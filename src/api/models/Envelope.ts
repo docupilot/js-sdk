@@ -33,7 +33,6 @@ export type Envelope = {
      * ex: Reason for Declining or Voiding provided by signer or sender respectively
      */
     reason?: string | null;
-    workspace: number;
     sender: number;
     voided_by?: number | null;
     readonly updated_by: number | null;
