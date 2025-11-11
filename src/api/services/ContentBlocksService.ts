@@ -489,4 +489,26 @@ export class ContentBlocksService {
         });
     }
 
+    /**
+     * Get content block schema by API name (key)
+     * @returns ContentBlock
+     * @throws ApiError
+     */
+    public static fetchSchemaByKey({
+        key,
+    }: {
+        /**
+         * API name (key) of the content block
+         */
+        key: string,
+    }): CancelablePromise<ContentBlock> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/content_blocks/schema/by-key/',
+            query: {
+                'key': key,
+            },
+        });
+    }
+
 }
