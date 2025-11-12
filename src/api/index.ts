@@ -145,6 +145,7 @@ export type { TemplateSchemaDetail } from './models/TemplateSchemaDetail';
 export type { TemplateSettings } from './models/TemplateSettings';
 export type { TemplateSharing } from './models/TemplateSharing';
 export type { TemplateTestResponse } from './models/TemplateTestResponse';
+export type { TestEventResponse } from './models/TestEventResponse';
 export type { Timezone } from './models/Timezone';
 export type { UnauthenticatedError } from './models/UnauthenticatedError';
 export type { UpdateDeliveryAccount } from './models/UpdateDeliveryAccount';

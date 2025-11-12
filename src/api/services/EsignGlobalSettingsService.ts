@@ -8,6 +8,7 @@ import type { PaginatedESignWebhookEventLogList } from '../models/PaginatedESign
 import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookList';
 import type { PatchedESignGlobalSettings } from '../models/PatchedESignGlobalSettings';
 import type { PatchedESignWebhook } from '../models/PatchedESignWebhook';
+import type { TestEventResponse } from '../models/TestEventResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -173,7 +174,7 @@ export class EsignGlobalSettingsService {
         page,
         search,
     }: {
-        webhookId: number,
+        webhookId: string,
         /**
          * Which field to use when ordering the results.
          */
@@ -198,6 +199,24 @@ export class EsignGlobalSettingsService {
                 'page': page,
                 'search': search,
             },
+        });
+    }
+
+    /**
+     * Send test event to webhook
+     * @returns TestEventResponse
+     * @throws ApiError
+     */
+    public static sendTestEvent({
+        requestBody,
+    }: {
+        requestBody: OmitReadonly<ESignWebhook>,
+    }): CancelablePromise<TestEventResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/global-settings/webhooks/send-test-event/',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

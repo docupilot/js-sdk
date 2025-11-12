@@ -9142,7 +9142,7 @@ paths:
       - in: path
         name: webhook_id
         schema:
-          type: integer
+          type: string
         required: true
       tags:
       - esign-global-settings
@@ -9154,6 +9154,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedESignWebhookEventLogList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/send-test-event/:
+    post:
+      operationId: send_test_event
+      summary: Send test event to webhook
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-global-settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ESignWebhook'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ESignWebhook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ESignWebhook'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestEventResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -10557,20 +10609,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        attach_metadata:
-          type: boolean
-        enable_authentication:
-          type: boolean
-        max_retry_count:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          description: Maximum number of retry attempts for failed webhook deliveries
-        initial_retry_delay:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          description: Initial retry delay in seconds
       required:
       - created_at
       - id
@@ -12393,20 +12431,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        attach_metadata:
-          type: boolean
-        enable_authentication:
-          type: boolean
-        max_retry_count:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          description: Maximum number of retry attempts for failed webhook deliveries
-        initial_retry_delay:
-          type: integer
-          maximum: 2147483647
-          minimum: 0
-          description: Initial retry delay in seconds
       description: ''
     PatchedEnvelopeDocumentsUpdate:
       type: object
@@ -13725,6 +13749,15 @@ components:
       required:
       - file_name
       - file_url
+      description: ''
+    TestEventResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code returned by the webhook endpoint
+      required:
+      - status_code
       description: ''
     Timezone:
       type: object
