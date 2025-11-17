@@ -143,7 +143,7 @@ export class ContentBlocksService {
      * @returns ContentBlockSharing
      * @throws ApiError
      */
-    public static updateContentBlockSharingPermissionContent({
+    public static updateContentBlockSharingPermission({
         contentBlockId,
         id,
         requestBody,

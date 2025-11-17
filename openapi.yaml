@@ -2598,7 +2598,7 @@ paths:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
     patch:
-      operationId: update_content_block_sharing_permission_content
+      operationId: update_content_block_sharing_permission
       summary: Update content block content partially
       parameters:
       - in: header
@@ -10697,8 +10697,6 @@ components:
         id:
           type: integer
           readOnly: true
-        key:
-          type: string
         name:
           type: string
           maxLength: 255
@@ -10706,11 +10704,22 @@ components:
           type: string
           nullable: true
           maxLength: 255
+        key:
+          type: string
+          readOnly: true
         type:
           enum:
           - docx
           - html
           type: string
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
         created_time:
           type: string
           format: date-time
@@ -10720,18 +10729,13 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        created_by:
-          type: integer
-          readOnly: true
-        updated_by:
-          type: integer
-          readOnly: true
-          nullable: true
       required:
       - created_by
       - created_time
       - id
+      - key
       - name
+      - type
       - updated_by
       - updated_time
     ContentBlockSharing:
@@ -12635,6 +12639,7 @@ components:
           maxLength: 255
         key:
           type: string
+          maxLength: 255
         file:
           type: string
           format: binary
@@ -14183,7 +14188,7 @@ components:
           - object
           - generic
           type: string
-        r_type:
+        rType:
           enum:
           - content_block
           type: string
@@ -14202,7 +14207,6 @@ components:
       - fields
       - generics
       - name
-      - r_type
       - type
       description: ''
     TemplateSchemaDetail:
@@ -14370,6 +14374,7 @@ components:
       properties:
         file_url:
           type: string
+          format: uri
         file_name:
           type: string
       required:
