@@ -7,11 +7,11 @@ export type ESignWebhook = {
     name: string;
     url: string;
     active?: boolean;
-    recipient_event_subscriptions?: Array<'viewed' | 'signed' | 'declined'>;
-    envelope_event_subscriptions?: Array<'completed' | 'expired'>;
-    enable_hmac?: boolean;
+    event_subscriptions?: Array<'recipient_viewed' | 'recipient_signed' | 'recipient_declined' | 'envelope_completed' | 'envelope_expired'>;
     hmac_secret?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
+    created_by: number;
+    updated_by?: number | null;
 };
 

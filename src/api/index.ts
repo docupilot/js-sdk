@@ -96,7 +96,6 @@ export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedDocumentMergeHistoryList } from './models/PaginatedDocumentMergeHistoryList';
 export type { PaginatedEnvelopeList } from './models/PaginatedEnvelopeList';
 export type { PaginatedEnvelopeRecipientList } from './models/PaginatedEnvelopeRecipientList';
-export type { PaginatedESignGlobalSettingsList } from './models/PaginatedESignGlobalSettingsList';
 export type { PaginatedESignWebhookEventLogList } from './models/PaginatedESignWebhookEventLogList';
 export type { PaginatedESignWebhookList } from './models/PaginatedESignWebhookList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';

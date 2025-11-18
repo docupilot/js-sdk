@@ -8807,24 +8807,6 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
       tags:
       - esign-global-settings
       security:
@@ -8834,7 +8816,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedESignGlobalSettingsList'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ESignGlobalSettings'
           description: ''
         '401':
           content:
@@ -9154,6 +9138,98 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedESignWebhookEventLogList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/{webhook_id}/events/{id}/retry/:
+    post:
+      operationId: retry_webhook_event
+      summary: Retry webhook event
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: webhook_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-global-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignWebhookEventLog'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/generate-hmac-secret/:
+    get:
+      operationId: generate_hmac_secret
+      summary: Generate HMAC secret
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-global-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+                description: Unspecified response body
           description: ''
         '401':
           content:
@@ -10525,28 +10601,24 @@ components:
       properties:
         expiry:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days until envelope expires
         first_reminder:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days before first reminder is sent
         reminder_frequency:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days between reminders
         warn_before:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
-        merge_audit_into_document:
-          type: boolean
-          description: Include the audit trail in the signed document as a single
-            file
       description: ''
     ESignReminderConfig:
       type: object
@@ -10580,23 +10652,16 @@ components:
           maxLength: 255
         active:
           type: boolean
-        recipient_event_subscriptions:
+        event_subscriptions:
           type: array
           items:
             enum:
-            - viewed
-            - signed
-            - declined
+            - recipient_viewed
+            - recipient_signed
+            - recipient_declined
+            - envelope_completed
+            - envelope_expired
             type: string
-        envelope_event_subscriptions:
-          type: array
-          items:
-            enum:
-            - completed
-            - expired
-            type: string
-        enable_hmac:
-          type: boolean
         hmac_secret:
           type: string
           nullable: true
@@ -10609,8 +10674,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+        created_by:
+          type: integer
+        updated_by:
+          type: integer
+          nullable: true
       required:
       - created_at
+      - created_by
       - id
       - name
       - updated_at
@@ -10632,20 +10703,17 @@ components:
           type: string
         status_code:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
-        triggered_at:
+          description: HTTP status code returned by the webhook
+        last_triggered_at:
           type: string
           format: date-time
           readOnly: true
         attempts:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
-        next_retry_at:
-          type: string
-          format: date-time
-          nullable: true
         webhook:
           type: integer
         envelope:
@@ -10654,8 +10722,8 @@ components:
       - envelope
       - event
       - id
+      - last_triggered_at
       - status_code
-      - triggered_at
       - webhook
       description: ''
     EmailDelivery:
@@ -12178,29 +12246,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentMergeHistory'
-    PaginatedESignGlobalSettingsList:
-      type: object
-      required:
-      - count
-      - results
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?page=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/ESignGlobalSettings'
     PaginatedESignWebhookEventLogList:
       type: object
       required:
@@ -12364,28 +12409,24 @@ components:
       properties:
         expiry:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days until envelope expires
         first_reminder:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days before first reminder is sent
         reminder_frequency:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days between reminders
         warn_before:
           type: integer
-          maximum: 2147483647
+          maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
-        merge_audit_into_document:
-          type: boolean
-          description: Include the audit trail in the signed document as a single
-            file
       description: ''
     PatchedESignWebhook:
       type: object
@@ -12402,23 +12443,16 @@ components:
           maxLength: 255
         active:
           type: boolean
-        recipient_event_subscriptions:
+        event_subscriptions:
           type: array
           items:
             enum:
-            - viewed
-            - signed
-            - declined
+            - recipient_viewed
+            - recipient_signed
+            - recipient_declined
+            - envelope_completed
+            - envelope_expired
             type: string
-        envelope_event_subscriptions:
-          type: array
-          items:
-            enum:
-            - completed
-            - expired
-            type: string
-        enable_hmac:
-          type: boolean
         hmac_secret:
           type: string
           nullable: true
@@ -12431,6 +12465,11 @@ components:
           type: string
           format: date-time
           readOnly: true
+        created_by:
+          type: integer
+        updated_by:
+          type: integer
+          nullable: true
       description: ''
     PatchedEnvelopeDocumentsUpdate:
       type: object

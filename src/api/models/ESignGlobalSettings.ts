@@ -19,9 +19,5 @@ export type ESignGlobalSettings = {
      * Number of days before expiry to send warning
      */
     warn_before?: number;
-    /**
-     * Include the audit trail in the signed document as a single file
-     */
-    merge_audit_into_document?: boolean;
 };
 

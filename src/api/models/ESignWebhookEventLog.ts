@@ -5,10 +5,12 @@
 export type ESignWebhookEventLog = {
     readonly id: number;
     event: 'recipient_viewed' | 'recipient_signed' | 'recipient_declined' | 'envelope_completed' | 'envelope_expired';
+    /**
+     * HTTP status code returned by the webhook
+     */
     status_code: number;
-    readonly triggered_at: string;
+    readonly last_triggered_at: string;
     attempts?: number;
-    next_retry_at?: string | null;
     webhook: number;
     envelope: string;
 };

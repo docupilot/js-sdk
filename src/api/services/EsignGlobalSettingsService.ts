@@ -3,7 +3,7 @@
 /* eslint-disable */
 import type { ESignGlobalSettings } from '../models/ESignGlobalSettings';
 import type { ESignWebhook } from '../models/ESignWebhook';
-import type { PaginatedESignGlobalSettingsList } from '../models/PaginatedESignGlobalSettingsList';
+import type { ESignWebhookEventLog } from '../models/ESignWebhookEventLog';
 import type { PaginatedESignWebhookEventLogList } from '../models/PaginatedESignWebhookEventLogList';
 import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookList';
 import type { PatchedESignGlobalSettings } from '../models/PatchedESignGlobalSettings';
@@ -19,35 +19,13 @@ export class EsignGlobalSettingsService {
 
     /**
      * Get signature general settings
-     * @returns PaginatedESignGlobalSettingsList
+     * @returns ESignGlobalSettings
      * @throws ApiError
      */
-    public static getSignatureGeneralSettings({
-        ordering,
-        page,
-        search,
-    }: {
-        /**
-         * Which field to use when ordering the results.
-         */
-        ordering?: string,
-        /**
-         * A page number within the paginated result set.
-         */
-        page?: number,
-        /**
-         * A search term.
-         */
-        search?: string,
-    }): CancelablePromise<PaginatedESignGlobalSettingsList> {
+    public static getSignatureGeneralSettings(): CancelablePromise<Array<ESignGlobalSettings>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/global-settings/general/',
-            query: {
-                'ordering': ordering,
-                'page': page,
-                'search': search,
-            },
         });
     }
 
@@ -199,6 +177,40 @@ export class EsignGlobalSettingsService {
                 'page': page,
                 'search': search,
             },
+        });
+    }
+
+    /**
+     * Retry webhook event
+     * @returns ESignWebhookEventLog
+     * @throws ApiError
+     */
+    public static retryWebhookEvent({
+        id,
+        webhookId,
+    }: {
+        id: string,
+        webhookId: string,
+    }): CancelablePromise<ESignWebhookEventLog> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/global-settings/webhooks/{webhook_id}/events/{id}/retry/',
+            path: {
+                'id': id,
+                'webhook_id': webhookId,
+            },
+        });
+    }
+
+    /**
+     * Generate HMAC secret
+     * @returns any
+     * @throws ApiError
+     */
+    public static generateHmacSecret(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/global-settings/webhooks/generate-hmac-secret/',
         });
     }
 
