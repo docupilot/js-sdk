@@ -9260,13 +9260,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ESignWebhook'
+              $ref: '#/components/schemas/TestWebhookSend'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ESignWebhook'
+              $ref: '#/components/schemas/TestWebhookSend'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ESignWebhook'
+              $ref: '#/components/schemas/TestWebhookSend'
         required: true
       security:
       - SessionAuthentication: []
@@ -13806,6 +13806,19 @@ components:
           description: HTTP status code returned by the webhook endpoint
       required:
       - status_code
+      description: ''
+    TestWebhookSend:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Webhook URL
+        hmac_secret:
+          type: string
+          description: HMAC secret for signing the request
+      required:
+      - url
       description: ''
     Timezone:
       type: object

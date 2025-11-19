@@ -9,6 +9,7 @@ import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookL
 import type { PatchedESignSettings } from '../models/PatchedESignSettings';
 import type { PatchedESignWebhook } from '../models/PatchedESignWebhook';
 import type { TestEventResponse } from '../models/TestEventResponse';
+import type { TestWebhookSend } from '../models/TestWebhookSend';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -222,7 +223,7 @@ export class EsignGlobalSettingsService {
     public static sendTestEvent({
         requestBody,
     }: {
-        requestBody: OmitReadonly<ESignWebhook>,
+        requestBody: OmitReadonly<TestWebhookSend>,
     }): CancelablePromise<TestEventResponse> {
         return __request(OpenAPI, {
             method: 'POST',
