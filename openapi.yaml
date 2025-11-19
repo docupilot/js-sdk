@@ -10676,8 +10676,10 @@ components:
           readOnly: true
         created_by:
           type: integer
+          readOnly: true
         updated_by:
           type: integer
+          readOnly: true
           nullable: true
       required:
       - created_at
@@ -10685,6 +10687,7 @@ components:
       - id
       - name
       - updated_at
+      - updated_by
       - url
       description: ''
     ESignWebhookEventLog:
@@ -12471,8 +12474,10 @@ components:
           readOnly: true
         created_by:
           type: integer
+          readOnly: true
         updated_by:
           type: integer
+          readOnly: true
           nullable: true
       description: ''
     PatchedEnvelopeDocumentsUpdate:

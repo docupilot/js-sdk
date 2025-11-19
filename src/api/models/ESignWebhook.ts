@@ -11,7 +11,7 @@ export type ESignWebhook = {
     hmac_secret?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
-    created_by: number;
-    updated_by?: number | null;
+    readonly created_by: number;
+    readonly updated_by: number | null;
 };
 
