@@ -8818,7 +8818,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ESignGlobalSettings'
+                  $ref: '#/components/schemas/ESignSettings'
           description: ''
         '401':
           content:
@@ -8849,13 +8849,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedESignGlobalSettings'
+              $ref: '#/components/schemas/PatchedESignSettings'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedESignGlobalSettings'
+              $ref: '#/components/schemas/PatchedESignSettings'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedESignGlobalSettings'
+              $ref: '#/components/schemas/PatchedESignSettings'
       security:
       - SessionAuthentication: []
       responses:
@@ -8863,7 +8863,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ESignGlobalSettings'
+                $ref: '#/components/schemas/ESignSettings'
           description: ''
         '400':
           content:
@@ -10596,7 +10596,24 @@ components:
       - top
       - width
       description: ''
-    ESignGlobalSettings:
+    ESignReminderConfig:
+      type: object
+      properties:
+        expiry:
+          type: integer
+        first_reminder:
+          type: integer
+        reminder_frequency:
+          type: integer
+        warn_before:
+          type: integer
+      required:
+      - expiry
+      - first_reminder
+      - reminder_frequency
+      - warn_before
+      description: ''
+    ESignSettings:
       type: object
       properties:
         expiry:
@@ -10619,23 +10636,6 @@ components:
           maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
-      description: ''
-    ESignReminderConfig:
-      type: object
-      properties:
-        expiry:
-          type: integer
-        first_reminder:
-          type: integer
-        reminder_frequency:
-          type: integer
-        warn_before:
-          type: integer
-      required:
-      - expiry
-      - first_reminder
-      - reminder_frequency
-      - warn_before
       description: ''
     ESignWebhook:
       type: object
@@ -10693,6 +10693,9 @@ components:
         id:
           type: integer
           readOnly: true
+        is_retryable:
+          type: boolean
+          readOnly: true
         event:
           enum:
           - recipient_viewed
@@ -10722,6 +10725,7 @@ components:
       - envelope
       - event
       - id
+      - is_retryable
       - last_triggered_at
       - status_code
       - webhook
@@ -12404,7 +12408,7 @@ components:
           type: string
           readOnly: true
       description: ''
-    PatchedESignGlobalSettings:
+    PatchedESignSettings:
       type: object
       properties:
         expiry:

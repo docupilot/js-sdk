@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type PatchedESignGlobalSettings = {
+export type ESignSettings = {
     /**
      * Number of days until envelope expires
      */

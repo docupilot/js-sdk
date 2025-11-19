@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ESignGlobalSettings } from '../models/ESignGlobalSettings';
+import type { ESignSettings } from '../models/ESignSettings';
 import type { ESignWebhook } from '../models/ESignWebhook';
 import type { ESignWebhookEventLog } from '../models/ESignWebhookEventLog';
 import type { PaginatedESignWebhookEventLogList } from '../models/PaginatedESignWebhookEventLogList';
 import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookList';
-import type { PatchedESignGlobalSettings } from '../models/PatchedESignGlobalSettings';
+import type { PatchedESignSettings } from '../models/PatchedESignSettings';
 import type { PatchedESignWebhook } from '../models/PatchedESignWebhook';
 import type { TestEventResponse } from '../models/TestEventResponse';
 
@@ -19,10 +19,10 @@ export class EsignGlobalSettingsService {
 
     /**
      * Get signature general settings
-     * @returns ESignGlobalSettings
+     * @returns ESignSettings
      * @throws ApiError
      */
-    public static getSignatureGeneralSettings(): CancelablePromise<Array<ESignGlobalSettings>> {
+    public static getSignatureGeneralSettings(): CancelablePromise<Array<ESignSettings>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/global-settings/general/',
@@ -31,14 +31,14 @@ export class EsignGlobalSettingsService {
 
     /**
      * Update signature general settings
-     * @returns ESignGlobalSettings
+     * @returns ESignSettings
      * @throws ApiError
      */
     public static updateSignatureGeneralSettings({
         requestBody,
     }: {
-        requestBody?: OmitReadonly<PatchedESignGlobalSettings>,
-    }): CancelablePromise<ESignGlobalSettings> {
+        requestBody?: OmitReadonly<PatchedESignSettings>,
+    }): CancelablePromise<ESignSettings> {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/dashboard/esign/global-settings/general/update/',
