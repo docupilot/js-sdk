@@ -149,11 +149,17 @@ export class EsignGlobalSettingsService {
      */
     public static listEsignWebhookEvents({
         webhookId,
+        event,
         ordering,
         page,
         search,
+        statusCode,
     }: {
         webhookId: string,
+        /**
+         * Filter by event
+         */
+        event?: Array<'envelope_completed' | 'envelope_expired' | 'recipient_declined' | 'recipient_signed' | 'recipient_viewed'>,
         /**
          * Which field to use when ordering the results.
          */
@@ -166,6 +172,10 @@ export class EsignGlobalSettingsService {
          * A search term.
          */
         search?: string,
+        /**
+         * Filter by status code
+         */
+        statusCode?: 'failure' | 'success',
     }): CancelablePromise<PaginatedESignWebhookEventLogList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -174,9 +184,11 @@ export class EsignGlobalSettingsService {
                 'webhook_id': webhookId,
             },
             query: {
+                'event': event,
                 'ordering': ordering,
                 'page': page,
                 'search': search,
+                'status_code': statusCode,
             },
         });
     }

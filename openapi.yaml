@@ -9105,6 +9105,21 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: event
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - envelope_completed
+            - envelope_expired
+            - recipient_declined
+            - recipient_signed
+            - recipient_viewed
+        description: Filter by event
+        explode: false
+        style: form
       - name: ordering
         required: false
         in: query
@@ -9123,6 +9138,16 @@ paths:
         description: A search term.
         schema:
           type: string
+      - in: query
+        name: status_code
+        schema:
+          type: string
+          enum:
+          - failure
+          - success
+        description: Filter by status code
+        explode: false
+        style: form
       - in: path
         name: webhook_id
         schema:
