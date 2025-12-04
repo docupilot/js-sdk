@@ -5429,7 +5429,23 @@ paths:
           content:
             application/json:
               schema:
-                description: A dynamic JSON object with varying keys and value types
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - read
+                    - write
+                    - manage
+                example:
+                  '199':
+                  - read
+                  - write
+                  '1201':
+                  - read
+                  '90':
+                  - write
               examples:
                 ResponseExample:
                   value:
@@ -5480,18 +5496,23 @@ paths:
           content:
             application/json:
               schema:
-                description: A dynamic JSON object with varying keys and value types
-              examples:
-                ResponseExample:
-                  value:
-                    '199':
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                    enum:
                     - read
                     - write
-                    '1201':
-                    - read
-                    '90':
-                    - write
-                  summary: Response Example
+                    - manage
+                example:
+                  '199':
+                  - read
+                  - write
+                  '1201':
+                  - read
+                  '90':
+                  - write
           description: ''
         '401':
           content:
@@ -5563,18 +5584,23 @@ paths:
           content:
             application/json:
               schema:
-                description: A dynamic JSON object with varying keys and value types
-              examples:
-                ResponseExample:
-                  value:
-                    '101':
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                    enum:
                     - read
                     - write
-                    '121':
-                    - read
-                    '12101':
-                    - write
-                  summary: Response Example
+                    - manage
+                example:
+                  '199':
+                  - read
+                  - write
+                  '1201':
+                  - read
+                  '90':
+                  - write
           description: ''
         '401':
           content:
@@ -14485,11 +14511,11 @@ components:
     UpdateRecipientEmail:
       type: object
       properties:
-        email:
+        email_address:
           type: string
           format: email
       required:
-      - email
+      - email_address
       description: ''
     UploadTemplateImage:
       type: object

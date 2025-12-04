@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type UpdateRecipientEmail = {
-    email: string;
+    email_address: string;
 };
 
