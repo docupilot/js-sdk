@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TestEventResponse = {
+export type TestWebhookEventResponse = {
     /**
      * HTTP status code returned by the webhook endpoint
      */
