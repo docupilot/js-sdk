@@ -10395,9 +10395,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
+                $ref: '#/components/schemas/GenerateHMACSecretResponse'
           description: ''
         '401':
           content:
@@ -12839,6 +12837,15 @@ components:
       required:
       - id
       - name
+      description: ''
+    GenerateHMACSecretResponse:
+      type: object
+      properties:
+        hmac_secret:
+          type: string
+          description: Generated HMAC secret
+      required:
+      - hmac_secret
       description: ''
     GlobalPermission:
       type: object
