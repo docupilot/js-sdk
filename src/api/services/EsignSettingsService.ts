@@ -4,6 +4,7 @@
 import type { ESignSettings } from '../models/ESignSettings';
 import type { ESignWebhook } from '../models/ESignWebhook';
 import type { ESignWebhookEventLog } from '../models/ESignWebhookEventLog';
+import type { GenerateHMACSecretResponse } from '../models/GenerateHMACSecretResponse';
 import type { PaginatedESignWebhookEventLogList } from '../models/PaginatedESignWebhookEventLogList';
 import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookList';
 import type { PatchedESignSettings } from '../models/PatchedESignSettings';
@@ -217,10 +218,10 @@ export class EsignSettingsService {
 
     /**
      * Generate HMAC secret
-     * @returns any
+     * @returns GenerateHMACSecretResponse
      * @throws ApiError
      */
-    public static generateHmacSecret(): CancelablePromise<Record<string, any>> {
+    public static generateHmacSecret(): CancelablePromise<GenerateHMACSecretResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/global-settings/webhooks/generate-hmac-secret/',

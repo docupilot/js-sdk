@@ -76,6 +76,7 @@ export type { FolderCount } from './models/FolderCount';
 export type { FolderSharing } from './models/FolderSharing';
 export type { ForbiddenError } from './models/ForbiddenError';
 export type { GalleryCategory } from './models/GalleryCategory';
+export type { GenerateHMACSecretResponse } from './models/GenerateHMACSecretResponse';
 export type { GlobalPermission } from './models/GlobalPermission';
 export type { GoogleDriveDelivery } from './models/GoogleDriveDelivery';
 export type { GoogleDrivePickerPayload } from './models/GoogleDrivePickerPayload';
