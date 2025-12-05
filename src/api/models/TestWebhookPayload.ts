@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TestWebhookSend = {
+export type TestWebhookPayload = {
     /**
      * Webhook URL
      */

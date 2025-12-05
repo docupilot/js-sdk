@@ -11,15 +11,34 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class PermissionsService {
 
     /**
+     * Returns content_block permissions
+     * @returns string
+     * @throws ApiError
+     */
+    public static getContentBlockPermissions({
+        ids,
+    }: {
+        ids?: string,
+    }): CancelablePromise<Record<string, Array<'read' | 'write' | 'manage'>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/permissions/content_block/',
+            query: {
+                'ids': ids,
+            },
+        });
+    }
+
+    /**
      * Returns folder permissions
-     * @returns any
+     * @returns string
      * @throws ApiError
      */
     public static getFolderPermissions({
         ids,
     }: {
         ids?: string,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<Record<string, Array<'read' | 'write' | 'manage'>>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/permissions/folder/',
@@ -43,14 +62,14 @@ export class PermissionsService {
 
     /**
      * Returns template permissions
-     * @returns any
+     * @returns string
      * @throws ApiError
      */
     public static getTemplatePermissions({
         ids,
     }: {
         ids?: string,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<Record<string, Array<'read' | 'write' | 'manage'>>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/permissions/template/',

@@ -8,15 +8,15 @@ import type { PaginatedESignWebhookEventLogList } from '../models/PaginatedESign
 import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookList';
 import type { PatchedESignSettings } from '../models/PatchedESignSettings';
 import type { PatchedESignWebhook } from '../models/PatchedESignWebhook';
-import type { TestEventResponse } from '../models/TestEventResponse';
-import type { TestWebhookSend } from '../models/TestWebhookSend';
+import type { TestWebhookEventResponse } from '../models/TestWebhookEventResponse';
+import type { TestWebhookPayload } from '../models/TestWebhookPayload';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
-export class EsignGlobalSettingsService {
+export class EsignSettingsService {
 
     /**
      * Get signature general settings
@@ -229,14 +229,14 @@ export class EsignGlobalSettingsService {
 
     /**
      * Send test event to webhook
-     * @returns TestEventResponse
+     * @returns TestWebhookEventResponse
      * @throws ApiError
      */
     public static sendTestEvent({
         requestBody,
     }: {
-        requestBody: OmitReadonly<TestWebhookSend>,
-    }): CancelablePromise<TestEventResponse> {
+        requestBody: OmitReadonly<TestWebhookPayload>,
+    }): CancelablePromise<TestWebhookEventResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/esign/global-settings/webhooks/send-test-event/',
