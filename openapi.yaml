@@ -9939,6 +9939,528 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/esign/global-settings/general/:
+    get:
+      operationId: get_signature_general_settings
+      summary: Get signature general settings
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ESignSettings'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/general/update/:
+    patch:
+      operationId: update_signature_general_settings
+      summary: Update signature general settings
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedESignSettings'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedESignSettings'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedESignSettings'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignSettings'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/:
+    get:
+      operationId: list_esign_webhooks
+      summary: Get list of webhooks
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedESignWebhookList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_esign_webhook
+      summary: Create a new webhook
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ESignWebhook'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ESignWebhook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ESignWebhook'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignWebhook'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/{id}/:
+    patch:
+      operationId: update_esign_webhook
+      summary: Partial update of an webhook
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedESignWebhook'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedESignWebhook'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedESignWebhook'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignWebhook'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_esign_webhook
+      summary: Delete an webhook
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/{webhook_id}/events/:
+    get:
+      operationId: list_esign_webhook_events
+      summary: Get list of webhook events
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: event
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - envelope_completed
+            - envelope_expired
+            - recipient_declined
+            - recipient_signed
+            - recipient_viewed
+        description: Filter by event
+        explode: false
+        style: form
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status_code
+        schema:
+          type: string
+          enum:
+          - failure
+          - success
+        description: Filter by status code
+        explode: false
+        style: form
+      - in: path
+        name: webhook_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedESignWebhookEventLogList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/{webhook_id}/events/{id}/retry/:
+    post:
+      operationId: retry_webhook_event
+      summary: Retry webhook event
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: webhook_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignWebhookEventLog'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/generate-hmac-secret/:
+    get:
+      operationId: generate_hmac_secret
+      summary: Generate HMAC secret
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateHMACSecretResponse'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/webhooks/send-test-event/:
+    post:
+      operationId: send_test_event
+      summary: Send test event to webhook
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestWebhookPayload'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TestWebhookPayload'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TestWebhookPayload'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestWebhookEventResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/meta/:
     get:
       operationId: get_app_meta
@@ -11359,6 +11881,126 @@ components:
       - reminder_frequency
       - warn_before
       description: ''
+    ESignSettings:
+      type: object
+      properties:
+        expiry:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days until envelope expires
+        first_reminder:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days before first reminder is sent
+        reminder_frequency:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days between reminders
+        warn_before:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days before expiry to send warning
+      description: ''
+    ESignWebhook:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        url:
+          type: string
+          format: uri
+          maxLength: 255
+        active:
+          type: boolean
+        event_subscriptions:
+          type: array
+          items:
+            enum:
+            - recipient_viewed
+            - recipient_signed
+            - recipient_declined
+            - envelope_completed
+            - envelope_expired
+            type: string
+        hmac_secret:
+          type: string
+          nullable: true
+          maxLength: 255
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+      required:
+      - created_at
+      - created_by
+      - id
+      - name
+      - updated_at
+      - updated_by
+      - url
+      description: ''
+    ESignWebhookEventLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_retryable:
+          type: boolean
+          readOnly: true
+        event:
+          enum:
+          - recipient_viewed
+          - recipient_signed
+          - recipient_declined
+          - envelope_completed
+          - envelope_expired
+          type: string
+        status_code:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: HTTP status code returned by the webhook
+        last_triggered_at:
+          type: string
+          format: date-time
+          readOnly: true
+        attempts:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        webhook:
+          type: integer
+        envelope:
+          type: string
+      required:
+      - envelope
+      - event
+      - id
+      - is_retryable
+      - last_triggered_at
+      - status_code
+      - webhook
+      description: ''
     EmailDelivery:
       type: object
       description: ''
@@ -12196,6 +12838,15 @@ components:
       - id
       - name
       description: ''
+    GenerateHMACSecretResponse:
+      type: object
+      properties:
+        hmac_secret:
+          type: string
+          description: Generated HMAC secret
+      required:
+      - hmac_secret
+      description: ''
     GlobalPermission:
       type: object
       properties:
@@ -12923,6 +13574,52 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DocumentMergeHistory'
+    PaginatedESignWebhookEventLogList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ESignWebhookEventLog'
+    PaginatedESignWebhookList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ESignWebhook'
     PaginatedEnvelopeList:
       type: object
       required:
@@ -13057,6 +13754,75 @@ components:
         spf_record:
           type: string
           readOnly: true
+      description: ''
+    PatchedESignSettings:
+      type: object
+      properties:
+        expiry:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days until envelope expires
+        first_reminder:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days before first reminder is sent
+        reminder_frequency:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days between reminders
+        warn_before:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Number of days before expiry to send warning
+      description: ''
+    PatchedESignWebhook:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        url:
+          type: string
+          format: uri
+          maxLength: 255
+        active:
+          type: boolean
+        event_subscriptions:
+          type: array
+          items:
+            enum:
+            - recipient_viewed
+            - recipient_signed
+            - recipient_declined
+            - envelope_completed
+            - envelope_expired
+            type: string
+        hmac_secret:
+          type: string
+          nullable: true
+          maxLength: 255
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
       description: ''
     PatchedEnvelopeDocumentsUpdate:
       type: object
@@ -14425,6 +15191,28 @@ components:
       required:
       - file_name
       - file_url
+      description: ''
+    TestWebhookEventResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status code returned by the webhook endpoint
+      required:
+      - status_code
+      description: ''
+    TestWebhookPayload:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Webhook URL
+        hmac_secret:
+          type: string
+          description: HMAC secret for signing the request
+      required:
+      - url
       description: ''
     Timezone:
       type: object
