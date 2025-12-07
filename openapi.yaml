@@ -9595,61 +9595,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/esign/envelopes/{id}/recipient/{recipient_id}/:
-    put:
-      operationId: update_recipient_email
-      summary: Update the email of an envelope recipient
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this envelope.
-        required: true
-      - in: path
-        name: recipient_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - esign
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateRecipientEmail'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateRecipientEmail'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateRecipientEmail'
-        required: true
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/esign/envelopes/{id}/restore/:
     post:
       operationId: restore_envelope_from_trash
@@ -13883,6 +13828,18 @@ components:
     PatchedUpdateEnvelopeRecipient:
       type: object
       properties:
+        email_address:
+          type: string
+          format: email
+          maxLength: 254
+        subject:
+          type: string
+          maxLength: 255
+        email_body:
+          type: string
+        name:
+          type: string
+          maxLength: 255
         order:
           type: integer
           maximum: 2147483647
@@ -15296,15 +15253,6 @@ components:
       - type
       - updated_at
       - used_by
-    UpdateRecipientEmail:
-      type: object
-      properties:
-        email_address:
-          type: string
-          format: email
-      required:
-      - email_address
-      description: ''
     UploadTemplateImage:
       type: object
       properties:
