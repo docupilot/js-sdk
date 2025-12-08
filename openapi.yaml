@@ -6223,6 +6223,71 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/templates/{id}/editor_version/:
+    patch:
+      operationId: update_template_editor_version
+      summary: Update the template editor version between v1 and v2
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEditorVersion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEditorVersion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEditorVersion'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EditorVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/templates/{id}/generate/:
     post:
       operationId: generate_document
@@ -11218,7 +11283,7 @@ components:
           type: string
           format: date-time
           nullable: true
-        use_froala:
+        use_v2_editor:
           type: boolean
         created_by:
           type: integer
@@ -12000,6 +12065,12 @@ components:
       - last_triggered_at
       - status_code
       - webhook
+      description: ''
+    EditorVersion:
+      type: object
+      properties:
+        use_v2_editor:
+          type: boolean
       description: ''
     EmailDelivery:
       type: object
@@ -13824,6 +13895,12 @@ components:
           readOnly: true
           nullable: true
       description: ''
+    PatchedEditorVersion:
+      type: object
+      properties:
+        use_v2_editor:
+          type: boolean
+      description: ''
     PatchedEnvelopeDocumentsUpdate:
       type: object
       properties:
@@ -14861,7 +14938,7 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        use_froala:
+        use_v2_editor:
           type: boolean
           readOnly: true
         created_by:
@@ -14880,7 +14957,7 @@ components:
       - type
       - updated_by
       - updated_time
-      - use_froala
+      - use_v2_editor
     TemplateCount:
       type: object
       properties:

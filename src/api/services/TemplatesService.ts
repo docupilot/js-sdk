@@ -3,10 +3,12 @@
 /* eslint-disable */
 import type { CopyTemplate } from '../models/CopyTemplate';
 import type { DeliveryCount } from '../models/DeliveryCount';
+import type { EditorVersion } from '../models/EditorVersion';
 import type { MoveTemplate } from '../models/MoveTemplate';
 import type { MoveTemplateResponse } from '../models/MoveTemplateResponse';
 import type { NewTemplate } from '../models/NewTemplate';
 import type { PaginatedTemplateList } from '../models/PaginatedTemplateList';
+import type { PatchedEditorVersion } from '../models/PatchedEditorVersion';
 import type { PatchedUpdateNewTemplate } from '../models/PatchedUpdateNewTemplate';
 import type { PatchedUpdateTemplateSharing } from '../models/PatchedUpdateTemplateSharing';
 import type { RestoreTemplateResponse } from '../models/RestoreTemplateResponse';
@@ -252,6 +254,32 @@ export class TemplatesService {
             path: {
                 'id': id,
             },
+        });
+    }
+
+    /**
+     * Update the template editor version between v1 and v2
+     * @returns EditorVersion
+     * @throws ApiError
+     */
+    public static updateTemplateEditorVersion({
+        id,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+        requestBody?: OmitReadonly<PatchedEditorVersion>,
+    }): CancelablePromise<EditorVersion> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/api/v2/templates/{id}/editor_version/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
