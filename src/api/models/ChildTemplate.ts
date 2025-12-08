@@ -11,7 +11,7 @@ export type ChildTemplate = {
     readonly updated_time: string | null;
     document_status?: 'active' | 'test';
     deleted_time?: string | null;
-    use_froala?: boolean;
+    use_v2_editor?: boolean;
     readonly created_by: number;
     readonly updated_by: number | null;
     folder?: number | null;

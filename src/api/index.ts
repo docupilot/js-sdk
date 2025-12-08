@@ -52,6 +52,7 @@ export type { DomainFailure } from './models/DomainFailure';
 export type { DomainVerify } from './models/DomainVerify';
 export type { DropboxDelivery } from './models/DropboxDelivery';
 export type { DynamicImage } from './models/DynamicImage';
+export type { EditorVersion } from './models/EditorVersion';
 export type { EmailDelivery } from './models/EmailDelivery';
 export type { EmailDeliveryAttachment } from './models/EmailDeliveryAttachment';
 export type { Envelope } from './models/Envelope';
@@ -109,6 +110,7 @@ export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryLi
 export type { PaginatedTemplateInfoList } from './models/PaginatedTemplateInfoList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
 export type { PatchedDomain } from './models/PatchedDomain';
+export type { PatchedEditorVersion } from './models/PatchedEditorVersion';
 export type { PatchedEnvelopeDocumentsUpdate } from './models/PatchedEnvelopeDocumentsUpdate';
 export type { PatchedEnvelopeUpdate } from './models/PatchedEnvelopeUpdate';
 export type { PatchedESignSettings } from './models/PatchedESignSettings';
