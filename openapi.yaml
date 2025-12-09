@@ -1625,6 +1625,10 @@ paths:
       operationId: list_workspaces
       summary: Get list of Workspaces
       parameters:
+      - in: query
+        name: active
+        schema:
+          type: boolean
       - name: ordering
         required: false
         in: query
@@ -9660,61 +9664,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/esign/envelopes/{id}/recipient/{recipient_id}/:
-    put:
-      operationId: update_recipient_email
-      summary: Update the email of an envelope recipient
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this envelope.
-        required: true
-      - in: path
-        name: recipient_id
-        schema:
-          type: string
-        required: true
-      tags:
-      - esign
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateRecipientEmail'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/UpdateRecipientEmail'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/UpdateRecipientEmail'
-        required: true
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/esign/envelopes/{id}/restore/:
     post:
       operationId: restore_envelope_from_trash
@@ -12209,7 +12158,6 @@ components:
           - voided
           - declined
           - completed
-          - waiting_for_me
           type: string
         cc:
           type: array
@@ -12245,7 +12193,7 @@ components:
         completed_at:
           type: string
           format: date-time
-          readOnly: true
+          nullable: true
         deleted_at:
           type: string
           format: date-time
@@ -12284,7 +12232,6 @@ components:
           type: integer
           nullable: true
       required:
-      - completed_at
       - created_at
       - deleted_at
       - envelope_id
@@ -12333,7 +12280,6 @@ components:
           - voided
           - declined
           - completed
-          - waiting_for_me
           type: string
         cc:
           type: array
@@ -12369,7 +12315,7 @@ components:
         completed_at:
           type: string
           format: date-time
-          readOnly: true
+          nullable: true
         deleted_at:
           type: string
           format: date-time
@@ -12418,7 +12364,6 @@ components:
           type: integer
           nullable: true
       required:
-      - completed_at
       - created_at
       - documents
       - envelope_id
@@ -12464,7 +12409,6 @@ components:
           - voided
           - declined
           - completed
-          - waiting_for_me
           type: string
         cc:
           type: array
@@ -12580,15 +12524,12 @@ components:
           type: integer
         completed:
           type: integer
-        waiting_for_me:
-          type: integer
       required:
       - completed
       - created
       - declined
       - pending
       - voided
-      - waiting_for_me
       description: ''
     EnvelopeUpdate:
       type: object
@@ -12945,11 +12886,17 @@ components:
           type: boolean
         delivery:create:
           type: boolean
+        esign_settings:
+          type: boolean
+        esign_webhook:
+          type: boolean
       required:
       - api_settings
       - billing
       - delivery:create
       - eSignatures
+      - esign_settings
+      - esign_webhook
       - folders
       - integrations
       - reports
@@ -13149,6 +13096,7 @@ components:
           - completed
           - declined
           - voided
+          - recipient_changed
           type: string
         event_meta:
           type: object
@@ -13960,6 +13908,18 @@ components:
     PatchedUpdateEnvelopeRecipient:
       type: object
       properties:
+        email_address:
+          type: string
+          format: email
+          maxLength: 254
+        subject:
+          type: string
+          maxLength: 255
+        email_body:
+          type: string
+        name:
+          type: string
+          maxLength: 255
         order:
           type: integer
           maximum: 2147483647
@@ -15373,15 +15333,6 @@ components:
       - type
       - updated_at
       - used_by
-    UpdateRecipientEmail:
-      type: object
-      properties:
-        email_address:
-          type: string
-          format: email
-      required:
-      - email_address
-      description: ''
     UploadTemplateImage:
       type: object
       properties:

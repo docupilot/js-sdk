@@ -4,7 +4,7 @@
 
 export type HistoryRecord = {
     readonly id: number;
-    event_name: 'created' | 'invited' | 'send_failed' | 'resent' | 'viewed' | 'signed' | 'completed' | 'declined' | 'voided';
+    event_name: 'created' | 'invited' | 'send_failed' | 'resent' | 'viewed' | 'signed' | 'completed' | 'declined' | 'voided' | 'recipient_changed';
     event_meta?: Record<string, any> | null;
     server_time: string;
     client_time: string;
