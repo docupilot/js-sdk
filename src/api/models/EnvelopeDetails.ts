@@ -13,7 +13,7 @@ export type EnvelopeDetails = {
     sn_envelope_id?: string | null;
     sn_invite_id?: string | null;
     name: string;
-    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me';
+    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
     cc?: Array<string>;
     sequenced_signing?: boolean;
     expiry?: string | null;
@@ -28,7 +28,7 @@ export type EnvelopeDetails = {
     warn_before?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
-    readonly completed_at: string;
+    completed_at?: string | null;
     deleted_at?: string | null;
     archived_at?: string | null;
     declined_at?: string | null;

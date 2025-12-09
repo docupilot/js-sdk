@@ -20,9 +20,11 @@ export class WorkspacesService {
      * @throws ApiError
      */
     public static listWorkspaces({
+        active,
         ordering,
         search,
     }: {
+        active?: boolean,
         /**
          * Which field to use when ordering the results.
          */
@@ -36,6 +38,7 @@ export class WorkspacesService {
             method: 'GET',
             url: '/dashboard/accounts/v2/workspaces/',
             query: {
+                'active': active,
                 'ordering': ordering,
                 'search': search,
             },

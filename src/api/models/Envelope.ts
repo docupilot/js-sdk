@@ -9,7 +9,7 @@ export type Envelope = {
     readonly source: 'DOC_GEN' | 'MANUAL_SEND';
     readonly envelope_id: string;
     name: string;
-    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me';
+    status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
     cc?: Array<string>;
     sequenced_signing?: boolean;
     expiry?: string | null;
@@ -24,7 +24,7 @@ export type Envelope = {
     warn_before?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
-    readonly completed_at: string;
+    completed_at?: string | null;
     readonly deleted_at: string | null;
     archived_at?: string | null;
     declined_at?: string | null;
