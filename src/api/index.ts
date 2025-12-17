@@ -32,6 +32,7 @@ export type { ChildDocumentMergeHistory } from './models/ChildDocumentMergeHisto
 export type { ChildTemplate } from './models/ChildTemplate';
 export type { ContentBlock } from './models/ContentBlock';
 export type { ContentBlockDetailByKeyResponse } from './models/ContentBlockDetailByKeyResponse';
+export type { ContentBlockEditorVersion } from './models/ContentBlockEditorVersion';
 export type { ContentBlockSharing } from './models/ContentBlockSharing';
 export type { CopyContentBlock } from './models/CopyContentBlock';
 export type { CopyTemplate } from './models/CopyTemplate';
@@ -109,6 +110,7 @@ export type { PaginatedESignWebhookList } from './models/PaginatedESignWebhookLi
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
 export type { PaginatedTemplateInfoList } from './models/PaginatedTemplateInfoList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
+export type { PatchedContentBlockEditorVersion } from './models/PatchedContentBlockEditorVersion';
 export type { PatchedDomain } from './models/PatchedDomain';
 export type { PatchedEditorVersion } from './models/PatchedEditorVersion';
 export type { PatchedEnvelopeDocumentsUpdate } from './models/PatchedEnvelopeDocumentsUpdate';
