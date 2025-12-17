@@ -3083,6 +3083,71 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/content_blocks/{id}/editor_version/:
+    patch:
+      operationId: update_content_block_editor_version
+      summary: Update the content block editor version between v1 and v2
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentBlockEditorVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/content_blocks/{id}/preview/:
     get:
       operationId: preview_content_block_file
@@ -11291,6 +11356,9 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        use_v2_editor:
+          type: boolean
+          readOnly: true
       required:
       - created_by
       - created_time
@@ -11300,6 +11368,7 @@ components:
       - type
       - updated_by
       - updated_time
+      - use_v2_editor
     ContentBlockDetailByKeyResponse:
       type: object
       properties:
@@ -11318,6 +11387,12 @@ components:
       - name
       - schema
       - type
+      description: ''
+    ContentBlockEditorVersion:
+      type: object
+      properties:
+        use_v2_editor:
+          type: boolean
       description: ''
     ContentBlockSharing:
       type: object
@@ -11907,11 +11982,13 @@ components:
           type: integer
           maximum: 32767
           minimum: 0
+          nullable: true
           description: Number of days before first reminder is sent
         reminder_frequency:
           type: integer
           maximum: 32767
           minimum: 0
+          nullable: true
           description: Number of days between reminders
         warn_before:
           type: integer
@@ -13754,6 +13831,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+    PatchedContentBlockEditorVersion:
+      type: object
+      properties:
+        use_v2_editor:
+          type: boolean
+      description: ''
     PatchedDomain:
       type: object
       properties:
@@ -13786,11 +13869,13 @@ components:
           type: integer
           maximum: 32767
           minimum: 0
+          nullable: true
           description: Number of days before first reminder is sent
         reminder_frequency:
           type: integer
           maximum: 32767
           minimum: 0
+          nullable: true
           description: Number of days between reminders
         warn_before:
           type: integer

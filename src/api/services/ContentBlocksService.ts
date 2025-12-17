@@ -3,11 +3,13 @@
 /* eslint-disable */
 import type { ContentBlock } from '../models/ContentBlock';
 import type { ContentBlockDetailByKeyResponse } from '../models/ContentBlockDetailByKeyResponse';
+import type { ContentBlockEditorVersion } from '../models/ContentBlockEditorVersion';
 import type { ContentBlockSharing } from '../models/ContentBlockSharing';
 import type { CopyContentBlock } from '../models/CopyContentBlock';
 import type { NewContentBlock } from '../models/NewContentBlock';
 import type { PaginatedContentBlockList } from '../models/PaginatedContentBlockList';
 import type { PaginatedTemplateInfoList } from '../models/PaginatedTemplateInfoList';
+import type { PatchedContentBlockEditorVersion } from '../models/PatchedContentBlockEditorVersion';
 import type { PatchedUpdateContentBlockSharing } from '../models/PatchedUpdateContentBlockSharing';
 import type { PatchedUpdateNewContentBlock } from '../models/PatchedUpdateNewContentBlock';
 import type { TemplateSchema } from '../models/TemplateSchema';
@@ -334,6 +336,32 @@ export class ContentBlocksService {
             path: {
                 'id': id,
             },
+        });
+    }
+
+    /**
+     * Update the content block editor version between v1 and v2
+     * @returns ContentBlockEditorVersion
+     * @throws ApiError
+     */
+    public static updateContentBlockEditorVersion({
+        id,
+        requestBody,
+    }: {
+        /**
+         * A unique integer value identifying this content block.
+         */
+        id: number,
+        requestBody?: OmitReadonly<PatchedContentBlockEditorVersion>,
+    }): CancelablePromise<ContentBlockEditorVersion> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/api/v2/content_blocks/{id}/editor_version/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

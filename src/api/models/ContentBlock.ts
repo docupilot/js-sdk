@@ -12,5 +12,6 @@ export type ContentBlock = {
     readonly updated_by: number | null;
     readonly created_time: string;
     readonly updated_time: string | null;
+    readonly use_v2_editor: boolean;
 };
 

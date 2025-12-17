@@ -10,11 +10,11 @@ export type ESignSettings = {
     /**
      * Number of days before first reminder is sent
      */
-    first_reminder?: number;
+    first_reminder?: number | null;
     /**
      * Number of days between reminders
      */
-    reminder_frequency?: number;
+    reminder_frequency?: number | null;
     /**
      * Number of days before expiry to send warning
      */
