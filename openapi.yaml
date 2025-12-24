@@ -10336,6 +10336,7 @@ paths:
             enum:
             - envelope_completed
             - envelope_expired
+            - envelope_voided
             - recipient_declined
             - recipient_signed
             - recipient_viewed
@@ -12020,6 +12021,7 @@ components:
             - recipient_declined
             - envelope_completed
             - envelope_expired
+            - envelope_voided
             type: string
         hmac_secret:
           type: string
@@ -12065,11 +12067,13 @@ components:
           - recipient_declined
           - envelope_completed
           - envelope_expired
+          - envelope_voided
           type: string
         status_code:
           type: integer
           maximum: 32767
           minimum: 0
+          nullable: true
           description: HTTP status code returned by the webhook
         last_triggered_at:
           type: string
@@ -12089,7 +12093,6 @@ components:
       - id
       - is_retryable
       - last_triggered_at
-      - status_code
       - webhook
       description: ''
     EditorVersion:
@@ -13907,6 +13910,7 @@ components:
             - recipient_declined
             - envelope_completed
             - envelope_expired
+            - envelope_voided
             type: string
         hmac_secret:
           type: string

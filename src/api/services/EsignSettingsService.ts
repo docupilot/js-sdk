@@ -160,7 +160,7 @@ export class EsignSettingsService {
         /**
          * Filter by event
          */
-        event?: Array<'envelope_completed' | 'envelope_expired' | 'recipient_declined' | 'recipient_signed' | 'recipient_viewed'>,
+        event?: Array<'envelope_completed' | 'envelope_expired' | 'envelope_voided' | 'recipient_declined' | 'recipient_signed' | 'recipient_viewed'>,
         /**
          * Which field to use when ordering the results.
          */
