@@ -12,7 +12,7 @@ export type SignatureDelivery = {
         email: string;
     }>;
     use_default_reminders?: boolean;
-    expiry?: number;
+    expiry?: number | null;
     first_reminder?: number | null;
     reminder_frequency?: number | null;
     warn_before?: number | null;
