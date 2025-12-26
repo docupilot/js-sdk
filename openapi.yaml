@@ -14821,6 +14821,7 @@ components:
           default: false
         expiry:
           type: integer
+          nullable: true
         first_reminder:
           type: integer
           nullable: true
