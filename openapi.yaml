@@ -10054,6 +10054,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/esign/global-settings/general/email-accounts/:
+    get:
+      operationId: get_email_accounts
+      summary: Get verified email DNS accounts for eSign notifications
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifiedEmailDNSAccounts'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/esign/global-settings/general/update/:
     patch:
       operationId: update_signature_general_settings
@@ -10087,6 +10121,53 @@ paths:
               schema:
                 $ref: '#/components/schemas/ESignSettings'
           description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/general/update-email-account/:
+    patch:
+      operationId: update_esign_email_account
+      summary: Update email account for eSign notifications
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedESignEmailAccount'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedESignEmailAccount'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedESignEmailAccount'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
         '400':
           content:
             application/json:
@@ -11552,6 +11633,26 @@ components:
           description: Number of deliveries linked to the template
       required:
       - delivery_count
+      description: ''
+    DeliveryEmailAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+          nullable: true
+        type:
+          enum:
+          - email
+          type: string
+          readOnly: true
+      required:
+      - id
+      - name
+      - type
       description: ''
     DemoGraphic:
       type: object
@@ -13860,6 +13961,13 @@ components:
           type: string
           readOnly: true
       description: ''
+    PatchedESignEmailAccount:
+      type: object
+      properties:
+        email_account:
+          type: integer
+          nullable: true
+      description: ''
     PatchedESignSettings:
       type: object
       properties:
@@ -14821,7 +14929,6 @@ components:
           default: false
         expiry:
           type: integer
-          nullable: true
         first_reminder:
           type: integer
           nullable: true
@@ -15690,6 +15797,17 @@ components:
       required:
       - errors
       - non_field_errors
+      description: ''
+    VerifiedEmailDNSAccounts:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryEmailAccount'
+          description: List of verified email DNS accounts
+      required:
+      - accounts
       description: ''
     VerifyDomain:
       type: object
