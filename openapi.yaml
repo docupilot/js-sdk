@@ -12075,6 +12075,9 @@ components:
     ESignSettings:
       type: object
       properties:
+        from_email:
+          type: string
+          readOnly: true
         expiry:
           type: integer
           maximum: 32767
@@ -12097,6 +12100,8 @@ components:
           maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
+      required:
+      - from_email
       description: ''
     ESignWebhook:
       type: object
@@ -13971,6 +13976,9 @@ components:
     PatchedESignSettings:
       type: object
       properties:
+        from_email:
+          type: string
+          readOnly: true
         expiry:
           type: integer
           maximum: 32767
