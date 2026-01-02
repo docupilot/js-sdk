@@ -7,10 +7,12 @@ import type { ESignWebhookEventLog } from '../models/ESignWebhookEventLog';
 import type { GenerateHMACSecretResponse } from '../models/GenerateHMACSecretResponse';
 import type { PaginatedESignWebhookEventLogList } from '../models/PaginatedESignWebhookEventLogList';
 import type { PaginatedESignWebhookList } from '../models/PaginatedESignWebhookList';
+import type { PatchedESignEmailAccount } from '../models/PatchedESignEmailAccount';
 import type { PatchedESignSettings } from '../models/PatchedESignSettings';
 import type { PatchedESignWebhook } from '../models/PatchedESignWebhook';
 import type { TestWebhookEventResponse } from '../models/TestWebhookEventResponse';
 import type { TestWebhookPayload } from '../models/TestWebhookPayload';
+import type { VerifiedEmailDNSAccounts } from '../models/VerifiedEmailDNSAccounts';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -32,6 +34,18 @@ export class EsignSettingsService {
     }
 
     /**
+     * Get verified email DNS accounts for eSign notifications
+     * @returns VerifiedEmailDNSAccounts
+     * @throws ApiError
+     */
+    public static getEmailAccounts(): CancelablePromise<VerifiedEmailDNSAccounts> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/global-settings/general/email-accounts/',
+        });
+    }
+
+    /**
      * Update signature general settings
      * @returns ESignSettings
      * @throws ApiError
@@ -44,6 +58,24 @@ export class EsignSettingsService {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/dashboard/esign/global-settings/general/update/',
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Update email account for eSign notifications
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static updateEsignEmailAccount({
+        requestBody,
+    }: {
+        requestBody?: OmitReadonly<PatchedESignEmailAccount>,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/esign/global-settings/general/update-email-account/',
             body: requestBody,
             mediaType: 'application/json',
         });
