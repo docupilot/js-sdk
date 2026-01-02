@@ -3,6 +3,7 @@
 /* eslint-disable */
 
 export type PatchedESignSettings = {
+    readonly from_email?: string;
     /**
      * Number of days until envelope expires
      */
