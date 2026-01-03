@@ -2,8 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { FromEmailAccount } from './FromEmailAccount';
+
 export type PatchedESignSettings = {
-    readonly from_email?: string;
+    readonly email_account?: FromEmailAccount;
     /**
      * Number of days until envelope expires
      */

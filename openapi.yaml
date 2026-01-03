@@ -12074,9 +12074,11 @@ components:
       description: ''
     ESignSettings:
       type: object
+      description: ''
       properties:
-        from_email:
-          type: string
+        email_account:
+          allOf:
+          - $ref: '#/components/schemas/FromEmailAccount'
           readOnly: true
         expiry:
           type: integer
@@ -12101,8 +12103,7 @@ components:
           minimum: 0
           description: Number of days before expiry to send warning
       required:
-      - from_email
-      description: ''
+      - email_account
     ESignWebhook:
       type: object
       properties:
@@ -13022,6 +13023,19 @@ components:
           type: string
       required:
       - detail
+      description: ''
+    FromEmailAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+        email:
+          type: string
+          format: email
+      required:
+      - email
+      - id
       description: ''
     GalleryCategory:
       type: object
@@ -13975,9 +13989,11 @@ components:
       description: ''
     PatchedESignSettings:
       type: object
+      description: ''
       properties:
-        from_email:
-          type: string
+        email_account:
+          allOf:
+          - $ref: '#/components/schemas/FromEmailAccount'
           readOnly: true
         expiry:
           type: integer
@@ -14001,7 +14017,6 @@ components:
           maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
-      description: ''
     PatchedESignWebhook:
       type: object
       properties:
@@ -14937,6 +14952,7 @@ components:
           default: false
         expiry:
           type: integer
+          nullable: true
         first_reminder:
           type: integer
           nullable: true
