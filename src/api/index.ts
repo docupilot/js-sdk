@@ -78,6 +78,7 @@ export type { Folder } from './models/Folder';
 export type { FolderCount } from './models/FolderCount';
 export type { FolderSharing } from './models/FolderSharing';
 export type { ForbiddenError } from './models/ForbiddenError';
+export type { FromEmailAccount } from './models/FromEmailAccount';
 export type { GalleryCategory } from './models/GalleryCategory';
 export type { GenerateHMACSecretResponse } from './models/GenerateHMACSecretResponse';
 export type { GlobalPermission } from './models/GlobalPermission';
