@@ -11,5 +11,6 @@ export type Meta = {
     batch_process_max_allowed_test_rows: BulkGenerateMeta;
     iam: string;
     esign_reminder_defaults: ESignReminderConfig;
+    esign_default_from_email: string;
 };
 
