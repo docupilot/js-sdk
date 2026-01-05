@@ -65,14 +65,14 @@ export class EsignSettingsService {
 
     /**
      * Update email account for eSign notifications
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
     public static updateEsignEmailAccount({
         requestBody,
     }: {
         requestBody?: OmitReadonly<PatchedESignEmailAccount>,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PATCH',
             url: '/dashboard/esign/global-settings/general/update-email-account/',

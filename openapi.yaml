@@ -10166,7 +10166,7 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '200':
+        '204':
           description: No response body
         '400':
           content:
@@ -13474,8 +13474,11 @@ components:
           type: string
         esign_reminder_defaults:
           $ref: '#/components/schemas/ESignReminderConfig'
+        esign_default_from_email:
+          type: string
       required:
       - batch_process_max_allowed_test_rows
+      - esign_default_from_email
       - esign_reminder_defaults
       - file_uploads
       - iam
