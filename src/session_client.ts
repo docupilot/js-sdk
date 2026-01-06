@@ -32,6 +32,10 @@ export class DocupilotSessionClient extends Docupilot {
   readonly ContentBlocksService = _API.ContentBlocksService;
   readonly EsignSettingsService = _API.EsignSettingsService;
 
+  updateConfig(config: Partial<_API.OpenAPIConfig>): void {
+    Object.assign(_API.OpenAPI, config);
+  }
+
   configureHeadersInterceptor(getHeaders: () => Record<string, string>) {
     _API.OpenAPI.HEADERS = async (options: ApiRequestOptions) => {
       const headers = getHeaders();
