@@ -33,6 +33,7 @@ export class TemplatesService {
      * @throws ApiError
      */
     public static listTemplates({
+        deliveryType,
         folder,
         ordering,
         outputType,
@@ -41,6 +42,10 @@ export class TemplatesService {
         status,
         type,
     }: {
+        /**
+         * Filter templates by configured delivery type
+         */
+        deliveryType?: 'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'signature' | 'webhook' | 'yousign' | 'zoho_crm',
         folder?: number,
         /**
          * Which field to use when ordering the results.
@@ -52,9 +57,12 @@ export class TemplatesService {
          */
         page?: number,
         /**
-         * A search term.
+         * Search templates by title
          */
         search?: string,
+        /**
+         * Filter templates by status (all, active, test)
+         */
         status?: 'active' | 'test',
         type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
     }): CancelablePromise<PaginatedTemplateList> {
@@ -62,6 +70,7 @@ export class TemplatesService {
             method: 'GET',
             url: '/dashboard/api/v2/templates/',
             query: {
+                'delivery_type': deliveryType,
                 'folder': folder,
                 'ordering': ordering,
                 'output_type': outputType,
@@ -310,6 +319,44 @@ export class TemplatesService {
     }
 
     /**
+     * Migrate DocuSign template to native signature delivery
+     *
+     * Creates a duplicate template with the same preferences and settings,
+     * but replaces DocuSign delivery configuration with native Signature delivery.
+     *
+     * Requirements:
+     * - Template must have at least one DocuSign delivery
+     * - The linked DocuSign account must be active (not expired)
+     *
+     * @returns Template
+     * @throws ApiError
+     */
+    public static migrateToNativeSyntax({
+        id,
+        provider,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+        /**
+         * Source provider to migrate from. Defaults to docusign.
+         */
+        provider?: 'docusign',
+    }): CancelablePromise<Template> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/api/v2/templates/{id}/migrate_to_native_syntax/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'provider': provider,
+            },
+        });
+    }
+
+    /**
      * Delete a template permanently from trash
      * @returns void
      * @throws ApiError
@@ -552,11 +599,18 @@ export class TemplatesService {
      * @throws ApiError
      */
     public static listAllTemplates({
+        deliveryType,
         folder,
         outputType,
         status,
         type,
     }: {
+        /**
+         * Filter templates by delivery type
+         *
+         *
+         */
+        deliveryType?: 'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'signature' | 'webhook' | 'yousign' | 'zoho_crm',
         folder?: number,
         outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         status?: 'active' | 'test',
@@ -566,6 +620,7 @@ export class TemplatesService {
             method: 'GET',
             url: '/dashboard/api/v2/templates/all/',
             query: {
+                'delivery_type': deliveryType,
                 'folder': folder,
                 'output_type': outputType,
                 'status': status,
