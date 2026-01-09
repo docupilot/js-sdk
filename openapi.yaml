@@ -5774,6 +5774,30 @@ paths:
         description: Workspace unique_key
         required: true
       - in: query
+        name: delivery_type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - azure_blob_storage
+          - box_drive
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sftp
+          - sign_now
+          - signable
+          - signature
+          - webhook
+          - yousign
+          - zoho_crm
+        description: Filter templates by configured delivery type
+      - in: query
         name: folder
         schema:
           type: integer
@@ -5801,12 +5825,11 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
+      - in: query
+        name: search
         schema:
           type: string
+        description: Search templates by title
       - in: query
         name: status
         schema:
@@ -5814,6 +5837,7 @@ paths:
           enum:
           - active
           - test
+        description: Filter templates by status (all, active, test)
       - in: query
         name: type
         schema:
@@ -6551,6 +6575,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{id}/migrate_to_native_syntax/:
+    post:
+      operationId: migrate_to_native_syntax
+      description: "\n        Creates a duplicate template with the same preferences\
+        \ and settings,\n        but replaces DocuSign delivery configuration with\
+        \ native Signature delivery.\n        \n        Requirements:\n        - Template\
+        \ must have at least one DocuSign delivery\n        - The linked DocuSign\
+        \ account must be active (not expired)\n        "
+      summary: Migrate DocuSign template to native signature delivery
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      - in: query
+        name: provider
+        schema:
+          type: string
+          enum:
+          - docusign
+        description: Source provider to migrate from. Defaults to docusign.
+      tags:
+      - templates
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrateToNativeSyntaxError'
           description: ''
   /dashboard/api/v2/templates/{id}/permanent_delete/:
     delete:
@@ -8468,6 +8540,32 @@ paths:
         description: Workspace unique_key
         required: true
       - in: query
+        name: delivery_type
+        schema:
+          type: string
+          enum:
+          - aws_s3
+          - azure_blob_storage
+          - box_drive
+          - docu_sign
+          - dropbox
+          - email
+          - eversign
+          - google_drive
+          - hellosign
+          - one_drive
+          - podio
+          - sftp
+          - sign_now
+          - signable
+          - signature
+          - webhook
+          - yousign
+          - zoho_crm
+        description: |+
+          Filter templates by delivery type
+
+      - in: query
         name: folder
         schema:
           type: integer
@@ -10054,40 +10152,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/esign/global-settings/general/email-accounts/:
-    get:
-      operationId: get_email_accounts
-      summary: Get verified email DNS accounts for eSign notifications
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - esign-settings
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/VerifiedEmailDNSAccounts'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/esign/global-settings/general/update/:
     patch:
       operationId: update_signature_general_settings
@@ -10121,53 +10185,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ESignSettings'
           description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/esign/global-settings/general/update-email-account/:
-    patch:
-      operationId: update_esign_email_account
-      summary: Update email account for eSign notifications
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - esign-settings
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedESignEmailAccount'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedESignEmailAccount'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedESignEmailAccount'
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
         '400':
           content:
             application/json:
@@ -11634,20 +11651,6 @@ components:
       required:
       - delivery_count
       description: ''
-    DeliveryEmailAccount:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          readOnly: true
-          nullable: true
-      required:
-      - id
-      - name
-      description: ''
     DemoGraphic:
       type: object
       properties:
@@ -12068,12 +12071,7 @@ components:
       description: ''
     ESignSettings:
       type: object
-      description: ''
       properties:
-        email_account:
-          allOf:
-          - $ref: '#/components/schemas/FromEmailAccount'
-          readOnly: true
         expiry:
           type: integer
           maximum: 32767
@@ -12096,8 +12094,7 @@ components:
           maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
-      required:
-      - email_account
+      description: ''
     ESignWebhook:
       type: object
       properties:
@@ -13018,19 +13015,6 @@ components:
       required:
       - detail
       description: ''
-    FromEmailAccount:
-      type: object
-      properties:
-        id:
-          type: integer
-          nullable: true
-        email:
-          type: string
-          format: email
-      required:
-      - email
-      - id
-      description: ''
     GalleryCategory:
       type: object
       properties:
@@ -13473,6 +13457,14 @@ components:
       - esign_reminder_defaults
       - file_uploads
       - iam
+      description: ''
+    MigrateToNativeSyntaxError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
       description: ''
     MoveTemplate:
       type: object
@@ -13974,21 +13966,9 @@ components:
           type: string
           readOnly: true
       description: ''
-    PatchedESignEmailAccount:
-      type: object
-      properties:
-        email_account:
-          type: integer
-          nullable: true
-      description: ''
     PatchedESignSettings:
       type: object
-      description: ''
       properties:
-        email_account:
-          allOf:
-          - $ref: '#/components/schemas/FromEmailAccount'
-          readOnly: true
         expiry:
           type: integer
           maximum: 32767
@@ -14011,6 +13991,7 @@ components:
           maximum: 32767
           minimum: 0
           description: Number of days before expiry to send warning
+      description: ''
     PatchedESignWebhook:
       type: object
       properties:
@@ -15815,17 +15796,6 @@ components:
       required:
       - errors
       - non_field_errors
-      description: ''
-    VerifiedEmailDNSAccounts:
-      type: object
-      properties:
-        accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeliveryEmailAccount'
-          description: List of verified email DNS accounts
-      required:
-      - accounts
       description: ''
     VerifyDomain:
       type: object
