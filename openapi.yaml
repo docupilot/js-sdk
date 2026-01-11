@@ -6598,15 +6598,19 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
-      - in: query
-        name: provider
-        schema:
-          type: string
-          enum:
-          - docusign
-        description: Source provider to migrate from. Defaults to docusign.
       tags:
       - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -13466,6 +13470,17 @@ components:
       required:
       - detail
       description: ''
+    MigrateToNativeSyntaxRequest:
+      type: object
+      properties:
+        provider:
+          enum:
+          - docusign
+          type: string
+          default: docusign
+        title:
+          type: string
+      description: ''
     MoveTemplate:
       type: object
       properties:
@@ -13940,6 +13955,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+        has_docusign_templates:
+          type: boolean
     PatchedContentBlockEditorVersion:
       type: object
       properties:

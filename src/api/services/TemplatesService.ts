@@ -4,6 +4,7 @@
 import type { CopyTemplate } from '../models/CopyTemplate';
 import type { DeliveryCount } from '../models/DeliveryCount';
 import type { EditorVersion } from '../models/EditorVersion';
+import type { MigrateToNativeSyntaxRequest } from '../models/MigrateToNativeSyntaxRequest';
 import type { MoveTemplate } from '../models/MoveTemplate';
 import type { MoveTemplateResponse } from '../models/MoveTemplateResponse';
 import type { NewTemplate } from '../models/NewTemplate';
@@ -333,16 +334,13 @@ export class TemplatesService {
      */
     public static migrateToNativeSyntax({
         id,
-        provider,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-        /**
-         * Source provider to migrate from. Defaults to docusign.
-         */
-        provider?: 'docusign',
+        requestBody?: OmitReadonly<MigrateToNativeSyntaxRequest>,
     }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -350,9 +348,8 @@ export class TemplatesService {
             path: {
                 'id': id,
             },
-            query: {
-                'provider': provider,
-            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
