@@ -90,6 +90,7 @@ export type { Invitation } from './models/Invitation';
 export type { MergeHistory } from './models/MergeHistory';
 export type { Meta } from './models/Meta';
 export type { MigrateToNativeSyntaxError } from './models/MigrateToNativeSyntaxError';
+export type { MigrateToNativeSyntaxRequest } from './models/MigrateToNativeSyntaxRequest';
 export type { MoveTemplate } from './models/MoveTemplate';
 export type { MoveTemplateResponse } from './models/MoveTemplateResponse';
 export type { NewAuthTokenResponse } from './models/NewAuthTokenResponse';
