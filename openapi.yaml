@@ -5776,27 +5776,30 @@ paths:
       - in: query
         name: delivery_type
         schema:
-          type: string
-          enum:
-          - aws_s3
-          - azure_blob_storage
-          - box_drive
-          - docu_sign
-          - dropbox
-          - email
-          - eversign
-          - google_drive
-          - hellosign
-          - one_drive
-          - podio
-          - sftp
-          - sign_now
-          - signable
-          - signature
-          - webhook
-          - yousign
-          - zoho_crm
-        description: Filter templates by configured delivery type
+          type: array
+          items:
+            type: string
+            enum:
+            - aws_s3
+            - azure_blob_storage
+            - box_drive
+            - docu_sign
+            - dropbox
+            - email
+            - eversign
+            - google_drive
+            - hellosign
+            - one_drive
+            - podio
+            - sftp
+            - sign_now
+            - signable
+            - signature
+            - webhook
+            - yousign
+            - zoho_crm
+        description: Filter templates by configured delivery type (supports multiple
+          values)
       - in: query
         name: folder
         schema:
@@ -8546,29 +8549,33 @@ paths:
       - in: query
         name: delivery_type
         schema:
-          type: string
-          enum:
-          - aws_s3
-          - azure_blob_storage
-          - box_drive
-          - docu_sign
-          - dropbox
-          - email
-          - eversign
-          - google_drive
-          - hellosign
-          - one_drive
-          - podio
-          - sftp
-          - sign_now
-          - signable
-          - signature
-          - webhook
-          - yousign
-          - zoho_crm
+          type: array
+          items:
+            type: string
+            enum:
+            - aws_s3
+            - azure_blob_storage
+            - box_drive
+            - docu_sign
+            - dropbox
+            - email
+            - eversign
+            - google_drive
+            - hellosign
+            - one_drive
+            - podio
+            - sftp
+            - sign_now
+            - signable
+            - signature
+            - webhook
+            - yousign
+            - zoho_crm
         description: |+
           Filter templates by delivery type
 
+        explode: true
+        style: form
       - in: query
         name: folder
         schema:
@@ -15073,6 +15080,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/Folder'
           nullable: true
+        has_docusign_delivery:
+          type: boolean
+          readOnly: true
         title:
           type: string
           maxLength: 255
@@ -15125,6 +15135,7 @@ components:
       - created_by
       - created_time
       - deleted_time
+      - has_docusign_delivery
       - id
       - title
       - type
