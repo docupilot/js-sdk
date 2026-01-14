@@ -5774,6 +5774,33 @@ paths:
         description: Workspace unique_key
         required: true
       - in: query
+        name: delivery_type
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - aws_s3
+            - azure_blob_storage
+            - box_drive
+            - docu_sign
+            - dropbox
+            - email
+            - eversign
+            - google_drive
+            - hellosign
+            - one_drive
+            - podio
+            - sftp
+            - sign_now
+            - signable
+            - signature
+            - webhook
+            - yousign
+            - zoho_crm
+        description: Filter templates by configured delivery type (supports multiple
+          values)
+      - in: query
         name: folder
         schema:
           type: integer
@@ -5801,12 +5828,11 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: search
-        required: false
-        in: query
-        description: A search term.
+      - in: query
+        name: search
         schema:
           type: string
+        description: Search templates by title
       - in: query
         name: status
         schema:
@@ -5814,6 +5840,7 @@ paths:
           enum:
           - active
           - test
+        description: Filter templates by status (all, active, test)
       - in: query
         name: type
         schema:
@@ -6551,6 +6578,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{id}/migrate_to_native_syntax/:
+    post:
+      operationId: migrate_to_native_syntax
+      summary: Migrate DocuSign template to native signature delivery
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrateToNativeSyntaxError'
           description: ''
   /dashboard/api/v2/templates/{id}/permanent_delete/:
     delete:
@@ -8467,6 +8541,36 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: delivery_type
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - aws_s3
+            - azure_blob_storage
+            - box_drive
+            - docu_sign
+            - dropbox
+            - email
+            - eversign
+            - google_drive
+            - hellosign
+            - one_drive
+            - podio
+            - sftp
+            - sign_now
+            - signable
+            - signature
+            - webhook
+            - yousign
+            - zoho_crm
+        description: |+
+          Filter templates by delivery type
+
+        explode: true
+        style: form
       - in: query
         name: folder
         schema:
@@ -13474,6 +13578,25 @@ components:
       - file_uploads
       - iam
       description: ''
+    MigrateToNativeSyntaxError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+      description: ''
+    MigrateToNativeSyntaxRequest:
+      type: object
+      properties:
+        provider:
+          enum:
+          - docusign
+          type: string
+          default: docusign
+        title:
+          type: string
+      description: ''
     MoveTemplate:
       type: object
       properties:
@@ -13948,6 +14071,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Template'
+        has_docusign_templates:
+          type: boolean
     PatchedContentBlockEditorVersion:
       type: object
       properties:
@@ -15075,6 +15200,9 @@ components:
           allOf:
           - $ref: '#/components/schemas/Folder'
           nullable: true
+        has_docusign_delivery:
+          type: boolean
+          readOnly: true
         title:
           type: string
           maxLength: 255
@@ -15127,6 +15255,7 @@ components:
       - created_by
       - created_time
       - deleted_time
+      - has_docusign_delivery
       - id
       - title
       - type
