@@ -14,6 +14,7 @@ import type { PatchedUpdateContentBlockSharing } from '../models/PatchedUpdateCo
 import type { PatchedUpdateNewContentBlock } from '../models/PatchedUpdateNewContentBlock';
 import type { TemplateSchema } from '../models/TemplateSchema';
 import type { TestContentBlock } from '../models/TestContentBlock';
+import type { UploadContentBlockImage } from '../models/UploadContentBlockImage';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -362,6 +363,32 @@ export class ContentBlocksService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Upload inline image of content block
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static uploadInlineImageOfContentBlock({
+        id,
+        formData,
+    }: {
+        /**
+         * A unique integer value identifying this content block.
+         */
+        id: number,
+        formData: OmitReadonly<UploadContentBlockImage>,
+    }): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/api/v2/content_blocks/{id}/inline_image/',
+            path: {
+                'id': id,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
         });
     }
 

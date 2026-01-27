@@ -3148,6 +3148,66 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/content_blocks/{id}/inline_image/:
+    post:
+      operationId: upload_inline_image_of_content_block
+      summary: Upload inline image of content block
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this content block.
+        required: true
+      tags:
+      - content_blocks
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadContentBlockImage'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '413':
+          content:
+            text/html:
+              schema:
+                description: Uploaded File Is Too Large.
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/content_blocks/{id}/preview/:
     get:
       operationId: preview_content_block_file
@@ -6814,7 +6874,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemplateSchema'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateSchema'
           description: ''
         '401':
           content:
@@ -11034,6 +11096,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         path:
           type: string
           nullable: true
@@ -11044,8 +11116,10 @@ components:
       required:
       - account
       - container_name
+      - created_time
       - id
       - name
+      - updated_time
     BannerNotification:
       type: object
       properties:
@@ -11128,6 +11202,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         folder:
           type: string
         folder_id:
@@ -11136,8 +11220,10 @@ components:
           maxLength: 100
       required:
       - account
+      - created_time
       - id
       - name
+      - updated_time
     BoxDrivePickerPayload:
       type: object
       properties:
@@ -11877,6 +11963,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         subject:
           type: string
           nullable: true
@@ -11912,9 +12008,11 @@ components:
       required:
       - account
       - api_version
+      - created_time
       - id
       - name
       - signers
+      - updated_time
     DocuSignFolder:
       type: object
       properties:
@@ -12115,6 +12213,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         folder:
           type: string
         mode:
@@ -12125,8 +12233,10 @@ components:
           type: string
       required:
       - account
+      - created_time
       - id
       - name
+      - updated_time
     DynamicImage:
       type: object
       properties:
@@ -12367,6 +12477,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         from_email:
           type: string
           nullable: true
@@ -12400,9 +12520,11 @@ components:
       required:
       - account
       - attachments
+      - created_time
       - id
       - name
       - to_email
+      - updated_time
     EmailDeliveryAttachment:
       type: object
       properties:
@@ -12947,6 +13069,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         title:
           type: string
           nullable: true
@@ -12968,9 +13100,11 @@ components:
           type: boolean
       required:
       - account
+      - created_time
       - id
       - name
       - signers
+      - updated_time
     ExportMergeHistory:
       type: object
       description: ''
@@ -13259,6 +13393,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         folder:
           type: string
           description: Base folder name
@@ -13274,8 +13418,10 @@ components:
           maxLength: 255
       required:
       - account
+      - created_time
       - id
       - name
+      - updated_time
     GoogleDrivePickerPayload:
       type: object
       properties:
@@ -13352,6 +13498,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         title:
           type: string
           nullable: true
@@ -13376,9 +13532,11 @@ components:
           type: boolean
       required:
       - account
+      - created_time
       - id
       - name
       - signers
+      - updated_time
     HistoryRecord:
       type: object
       properties:
@@ -13795,12 +13953,24 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         folder:
           type: string
       required:
       - account
+      - created_time
       - id
       - name
+      - updated_time
     Organization:
       type: object
       properties:
@@ -14646,6 +14816,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         bucket:
           type: string
           maxLength: 2000
@@ -14664,8 +14844,10 @@ components:
       required:
       - account
       - bucket
+      - created_time
       - id
       - name
+      - updated_time
     SaveCustomerFeedback:
       type: object
       properties:
@@ -14800,14 +14982,26 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         path:
           type: string
           nullable: true
           maxLength: 255
       required:
       - account
+      - created_time
       - id
       - name
+      - updated_time
     SharingInfoFolder:
       type: object
       properties:
@@ -14925,6 +15119,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         subject:
           type: string
           nullable: true
@@ -14942,9 +15146,11 @@ components:
           type: boolean
       required:
       - account
+      - created_time
       - id
       - name
       - signers
+      - updated_time
     SignableDelivery:
       type: object
       description: ''
@@ -15019,6 +15225,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         title:
           type: string
           nullable: true
@@ -15034,9 +15250,11 @@ components:
           nullable: true
       required:
       - account
+      - created_time
       - id
       - name
       - parties
+      - updated_time
     SignatureDelivery:
       type: object
       description: ''
@@ -15125,6 +15343,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         subject:
           type: string
           nullable: true
@@ -15141,10 +15369,12 @@ components:
         enable_optional_signers:
           type: boolean
       required:
+      - created_time
       - id
       - name
       - sender
       - signers
+      - updated_time
     SigningLinkResponse:
       type: object
       properties:
@@ -15679,6 +15909,15 @@ components:
       - type
       - updated_at
       - used_by
+    UploadContentBlockImage:
+      type: object
+      properties:
+        upload:
+          type: string
+          format: binary
+      required:
+      - upload
+      description: ''
     UploadTemplateImage:
       type: object
       properties:
@@ -16043,6 +16282,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         url:
           type: string
           maxLength: 255
@@ -16055,8 +16304,10 @@ components:
           additionalProperties: {}
           nullable: true
       required:
+      - created_time
       - id
       - name
+      - updated_time
       - url
     WordAddInPromptSuggestions:
       type: object
@@ -16495,6 +16746,16 @@ components:
           type: string
           format: date-time
           nullable: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         title:
           type: string
           maxLength: 256
@@ -16531,10 +16792,12 @@ components:
           type: boolean
       required:
       - account
+      - created_time
       - id
       - name
       - signers
       - title
+      - updated_time
   securitySchemes:
     OAuthAuthentication:
       type: http

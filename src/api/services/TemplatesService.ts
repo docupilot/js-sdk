@@ -428,7 +428,7 @@ export class TemplatesService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<TemplateSchema> {
+    }): CancelablePromise<Array<TemplateSchema>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/schema/',

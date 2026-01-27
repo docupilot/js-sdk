@@ -11,6 +11,8 @@ export type WebhookDelivery = {
     success_callback_payload?: Record<string, any> | null;
     success_callback_headers?: Record<string, any> | null;
     last_used_on?: string | null;
+    readonly created_time: string | null;
+    readonly updated_time: string | null;
     url: string;
     headers?: Record<string, any> | null;
     payload?: Record<string, any> | null;
