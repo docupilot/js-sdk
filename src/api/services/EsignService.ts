@@ -8,6 +8,7 @@ import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
 import type { EnvelopeRecipient } from '../models/EnvelopeRecipient';
+import type { EnvelopeResponses } from '../models/EnvelopeResponses';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeUpdate } from '../models/EnvelopeUpdate';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
@@ -467,6 +468,36 @@ export class EsignService {
             url: '/dashboard/esign/envelopes/{id}/permanent_delete/',
             path: {
                 'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get consolidated field responses for an envelope
+     * @returns EnvelopeResponses
+     * @throws ApiError
+     */
+    public static getEnvelopeResponses({
+        id,
+        recipientId,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        /**
+         * Filter responses by recipient id
+         */
+        recipientId?: string,
+    }): CancelablePromise<EnvelopeResponses> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/responses/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'recipient_id': recipientId,
             },
         });
     }
