@@ -169,6 +169,7 @@ export type { TestWebhookPayload } from './models/TestWebhookPayload';
 export type { Timezone } from './models/Timezone';
 export type { UnauthenticatedError } from './models/UnauthenticatedError';
 export type { UpdateDeliveryAccount } from './models/UpdateDeliveryAccount';
+export type { UploadContentBlockImage } from './models/UploadContentBlockImage';
 export type { UploadTemplateImage } from './models/UploadTemplateImage';
 export type { User } from './models/User';
 export type { UserDemographic } from './models/UserDemographic';
