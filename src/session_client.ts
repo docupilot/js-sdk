@@ -28,6 +28,7 @@ export class DocupilotSessionClient extends Docupilot {
   readonly DemographicService = _API.DemographicService;
   readonly MergeHistoryService = _API.MergeHistoryService;
   readonly EsignService = _API.EsignService;
+  readonly EnvelopeFieldsService = _API.EnvelopeFieldsService;
   readonly OrganizationService = _API.OrganizationService;
   readonly ContentBlocksService = _API.ContentBlocksService;
   readonly EsignSettingsService = _API.EsignSettingsService;
