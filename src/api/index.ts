@@ -197,7 +197,6 @@ export { ContentBlocksService } from './services/ContentBlocksService';
 export { DemographicService } from './services/DemographicService';
 export { DomainService } from './services/DomainService';
 export { EnvelopeFieldsService } from './services/EnvelopeFieldsService';
-export { EnvelopesRecipientsService } from './services/EnvelopesRecipientsService';
 export { EsignService } from './services/EsignService';
 export { EsignSettingsService } from './services/EsignSettingsService';
 export { FoldersService } from './services/FoldersService';

@@ -9437,7 +9437,7 @@ paths:
         schema:
           type: string
       tags:
-      - Envelopes Recipients
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -9477,7 +9477,7 @@ paths:
           type: string
         required: true
       tags:
-      - Envelopes Recipients
+      - esign
       requestBody:
         content:
           application/json:
@@ -9547,7 +9547,7 @@ paths:
           type: string
         required: true
       tags:
-      - Envelopes Recipients
+      - esign
       requestBody:
         content:
           application/json:
@@ -9615,7 +9615,7 @@ paths:
           type: string
         required: true
       tags:
-      - Envelopes Recipients
+      - esign
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
