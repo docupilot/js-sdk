@@ -3,12 +3,14 @@
 /* eslint-disable */
 
 import type { EnvelopeDocuments } from './EnvelopeDocuments';
+import type { EnvelopeField } from './EnvelopeField';
 import type { EnvelopeRecipient } from './EnvelopeRecipient';
 
 export type EnvelopeDetails = {
     readonly id: number;
     documents: Array<EnvelopeDocuments>;
     recipients: Array<EnvelopeRecipient>;
+    fields: Array<EnvelopeField>;
     readonly envelope_id: string;
     sn_envelope_id?: string | null;
     sn_invite_id?: string | null;

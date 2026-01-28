@@ -9006,16 +9006,155 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/esign/envelopes/{envelope_id}/documents/{id}/:
-    patch:
-      operationId: update_envelope_document
-      summary: Update envelope document
+  /dashboard/esign/envelopes/{envelope_id}/fields/:
+    get:
+      operationId: get_envelope_fields
+      summary: Get envelope fields
       parameters:
       - in: header
         name: X-Workspace
         schema:
           type: string
         description: Workspace unique_key
+        required: true
+      - in: query
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - Envelope Fields
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvelopeField'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_envelope_field
+      summary: Create a new envelope field
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: recipient_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Envelope Fields
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeField'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeField'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeField'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeField'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{envelope_id}/fields/{id}/:
+    get:
+      operationId: get_envelope_field
+      summary: Get envelope field
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: document_id
+        schema:
+          type: string
         required: true
       - in: path
         name: envelope_id
@@ -9028,18 +9167,7 @@ paths:
           type: string
         required: true
       tags:
-      - esign
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
+      - Envelope Fields
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -9049,8 +9177,207 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EnvelopeDocuments'
+                $ref: '#/components/schemas/EnvelopeField'
           description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    put:
+      operationId: update_envelope_field
+      summary: Update envelope field
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Envelope Fields
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeField'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeField'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeField'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeField'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: partial_update_envelope_field
+      summary: Partial update of envelope field
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Envelope Fields
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeField'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeField'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeField'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeField'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_envelope_field
+      summary: Delete envelope field
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: document_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: envelope_id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Envelope Fields
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
         '400':
           content:
             application/json:
@@ -9110,7 +9437,7 @@ paths:
         schema:
           type: string
       tags:
-      - esign
+      - Envelopes Recipients
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -9150,7 +9477,7 @@ paths:
           type: string
         required: true
       tags:
-      - esign
+      - Envelopes Recipients
       requestBody:
         content:
           application/json:
@@ -9220,7 +9547,7 @@ paths:
           type: string
         required: true
       tags:
-      - esign
+      - Envelopes Recipients
       requestBody:
         content:
           application/json:
@@ -9288,7 +9615,7 @@ paths:
           type: string
         required: true
       tags:
-      - esign
+      - Envelopes Recipients
       security:
       - OAuthAuthentication: []
       - SessionAuthentication: []
@@ -9878,6 +10205,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/responses/:
+    get:
+      operationId: get_envelope_responses
+      summary: Get consolidated field responses for an envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      - in: query
+        name: recipient_id
+        schema:
+          type: string
+        description: Filter responses by recipient id
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeResponses'
           description: ''
         '401':
           content:
@@ -12608,6 +12988,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EnvelopeRecipient'
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeField'
         envelope_id:
           type: string
           readOnly: true
@@ -12716,6 +13100,7 @@ components:
       - created_at
       - documents
       - envelope_id
+      - fields
       - id
       - name
       - recipients
@@ -12732,15 +13117,136 @@ components:
         document_name:
           type: string
           readOnly: true
-        fields_meta:
+      required:
+      - document_name
+      - id
+      description: ''
+    EnvelopeField:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        sn_field_id:
+          type: string
+          readOnly: true
+          nullable: true
+        type:
+          enum:
+          - eText
+          - eInitials
+          - eDate
+          - eSignedDate
+          - eDropDown
+          - eCheckBox
+          - eSignature
+          - eAttachments
+          type: string
+        x:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        y:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        required:
+          type: boolean
+        width:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        height:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        page_number:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        field_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        label:
+          type: string
+          nullable: true
+          maxLength: 255
+        default_value:
+          type: string
+          nullable: true
+        config:
           type: object
           additionalProperties: {}
+          nullable: true
+        recipient_color:
+          type: string
+          nullable: true
+          maxLength: 30
+        text_color:
+          type: string
+          nullable: true
+          maxLength: 30
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        envelope:
+          type: integer
+          readOnly: true
+        document:
+          type: integer
+          readOnly: true
+        recipient:
+          type: integer
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
       required:
-      - document_name
-      - fields_meta
+      - created_at
+      - created_by
+      - document
+      - envelope
+      - height
       - id
+      - page_number
+      - recipient
+      - sn_field_id
+      - type
+      - updated_at
+      - updated_by
+      - width
+      - x
+      - y
+      description: ''
+    EnvelopeFieldResponse:
+      type: object
+      properties:
+        signer_id:
+          type: string
+        document_id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        type:
+          type: string
+        value:
+          type: string
+          nullable: true
+      required:
+      - name
+      - signer_id
+      - type
       description: ''
     EnvelopeHistory:
       type: object
@@ -12859,6 +13365,16 @@ components:
       - subject
       - updated_at
       - workspace
+      description: ''
+    EnvelopeResponses:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeFieldResponse'
+      required:
+      - data
       description: ''
     EnvelopeStatusCountResponse:
       type: object
@@ -14252,12 +14768,95 @@ components:
         use_v2_editor:
           type: boolean
       description: ''
-    PatchedEnvelopeDocumentsUpdate:
+    PatchedEnvelopeField:
       type: object
       properties:
-        fields_meta:
+        id:
+          type: integer
+          readOnly: true
+        sn_field_id:
+          type: string
+          readOnly: true
+          nullable: true
+        type:
+          enum:
+          - eText
+          - eInitials
+          - eDate
+          - eSignedDate
+          - eDropDown
+          - eCheckBox
+          - eSignature
+          - eAttachments
+          type: string
+        x:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        y:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        required:
+          type: boolean
+        width:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        height:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        page_number:
+          type: integer
+          maximum: 32767
+          minimum: 0
+        field_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        label:
+          type: string
+          nullable: true
+          maxLength: 255
+        default_value:
+          type: string
+          nullable: true
+        config:
           type: object
           additionalProperties: {}
+          nullable: true
+        recipient_color:
+          type: string
+          nullable: true
+          maxLength: 30
+        text_color:
+          type: string
+          nullable: true
+          maxLength: 30
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        envelope:
+          type: integer
+          readOnly: true
+        document:
+          type: integer
+          readOnly: true
+        recipient:
+          type: integer
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
           nullable: true
       description: ''
     PatchedEnvelopeUpdate:
