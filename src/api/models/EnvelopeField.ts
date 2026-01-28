@@ -4,8 +4,7 @@
 
 export type EnvelopeField = {
     readonly id: number;
-    readonly sn_field_id: string | null;
-    type: 'eText' | 'eInitials' | 'eDate' | 'eSignedDate' | 'eDropDown' | 'eCheckBox' | 'eSignature' | 'eAttachments';
+    type: 'eText' | 'eInitials' | 'eDate' | 'eSignedDate' | 'eDropDown' | 'eCheckBox' | 'eSign' | 'eAttachments';
     'x': number;
     'y': number;
     required?: boolean;

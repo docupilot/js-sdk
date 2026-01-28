@@ -13127,10 +13127,6 @@ components:
         id:
           type: integer
           readOnly: true
-        sn_field_id:
-          type: string
-          readOnly: true
-          nullable: true
         type:
           enum:
           - eText
@@ -13139,7 +13135,7 @@ components:
           - eSignedDate
           - eDropDown
           - eCheckBox
-          - eSignature
+          - eSign
           - eAttachments
           type: string
         x:
@@ -13220,7 +13216,6 @@ components:
       - id
       - page_number
       - recipient
-      - sn_field_id
       - type
       - updated_at
       - updated_by
@@ -14774,10 +14769,6 @@ components:
         id:
           type: integer
           readOnly: true
-        sn_field_id:
-          type: string
-          readOnly: true
-          nullable: true
         type:
           enum:
           - eText
@@ -14786,7 +14777,7 @@ components:
           - eSignedDate
           - eDropDown
           - eCheckBox
-          - eSignature
+          - eSign
           - eAttachments
           type: string
         x:
