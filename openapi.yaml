@@ -14845,13 +14845,6 @@ components:
     SendEnvelopeViaEmail:
       type: object
       properties:
-        subject:
-          type: string
-          maxLength: 512
-        description:
-          type: string
-          nullable: true
-          maxLength: 512
         emails:
           type: array
           items:
@@ -14860,7 +14853,6 @@ components:
           nullable: true
       required:
       - emails
-      - subject
       description: ''
     SendTestSmtpMail:
       type: object
