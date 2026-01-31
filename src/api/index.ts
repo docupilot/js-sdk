@@ -72,6 +72,7 @@ export type { ESignSettings } from './models/ESignSettings';
 export type { ESignWebhook } from './models/ESignWebhook';
 export type { ESignWebhookEventLog } from './models/ESignWebhookEventLog';
 export type { EversignDelivery } from './models/EversignDelivery';
+export type { ExchangeSessionResponse } from './models/ExchangeSessionResponse';
 export type { ExportMergeHistory } from './models/ExportMergeHistory';
 export type { File } from './models/File';
 export type { FileUploadMeta } from './models/FileUploadMeta';
@@ -93,6 +94,7 @@ export type { InitiateAuthorizationSequence } from './models/InitiateAuthorizati
 export type { Invitation } from './models/Invitation';
 export type { MergeHistory } from './models/MergeHistory';
 export type { Meta } from './models/Meta';
+export type { MigrateSessionResponse } from './models/MigrateSessionResponse';
 export type { MigrateToNativeSyntaxError } from './models/MigrateToNativeSyntaxError';
 export type { MigrateToNativeSyntaxRequest } from './models/MigrateToNativeSyntaxRequest';
 export type { MoveTemplate } from './models/MoveTemplate';
