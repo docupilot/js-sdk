@@ -1440,6 +1440,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/accounts/v2/users/exchange_session/:
+    get:
+      operationId: get_exchange_session_code
+      description: Generates a short-lived UUID code linked to the current session
+        key for cross-domain migration.
+      summary: Exchange session for a migration code
+      tags:
+      - users
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeSessionResponse'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/accounts/v2/users/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -1498,6 +1527,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /dashboard/accounts/v2/users/migrate_session/:
+    get:
+      operationId: attach_session_from_exchange_code
+      description: Endpoint called on the API domain to exchange a short-lived code
+        for a session cookie.
+      summary: Migrate session to API domain
+      parameters:
+      - in: query
+        name: org
+        schema:
+          type: string
+        description: The organization subdomain (e.g., 'rush')
+        required: true
+      - in: query
+        name: session_exchange_code
+        schema:
+          type: string
+        description: The one-time UUID exchange code obtained from /exchange_session/
+        required: true
+      tags:
+      - users
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrateSessionResponse'
           description: ''
   /dashboard/accounts/v2/users/update_user_profile/:
     patch:
@@ -13116,6 +13173,14 @@ components:
       - id
       - name
       - signers
+    ExchangeSessionResponse:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+      - code
+      description: ''
     ExportMergeHistory:
       type: object
       description: ''
@@ -13724,6 +13789,14 @@ components:
       - esign_reminder_defaults
       - file_uploads
       - iam
+      description: ''
+    MigrateSessionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
       description: ''
     MigrateToNativeSyntaxError:
       type: object
