@@ -36,25 +36,22 @@ export class APIClient {
     return this.isAuthenticated(() => this.appServices.users.getMe());
   }
 
-  authenticate({
-    access_key = process.env.DOCUPILOT_ACCESS_KEY as string,
-    access_secret = process.env.DOCUPILOT_ACCESS_SECRET as string,
+  setHost({
     app_host = DEFAULT_APP_HOST,
     accounts_host = DEFAULT_ACCOUNTS_HOST,
   }: {
-    access_key: string;
-    access_secret: string;
-    app_host: string;
-    accounts_host: string;
-  }): void {
-    const apiBase = app_host.replace(/\/+$/g, '');
-    const accountsBase = accounts_host.replace(/\/+$/g, '');
-    const token = btoa(`${access_key}:${access_secret}`);
+    app_host?: string;
+    accounts_host?: string;
+  }) {
+    _API.OpenAPI.BASE = app_host.replace(/\/+$/g, '');
+    _Accounts.OpenAPI.BASE = accounts_host.replace(/\/+$/g, '');
+  }
 
-    _API.OpenAPI.BASE = apiBase;
-    _API.OpenAPI.TOKEN = token;
-    _Accounts.OpenAPI.BASE = accountsBase;
-    _Accounts.OpenAPI.TOKEN = token;
+  authenticate(
+    access_key: string = process.env.DOCUPILOT_ACCESS_KEY as string,
+    access_secret: string = process.env.DOCUPILOT_ACCESS_SECRET as string,
+  ): void {
+    _API.OpenAPI.TOKEN = btoa(`${access_key}:${access_secret}`);
   }
 
   updateAppConfig(config: Partial<_API.OpenAPIConfig>): void {
