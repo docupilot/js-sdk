@@ -13,11 +13,14 @@
     "generate.app-spec.node": "node generate.js --input ./openapi-app.yaml --output ./src/api --useOptions --useUnionTypes --client node",
     "generate.app-spec.react": "node generate.js --input ./openapi-app.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
     "generate.app-spec.browser": "node generate.js --input ./openapi-app.yaml --output ./src/api --useUnionTypes --client xhr",
+    "generate.accounts-spec.node": "node generate.js --input ./accounts-openapi.yaml --output ./src/accounts --useOptions --useUnionTypes --client node",
+    "generate.accounts-spec.react": "node generate.js --input ./accounts-openapi.yaml --output ./src/accounts --useOptions --useUnionTypes --client xhr",
+    "generate.accounts-spec.browser": "node generate.js --input ./accounts-openapi.yaml --output ./src/accounts --useUnionTypes --client xhr",
     "build": "npm run clean:dist && npm run build:web && npm run build:esm && npm run build:cjs",
     "clean:dist": "rm -rf dist/",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
-    "build:web": "npm run generate.app-spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.app-spec.react"
+    "build:web": "npm run generate.app-spec.browser && npm run generate.accounts-spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.app-spec.react && npm run generate.accounts-spec.react"
   },
   "repository": {
     "type": "git",
