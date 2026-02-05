@@ -10,7 +10,7 @@ const DEFAULT_APP_HOST =
 const DEFAULT_ACCOUNTS_HOST =
   process.env.DOCUPILOT_ACCOUNTS_HOST ?? 'https://accounts.docupilot.app';
 
-export class ApiClient {
+export class APIClient {
   readonly appServices = AppServices;
   readonly accountServices = AccountServices;
 
