@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       title_suffix:
-        description: "What is today's date? Ex: Feb 11"
+        description: "Ex: Enter today's date 'Feb 11'"
         type: string
         required: true
       app_branch:
-        description: 'Branch of docupilot/appserver which openapi.yaml should be downloaded'
+        description: 'Branch of docupilot/appserver'
         type: string
         default: 'main'
         required: true
