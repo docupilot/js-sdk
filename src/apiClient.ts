@@ -80,4 +80,59 @@ export class APIClient {
       return Object.assign({}, options.headers || {}, headers);
     };
   }
+
+  /**@deprecated*/
+  readonly AuthTokensService = _API.AuthTokensService;
+  /**@deprecated*/
+  readonly FoldersService = _API.FoldersService;
+  /**@deprecated*/
+  readonly GeneralService = _API.GeneralService;
+  /**@deprecated*/
+  readonly GenerateBulkService = _API.GenerateBulkService;
+  /**@deprecated*/
+  readonly GenerateService = _API.GenerateService;
+  /**@deprecated*/
+  readonly HistoryService = _API.HistoryService;
+  /**@deprecated*/
+  readonly LinkedAccountsService = _API.LinkedAccountsService;
+  /**@deprecated*/
+  readonly PersonalizationService = _API.PersonalizationService;
+  /**@deprecated*/
+  readonly SubscriptionService = _API.SubscriptionService;
+  /**@deprecated*/
+  readonly TemplateDeliveryService = _API.TemplateDeliveryService;
+  /**@deprecated*/
+  readonly TemplatesService = _API.TemplatesService;
+  /**@deprecated*/
+  readonly UsersService = _API.UsersService;
+  /**@deprecated*/
+  readonly WorkspacesService = _API.WorkspacesService;
+  /**@deprecated*/
+  readonly InvitationsService = _API.InvitationsService;
+  /**@deprecated*/
+  readonly TeamService = _API.TeamService;
+  /**@deprecated*/
+  readonly PermissionsService = _API.PermissionsService;
+  /**@deprecated*/
+  readonly AppendService = _API.AppendService;
+  /**@deprecated*/
+  readonly DomainService = _API.DomainService;
+  /**@deprecated*/
+  readonly GalleryTemplatesService = _API.GalleryTemplatesService;
+  /**@deprecated*/
+  readonly UserSatisfactionSurveyService = _API.UserSatisfactionSurveyService;
+  /**@deprecated*/
+  readonly AiService = _API.AiService;
+  /**@deprecated*/
+  readonly DemographicService = _API.DemographicService;
+  /**@deprecated*/
+  readonly MergeHistoryService = _API.MergeHistoryService;
+  /**@deprecated*/
+  readonly EsignService = _API.EsignService;
+  /**@deprecated*/
+  readonly OrganizationService = _API.OrganizationService;
+  /**@deprecated*/
+  readonly ContentBlocksService = _API.ContentBlocksService;
+  /**@deprecated*/
+  readonly EsignSettingsService = _API.EsignSettingsService;
 }
