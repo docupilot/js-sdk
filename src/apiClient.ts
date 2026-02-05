@@ -57,7 +57,7 @@ export class APIClient {
     _Accounts.OpenAPI.TOKEN = token;
   }
 
-  updateConfig(config: Partial<_API.OpenAPIConfig>): void {
+  updateAppConfig(config: Partial<_API.OpenAPIConfig>): void {
     Object.assign(_API.OpenAPI, config);
   }
 
