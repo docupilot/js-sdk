@@ -12,6 +12,11 @@ on:
         type: string
         default: 'main'
         required: true
+      accounts_branch:
+        description: 'Branch of docupilot/accounts'
+        type: string
+        default: 'main'
+        required: true
 
 jobs:
   create-pr:
@@ -52,6 +57,15 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/docupilot/appserver/contents/openapi.yaml?ref=${{ inputs.app_branch }} \
           -o app-openapi.yaml
+
+      - name: update accounts openapi yaml
+        run: |
+          curl \
+          -H "Accept: application/vnd.github.raw" \
+          -H "Authorization: Bearer ${{ secrets.PRIVATE_DEPENDENCIES_PAT }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/docupilot/accounts/contents/openapi.yaml?ref=${{ inputs.accounts_branch }} \
+          -o openapi-accounts.yaml
 
       - run: git diff
 

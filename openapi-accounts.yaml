@@ -1,0 +1,3189 @@
+openapi: 3.0.3
+info:
+  title: Docupilot accounts APIs
+  version: '1.0'
+  description: Docupilot accounts APIs
+  termsOfService: https://docupilot.app/terms-and-conditions/
+  contact:
+    name: Team Docupilot
+    email: support@docupilot.app
+paths:
+  /accounts/application/:
+    get:
+      operationId: list_all_applications
+      summary: List all applications
+      tags:
+      - application
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/demographic/:
+    post:
+      operationId: create_demographic
+      summary: Create Demographic
+      tags:
+      - demographic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DemoGraphic'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DemoGraphic'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DemoGraphic'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/demographic/show_prompt/:
+    get:
+      operationId: show_demographic_prompt_for_organization_users
+      summary: Show demographic prompt for organization users
+      tags:
+      - demographic
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShowDemographicPrompt'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/demographic/validate_domain/:
+    post:
+      operationId: validate_domain
+      summary: Verify domain
+      tags:
+      - demographic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyDomain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyDomain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyDomain'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyDomain'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/domain/:
+    get:
+      operationId: list_domains
+      summary: List domains
+      tags:
+      - domain
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_domain
+      summary: Create domain
+      tags:
+      - domain
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Domain'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Domain'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Domain'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/domain/{id}/:
+    delete:
+      operationId: destroy_domain
+      summary: Destroy domain
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this domain.
+        required: true
+      tags:
+      - domain
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/domain/{id}/toggle_lock/:
+    patch:
+      operationId: toggle_domain_lock
+      summary: Toggle domain lock
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this domain.
+        required: true
+      tags:
+      - domain
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/domain/{id}/verify/:
+    patch:
+      operationId: verify_domain
+      summary: verify domain
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this domain.
+        required: true
+      tags:
+      - domain
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/invitation/:
+    get:
+      operationId: list_invitation
+      summary: Get list of Invitation
+      tags:
+      - invitation
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invitation'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_invitation
+      summary: Create Invitation
+      tags:
+      - invitation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInvitation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateInvitation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateInvitation'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/invitation/{id}/:
+    delete:
+      operationId: delete_invitation
+      summary: Delete Invitation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - invitation
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/invitation/{id}/accept_workspace_invitation/:
+    post:
+      operationId: accept_invitation
+      summary: Accept workspace invitation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - invitation
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptInvite'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/invitation/{id}/decline_workspace_invitation/:
+    delete:
+      operationId: decline_workspace_invitation
+      summary: Decline workspace invitation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - invitation
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/invitation/{id}/resend_invitation/:
+    post:
+      operationId: resend_invitation
+      summary: Resend invitation
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this invitation.
+        required: true
+      tags:
+      - invitation
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invitation'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/invitation/list_workspace_invitations/:
+    get:
+      operationId: list_workspace_invitations
+      summary: List pending workspace invitations for the current user
+      tags:
+      - invitation
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invitation'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/:
+    get:
+      operationId: mfa_list
+      tags:
+      - mfa
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/delete-totp-device/:
+    delete:
+      operationId: mfa_delete_totp_device_destroy
+      tags:
+      - mfa
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/disable-mfa/:
+    post:
+      operationId: mfa_disable
+      tags:
+      - mfa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MFADisable'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MFADisable'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MFADisable'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MFADisable'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/enable-mfa/:
+    post:
+      operationId: mfa_enable
+      tags:
+      - mfa
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/generate-backup-tokens/:
+    post:
+      operationId: mfa_generate_backup_tokens_create
+      tags:
+      - mfa
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/mark-device-primary/:
+    put:
+      operationId: mfa_mark_device_primary_update
+      tags:
+      - mfa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkDevicePrimary'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MarkDevicePrimary'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MarkDevicePrimary'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarkDevicePrimary'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/setup-totp-device/:
+    get:
+      operationId: mfa_setup_totp_device_retrieve
+      tags:
+      - mfa
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/mfa/verify-totp-device/:
+    post:
+      operationId: mfa_verify_totp_device_create
+      summary: Verify Totp device
+      tags:
+      - mfa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TotpDeviceVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TotpDeviceVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TotpDeviceVerify'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TOTPDevice'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/delete_organization/:
+    post:
+      operationId: delete_organization
+      summary: 'Delete a Organization and other related data permanently '
+      tags:
+      - organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationDelete'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationDelete'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationDelete'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/details/:
+    get:
+      operationId: organization_details_retrieve
+      tags:
+      - organization
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/meta/:
+    get:
+      operationId: get_organization_meta
+      summary: Get organization meta information
+      tags:
+      - organization
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMetaResponse'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/toggle_mfa_status/:
+    patch:
+      operationId: toggle_organization_mfa_status
+      summary: Activate or Deactivate Organization MFA
+      tags:
+      - organization
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/toggle_password_based_login/:
+    patch:
+      operationId: toggle_password_based_login
+      description: Flips the organization setting. Disabling is only allowed if at
+        least one active SAML provider is configured.
+      summary: Toggle password-based login
+      tags:
+      - organization
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/update_org/:
+    patch:
+      operationId: update_organization
+      tags:
+      - organization
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganization'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization/update_subdomain/:
+    patch:
+      operationId: update_organization_subdomain
+      summary: Update organization subdomain
+      tags:
+      - organization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationSubdomainChange'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationSubdomainChange'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationSubdomainChange'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationSubdomainChangeResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/organization_onboarding/:
+    get:
+      operationId: organization_onboarding_retrieve
+      tags:
+      - organization_onboarding
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingStatus'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    patch:
+      operationId: organization_onboarding_partial_update
+      tags:
+      - organization_onboarding
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOnboardingStatus'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOnboardingStatus'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOnboardingStatus'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OnboardingStatus'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/saml/:
+    get:
+      operationId: list_saml_providers
+      summary: Get list of SAML providers
+      tags:
+      - saml
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SAMLProvider'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_saml_provider
+      summary: Create SAML provider
+      tags:
+      - saml
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderCreate'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLProviderCreate'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/saml/{id}/:
+    put:
+      operationId: update_saml_provider
+      summary: Update SAML provider
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - saml
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderUpdate'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLProviderUpdate'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: saml_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - saml
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLProviderUpdate'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_saml_provider
+      summary: Delete SAML provider
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - saml
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/saml/{id}/toggle_active/:
+    post:
+      operationId: toggle_saml_provider
+      summary: Toggle SAML provider active status
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - saml
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLProvider'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/team/:
+    get:
+      operationId: list_all_team_members
+      summary: List all team members
+      parameters:
+      - in: query
+        name: role
+        schema:
+          type: string
+          enum:
+          - member
+          - owner
+      tags:
+      - team
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamMember'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/team/{id}/toggle_user_status/:
+    patch:
+      operationId: toggle_user_status
+      summary: Activate or Deactivate a User
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - team
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/team/transfer_ownership/:
+    put:
+      operationId: transfer_ownership_to_admin_user
+      summary: Transfer Ownership To Admin User
+      tags:
+      - team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferOwnership'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TransferOwnership'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TransferOwnership'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/user/change_email/:
+    put:
+      operationId: change_email
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeEmail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangeEmail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangeEmail'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /accounts/user/change_password/:
+    put:
+      operationId: change_password
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /accounts/user/config_meta/:
+    get:
+      operationId: user_config_meta
+      summary: User config meta
+      tags:
+      - user
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMeta'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/user/detail/{guid}/:
+    get:
+      operationId: get_use_by_guid
+      summary: get logged in user details
+      parameters:
+      - in: path
+        name: guid
+        schema:
+          type: string
+          pattern: ^[0-9a-f-]+$
+        required: true
+      tags:
+      - user
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /accounts/user/exchange_session/:
+    get:
+      operationId: get_exchange_session_code
+      description: Generates a short-lived UUID code linked to the current session
+        key for cross-domain migration.
+      summary: Exchange session for a migration code
+      tags:
+      - user
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeSessionResponse'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/user/initiate_authorization_sequence/:
+    post:
+      operationId: initiate_authorization_sequence
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendAuthorizationOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendAuthorizationOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendAuthorizationOTP'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/user/me/:
+    get:
+      operationId: get_me
+      summary: get logged in user details
+      tags:
+      - user
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+    put:
+      operationId: update_me
+      summary: update logged in user details
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+    patch:
+      operationId: partial_update_user_details
+      summary: partial update user details
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+  /accounts/user/migrate_session/:
+    get:
+      operationId: attach_session_from_exchange_code
+      description: Endpoint called on the API domain to exchange a short-lived code
+        for a session cookie.
+      summary: Migrate session to API domain
+      parameters:
+      - in: query
+        name: org
+        schema:
+          type: string
+        description: The organization subdomain (e.g., 'rush')
+        required: true
+      - in: query
+        name: session_exchange_code
+        schema:
+          type: string
+        description: The one-time UUID exchange code obtained from /exchange_session/
+        required: true
+      tags:
+      - user
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrateSessionResponse'
+          description: ''
+  /accounts/user/organizations/:
+    get:
+      operationId: get_user_organizations
+      summary: Get all organizations for the current user
+      tags:
+      - user
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/user/verify_authorization/:
+    post:
+      operationId: verify_authorization
+      tags:
+      - user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyAuthorizationOTP'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VerifyAuthorizationOTP'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/VerifyAuthorizationOTP'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /community/docupilot/topics/:
+    get:
+      operationId: community_docupilot_topics_retrieve
+      tags:
+      - community
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+components:
+  schemas:
+    AcceptInvite:
+      type: object
+      properties:
+        workspace_unique_key:
+          type: string
+      required:
+      - workspace_unique_key
+    Application:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        hosted_url:
+          type: string
+          readOnly: true
+      required:
+      - hosted_url
+      - id
+    ChangeEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        password:
+          type: string
+          maxLength: 128
+      required:
+      - email
+      - password
+    ChangePassword:
+      type: object
+      properties:
+        current_password:
+          type: string
+          writeOnly: true
+        new_password:
+          type: string
+          writeOnly: true
+        clear_other_sessions:
+          type: boolean
+          default: false
+      required:
+      - current_password
+      - new_password
+    CreateInvitation:
+      type: object
+      properties:
+        email:
+          type: string
+        role:
+          enum:
+          - admin
+          - manager
+          - member
+          - billing_manager
+          type: string
+        workspace:
+          type: integer
+      required:
+      - email
+      - role
+      - workspace
+    DemoGraphic:
+      type: object
+      properties:
+        user_demographic:
+          allOf:
+          - $ref: '#/components/schemas/UserDemographic'
+          nullable: true
+        organization_demographic:
+          allOf:
+          - $ref: '#/components/schemas/OrganizationDemographic'
+          nullable: true
+    Domain:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        domain_name:
+          type: string
+          maxLength: 70
+        txt_record:
+          type: string
+          readOnly: true
+        is_txt_verified:
+          type: boolean
+          readOnly: true
+        is_locked:
+          type: boolean
+          readOnly: true
+        verification_expired_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - domain_name
+      - id
+      - is_locked
+      - is_txt_verified
+      - txt_record
+      - verification_expired_at
+    ExchangeSessionResponse:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+      - code
+    ForbiddenError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+    Invitation:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        role:
+          enum:
+          - admin
+          - manager
+          - member
+          - billing_manager
+          type: string
+        workspace:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        expires_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_accepted:
+          type: boolean
+          readOnly: true
+          nullable: true
+        invite_key:
+          type: string
+          readOnly: true
+        sender:
+          type: string
+          readOnly: true
+        expired:
+          type: boolean
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - expired
+      - expires_at
+      - id
+      - invite_key
+      - is_accepted
+      - role
+      - sender
+      - workspace
+    Locale:
+      type: object
+      properties:
+        code:
+          type: string
+        display:
+          type: string
+      required:
+      - code
+      - display
+    MFADisable:
+      type: object
+      properties:
+        otp:
+          type: integer
+      required:
+      - otp
+    MarkDevicePrimary:
+      type: object
+      properties:
+        id:
+          type: integer
+        type:
+          enum:
+          - email
+          - totp
+          type: string
+      required:
+      - id
+      - type
+    MigrateSessionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+      - status
+    NotFoundError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+    OnboardingStatus:
+      type: object
+      properties:
+        personalize_experience:
+          type: boolean
+        secure_account:
+          type: boolean
+    Organization:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        subdomain:
+          type: string
+          readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+        enforce_mfa:
+          type: boolean
+          readOnly: true
+        logo:
+          type: string
+          format: binary
+          nullable: true
+        password_based_login:
+          type: boolean
+          readOnly: true
+          description: Whether password-based login is allowed for this organization
+        region:
+          enum:
+          - us1
+          type: string
+          readOnly: true
+      required:
+      - created_time
+      - enforce_mfa
+      - name
+      - password_based_login
+      - region
+      - subdomain
+      - updated_time
+    OrganizationDelete:
+      type: object
+      properties:
+        otp:
+          type: string
+          writeOnly: true
+          maxLength: 6
+          minLength: 6
+      required:
+      - otp
+    OrganizationDemographic:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        domain_name:
+          type: string
+          nullable: true
+          maxLength: 255
+        employee_count:
+          enum:
+          - JUST ME
+          - 2 to 5
+          - 6 to 10
+          - 11 to 25
+          - 26 to 50
+          - 51 to 200
+          - 201 to 1,000
+          - 1,001 to 10,000
+          - 10,001 or more
+          type: string
+        industry:
+          type: string
+          maxLength: 100
+        primary_region:
+          type: string
+          maxLength: 100
+      required:
+      - employee_count
+      - id
+      - industry
+      - primary_region
+    OrganizationMetaResponse:
+      type: object
+      properties:
+        okta_enabled:
+          type: boolean
+      required:
+      - okta_enabled
+    OrganizationSubdomainChangeResponse:
+      type: object
+      properties:
+        new_url:
+          type: string
+      required:
+      - new_url
+    PatchedOnboardingStatus:
+      type: object
+      properties:
+        personalize_experience:
+          type: boolean
+        secure_account:
+          type: boolean
+    PatchedOrganization:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        subdomain:
+          type: string
+          readOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_time:
+          type: string
+          format: date-time
+          readOnly: true
+        enforce_mfa:
+          type: boolean
+          readOnly: true
+        logo:
+          type: string
+          format: binary
+          nullable: true
+        password_based_login:
+          type: boolean
+          readOnly: true
+          description: Whether password-based login is allowed for this organization
+        region:
+          enum:
+          - us1
+          type: string
+          readOnly: true
+    PatchedOrganizationSubdomainChange:
+      type: object
+      properties:
+        subdomain:
+          type: string
+          maxLength: 50
+          minLength: 3
+    PatchedSAMLProviderUpdate:
+      type: object
+      properties:
+        entity_id:
+          type: string
+          format: uri
+          description: Unique identifier for the SAML Identity Provider (IdP). Typically
+            the URL of the IdP's metadata endpoint.
+        sso_url:
+          type: string
+          format: uri
+          description: Single Sign-On URL of the Identity Provider
+        slo_url:
+          type: string
+          format: uri
+          description: Single Logout URL of the Identity Provider
+        x509cert:
+          type: string
+          format: uri
+          description: X.509 certificate of the Identity Provider
+        name:
+          type: string
+          description: Name of the SAML provider
+        signing_option:
+          enum:
+          - both
+          - assertions_only
+          - response_only
+          type: string
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        guid:
+          type: string
+          format: uuid
+          readOnly: true
+          description: globally unique identifier for user
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          readOnly: true
+        timezone:
+          enum:
+          - Pacific/Midway
+          - America/Adak
+          - Pacific/Honolulu
+          - Pacific/Marquesas
+          - America/Anchorage
+          - America/Tijuana
+          - America/Los_Angeles
+          - America/Phoenix
+          - America/Chihuahua
+          - America/Denver
+          - America/Belize
+          - America/Chicago
+          - Pacific/Easter
+          - America/Mexico_City
+          - America/Regina
+          - America/Bogota
+          - America/Cancun
+          - America/New_York
+          - America/Port-au-Prince
+          - America/Havana
+          - America/Indiana/Indianapolis
+          - America/Asuncion
+          - America/Halifax
+          - America/Caracas
+          - America/Cuiaba
+          - America/Manaus
+          - America/Santiago
+          - America/Grand_Turk
+          - America/St_Johns
+          - America/Fortaleza
+          - America/Sao_Paulo
+          - America/Cayenne
+          - America/Buenos_Aires
+          - America/Godthab
+          - America/Montevideo
+          - America/Miquelon
+          - America/Bahia
+          - America/Noronha
+          - Atlantic/Azores
+          - Atlantic/Cape_Verde
+          - UTC
+          - Africa/Casablanca
+          - Europe/London
+          - Africa/Monrovia
+          - Europe/Amsterdam
+          - Europe/Belgrade
+          - Europe/Brussels
+          - Europe/Warsaw
+          - Africa/Algiers
+          - Africa/Windhoek
+          - Asia/Amman
+          - Europe/Athens
+          - Asia/Beirut
+          - Africa/Cairo
+          - Asia/Damascus
+          - Asia/Gaza
+          - Africa/Harare
+          - Europe/Helsinki
+          - Asia/Jerusalem
+          - Europe/Kaliningrad
+          - Africa/Tripoli
+          - Asia/Baghdad
+          - Asia/Istanbul
+          - Asia/Kuwait
+          - Europe/Minsk
+          - Europe/Moscow
+          - Africa/Nairobi
+          - Asia/Tehran
+          - Asia/Muscat
+          - Europe/Astrakhan
+          - Asia/Baku
+          - Europe/Samara
+          - Indian/Mauritius
+          - Asia/Tbilisi
+          - Asia/Yerevan
+          - Asia/Kabul
+          - Asia/Tashkent
+          - Asia/Yekaterinburg
+          - Asia/Karachi
+          - Asia/Kolkata
+          - Asia/Colombo
+          - Asia/Katmandu
+          - Asia/Almaty
+          - Asia/Dhaka
+          - Asia/Rangoon
+          - Asia/Novosibirsk
+          - Asia/Bangkok
+          - Asia/Barnaul
+          - Asia/Hovd
+          - Asia/Krasnoyarsk
+          - Asia/Tomsk
+          - Asia/Chongqing
+          - Asia/Irkutsk
+          - Asia/Kuala_Lumpur
+          - Australia/Perth
+          - Asia/Taipei
+          - Asia/Ulaanbaatar
+          - Asia/Pyongyang
+          - Australia/Eucla
+          - Asia/Chita
+          - Asia/Tokyo
+          - Asia/Seoul
+          - Asia/Yakutsk
+          - Australia/Adelaide
+          - Australia/Darwin
+          - Australia/Brisbane
+          - Australia/Canberra
+          - Pacific/Guam
+          - Australia/Hobart
+          - Asia/Vladivostok
+          - Australia/Lord_Howe
+          - Pacific/Bougainville
+          - Asia/Srednekolymsk
+          - Asia/Magadan
+          - Pacific/Norfolk
+          - Asia/Sakhalin
+          - Pacific/Guadalcanal
+          - Asia/Anadyr
+          - Pacific/Auckland
+          - Pacific/Fiji
+          - Pacific/Chatham
+          - Pacific/Tongatapu
+          - Pacific/Apia
+          - Pacific/Kiritimati
+          type: string
+        locale:
+          enum:
+          - en
+          - nl
+          - fr
+          - de
+          - es
+          - ar
+          - he
+          - null
+          type: string
+          nullable: true
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        locale_display_name:
+          type: string
+          readOnly: true
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+        is_mfa_enabled:
+          type: boolean
+          readOnly: true
+        organization:
+          allOf:
+          - $ref: '#/components/schemas/UserOrganization'
+          readOnly: true
+        role:
+          enum:
+          - owner
+          - member
+          type: string
+          readOnly: true
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+          readOnly: true
+    SAMLProvider:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 40
+        client_id:
+          type: string
+          description: App ID, or consumer key
+          maxLength: 191
+        entity_url:
+          type: string
+          format: uri
+          readOnly: true
+        acs_url:
+          type: string
+          format: uri
+          readOnly: true
+        entity_id:
+          type: string
+          format: uri
+          readOnly: true
+        sso_url:
+          type: string
+          format: uri
+          readOnly: true
+        slo_url:
+          type: string
+          format: uri
+          readOnly: true
+        x509cert:
+          type: string
+          readOnly: true
+        type:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+        signing_option:
+          enum:
+          - both
+          - assertions_only
+          - response_only
+          type: string
+          readOnly: true
+      required:
+      - acs_url
+      - active
+      - client_id
+      - entity_id
+      - entity_url
+      - id
+      - name
+      - signing_option
+      - slo_url
+      - sso_url
+      - type
+      - x509cert
+    SAMLProviderCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 40
+        type:
+          enum:
+          - microsoft
+          - okta
+          type: string
+      required:
+      - name
+      - type
+    SAMLProviderUpdate:
+      type: object
+      properties:
+        entity_id:
+          type: string
+          format: uri
+          description: Unique identifier for the SAML Identity Provider (IdP). Typically
+            the URL of the IdP's metadata endpoint.
+        sso_url:
+          type: string
+          format: uri
+          description: Single Sign-On URL of the Identity Provider
+        slo_url:
+          type: string
+          format: uri
+          description: Single Logout URL of the Identity Provider
+        x509cert:
+          type: string
+          format: uri
+          description: X.509 certificate of the Identity Provider
+        name:
+          type: string
+          description: Name of the SAML provider
+        signing_option:
+          enum:
+          - both
+          - assertions_only
+          - response_only
+          type: string
+      required:
+      - entity_id
+      - name
+      - signing_option
+      - slo_url
+      - sso_url
+      - x509cert
+    SendAuthorizationOTP:
+      type: object
+      properties:
+        action_name:
+          type: string
+      required:
+      - action_name
+    ShowDemographicPrompt:
+      type: object
+      properties:
+        user_demographic:
+          type: boolean
+        organization_demographic:
+          type: boolean
+      required:
+      - organization_demographic
+      - user_demographic
+    TOTPDevice:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The date and time when this device was initially created in
+            the system.
+        last_used_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: The most recent date and time this device was used.
+        name:
+          type: string
+          readOnly: true
+          description: The human-readable name of this device.
+      required:
+      - created_at
+      - id
+      - last_used_at
+      - name
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        role:
+          enum:
+          - owner
+          - member
+          type: string
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+          readOnly: true
+      required:
+      - email
+      - id
+      - workspaces
+    TimeZone:
+      type: object
+      properties:
+        name:
+          type: string
+        tz:
+          type: string
+        offset:
+          type: string
+      required:
+      - name
+      - offset
+      - tz
+    TotpDeviceVerify:
+      type: object
+      properties:
+        t_otp:
+          type: integer
+      required:
+      - t_otp
+    TransferOwnership:
+      type: object
+      properties:
+        transfer_to:
+          type: integer
+        otp:
+          type: string
+          maxLength: 6
+          minLength: 6
+      required:
+      - otp
+      - transfer_to
+    UnauthenticatedError:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        guid:
+          type: string
+          format: uuid
+          readOnly: true
+          description: globally unique identifier for user
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          readOnly: true
+        timezone:
+          enum:
+          - Pacific/Midway
+          - America/Adak
+          - Pacific/Honolulu
+          - Pacific/Marquesas
+          - America/Anchorage
+          - America/Tijuana
+          - America/Los_Angeles
+          - America/Phoenix
+          - America/Chihuahua
+          - America/Denver
+          - America/Belize
+          - America/Chicago
+          - Pacific/Easter
+          - America/Mexico_City
+          - America/Regina
+          - America/Bogota
+          - America/Cancun
+          - America/New_York
+          - America/Port-au-Prince
+          - America/Havana
+          - America/Indiana/Indianapolis
+          - America/Asuncion
+          - America/Halifax
+          - America/Caracas
+          - America/Cuiaba
+          - America/Manaus
+          - America/Santiago
+          - America/Grand_Turk
+          - America/St_Johns
+          - America/Fortaleza
+          - America/Sao_Paulo
+          - America/Cayenne
+          - America/Buenos_Aires
+          - America/Godthab
+          - America/Montevideo
+          - America/Miquelon
+          - America/Bahia
+          - America/Noronha
+          - Atlantic/Azores
+          - Atlantic/Cape_Verde
+          - UTC
+          - Africa/Casablanca
+          - Europe/London
+          - Africa/Monrovia
+          - Europe/Amsterdam
+          - Europe/Belgrade
+          - Europe/Brussels
+          - Europe/Warsaw
+          - Africa/Algiers
+          - Africa/Windhoek
+          - Asia/Amman
+          - Europe/Athens
+          - Asia/Beirut
+          - Africa/Cairo
+          - Asia/Damascus
+          - Asia/Gaza
+          - Africa/Harare
+          - Europe/Helsinki
+          - Asia/Jerusalem
+          - Europe/Kaliningrad
+          - Africa/Tripoli
+          - Asia/Baghdad
+          - Asia/Istanbul
+          - Asia/Kuwait
+          - Europe/Minsk
+          - Europe/Moscow
+          - Africa/Nairobi
+          - Asia/Tehran
+          - Asia/Muscat
+          - Europe/Astrakhan
+          - Asia/Baku
+          - Europe/Samara
+          - Indian/Mauritius
+          - Asia/Tbilisi
+          - Asia/Yerevan
+          - Asia/Kabul
+          - Asia/Tashkent
+          - Asia/Yekaterinburg
+          - Asia/Karachi
+          - Asia/Kolkata
+          - Asia/Colombo
+          - Asia/Katmandu
+          - Asia/Almaty
+          - Asia/Dhaka
+          - Asia/Rangoon
+          - Asia/Novosibirsk
+          - Asia/Bangkok
+          - Asia/Barnaul
+          - Asia/Hovd
+          - Asia/Krasnoyarsk
+          - Asia/Tomsk
+          - Asia/Chongqing
+          - Asia/Irkutsk
+          - Asia/Kuala_Lumpur
+          - Australia/Perth
+          - Asia/Taipei
+          - Asia/Ulaanbaatar
+          - Asia/Pyongyang
+          - Australia/Eucla
+          - Asia/Chita
+          - Asia/Tokyo
+          - Asia/Seoul
+          - Asia/Yakutsk
+          - Australia/Adelaide
+          - Australia/Darwin
+          - Australia/Brisbane
+          - Australia/Canberra
+          - Pacific/Guam
+          - Australia/Hobart
+          - Asia/Vladivostok
+          - Australia/Lord_Howe
+          - Pacific/Bougainville
+          - Asia/Srednekolymsk
+          - Asia/Magadan
+          - Pacific/Norfolk
+          - Asia/Sakhalin
+          - Pacific/Guadalcanal
+          - Asia/Anadyr
+          - Pacific/Auckland
+          - Pacific/Fiji
+          - Pacific/Chatham
+          - Pacific/Tongatapu
+          - Pacific/Apia
+          - Pacific/Kiritimati
+          type: string
+        locale:
+          enum:
+          - en
+          - nl
+          - fr
+          - de
+          - es
+          - ar
+          - he
+          - null
+          type: string
+          nullable: true
+        is_active:
+          type: boolean
+          readOnly: true
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        locale_display_name:
+          type: string
+          readOnly: true
+        theme:
+          enum:
+          - light
+          - dark
+          - system
+          type: string
+        is_mfa_enabled:
+          type: boolean
+          readOnly: true
+        organization:
+          allOf:
+          - $ref: '#/components/schemas/UserOrganization'
+          readOnly: true
+        role:
+          enum:
+          - owner
+          - member
+          type: string
+          readOnly: true
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+          readOnly: true
+      required:
+      - email
+      - guid
+      - id
+      - is_active
+      - is_mfa_enabled
+      - locale_display_name
+      - organization
+      - role
+      - workspaces
+    UserDemographic:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        product_referral_source:
+          type: string
+          nullable: true
+          maxLength: 52
+        role:
+          type: string
+          maxLength: 52
+      required:
+      - id
+      - role
+    UserMeta:
+      type: object
+      properties:
+        timezone:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeZone'
+        locale:
+          type: array
+          items:
+            $ref: '#/components/schemas/Locale'
+      required:
+      - locale
+      - timezone
+    UserOrganization:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        subdomain:
+          type: string
+          maxLength: 50
+        active:
+          type: boolean
+        enforce_mfa:
+          type: boolean
+        region:
+          enum:
+          - us1
+          type: string
+      required:
+      - id
+      - name
+      - subdomain
+    ValidationError:
+      type: object
+      properties:
+        errors:
+          type: object
+          additionalProperties: {}
+        non_field_errors:
+          type: array
+          items:
+            type: string
+      required:
+      - errors
+      - non_field_errors
+    VerifyAuthorizationOTP:
+      type: object
+      properties:
+        otp:
+          type: string
+      required:
+      - otp
+    VerifyDomain:
+      type: object
+      properties:
+        domain_name:
+          type: string
+          maxLength: 255
+      required:
+      - domain_name
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        role:
+          enum:
+          - owner
+          - admin
+          - manager
+          - member
+          - billing_manager
+          type: string
+        unique_key:
+          type: string
+        plan:
+          type: string
+        users:
+          type: integer
+        plan_status:
+          type: string
+      required:
+      - id
+      - name
+      - plan
+      - plan_status
+      - unique_key
+      - users
+  securitySchemes:
+    OAuthAuthentication:
+      type: http
+      scheme: bearer
+      description: OAuth2 Bearer Token Authentication
+    SessionAuthentication:
+      type: apiKey
+      in: cookie
+      name: sessionid
+      description: browser based login takes care of this
+externalDocs:
+  description: Help docs on how to use API
+  url: https://help.docupilot.app/developers/api-overview
