@@ -1,9 +1,5 @@
 import { APIClient } from '../src';
 
-function getCookie(name: string) {
-  return 'sample-cookie-' + name;
-}
-
 async function run(orgName: string) {
   const client = new APIClient();
   client.authenticate('key', 'secret'); // authenticate all services using api key and secret
