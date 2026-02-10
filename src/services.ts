@@ -1,0 +1,46 @@
+import * as _API from './api';
+import * as _Accounts from './accounts';
+
+export const AppServices = {
+  ai: _API.AiService,
+  append: _API.AppendService,
+  authTokens: _API.AuthTokensService,
+  contentBlocks: _API.ContentBlocksService,
+  demographic: _API.DemographicService,
+  domain: _API.DomainService,
+  eSign: _API.EsignService,
+  eSignSettings: _API.EsignSettingsService,
+  folders: _API.FoldersService,
+  galleryTemplates: _API.GalleryTemplatesService,
+  general: _API.GeneralService,
+  generate: _API.GenerateService,
+  generateBulk: _API.GenerateBulkService,
+  history: _API.HistoryService,
+  invitations: _API.InvitationsService,
+  linkedAccounts: _API.LinkedAccountsService,
+  mergeHistory: _API.MergeHistoryService,
+  organization: _API.OrganizationService,
+  permissions: _API.PermissionsService,
+  personalization: _API.PersonalizationService,
+  subscription: _API.SubscriptionService,
+  team: _API.TeamService,
+  templateDelivery: _API.TemplateDeliveryService,
+  templates: _API.TemplatesService,
+  users: _API.UsersService,
+  userSatisfactionSurvey: _API.UserSatisfactionSurveyService,
+  workspaces: _API.WorkspacesService,
+};
+
+export const AccountServices = {
+  application: _Accounts.ApplicationService,
+  community: _Accounts.CommunityService,
+  demographic: _Accounts.DemographicService,
+  domain: _Accounts.DomainService,
+  invitation: _Accounts.InvitationService,
+  mfa: _Accounts.MfaService,
+  organization: _Accounts.OrganizationService,
+  organizationOnboarding: _Accounts.OrganizationOnboardingService,
+  saml: _Accounts.SamlService,
+  team: _Accounts.TeamService,
+  user: _Accounts.UserService,
+};

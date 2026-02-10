@@ -1,3 +1,3 @@
 export * as API from './api';
-export { DocupilotSessionClient } from './session_client';
-export { DocupilotTokenClient } from './token_client';
+export * as Accounts from './accounts';
+export { APIClient } from './apiClient';
