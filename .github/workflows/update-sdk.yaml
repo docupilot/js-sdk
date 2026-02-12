@@ -71,8 +71,11 @@ jobs:
 
       - run: echo $(git diff)
 
-      - name: update sdk
-        run: npm run generate.spec.react
+      - name: update app sdk
+        run: npm run generate.app-spec.react
+
+      - name: update accounts sdk
+        run: npm run generate.accounts-spec.react
 
       - name: Create Pull Request
         id: create_pr
