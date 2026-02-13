@@ -14,5 +14,6 @@ export type Organization = {
      */
     readonly password_based_login: boolean;
     readonly region: 'us1';
+    readonly provisioning_mode: 'manual' | 'scim';
 };
 
