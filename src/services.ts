@@ -42,4 +42,5 @@ export const AccountServices = {
   saml: _Accounts.SamlService,
   team: _Accounts.TeamService,
   user: _Accounts.UserService,
+  scim: _Accounts.ScimService,
 };
