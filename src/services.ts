@@ -6,7 +6,6 @@ export const AppServices = {
   append: _API.AppendService,
   authTokens: _API.AuthTokensService,
   contentBlocks: _API.ContentBlocksService,
-  demographic: _API.DemographicService,
   domain: _API.DomainService,
   eSign: _API.EsignService,
   eSignSettings: _API.EsignSettingsService,
