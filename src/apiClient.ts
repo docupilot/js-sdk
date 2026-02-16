@@ -121,8 +121,6 @@ export class APIClient {
   /**@deprecated*/
   readonly AiService = _API.AiService;
   /**@deprecated*/
-  readonly DemographicService = _API.DemographicService;
-  /**@deprecated*/
   readonly MergeHistoryService = _API.MergeHistoryService;
   /**@deprecated*/
   readonly EsignService = _API.EsignService;
