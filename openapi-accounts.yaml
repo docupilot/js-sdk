@@ -1314,6 +1314,12 @@ paths:
       - saml
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderUpdate'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/SAMLProviderUpdate'
@@ -1364,6 +1370,12 @@ paths:
       - saml
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
@@ -1417,6 +1429,52 @@ paths:
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/saml/{id}/refetch_metadata/:
+    post:
+      operationId: refetch_saml_metadata
+      summary: Refetch SAML IdP metadata
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - saml
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLProvider'
+          description: ''
         '400':
           content:
             application/json:
@@ -2410,32 +2468,13 @@ components:
     PatchedSAMLProviderUpdate:
       type: object
       properties:
-        entity_id:
+        metadata_url:
           type: string
           format: uri
-          description: Unique identifier for the SAML Identity Provider (IdP). Typically
-            the URL of the IdP's metadata endpoint.
-        sso_url:
-          type: string
-          format: uri
-          description: Single Sign-On URL of the Identity Provider
-        slo_url:
-          type: string
-          format: uri
-          description: Single Logout URL of the Identity Provider
-        x509cert:
-          type: string
-          format: uri
-          description: X.509 certificate of the Identity Provider
+          description: Metadata URL of the Identity Provider
         name:
           type: string
           description: Name of the SAML provider
-        signing_option:
-          enum:
-          - both
-          - assertions_only
-          - response_only
-          type: string
     PatchedUser:
       type: object
       properties:
@@ -2650,46 +2689,24 @@ components:
           type: string
           format: uri
           readOnly: true
-        entity_id:
+        metadata_url:
           type: string
           format: uri
-          readOnly: true
-        sso_url:
-          type: string
-          format: uri
-          readOnly: true
-        slo_url:
-          type: string
-          format: uri
-          readOnly: true
-        x509cert:
-          type: string
           readOnly: true
         type:
           type: string
           readOnly: true
         active:
           type: boolean
-        signing_option:
-          enum:
-          - both
-          - assertions_only
-          - response_only
-          type: string
-          readOnly: true
       required:
       - acs_url
       - active
       - client_id
-      - entity_id
       - entity_url
       - id
+      - metadata_url
       - name
-      - signing_option
-      - slo_url
-      - sso_url
       - type
-      - x509cert
     SAMLProviderCreate:
       type: object
       properties:
@@ -2707,39 +2724,16 @@ components:
     SAMLProviderUpdate:
       type: object
       properties:
-        entity_id:
+        metadata_url:
           type: string
           format: uri
-          description: Unique identifier for the SAML Identity Provider (IdP). Typically
-            the URL of the IdP's metadata endpoint.
-        sso_url:
-          type: string
-          format: uri
-          description: Single Sign-On URL of the Identity Provider
-        slo_url:
-          type: string
-          format: uri
-          description: Single Logout URL of the Identity Provider
-        x509cert:
-          type: string
-          format: uri
-          description: X.509 certificate of the Identity Provider
+          description: Metadata URL of the Identity Provider
         name:
           type: string
           description: Name of the SAML provider
-        signing_option:
-          enum:
-          - both
-          - assertions_only
-          - response_only
-          type: string
       required:
-      - entity_id
+      - metadata_url
       - name
-      - signing_option
-      - slo_url
-      - sso_url
-      - x509cert
     SendAuthorizationOTP:
       type: object
       properties:

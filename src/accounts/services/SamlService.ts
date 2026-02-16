@@ -50,13 +50,13 @@ export class SamlService {
      */
     public static updateSamlProvider({
         id,
-        formData,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this social application.
          */
         id: number,
-        formData: OmitReadonly<SAMLProviderUpdate>,
+        requestBody: OmitReadonly<SAMLProviderUpdate>,
     }): CancelablePromise<SAMLProviderUpdate> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -64,8 +64,8 @@ export class SamlService {
             path: {
                 'id': id,
             },
-            formData: formData,
-            mediaType: 'multipart/form-data',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
@@ -75,13 +75,13 @@ export class SamlService {
      */
     public static samlPartialUpdate({
         id,
-        formData,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this social application.
          */
         id: number,
-        formData?: OmitReadonly<PatchedSAMLProviderUpdate>,
+        requestBody?: OmitReadonly<PatchedSAMLProviderUpdate>,
     }): CancelablePromise<SAMLProviderUpdate> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -89,8 +89,8 @@ export class SamlService {
             path: {
                 'id': id,
             },
-            formData: formData,
-            mediaType: 'multipart/form-data',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
@@ -110,6 +110,28 @@ export class SamlService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/accounts/saml/{id}/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Refetch SAML IdP metadata
+     * @returns SAMLProvider
+     * @throws ApiError
+     */
+    public static refetchSamlMetadata({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this social application.
+         */
+        id: number,
+    }): CancelablePromise<SAMLProvider> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/accounts/saml/{id}/refetch_metadata/',
             path: {
                 'id': id,
             },

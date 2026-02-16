@@ -4,25 +4,12 @@
 
 export type SAMLProviderUpdate = {
     /**
-     * Unique identifier for the SAML Identity Provider (IdP). Typically the URL of the IdP's metadata endpoint.
+     * Metadata URL of the Identity Provider
      */
-    entity_id: string;
-    /**
-     * Single Sign-On URL of the Identity Provider
-     */
-    sso_url: string;
-    /**
-     * Single Logout URL of the Identity Provider
-     */
-    slo_url: string;
-    /**
-     * X.509 certificate of the Identity Provider
-     */
-    x509cert: string;
+    metadata_url: string;
     /**
      * Name of the SAML provider
      */
     name: string;
-    signing_option: 'both' | 'assertions_only' | 'response_only';
 };
 
