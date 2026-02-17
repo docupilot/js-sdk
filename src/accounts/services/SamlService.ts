@@ -117,28 +117,6 @@ export class SamlService {
     }
 
     /**
-     * Refetch SAML IdP metadata
-     * @returns SAMLProvider
-     * @throws ApiError
-     */
-    public static refetchSamlMetadata({
-        id,
-    }: {
-        /**
-         * A unique integer value identifying this social application.
-         */
-        id: number,
-    }): CancelablePromise<SAMLProvider> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/accounts/saml/{id}/refetch_metadata/',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
      * Toggle SAML provider active status
      * @returns SAMLProvider
      * @throws ApiError
