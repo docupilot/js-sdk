@@ -10082,42 +10082,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/esign/global-settings/general/:
-    get:
-      operationId: get_signature_general_settings
-      summary: Get signature general settings
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - esign-settings
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ESignSettings'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/esign/global-settings/general/email-accounts/:
     get:
       operationId: get_email_accounts
@@ -10139,6 +10103,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifiedEmailDNSAccounts'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/general/get/:
+    get:
+      operationId: get_signature_general_settings
+      summary: Get signature general settings
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignSettings'
           description: ''
         '401':
           content:
