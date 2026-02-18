@@ -19,7 +19,7 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: '',
+    BASE: 'http://api-us1.docupilot.localhost',
     VERSION: '3.0',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
