@@ -22,18 +22,6 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class EsignSettingsService {
 
     /**
-     * Get signature general settings
-     * @returns ESignSettings
-     * @throws ApiError
-     */
-    public static getSignatureGeneralSettings(): CancelablePromise<Array<ESignSettings>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/esign/global-settings/general/',
-        });
-    }
-
-    /**
      * Get verified email DNS accounts for eSign notifications
      * @returns VerifiedEmailDNSAccounts
      * @throws ApiError
@@ -42,6 +30,18 @@ export class EsignSettingsService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/global-settings/general/email-accounts/',
+        });
+    }
+
+    /**
+     * Get signature general settings
+     * @returns ESignSettings
+     * @throws ApiError
+     */
+    public static getSignatureGeneralSettings(): CancelablePromise<ESignSettings> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/global-settings/general/get/',
         });
     }
 
