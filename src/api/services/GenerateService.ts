@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
-import type { Template } from '../models/Template';
+import type { TemplateGenerateResponse } from '../models/TemplateGenerateResponse';
 import type { TemplateTestResponse } from '../models/TemplateTestResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -14,7 +14,7 @@ export class GenerateService {
 
     /**
      * Generate document from template
-     * @returns Template
+     * @returns TemplateGenerateResponse file_url is included when download=true or no delivery configuration exists;otherwise, only file_name is returned.
      * @throws ApiError
      */
     public static generateDocument({
@@ -37,7 +37,7 @@ export class GenerateService {
         includeUrl?: boolean,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         requestBody?: Record<string, any>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<TemplateGenerateResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/templates/{id}/generate/',

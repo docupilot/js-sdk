@@ -17,10 +17,20 @@ export class MfaService {
      * @returns any No response body
      * @throws ApiError
      */
-    public static mfaList(): CancelablePromise<any> {
+    public static mfaList({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/mfa/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 

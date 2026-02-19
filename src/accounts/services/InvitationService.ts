@@ -17,10 +17,20 @@ export class InvitationService {
      * @returns Invitation
      * @throws ApiError
      */
-    public static listInvitation(): CancelablePromise<Array<Invitation>> {
+    public static listInvitation({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<Array<Invitation>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/invitation/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 
@@ -135,10 +145,20 @@ export class InvitationService {
      * @returns Invitation
      * @throws ApiError
      */
-    public static listWorkspaceInvitations(): CancelablePromise<Array<Invitation>> {
+    public static listWorkspaceInvitations({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<Array<Invitation>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/invitation/list_workspace_invitations/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 

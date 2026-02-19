@@ -3365,6 +3365,83 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/convert/:
+    post:
+      operationId: convert-files
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: response_type
+        schema:
+          type: string
+          enum:
+          - stream
+          - url
+        description: If stream, returns the converted file as a downloadable binary
+          (PDF / PNG / ZIP). If url, returns JSON with file_url and file_name.
+      tags:
+      - convert
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConvertJsonRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ConvertMultipartRequest'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  file_url:
+                    type: string
+                  file_name:
+                    type: string
+                description: Returned when download=false
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/domain/{id}/:
     get:
       operationId: get_domain
@@ -6347,12 +6424,13 @@ paths:
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '200':
+        '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Template'
-          description: ''
+                $ref: '#/components/schemas/TemplateGenerateResponse'
+          description: file_url is included when download=true or no delivery configuration
+            exists;otherwise, only file_name is returned.
         '400':
           content:
             application/json:
@@ -11556,6 +11634,55 @@ components:
       required:
       - id
       - user
+    ConvertFileUrl:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+      required:
+      - type
+      - url
+      description: ''
+    ConvertJsonRequest:
+      type: object
+      properties:
+        output_file_name:
+          type: string
+        output_type:
+          enum:
+          - pdf
+          - png
+          - png.zip
+          type: string
+        file:
+          $ref: '#/components/schemas/ConvertFileUrl'
+      required:
+      - file
+      - output_file_name
+      - output_type
+      description: ''
+    ConvertMultipartRequest:
+      type: object
+      properties:
+        output_file_name:
+          type: string
+        output_type:
+          enum:
+          - pdf
+          - png
+          - png.zip
+          type: string
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+      - output_file_name
+      - output_type
+      description: ''
     CopyContentBlock:
       type: object
       properties:
@@ -11922,6 +12049,14 @@ components:
         is_data_expired:
           type: boolean
           readOnly: true
+        action:
+          enum:
+          - 0
+          - 1
+          - 2
+          type: integer
+          minimum: 0
+          maximum: 32767
         is_document_expired:
           type: boolean
           readOnly: true
@@ -15301,6 +15436,18 @@ components:
       - id
       - image_path
       - title
+      description: ''
+    TemplateGenerateResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
       description: ''
     TemplateInfo:
       type: object

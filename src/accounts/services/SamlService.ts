@@ -18,10 +18,20 @@ export class SamlService {
      * @returns SAMLProvider
      * @throws ApiError
      */
-    public static listSamlProviders(): CancelablePromise<Array<SAMLProvider>> {
+    public static listSamlProviders({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<Array<SAMLProvider>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/saml/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 
@@ -50,13 +60,13 @@ export class SamlService {
      */
     public static updateSamlProvider({
         id,
-        formData,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this social application.
          */
         id: number,
-        formData: OmitReadonly<SAMLProviderUpdate>,
+        requestBody: OmitReadonly<SAMLProviderUpdate>,
     }): CancelablePromise<SAMLProviderUpdate> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -64,8 +74,8 @@ export class SamlService {
             path: {
                 'id': id,
             },
-            formData: formData,
-            mediaType: 'multipart/form-data',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
@@ -75,13 +85,13 @@ export class SamlService {
      */
     public static samlPartialUpdate({
         id,
-        formData,
+        requestBody,
     }: {
         /**
          * A unique integer value identifying this social application.
          */
         id: number,
-        formData?: OmitReadonly<PatchedSAMLProviderUpdate>,
+        requestBody?: OmitReadonly<PatchedSAMLProviderUpdate>,
     }): CancelablePromise<SAMLProviderUpdate> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -89,8 +99,8 @@ export class SamlService {
             path: {
                 'id': id,
             },
-            formData: formData,
-            mediaType: 'multipart/form-data',
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

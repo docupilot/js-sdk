@@ -12,6 +12,13 @@ paths:
     get:
       operationId: list_all_applications
       summary: List all applications
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - application
       security:
@@ -154,6 +161,13 @@ paths:
     get:
       operationId: list_domains
       summary: List domains
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - domain
       security:
@@ -366,6 +380,13 @@ paths:
     get:
       operationId: list_invitation
       summary: Get list of Invitation
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - invitation
       security:
@@ -615,6 +636,13 @@ paths:
     get:
       operationId: list_workspace_invitations
       summary: List pending workspace invitations for the current user
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - invitation
       security:
@@ -643,6 +671,13 @@ paths:
   /accounts/mfa/:
     get:
       operationId: mfa_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - mfa
       security:
@@ -1230,6 +1265,13 @@ paths:
     get:
       operationId: list_saml_providers
       summary: Get list of SAML providers
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - saml
       security:
@@ -1314,6 +1356,12 @@ paths:
       - saml
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SAMLProviderUpdate'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/SAMLProviderUpdate'
@@ -1364,6 +1412,12 @@ paths:
       - saml
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedSAMLProviderUpdate'
@@ -1492,6 +1546,12 @@ paths:
       operationId: list_all_team_members
       summary: List all team members
       parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       - in: query
         name: role
         schema:
@@ -1940,6 +2000,13 @@ paths:
     get:
       operationId: get_user_organizations
       summary: Get all organizations for the current user
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       tags:
       - user
       security:
@@ -2410,32 +2477,13 @@ components:
     PatchedSAMLProviderUpdate:
       type: object
       properties:
-        entity_id:
+        metadata_url:
           type: string
           format: uri
-          description: Unique identifier for the SAML Identity Provider (IdP). Typically
-            the URL of the IdP's metadata endpoint.
-        sso_url:
-          type: string
-          format: uri
-          description: Single Sign-On URL of the Identity Provider
-        slo_url:
-          type: string
-          format: uri
-          description: Single Logout URL of the Identity Provider
-        x509cert:
-          type: string
-          format: uri
-          description: X.509 certificate of the Identity Provider
+          description: Metadata URL of the Identity Provider
         name:
           type: string
           description: Name of the SAML provider
-        signing_option:
-          enum:
-          - both
-          - assertions_only
-          - response_only
-          type: string
     PatchedUser:
       type: object
       properties:
@@ -2650,46 +2698,24 @@ components:
           type: string
           format: uri
           readOnly: true
-        entity_id:
+        metadata_url:
           type: string
           format: uri
-          readOnly: true
-        sso_url:
-          type: string
-          format: uri
-          readOnly: true
-        slo_url:
-          type: string
-          format: uri
-          readOnly: true
-        x509cert:
-          type: string
           readOnly: true
         type:
           type: string
           readOnly: true
         active:
           type: boolean
-        signing_option:
-          enum:
-          - both
-          - assertions_only
-          - response_only
-          type: string
-          readOnly: true
       required:
       - acs_url
       - active
       - client_id
-      - entity_id
       - entity_url
       - id
+      - metadata_url
       - name
-      - signing_option
-      - slo_url
-      - sso_url
       - type
-      - x509cert
     SAMLProviderCreate:
       type: object
       properties:
@@ -2707,39 +2733,16 @@ components:
     SAMLProviderUpdate:
       type: object
       properties:
-        entity_id:
+        metadata_url:
           type: string
           format: uri
-          description: Unique identifier for the SAML Identity Provider (IdP). Typically
-            the URL of the IdP's metadata endpoint.
-        sso_url:
-          type: string
-          format: uri
-          description: Single Sign-On URL of the Identity Provider
-        slo_url:
-          type: string
-          format: uri
-          description: Single Logout URL of the Identity Provider
-        x509cert:
-          type: string
-          format: uri
-          description: X.509 certificate of the Identity Provider
+          description: Metadata URL of the Identity Provider
         name:
           type: string
           description: Name of the SAML provider
-        signing_option:
-          enum:
-          - both
-          - assertions_only
-          - response_only
-          type: string
       required:
-      - entity_id
+      - metadata_url
       - name
-      - signing_option
-      - slo_url
-      - sso_url
-      - x509cert
     SendAuthorizationOTP:
       type: object
       properties:

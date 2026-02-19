@@ -196,10 +196,20 @@ export class UserService {
      * @returns Organization
      * @throws ApiError
      */
-    public static getUserOrganizations(): CancelablePromise<Array<Organization>> {
+    public static getUserOrganizations({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<Array<Organization>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/user/organizations/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 
