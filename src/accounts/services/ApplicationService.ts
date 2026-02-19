@@ -15,10 +15,20 @@ export class ApplicationService {
      * @returns Application
      * @throws ApiError
      */
-    public static listAllApplications(): CancelablePromise<Array<Application>> {
+    public static listAllApplications({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<Array<Application>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/application/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 

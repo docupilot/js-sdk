@@ -15,10 +15,20 @@ export class DomainService {
      * @returns Domain
      * @throws ApiError
      */
-    public static listDomains(): CancelablePromise<Array<Domain>> {
+    public static listDomains({
+        ordering,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+    }): CancelablePromise<Array<Domain>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/domain/',
+            query: {
+                'ordering': ordering,
+            },
         });
     }
 

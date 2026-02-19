@@ -17,14 +17,20 @@ export class TeamService {
      * @throws ApiError
      */
     public static listAllTeamMembers({
+        ordering,
         role,
     }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
         role?: 'member' | 'owner',
     }): CancelablePromise<Array<TeamMember>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/team/',
             query: {
+                'ordering': ordering,
                 'role': role,
             },
         });
