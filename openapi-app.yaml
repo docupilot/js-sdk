@@ -6388,6 +6388,13 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
       - in: path
         name: id
         schema:
@@ -6399,15 +6406,19 @@ paths:
       security:
       - SessionAuthentication: []
       responses:
-        '201':
+        '200':
           content:
-            application/json:
+            text/csv:
               schema:
-                $ref: '#/components/schemas/BulkGenData'
+                type: string
+                format: binary
           description: ''
         '400':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/ValidationError'
           description: ''
@@ -6416,16 +6427,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
         '403':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''

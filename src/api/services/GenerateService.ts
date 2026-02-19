@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { BulkGenData } from '../models/BulkGenData';
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
 import type { Template } from '../models/Template';
 import type { TemplateTestResponse } from '../models/TemplateTestResponse';
@@ -60,22 +59,27 @@ export class GenerateService {
 
     /**
      * Generates a sample csv for the template using ai.
-     * @returns BulkGenData
+     * @returns binary
      * @throws ApiError
      */
     public static generateSampleCsv({
         id,
+        format,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<BulkGenData> {
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/templates/{id}/generate_sample_csv/',
             path: {
                 'id': id,
+            },
+            query: {
+                'format': format,
             },
         });
     }
