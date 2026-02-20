@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SAMLProvider = {
+export type SAMLProviderRetrieve = {
     readonly id: number;
     name: string;
     /**
