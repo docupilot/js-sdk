@@ -32,8 +32,6 @@ paths:
           type: string
       tags:
       - auth_tokens
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -42,18 +40,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AuthToken'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_auth_token
@@ -78,8 +64,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AuthToken'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -92,18 +76,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/auth_tokens/{id}/:
     put:
@@ -135,8 +107,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AuthToken'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -149,18 +119,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -185,8 +143,6 @@ paths:
         required: true
       tags:
       - auth_tokens
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -195,18 +151,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -243,8 +187,6 @@ paths:
           type: string
       tags:
       - invitations
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -253,18 +195,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Invitation'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_invitation
@@ -290,8 +220,6 @@ paths:
             schema:
               $ref: '#/components/schemas/Invitation'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -304,18 +232,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/invitations/{id}/:
     delete:
@@ -336,8 +252,6 @@ paths:
         required: true
       tags:
       - invitations
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -346,18 +260,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -384,8 +286,6 @@ paths:
         required: true
       tags:
       - invitations
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -398,18 +298,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -424,8 +312,6 @@ paths:
       tags:
       - organization
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -470,8 +356,6 @@ paths:
           type: string
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -480,18 +364,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AddonPricingInfo'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/buy_addon/:
     post:
@@ -517,8 +389,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AddonPurchase'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -532,18 +402,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -556,26 +414,12 @@ paths:
         required: true
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChargebeeSubscription'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/extend_trial/:
     post:
@@ -590,8 +434,6 @@ paths:
         required: true
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -600,18 +442,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/hosted_page/:
     get:
@@ -629,8 +459,6 @@ paths:
           type: string
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -638,18 +466,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/portal_session/:
     get:
@@ -663,26 +479,12 @@ paths:
         required: true
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChargebeeSubscription'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/remaining_months/:
     get:
@@ -696,8 +498,6 @@ paths:
         required: true
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -705,18 +505,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/renew_request/:
     post:
@@ -741,8 +529,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/RenewSubscription'
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -751,18 +537,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/subscription/resume/:
     post:
@@ -776,8 +550,6 @@ paths:
         required: true
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -792,18 +564,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/subscription/unpaid_invoices/:
     get:
       operationId: get_chargebee_unpaid_invoices
@@ -816,26 +576,12 @@ paths:
         required: true
       tags:
       - subscription
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/HostedPage'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/team/:
     get:
@@ -867,8 +613,6 @@ paths:
       tags:
       - team
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -922,8 +666,6 @@ paths:
               $ref: '#/components/schemas/ChangeRole'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -975,8 +717,6 @@ paths:
       tags:
       - team
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -1033,8 +773,6 @@ paths:
       tags:
       - Gallery templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -1071,8 +809,6 @@ paths:
       tags:
       - Gallery templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -1105,23 +841,9 @@ paths:
       summary: Redirect to G2 Review Page
       tags:
       - user_satisfaction_survey
-      security:
-      - SessionAuthentication: []
       responses:
         '302':
           description: No response body
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/user_satisfaction_survey/nps_next_reminder/:
     post:
       operationId: nps_next_reminder
@@ -1140,8 +862,6 @@ paths:
             schema:
               $ref: '#/components/schemas/NpsNextReminder'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1150,18 +870,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/user_satisfaction_survey/nps_rating/:
     post:
@@ -1180,8 +888,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/NpsRating'
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1190,18 +896,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/user_satisfaction_survey/save_user_feedback/:
     post:
@@ -1221,8 +915,6 @@ paths:
             schema:
               $ref: '#/components/schemas/SaveCustomerFeedback'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1231,18 +923,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/user_satisfaction_survey/show_survey_prompt/:
     get:
@@ -1257,8 +937,6 @@ paths:
         required: true
       tags:
       - user_satisfaction_survey
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1266,26 +944,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/SurveyPrompt'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/:
     post:
       operationId: update_g2_review_updated_on
       summary: Update g2_review_updated_on
       tags:
       - user_satisfaction_survey
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1295,18 +959,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/users/exchange_session/:
     get:
       operationId: get_exchange_session_code
@@ -1315,26 +967,12 @@ paths:
       summary: Exchange session for a migration code
       tags:
       - users
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExchangeSessionResponse'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/users/initiate_authorization_sequence/:
     post:
@@ -1355,8 +993,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/InitiateAuthorizationSequence'
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -1379,8 +1015,6 @@ paths:
       tags:
       - users
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -1440,8 +1074,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateUser'
-      security:
-      - SessionAuthentication: []
       responses:
         '202':
           description: No response body
@@ -1450,18 +1082,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/workspaces/:
     get:
@@ -1487,8 +1107,6 @@ paths:
       tags:
       - workspaces
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -1528,8 +1146,6 @@ paths:
             schema:
               $ref: '#/components/schemas/Workspace'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -1542,18 +1158,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/workspaces/csm_details/:
     get:
@@ -1568,8 +1172,6 @@ paths:
         required: true
       tags:
       - workspaces
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1585,18 +1187,6 @@ paths:
                     phone_number: '87654321'
                   summary: Response Example
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/workspaces/current/:
     get:
       operationId: get_current_workspace
@@ -1611,8 +1201,6 @@ paths:
       tags:
       - workspaces
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -1656,8 +1244,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedWorkspace'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1670,18 +1256,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/workspaces/current/delete/:
     post:
@@ -1708,8 +1282,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DeleteCurrentWorkspace'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           description: No response body
@@ -1718,18 +1290,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/accounts/v2/workspaces/retention_preference/:
     get:
@@ -1744,26 +1304,12 @@ paths:
         required: true
       tags:
       - workspaces
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/RetentionPreference'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     put:
       operationId: update_workspace_data_retention_preference
@@ -1799,8 +1345,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/RetentionPreference'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1824,18 +1368,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/ai/online-builder/create_template/:
     post:
@@ -1862,8 +1394,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AITemplateCreate'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1876,18 +1406,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/ai/online-builder/edit_template/:
     post:
@@ -1914,8 +1432,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AITemplateEdit'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1928,18 +1444,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/ai/online-builder/list_prompt_suggestions/:
     post:
@@ -1966,8 +1470,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PromptSuggestions'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -1980,18 +1482,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/ai/word-add-in/edit_template/:
     post:
@@ -2019,8 +1509,6 @@ paths:
               $ref: '#/components/schemas/WordAddInTemplateEdit'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2073,8 +1561,6 @@ paths:
               $ref: '#/components/schemas/WordAddInPromptSuggestions'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2128,8 +1614,6 @@ paths:
               $ref: '#/components/schemas/AppendFiles'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -2206,8 +1690,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2247,8 +1729,6 @@ paths:
               $ref: '#/components/schemas/NewContentBlock'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -2299,8 +1779,6 @@ paths:
         required: true
       tags:
       - content_blocks
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2309,18 +1787,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ContentBlockSharing'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_content_block_sharing_permission
@@ -2357,8 +1823,6 @@ paths:
               items:
                 $ref: '#/components/schemas/ContentBlockSharing'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -2373,18 +1837,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -2417,26 +1869,12 @@ paths:
         required: true
       tags:
       - content_blocks
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContentBlockSharing'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -2479,8 +1917,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateContentBlockSharing'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -2493,18 +1929,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -2536,8 +1960,6 @@ paths:
         required: true
       tags:
       - content_blocks
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -2546,18 +1968,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -2585,8 +1995,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2644,8 +2052,6 @@ paths:
               $ref: '#/components/schemas/ContentBlock'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2702,8 +2108,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewContentBlock'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2761,8 +2165,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -2823,8 +2225,6 @@ paths:
               $ref: '#/components/schemas/CopyContentBlock'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -2877,8 +2277,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -2957,8 +2355,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3016,8 +2412,6 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadContentBlockImage'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           description: No response body
@@ -3032,18 +2426,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -3077,8 +2459,6 @@ paths:
         required: true
       tags:
       - content_blocks
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -3137,8 +2517,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3199,8 +2577,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3247,8 +2623,6 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -3301,8 +2675,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3349,8 +2721,6 @@ paths:
       tags:
       - content_blocks
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3396,8 +2766,6 @@ paths:
               $ref: '#/components/schemas/ConvertMultipartRequest'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -3462,8 +2830,6 @@ paths:
       tags:
       - domain
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3521,8 +2887,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedDomain'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3583,8 +2947,6 @@ paths:
       tags:
       - folders
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -3632,8 +2994,6 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -3678,8 +3038,6 @@ paths:
         required: true
       tags:
       - folders
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -3688,18 +3046,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FolderSharing'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_folder_sharing_permission
@@ -3736,8 +3082,6 @@ paths:
               items:
                 $ref: '#/components/schemas/FolderSharing'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -3752,18 +3096,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -3795,26 +3127,12 @@ paths:
         required: true
       tags:
       - folders
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FolderSharing'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -3856,8 +3174,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateFolderSharing'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -3870,18 +3186,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -3912,8 +3216,6 @@ paths:
         required: true
       tags:
       - folders
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -3922,18 +3224,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -3973,8 +3263,6 @@ paths:
               $ref: '#/components/schemas/Folder'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -4027,8 +3315,6 @@ paths:
       tags:
       - folders
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -4076,26 +3362,12 @@ paths:
         required: true
       tags:
       - folders
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/FolderCount'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/folders/sharing_status/:
     get:
@@ -4109,26 +3381,12 @@ paths:
         required: true
       tags:
       - folders
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SharingInfoFolder'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/history/:
     get:
@@ -4180,8 +3438,6 @@ paths:
       tags:
       - history
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -4221,8 +3477,6 @@ paths:
         required: true
       tags:
       - history
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4250,18 +3504,6 @@ paths:
               schema:
                 type: string
                 format: binary
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -4301,8 +3543,6 @@ paths:
               $ref: '#/components/schemas/MergeHistory'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -4355,8 +3595,6 @@ paths:
       tags:
       - history
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -4404,8 +3642,6 @@ paths:
               $ref: '#/components/schemas/ExportMergeHistory'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -4452,8 +3688,6 @@ paths:
         required: true
       tags:
       - history
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4481,18 +3715,6 @@ paths:
               schema:
                 type: string
                 format: binary
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -4547,8 +3769,6 @@ paths:
           - zoho_crm
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4557,18 +3777,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DeliveryAccount'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: add_delivery_account
@@ -4594,8 +3802,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DeliveryAccount'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -4608,18 +3814,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/linked_accounts/{integrator_type}/invoke/:
     get:
@@ -4647,23 +3841,9 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '302':
           description: No response body
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
         '404':
           content:
             application/json:
@@ -4701,8 +3881,6 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateDeliveryAccount'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4715,18 +3893,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -4752,8 +3918,6 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -4762,18 +3926,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -4800,8 +3952,6 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4880,26 +4030,12 @@ paths:
           - zoho_crm
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedAccountDeliveryList'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/linked_accounts/{id}/delivery_emails/:
     get:
@@ -4920,8 +4056,6 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4937,18 +4071,6 @@ paths:
                   - abcd@gmail.com
                   summary: Response Example
           description: An array of emails
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
         '404':
           content:
             application/json:
@@ -4974,8 +4096,6 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -4984,18 +4104,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/DocuSignFolder'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -5022,8 +4130,6 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5086,8 +4192,6 @@ paths:
             schema:
               $ref: '#/components/schemas/SendEmailAccountAuthorizationOTP'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -5096,18 +4200,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -5134,23 +4226,9 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '302':
           description: No response body
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
         '404':
           content:
             application/json:
@@ -5176,8 +4254,6 @@ paths:
         required: true
       tags:
       - linked_accounts
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5190,18 +4266,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -5240,8 +4304,6 @@ paths:
             schema:
               $ref: '#/components/schemas/VerifyEmailAccountOTP'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -5250,18 +4312,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -5294,8 +4344,6 @@ paths:
             schema:
               $ref: '#/components/schemas/SendTestSmtpMail'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           description: No response body
@@ -5304,18 +4352,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/merge_history/:
     get:
@@ -5365,8 +4401,6 @@ paths:
       tags:
       - merge_history
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -5406,8 +4440,6 @@ paths:
         required: true
       tags:
       - merge_history
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5436,18 +4468,6 @@ paths:
                 type: string
                 format: binary
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
         '404':
           content:
             application/json:
@@ -5471,8 +4491,6 @@ paths:
           type: string
       tags:
       - permissions
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5509,18 +4527,6 @@ paths:
                     - read
                   summary: Response Example
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/api/v2/permissions/folder/:
     get:
       operationId: get_folder_permissions
@@ -5538,8 +4544,6 @@ paths:
           type: string
       tags:
       - permissions
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5563,18 +4567,6 @@ paths:
                   '90':
                   - write
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/api/v2/permissions/global/:
     get:
       operationId: get_global_permissions
@@ -5588,26 +4580,12 @@ paths:
         required: true
       tags:
       - permissions
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GlobalPermission'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/permissions/template/:
     get:
@@ -5626,8 +4604,6 @@ paths:
           type: string
       tags:
       - permissions
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5651,18 +4627,6 @@ paths:
                   '90':
                   - write
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/api/v2/personalization/:
     get:
       operationId: get_user_personalization
@@ -5675,8 +4639,6 @@ paths:
         required: true
       tags:
       - personalization
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -5685,18 +4647,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UserPersonalization'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: update_user_personalization
@@ -5720,8 +4670,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/UserPersonalization'
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -5839,8 +4787,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -5880,8 +4826,6 @@ paths:
               $ref: '#/components/schemas/NewTemplate'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -5934,8 +4878,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -5993,8 +4935,6 @@ paths:
               $ref: '#/components/schemas/Template'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -6051,8 +4991,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateNewTemplate'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -6110,8 +5048,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -6172,8 +5108,6 @@ paths:
               $ref: '#/components/schemas/CopyTemplate'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -6225,26 +5159,12 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeliveryCount'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -6272,8 +5192,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -6332,8 +5250,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedEditorVersion'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -6420,8 +5336,6 @@ paths:
               type: object
               additionalProperties: {}
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -6474,8 +5388,6 @@ paths:
         required: true
       tags:
       - generate
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -6483,18 +5395,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -6527,8 +5427,6 @@ paths:
             schema:
               $ref: '#/components/schemas/UploadTemplateImage'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           description: No response body
@@ -6543,18 +5441,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -6593,8 +5479,6 @@ paths:
             schema:
               $ref: '#/components/schemas/MigrateToNativeSyntaxRequest'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -6629,8 +5513,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -6685,8 +5567,6 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -6733,8 +5613,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -6787,8 +5665,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -6836,26 +5712,12 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TemplateSchemaDetail'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -6899,8 +5761,6 @@ paths:
             schema:
               type: object
               additionalProperties: {}
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -6913,18 +5773,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -6952,8 +5800,6 @@ paths:
       tags:
       - generate
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7030,8 +5876,6 @@ paths:
       tags:
       - template_delivery
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7084,8 +5928,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -7144,8 +5986,6 @@ paths:
       tags:
       - template_delivery
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7208,8 +6048,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PolymorphicDelivery'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7267,8 +6105,6 @@ paths:
       tags:
       - template_delivery
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -7329,8 +6165,6 @@ paths:
               $ref: '#/components/schemas/EmailDeliveryAttachment'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7401,8 +6235,6 @@ paths:
       tags:
       - template_delivery
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7461,8 +6293,6 @@ paths:
       tags:
       - template_delivery
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -7517,8 +6347,6 @@ paths:
       tags:
       - template_delivery
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7594,8 +6422,6 @@ paths:
       tags:
       - generate_bulk
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7644,8 +6470,6 @@ paths:
       tags:
       - generate_bulk
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7711,8 +6535,6 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkGen'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7773,8 +6595,6 @@ paths:
       tags:
       - generate_bulk
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7840,8 +6660,6 @@ paths:
               $ref: '#/components/schemas/BulkGenEdit'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -7904,8 +6722,6 @@ paths:
       tags:
       - generate_bulk
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -7978,8 +6794,6 @@ paths:
               $ref: '#/components/schemas/BulkGenEdit'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -8040,8 +6854,6 @@ paths:
               $ref: '#/components/schemas/BulkGenUpload'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -8101,8 +6913,6 @@ paths:
       tags:
       - generate
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -8143,8 +6953,6 @@ paths:
       tags:
       - generate
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -8202,8 +7010,6 @@ paths:
       tags:
       - generate
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -8250,8 +7056,6 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -8260,18 +7064,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TemplateSharing'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_template_sharing_permission
@@ -8308,8 +7100,6 @@ paths:
               items:
                 $ref: '#/components/schemas/TemplateSharing'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -8324,18 +7114,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -8367,26 +7145,12 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TemplateSharing'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -8428,8 +7192,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedUpdateTemplateSharing'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -8442,18 +7204,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -8484,8 +7234,6 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -8494,18 +7242,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -8586,8 +7322,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -8629,26 +7363,12 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/TemplateCount'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/templates/move/:
     post:
@@ -8676,8 +7396,6 @@ paths:
               $ref: '#/components/schemas/MoveTemplate'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '207':
@@ -8716,26 +7434,12 @@ paths:
         required: true
       tags:
       - templates
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SharingInfoTemplate'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/api/v2/templates/trash/:
     get:
@@ -8757,8 +7461,6 @@ paths:
       tags:
       - templates
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -8784,8 +7486,6 @@ paths:
       operationId: list_banner_notifications
       tags:
       - general
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -8794,18 +7494,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/BannerNotification'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/envelopes/:
     get:
@@ -8855,8 +7543,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -8899,8 +7585,6 @@ paths:
               $ref: '#/components/schemas/CreateEnvelope'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -8962,8 +7646,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedEnvelopeDocumentsUpdate'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9033,8 +7715,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9085,8 +7765,6 @@ paths:
               $ref: '#/components/schemas/CreateEnvelopeRecipient'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '201':
@@ -9154,8 +7832,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUpdateEnvelopeRecipient'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9211,8 +7887,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -9272,8 +7946,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedEnvelopeUpdate'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9325,8 +7997,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -9387,8 +8057,6 @@ paths:
               $ref: '#/components/schemas/EnvelopeVoid'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -9437,8 +8105,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9490,8 +8156,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9551,8 +8215,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9623,8 +8285,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9684,8 +8344,6 @@ paths:
               $ref: '#/components/schemas/SendEnvelopeViaEmail'
         required: true
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -9734,8 +8392,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9788,8 +8444,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -9843,8 +8497,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9891,8 +8543,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -9956,8 +8606,6 @@ paths:
             schema:
               $ref: '#/components/schemas/EnvelopeUpdate'
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -10006,8 +8654,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '204':
@@ -10056,8 +8702,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -10104,8 +8748,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -10138,8 +8780,6 @@ paths:
       tags:
       - esign
       security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
       - tokenAuth: []
       responses:
         '200':
@@ -10173,26 +8813,12 @@ paths:
         required: true
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifiedEmailDNSAccounts'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/general/get/:
     get:
@@ -10207,26 +8833,12 @@ paths:
         required: true
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ESignSettings'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/general/update/:
     patch:
@@ -10252,8 +8864,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedESignSettings'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10266,18 +8876,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/general/update-email-account/:
     patch:
@@ -10303,8 +8901,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedESignEmailAccount'
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -10313,18 +8909,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/webhooks/:
     get:
@@ -10357,26 +8941,12 @@ paths:
           type: string
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedESignWebhookList'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
     post:
       operationId: create_esign_webhook
@@ -10402,8 +8972,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ESignWebhook'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '201':
           content:
@@ -10416,18 +8984,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/webhooks/{id}/:
     patch:
@@ -10458,8 +9014,6 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/PatchedESignWebhook'
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10472,18 +9026,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -10508,8 +9050,6 @@ paths:
         required: true
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '204':
           description: No response body
@@ -10518,18 +9058,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -10599,26 +9127,12 @@ paths:
         required: true
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedESignWebhookEventLogList'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/webhooks/{webhook_id}/events/{id}/retry/:
     post:
@@ -10643,8 +9157,6 @@ paths:
         required: true
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10657,18 +9169,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -10689,26 +9189,12 @@ paths:
         required: true
       tags:
       - esign-settings
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenerateHMACSecretResponse'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /dashboard/esign/global-settings/webhooks/send-test-event/:
     post:
@@ -10735,8 +9221,6 @@ paths:
             schema:
               $ref: '#/components/schemas/TestWebhookPayload'
         required: true
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10750,25 +9234,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ValidationError'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/meta/:
     get:
       operationId: get_app_meta
       tags:
       - general
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10776,25 +9246,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Meta'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/plans/:
     get:
       operationId: list_subscription_plans
       tags:
       - general
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10804,25 +9260,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Plan'
           description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/tz/:
     get:
       operationId: list_timezones
       tags:
       - general
-      security:
-      - SessionAuthentication: []
       responses:
         '200':
           content:
@@ -10831,18 +9273,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Timezone'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
 components:
   schemas:
@@ -16575,15 +15005,6 @@ components:
       - signers
       - title
   securitySchemes:
-    OAuthAuthentication:
-      type: http
-      scheme: bearer
-      description: OAuth2 Bearer Token Authentication
-    SessionAuthentication:
-      type: apiKey
-      in: cookie
-      name: sessionid
-      description: browser based login takes care of this
     tokenAuth:
       type: apiKey
       in: header
