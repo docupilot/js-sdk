@@ -2,8 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { PatchedSAMLProviderUpdate } from '../models/PatchedSAMLProviderUpdate';
-import type { SAMLProvider } from '../models/SAMLProvider';
 import type { SAMLProviderCreate } from '../models/SAMLProviderCreate';
+import type { SAMLProviderList } from '../models/SAMLProviderList';
+import type { SAMLProviderRetrieve } from '../models/SAMLProviderRetrieve';
 import type { SAMLProviderUpdate } from '../models/SAMLProviderUpdate';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -15,7 +16,7 @@ export class SamlService {
 
     /**
      * Get list of SAML providers
-     * @returns SAMLProvider
+     * @returns SAMLProviderList
      * @throws ApiError
      */
     public static listSamlProviders({
@@ -25,7 +26,7 @@ export class SamlService {
          * Which field to use when ordering the results.
          */
         ordering?: string,
-    }): CancelablePromise<Array<SAMLProvider>> {
+    }): CancelablePromise<Array<SAMLProviderList>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/saml/',
@@ -50,6 +51,28 @@ export class SamlService {
             url: '/accounts/saml/',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Retrieve SAML provider
+     * @returns SAMLProviderRetrieve
+     * @throws ApiError
+     */
+    public static retrieveSamlProvider({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this social application.
+         */
+        id: number,
+    }): CancelablePromise<SAMLProviderRetrieve> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/saml/{id}/',
+            path: {
+                'id': id,
+            },
         });
     }
 
@@ -128,7 +151,7 @@ export class SamlService {
 
     /**
      * Toggle SAML provider active status
-     * @returns SAMLProvider
+     * @returns SAMLProviderRetrieve
      * @throws ApiError
      */
     public static toggleSamlProvider({
@@ -138,7 +161,7 @@ export class SamlService {
          * A unique integer value identifying this social application.
          */
         id: number,
-    }): CancelablePromise<SAMLProvider> {
+    }): CancelablePromise<SAMLProviderRetrieve> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/accounts/saml/{id}/toggle_active/',

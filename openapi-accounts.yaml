@@ -1283,7 +1283,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/SAMLProvider'
+                  $ref: '#/components/schemas/SAMLProviderList'
           description: ''
         '401':
           content:
@@ -1342,6 +1342,45 @@ paths:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/saml/{id}/:
+    get:
+      operationId: retrieve_saml_provider
+      summary: Retrieve SAML provider
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this social application.
+        required: true
+      tags:
+      - saml
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SAMLProviderRetrieve'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
     put:
       operationId: update_saml_provider
       summary: Update SAML provider
@@ -1515,7 +1554,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SAMLProvider'
+                $ref: '#/components/schemas/SAMLProviderRetrieve'
           description: ''
         '400':
           content:
@@ -2677,7 +2716,44 @@ components:
           items:
             $ref: '#/components/schemas/Workspace'
           readOnly: true
-    SAMLProvider:
+    SAMLProviderCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 40
+        type:
+          enum:
+          - microsoft
+          - okta
+          type: string
+      required:
+      - name
+      - type
+    SAMLProviderList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 40
+        type:
+          type: string
+          readOnly: true
+        is_setup_complete:
+          type: boolean
+          readOnly: true
+        active:
+          type: boolean
+      required:
+      - active
+      - id
+      - is_setup_complete
+      - name
+      - type
+    SAMLProviderRetrieve:
       type: object
       properties:
         id:
@@ -2714,20 +2790,6 @@ components:
       - entity_url
       - id
       - metadata_url
-      - name
-      - type
-    SAMLProviderCreate:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 40
-        type:
-          enum:
-          - microsoft
-          - okta
-          type: string
-      required:
       - name
       - type
     SAMLProviderUpdate:
