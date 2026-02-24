@@ -24,7 +24,7 @@ export type User = {
     theme?: 'light' | 'dark' | 'system';
     readonly is_mfa_enabled: boolean;
     readonly organization: UserOrganization;
-    readonly role: 'owner' | 'member';
+    readonly role: 'owner' | 'admin' | 'member';
     readonly workspaces: Array<Workspace>;
 };
 

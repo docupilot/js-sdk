@@ -10,6 +10,7 @@ export type { AcceptInvite } from './models/AcceptInvite';
 export type { Application } from './models/Application';
 export type { ChangeEmail } from './models/ChangeEmail';
 export type { ChangePassword } from './models/ChangePassword';
+export type { ChangeRole } from './models/ChangeRole';
 export type { CreateInvitation } from './models/CreateInvitation';
 export type { DemoGraphic } from './models/DemoGraphic';
 export type { Domain } from './models/Domain';
