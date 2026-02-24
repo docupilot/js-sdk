@@ -9,7 +9,7 @@ export type TeamMember = {
     first_name?: string;
     last_name?: string;
     email: string;
-    role?: 'owner' | 'member';
+    role?: 'owner' | 'admin' | 'member';
     /**
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
