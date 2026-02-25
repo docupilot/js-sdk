@@ -5,10 +5,8 @@ import { ApiRequestOptions as AppApiRequestOptions } from './api/core/ApiRequest
 import { ApiRequestOptions as AccountsApiRequestOptions } from './accounts/core/ApiRequestOptions';
 import { AccountServices, AppServices } from './services';
 
-const DEFAULT_APP_HOST =
-  process.env.DOCUPILOT_HOST ?? 'https://api-us1.docupilot.app';
-const DEFAULT_ACCOUNTS_HOST =
-  process.env.DOCUPILOT_ACCOUNTS_HOST ?? 'https://accounts.docupilot.app';
+const DEFAULT_APP_HOST = 'https://api-us1.docupilot.app';
+const DEFAULT_ACCOUNTS_HOST = 'https://accounts.docupilot.app';
 
 export class APIClient {
   readonly appServices = AppServices;
