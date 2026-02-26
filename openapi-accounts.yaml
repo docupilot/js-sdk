@@ -963,7 +963,6 @@ paths:
               $ref: '#/components/schemas/OrganizationDelete'
         required: true
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '204':
@@ -992,7 +991,6 @@ paths:
       tags:
       - organization
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1047,7 +1045,6 @@ paths:
       tags:
       - organization
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1083,7 +1080,6 @@ paths:
       tags:
       - organization
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1121,7 +1117,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedOrganization'
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1166,7 +1161,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedOrganizationSubdomainChange'
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1596,12 +1590,12 @@ paths:
         schema:
           type: string
           enum:
+          - admin
           - member
           - owner
       tags:
       - team
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1624,6 +1618,63 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/team/{id}/change_role/:
+    put:
+      operationId: change_role_of_team_member
+      summary: Change role of team member at organization level.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - team
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeRole'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangeRole'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangeRole'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /accounts/team/{id}/toggle_user_status/:
     patch:
       operationId: toggle_user_status
@@ -1637,7 +1688,6 @@ paths:
       tags:
       - team
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '200':
@@ -1689,7 +1739,6 @@ paths:
               $ref: '#/components/schemas/TransferOwnership'
         required: true
       security:
-      - OAuthAuthentication: []
       - SessionAuthentication: []
       responses:
         '204':
@@ -2188,6 +2237,16 @@ components:
       required:
       - current_password
       - new_password
+    ChangeRole:
+      type: object
+      properties:
+        role:
+          enum:
+          - admin
+          - member
+          type: string
+      required:
+      - role
     CreateInvitation:
       type: object
       properties:
@@ -2708,6 +2767,7 @@ components:
         role:
           enum:
           - owner
+          - admin
           - member
           type: string
           readOnly: true
@@ -2869,6 +2929,7 @@ components:
         role:
           enum:
           - owner
+          - admin
           - member
           type: string
         is_active:
@@ -3109,6 +3170,7 @@ components:
         role:
           enum:
           - owner
+          - admin
           - member
           type: string
           readOnly: true
