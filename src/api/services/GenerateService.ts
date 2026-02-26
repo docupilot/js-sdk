@@ -137,7 +137,7 @@ export class GenerateService {
      * @returns binary
      * @throws ApiError
      */
-    public static generateSampleCsv({
+    public static sampleCsv({
         templateId,
         format,
     }: {
@@ -149,7 +149,7 @@ export class GenerateService {
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/generate_sample_csv/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/sample_csv/',
             path: {
                 'template_id': templateId,
             },

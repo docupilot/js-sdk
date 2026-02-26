@@ -8012,9 +8012,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/api/v2/templates/{template_id}/generate/bulk/generate_sample_csv/:
+  /dashboard/api/v2/templates/{template_id}/generate/bulk/sample_csv/:
     post:
-      operationId: generate_sample_csv
+      operationId: sample_csv
       summary: Generates a sample csv for the template using ai.
       parameters:
       - in: header
