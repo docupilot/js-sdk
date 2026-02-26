@@ -133,6 +133,33 @@ export class GenerateService {
     }
 
     /**
+     * Generates a sample csv for the template using ai.
+     * @returns binary
+     * @throws ApiError
+     */
+    public static sampleCsv({
+        templateId,
+        format,
+    }: {
+        /**
+         * Template id
+         */
+        templateId: number,
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/sample_csv/',
+            path: {
+                'template_id': templateId,
+            },
+            query: {
+                'format': format,
+            },
+        });
+    }
+
+    /**
      * Get document create link path
      * URL to create document will be {host}/{path}
      * @returns DocumentMergeLink

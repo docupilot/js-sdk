@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ChangeRole } from '../models/ChangeRole';
 import type { TeamMember } from '../models/TeamMember';
 import type { TransferOwnership } from '../models/TransferOwnership';
 
@@ -24,7 +25,7 @@ export class TeamService {
          * Which field to use when ordering the results.
          */
         ordering?: string,
-        role?: 'member' | 'owner',
+        role?: 'admin' | 'member' | 'owner',
     }): CancelablePromise<Array<TeamMember>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -33,6 +34,29 @@ export class TeamService {
                 'ordering': ordering,
                 'role': role,
             },
+        });
+    }
+
+    /**
+     * Change role of team member at organization level.
+     * @returns TeamMember
+     * @throws ApiError
+     */
+    public static changeRoleOfTeamMember({
+        id,
+        requestBody,
+    }: {
+        id: number,
+        requestBody: OmitReadonly<ChangeRole>,
+    }): CancelablePromise<TeamMember> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/accounts/team/{id}/change_role/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
