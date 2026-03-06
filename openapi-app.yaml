@@ -1555,48 +1555,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/accounts/v2/workspaces/csm_details/:
-    get:
-      operationId: get_csm_details
-      description: Returns csm details for given workspace
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - workspaces
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CSMDetails'
-              examples:
-                ResponseExample:
-                  value:
-                  - name: test1
-                    phone_number: '12345678'
-                  - name: test2
-                    phone_number: '87654321'
-                  summary: Response Example
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/workspaces/current/:
     get:
       operationId: get_current_workspace
@@ -11388,19 +11346,6 @@ components:
           type: integer
       required:
       - max_test_rows
-      description: ''
-    CSMDetails:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        phone_number:
-          type: string
-          maxLength: 20
-      required:
-      - name
-      - phone_number
       description: ''
     ChangeRole:
       type: object

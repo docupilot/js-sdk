@@ -944,6 +944,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/organization/csm_details/:
+    get:
+      operationId: get_csm_details
+      description: Returns csm details for Organization if available
+      tags:
+      - organization
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CSMDetails'
+              examples:
+                ResponseExample:
+                  value:
+                    name: test1
+                    phone_number: '12345678'
+                  summary: Response Example
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/organization/delete_organization/:
     post:
       operationId: delete_organization
@@ -1573,6 +1606,141 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/scim/config/:
+    get:
+      operationId: get_scim_config
+      tags:
+      - scim
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimConfig'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/scim/keys/:
+    post:
+      operationId: create_scim_key
+      tags:
+      - scim
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimApiKeyCreateResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /accounts/scim/keys/{key_id}/:
+    delete:
+      operationId: delete_scim_key
+      parameters:
+      - in: path
+        name: key_id
+        schema:
+          type: string
+          pattern: ^[^/]+$
+        required: true
+      tags:
+      - scim
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /accounts/scim/toggle_provisioning/:
+    post:
+      operationId: toggle_scim_provisioning
+      tags:
+      - scim
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScimToggleResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
           description: ''
   /accounts/team/:
     get:
@@ -2209,6 +2377,18 @@ components:
       required:
       - hosted_url
       - id
+    CSMDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+      required:
+      - name
+      - phone_number
     ChangeEmail:
       type: object
       properties:
@@ -2460,11 +2640,18 @@ components:
           - us1
           type: string
           readOnly: true
+        provisioning_mode:
+          enum:
+          - manual
+          - scim
+          type: string
+          readOnly: true
       required:
       - created_time
       - enforce_mfa
       - name
       - password_based_login
+      - provisioning_mode
       - region
       - subdomain
       - updated_time
@@ -2563,6 +2750,12 @@ components:
         region:
           enum:
           - us1
+          type: string
+          readOnly: true
+        provisioning_mode:
+          enum:
+          - manual
+          - scim
           type: string
           readOnly: true
     PatchedOrganizationSubdomainChange:
@@ -2865,6 +3058,68 @@ components:
       required:
       - metadata_url
       - name
+    ScimApiKey:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        is_active:
+          type: boolean
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        last_used_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - created_at
+      - id
+      - is_active
+      - last_used_at
+    ScimApiKeyCreateResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        key:
+          $ref: '#/components/schemas/ScimApiKey'
+      required:
+      - key
+      - token
+    ScimConfig:
+      type: object
+      properties:
+        provisioning_mode:
+          type: string
+          readOnly: true
+        keys:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScimApiKey'
+          readOnly: true
+        scim_base_url:
+          type: string
+          readOnly: true
+      required:
+      - keys
+      - provisioning_mode
+      - scim_base_url
+    ScimToggleResponse:
+      type: object
+      properties:
+        provisioning_mode:
+          type: string
+        scim_config:
+          $ref: '#/components/schemas/ScimConfig'
+      required:
+      - provisioning_mode
+      - scim_config
     SendAuthorizationOTP:
       type: object
       properties:

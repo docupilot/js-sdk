@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CSMDetails } from '../models/CSMDetails';
 import type { Organization } from '../models/Organization';
 import type { OrganizationDelete } from '../models/OrganizationDelete';
 import type { OrganizationMetaResponse } from '../models/OrganizationMetaResponse';
@@ -14,6 +15,18 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class OrganizationService {
+
+    /**
+     * Returns csm details for Organization if available
+     * @returns CSMDetails
+     * @throws ApiError
+     */
+    public static getCsmDetails(): CancelablePromise<CSMDetails> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/accounts/organization/csm_details/',
+        });
+    }
 
     /**
      * Delete a Organization and other related data permanently
