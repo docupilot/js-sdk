@@ -41,7 +41,6 @@ export type { CopyContentBlock } from './models/CopyContentBlock';
 export type { CopyTemplate } from './models/CopyTemplate';
 export type { CreateEnvelope } from './models/CreateEnvelope';
 export type { CreateEnvelopeRecipient } from './models/CreateEnvelopeRecipient';
-export type { CSMDetails } from './models/CSMDetails';
 export type { DeleteCurrentWorkspace } from './models/DeleteCurrentWorkspace';
 export type { DeliveryAccount } from './models/DeliveryAccount';
 export type { DeliveryCount } from './models/DeliveryCount';
