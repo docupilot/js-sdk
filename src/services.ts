@@ -40,6 +40,7 @@ export const AccountServices = {
   organization: _Accounts.OrganizationService,
   organizationOnboarding: _Accounts.OrganizationOnboardingService,
   saml: _Accounts.SamlService,
+  scim: _Accounts.ScimService,
   team: _Accounts.TeamService,
   user: _Accounts.UserService,
 };
