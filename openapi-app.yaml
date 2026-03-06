@@ -1555,48 +1555,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/accounts/v2/workspaces/csm_details/:
-    get:
-      operationId: get_csm_details
-      description: Returns csm details for given workspace
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - workspaces
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CSMDetails'
-              examples:
-                ResponseExample:
-                  value:
-                  - name: test1
-                    phone_number: '12345678'
-                  - name: test2
-                    phone_number: '87654321'
-                  summary: Response Example
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/workspaces/current/:
     get:
       operationId: get_current_workspace
@@ -4535,6 +4493,7 @@ paths:
           - dropbox
           - email
           - eversign
+          - google_cloud_storage
           - google_drive
           - hellosign
           - one_drive
@@ -4868,6 +4827,7 @@ paths:
           - dropbox
           - email
           - eversign
+          - google_cloud_storage
           - google_drive
           - hellosign
           - one_drive
@@ -5767,6 +5727,7 @@ paths:
             - dropbox
             - email
             - eversign
+            - google_cloud_storage
             - google_drive
             - hellosign
             - one_drive
@@ -7016,6 +6977,7 @@ paths:
           - dropbox
           - email
           - eversign
+          - google_cloud_storage
           - google_drive
           - hellosign
           - one_drive
@@ -8613,6 +8575,7 @@ paths:
             - dropbox
             - email
             - eversign
+            - google_cloud_storage
             - google_drive
             - hellosign
             - one_drive
@@ -11124,6 +11087,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -11218,6 +11182,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -11389,19 +11354,6 @@ components:
       required:
       - max_test_rows
       description: ''
-    CSMDetails:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        phone_number:
-          type: string
-          maxLength: 20
-      required:
-      - name
-      - phone_number
-      description: ''
     ChangeRole:
       type: object
       properties:
@@ -11531,6 +11483,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         status:
           enum:
@@ -11863,6 +11816,7 @@ components:
           - email
           - sftp
           - azure_storage
+          - google_cloud_storage
           type: string
         credentials:
           type: object
@@ -12004,6 +11958,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -12250,6 +12205,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -12502,6 +12458,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -13112,6 +13069,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -13396,6 +13354,71 @@ components:
       - workspace:delete
       - workspace:update
       description: ''
+    GoogleCloudStorageDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - signature
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          - google_cloud_storage
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        bucket_name:
+          type: string
+          description: Google Cloud Storage Bucket Name
+        folder:
+          type: string
+          description: Allowed upload folder path
+      required:
+      - account
+      - bucket_name
+      - id
+      - name
     GoogleDriveDelivery:
       type: object
       description: ''
@@ -13432,6 +13455,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -13525,6 +13549,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -13976,6 +14001,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -14721,6 +14747,7 @@ components:
       - $ref: '#/components/schemas/OneDriveDelivery'
       - $ref: '#/components/schemas/SignNowDelivery'
       - $ref: '#/components/schemas/GoogleDriveDelivery'
+      - $ref: '#/components/schemas/GoogleCloudStorageDelivery'
       - $ref: '#/components/schemas/S3Delivery'
       - $ref: '#/components/schemas/HelloSignDelivery'
       - $ref: '#/components/schemas/DocuSignDelivery'
@@ -14740,6 +14767,7 @@ components:
           one_drive: '#/components/schemas/OneDriveDelivery'
           sign_now: '#/components/schemas/SignNowDelivery'
           google_drive: '#/components/schemas/GoogleDriveDelivery'
+          google_cloud_storage: '#/components/schemas/GoogleCloudStorageDelivery'
           aws_s3: '#/components/schemas/S3Delivery'
           hellosign: '#/components/schemas/HelloSignDelivery'
           docu_sign: '#/components/schemas/DocuSignDelivery'
@@ -14827,6 +14855,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -14973,6 +15002,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -15077,6 +15107,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -15171,6 +15202,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -15277,6 +15309,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -15470,6 +15503,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
           readOnly: true
       required:
@@ -15835,6 +15869,7 @@ components:
           - email
           - sftp
           - azure_storage
+          - google_cloud_storage
           type: string
           readOnly: true
         credentials:
@@ -16172,6 +16207,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string
@@ -16590,6 +16626,7 @@ components:
           - yousign
           - email
           - sftp
+          - google_cloud_storage
           type: string
         success_callback_url:
           type: string

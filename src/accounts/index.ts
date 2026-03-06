@@ -12,6 +12,7 @@ export type { ChangeEmail } from './models/ChangeEmail';
 export type { ChangePassword } from './models/ChangePassword';
 export type { ChangeRole } from './models/ChangeRole';
 export type { CreateInvitation } from './models/CreateInvitation';
+export type { CSMDetails } from './models/CSMDetails';
 export type { DemoGraphic } from './models/DemoGraphic';
 export type { Domain } from './models/Domain';
 export type { ExchangeSessionResponse } from './models/ExchangeSessionResponse';
