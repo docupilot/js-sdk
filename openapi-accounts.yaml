@@ -944,6 +944,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /accounts/organization/csm_details/:
+    get:
+      operationId: get_csm_details
+      description: Returns csm details for Organization if available
+      tags:
+      - organization
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CSMDetails'
+              examples:
+                ResponseExample:
+                  value:
+                    name: test1
+                    phone_number: '12345678'
+                  summary: Response Example
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /accounts/organization/delete_organization/:
     post:
       operationId: delete_organization
@@ -2209,6 +2242,18 @@ components:
       required:
       - hosted_url
       - id
+    CSMDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+      required:
+      - name
+      - phone_number
     ChangeEmail:
       type: object
       properties:
