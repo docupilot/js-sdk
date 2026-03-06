@@ -2701,10 +2701,10 @@ components:
     OrganizationMetaResponse:
       type: object
       properties:
-        okta_enabled:
+        scim_enabled:
           type: boolean
       required:
-      - okta_enabled
+      - scim_enabled
     OrganizationSubdomainChangeResponse:
       type: object
       properties:

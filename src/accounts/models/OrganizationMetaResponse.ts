@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type OrganizationMetaResponse = {
-    okta_enabled: boolean;
+    scim_enabled: boolean;
 };
 
