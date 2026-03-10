@@ -1555,6 +1555,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/accounts/v2/workspaces/csm_details/:
+    get:
+      operationId: get_csm_details
+      description: Returns csm details for given workspace
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - workspaces
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CSMDetails'
+              examples:
+                ResponseExample:
+                  value:
+                  - name: test1
+                    phone_number: '12345678'
+                  - name: test2
+                    phone_number: '87654321'
+                  summary: Response Example
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/accounts/v2/workspaces/current/:
     get:
       operationId: get_current_workspace
@@ -3316,83 +3358,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ContentBlockDetailByKeyResponse'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/api/v2/convert/:
-    post:
-      operationId: convert-files
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: query
-        name: response_type
-        schema:
-          type: string
-          enum:
-          - stream
-          - url
-        description: If stream, returns the converted file as a downloadable binary
-          (PDF / PNG / ZIP). If url, returns JSON with file_url and file_name.
-      tags:
-      - convert
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ConvertJsonRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ConvertMultipartRequest'
-        required: true
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  file_url:
-                    type: string
-                  file_name:
-                    type: string
-                description: Returned when download=false
-            application/pdf:
-              schema:
-                type: string
-                format: binary
-            image/png:
-              schema:
-                type: string
-                format: binary
-            application/zip:
-              schema:
-                type: string
-                format: binary
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
@@ -6382,13 +6347,12 @@ paths:
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '201':
+        '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TemplateGenerateResponse'
-          description: file_url is included when download=true or no delivery configuration
-            exists;otherwise, only file_name is returned.
+                $ref: '#/components/schemas/Template'
+          description: ''
         '400':
           content:
             application/json:
@@ -7967,79 +7931,6 @@ paths:
         '404':
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/api/v2/templates/{template_id}/generate/bulk/sample_csv/:
-    post:
-      operationId: sample_csv
-      summary: Generates a sample csv for the template using ai.
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - octet-stream
-      - in: path
-        name: template_id
-        schema:
-          type: integer
-          format: int32
-        description: Template id
-        required: true
-      tags:
-      - generate
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            text/csv:
-              schema:
-                type: string
-                format: binary
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-            application/octet-stream:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-            application/octet-stream:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -10191,6 +10082,42 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/esign/global-settings/general/:
+    get:
+      operationId: get_signature_general_settings
+      summary: Get signature general settings
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-settings
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ESignSettings'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/esign/global-settings/general/email-accounts/:
     get:
       operationId: get_email_accounts
@@ -10212,40 +10139,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifiedEmailDNSAccounts'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/esign/global-settings/general/get/:
-    get:
-      operationId: get_signature_general_settings
-      summary: Get signature general settings
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - esign-settings
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ESignSettings'
           description: ''
         '401':
           content:
@@ -11347,6 +11240,19 @@ components:
       required:
       - max_test_rows
       description: ''
+    CSMDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        phone_number:
+          type: string
+          maxLength: 20
+      required:
+      - name
+      - phone_number
+      description: ''
     ChangeRole:
       type: object
       properties:
@@ -11652,55 +11558,6 @@ components:
       required:
       - id
       - user
-    ConvertFileUrl:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-      required:
-      - type
-      - url
-      description: ''
-    ConvertJsonRequest:
-      type: object
-      properties:
-        output_file_name:
-          type: string
-        output_type:
-          enum:
-          - pdf
-          - png
-          - png.zip
-          type: string
-        file:
-          $ref: '#/components/schemas/ConvertFileUrl'
-      required:
-      - file
-      - output_file_name
-      - output_type
-      description: ''
-    ConvertMultipartRequest:
-      type: object
-      properties:
-        output_file_name:
-          type: string
-        output_type:
-          enum:
-          - pdf
-          - png
-          - png.zip
-          type: string
-        file:
-          type: string
-          format: binary
-      required:
-      - file
-      - output_file_name
-      - output_type
-      description: ''
     CopyContentBlock:
       type: object
       properties:
@@ -12067,14 +11924,6 @@ components:
         is_data_expired:
           type: boolean
           readOnly: true
-        action:
-          enum:
-          - 0
-          - 1
-          - 2
-          type: integer
-          minimum: 0
-          maximum: 32767
         is_document_expired:
           type: boolean
           readOnly: true
@@ -15454,18 +15303,6 @@ components:
       - id
       - image_path
       - title
-      description: ''
-    TemplateGenerateResponse:
-      type: object
-      properties:
-        file_url:
-          type: string
-          format: uri
-        file_name:
-          type: string
-      required:
-      - file_name
-      - file_url
       description: ''
     TemplateInfo:
       type: object

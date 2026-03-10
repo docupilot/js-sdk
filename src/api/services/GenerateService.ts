@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
-import type { TemplateGenerateResponse } from '../models/TemplateGenerateResponse';
+import type { Template } from '../models/Template';
 import type { TemplateTestResponse } from '../models/TemplateTestResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -14,7 +14,7 @@ export class GenerateService {
 
     /**
      * Generate document from template
-     * @returns TemplateGenerateResponse file_url is included when download=true or no delivery configuration exists;otherwise, only file_name is returned.
+     * @returns Template
      * @throws ApiError
      */
     public static generateDocument({
@@ -37,7 +37,7 @@ export class GenerateService {
         includeUrl?: boolean,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         requestBody?: Record<string, any>,
-    }): CancelablePromise<TemplateGenerateResponse> {
+    }): CancelablePromise<Template> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/templates/{id}/generate/',
@@ -128,33 +128,6 @@ export class GenerateService {
             url: '/dashboard/api/v2/templates/{id}/test_data/',
             path: {
                 'id': id,
-            },
-        });
-    }
-
-    /**
-     * Generates a sample csv for the template using ai.
-     * @returns binary
-     * @throws ApiError
-     */
-    public static sampleCsv({
-        templateId,
-        format,
-    }: {
-        /**
-         * Template id
-         */
-        templateId: number,
-        format?: 'json' | 'octet-stream',
-    }): CancelablePromise<Blob> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/sample_csv/',
-            path: {
-                'template_id': templateId,
-            },
-            query: {
-                'format': format,
             },
         });
     }
