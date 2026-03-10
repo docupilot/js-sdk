@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ConvertFileUrl = {
-    url: string;
-    type: string;
+export type CSMDetails = {
+    name: string;
+    phone_number: string;
 };
 
