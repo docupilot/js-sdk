@@ -8840,7 +8840,7 @@ paths:
           description: ''
   /dashboard/esign/envelope-exports/:
     get:
-      operationId: get_created_envelope-export
+      operationId: get_created_envelope_export
       summary: Get created envelope export
       parameters:
       - in: header
@@ -8896,11 +8896,10 @@ paths:
           - completed
           - created
           - declined
+          - pending
           - voided
           - waiting_for_me
-          - waiting_for_others
         description: Status filter
-        required: true
       tags:
       - esign
       requestBody:
@@ -8949,7 +8948,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: string
+          type: integer
         required: true
       tags:
       - esign
@@ -8965,19 +8964,19 @@ paths:
           description: Download the exported envelopes as a ZIP file
         '401':
           content:
-            application/json:
+            application/zip:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
         '403':
           content:
-            application/json:
+            application/zip:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
-            application/json:
+            application/zip:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -12324,10 +12323,20 @@ components:
           items:
             type: integer
           writeOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        filters:
+          type: object
+          additionalProperties: {}
+          readOnly: true
         is_export_all:
           type: boolean
           writeOnly: true
       required:
+      - created_time
+      - filters
       - id
       - name
       - status

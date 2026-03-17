@@ -63,7 +63,7 @@ export class EsignService {
         /**
          * Status filter
          */
-        status: 'completed' | 'created' | 'declined' | 'voided' | 'waiting_for_me' | 'waiting_for_others',
+        status?: 'completed' | 'created' | 'declined' | 'pending' | 'voided' | 'waiting_for_me',
         requestBody?: OmitReadonly<DownloadEnvelope>,
     }): CancelablePromise<DownloadEnvelope> {
         return __request(OpenAPI, {
@@ -85,7 +85,7 @@ export class EsignService {
     public static downloadCreatedExportEnvelopes({
         id,
     }: {
-        id: string,
+        id: number,
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
