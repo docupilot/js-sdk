@@ -53,6 +53,7 @@ export type { DocuSignFolderOwner } from './models/DocuSignFolderOwner';
 export type { Domain } from './models/Domain';
 export type { DomainFailure } from './models/DomainFailure';
 export type { DomainVerify } from './models/DomainVerify';
+export type { DownloadEnvelope } from './models/DownloadEnvelope';
 export type { DropboxDelivery } from './models/DropboxDelivery';
 export type { DynamicImage } from './models/DynamicImage';
 export type { EditorVersion } from './models/EditorVersion';
@@ -112,6 +113,7 @@ export type { PaginatedAccountDeliveryList } from './models/PaginatedAccountDeli
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedContentBlockList } from './models/PaginatedContentBlockList';
 export type { PaginatedDocumentMergeHistoryList } from './models/PaginatedDocumentMergeHistoryList';
+export type { PaginatedDownloadEnvelopeList } from './models/PaginatedDownloadEnvelopeList';
 export type { PaginatedEnvelopeList } from './models/PaginatedEnvelopeList';
 export type { PaginatedEnvelopeRecipientList } from './models/PaginatedEnvelopeRecipientList';
 export type { PaginatedESignWebhookEventLogList } from './models/PaginatedESignWebhookEventLogList';
