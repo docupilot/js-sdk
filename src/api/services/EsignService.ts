@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { CreateEnvelope } from '../models/CreateEnvelope';
 import type { CreateEnvelopeRecipient } from '../models/CreateEnvelopeRecipient';
+import type { DownloadEnvelope } from '../models/DownloadEnvelope';
 import type { Envelope } from '../models/Envelope';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
@@ -12,6 +13,7 @@ import type { EnvelopeResponses } from '../models/EnvelopeResponses';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeUpdate } from '../models/EnvelopeUpdate';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
+import type { PaginatedDownloadEnvelopeList } from '../models/PaginatedDownloadEnvelopeList';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
 import type { PatchedEnvelopeDocumentsUpdate } from '../models/PatchedEnvelopeDocumentsUpdate';
@@ -26,6 +28,73 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class EsignService {
+
+    /**
+     * Get created envelope export
+     * @returns PaginatedDownloadEnvelopeList
+     * @throws ApiError
+     */
+    public static getCreatedEnvelopeExport({
+        page,
+    }: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+    }): CancelablePromise<PaginatedDownloadEnvelopeList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelope-exports/',
+            query: {
+                'page': page,
+            },
+        });
+    }
+
+    /**
+     * Create envelope export task
+     * @returns DownloadEnvelope
+     * @throws ApiError
+     */
+    public static createEnvelopeExportTask({
+        status,
+        requestBody,
+    }: {
+        /**
+         * Status filter
+         */
+        status: 'completed' | 'created' | 'declined' | 'voided' | 'waiting_for_me' | 'waiting_for_others',
+        requestBody?: OmitReadonly<DownloadEnvelope>,
+    }): CancelablePromise<DownloadEnvelope> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelope-exports/',
+            query: {
+                'status': status,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * download generated export envelopes if available
+     * @returns binary Download the exported envelopes as a ZIP file
+     * @throws ApiError
+     */
+    public static downloadCreatedExportEnvelopes({
+        id,
+    }: {
+        id: string,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelope-exports/{id}/download/',
+            path: {
+                'id': id,
+            },
+        });
+    }
 
     /**
      * Get list of envelopes
