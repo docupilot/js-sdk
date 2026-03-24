@@ -1020,7 +1020,7 @@ paths:
           description: ''
   /accounts/organization/details/:
     get:
-      operationId: organization_details_retrieve
+      operationId: get_organization
       tags:
       - organization
       security:
@@ -2625,7 +2625,7 @@ components:
           readOnly: true
         logo:
           type: string
-          format: binary
+          format: uri
           nullable: true
         password_based_login:
           type: boolean
