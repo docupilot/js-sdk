@@ -8,7 +8,7 @@ export type Organization = {
     readonly created_time: string;
     readonly updated_time: string;
     readonly enforce_mfa: boolean;
-    logo?: Blob | null;
+    logo?: string | null;
     /**
      * Whether password-based login is allowed for this organization
      */
