@@ -50,7 +50,7 @@ export class OrganizationService {
      * @returns Organization
      * @throws ApiError
      */
-    public static organizationDetailsRetrieve(): CancelablePromise<Organization> {
+    public static getOrganization(): CancelablePromise<Organization> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/accounts/organization/details/',
