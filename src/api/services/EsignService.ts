@@ -4,6 +4,7 @@
 import type { CreateEnvelope } from '../models/CreateEnvelope';
 import type { CreateEnvelopeRecipient } from '../models/CreateEnvelopeRecipient';
 import type { Envelope } from '../models/Envelope';
+import type { EnvelopeBulkDownload } from '../models/EnvelopeBulkDownload';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
@@ -12,6 +13,7 @@ import type { EnvelopeResponses } from '../models/EnvelopeResponses';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeUpdate } from '../models/EnvelopeUpdate';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
+import type { PaginatedEnvelopeBulkDownloadList } from '../models/PaginatedEnvelopeBulkDownloadList';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
 import type { PatchedEnvelopeDocumentsUpdate } from '../models/PatchedEnvelopeDocumentsUpdate';
@@ -26,6 +28,73 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class EsignService {
+
+    /**
+     * Get created envelope export
+     * @returns PaginatedEnvelopeBulkDownloadList
+     * @throws ApiError
+     */
+    public static getCreatedEnvelopeExport({
+        page,
+    }: {
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+    }): CancelablePromise<PaginatedEnvelopeBulkDownloadList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelope-exports/',
+            query: {
+                'page': page,
+            },
+        });
+    }
+
+    /**
+     * Create envelope export task
+     * @returns EnvelopeBulkDownload
+     * @throws ApiError
+     */
+    public static createEnvelopeExportTask({
+        status,
+        requestBody,
+    }: {
+        /**
+         * Status filter
+         */
+        status?: 'completed' | 'created' | 'declined' | 'pending' | 'voided' | 'waiting_for_me',
+        requestBody?: OmitReadonly<EnvelopeBulkDownload>,
+    }): CancelablePromise<EnvelopeBulkDownload> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelope-exports/',
+            query: {
+                'status': status,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * download generated export envelopes if available
+     * @returns binary Download the exported envelopes as a ZIP file
+     * @throws ApiError
+     */
+    public static downloadCreatedExportEnvelopes({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelope-exports/{id}/download/',
+            path: {
+                'id': id,
+            },
+        });
+    }
 
     /**
      * Get list of envelopes
@@ -292,6 +361,28 @@ export class EsignService {
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Copy an envelope
+     * @returns EnvelopeDetails
+     * @throws ApiError
+     */
+    public static copyEnvelope({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+    }): CancelablePromise<EnvelopeDetails> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelopes/{id}/copy/',
+            path: {
+                'id': id,
+            },
         });
     }
 

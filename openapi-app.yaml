@@ -8838,6 +8838,148 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/esign/envelope-exports/:
+    get:
+      operationId: get_created_envelope_export
+      summary: Get created envelope export
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEnvelopeBulkDownloadList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_envelope_export_task
+      summary: Create envelope export task
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - completed
+          - created
+          - declined
+          - pending
+          - voided
+          - waiting_for_me
+        description: Status filter
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeBulkDownload'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeBulkDownload'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/envelope-exports/{id}/download/:
+    get:
+      operationId: download_created_export_envelopes
+      summary: download generated export envelopes if available
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: Download the exported envelopes as a ZIP file
+        '401':
+          content:
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/esign/envelopes/:
     get:
       operationId: list_envelopes
@@ -9424,6 +9566,58 @@ paths:
       responses:
         '204':
           description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/copy/:
+    post:
+      operationId: copy_envelope
+      summary: Copy an envelope
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDetails'
+          description: ''
         '400':
           content:
             application/json:
@@ -12629,6 +12823,45 @@ components:
       - updated_by
       - voided_at
       description: ''
+    EnvelopeBulkDownload:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - pending
+          - success
+          - error
+          type: string
+          readOnly: true
+        envelope_ids:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        filters:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        is_export_all:
+          type: boolean
+          writeOnly: true
+      required:
+      - created_time
+      - filters
+      - id
+      - name
+      - status
     EnvelopeDetails:
       type: object
       properties:
@@ -14101,6 +14334,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ESignWebhook'
+    PaginatedEnvelopeBulkDownloadList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeBulkDownload'
     PaginatedEnvelopeList:
       type: object
       required:

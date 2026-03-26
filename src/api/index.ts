@@ -59,6 +59,7 @@ export type { EditorVersion } from './models/EditorVersion';
 export type { EmailDelivery } from './models/EmailDelivery';
 export type { EmailDeliveryAttachment } from './models/EmailDeliveryAttachment';
 export type { Envelope } from './models/Envelope';
+export type { EnvelopeBulkDownload } from './models/EnvelopeBulkDownload';
 export type { EnvelopeDetails } from './models/EnvelopeDetails';
 export type { EnvelopeDocuments } from './models/EnvelopeDocuments';
 export type { EnvelopeFieldResponse } from './models/EnvelopeFieldResponse';
@@ -112,6 +113,7 @@ export type { PaginatedAccountDeliveryList } from './models/PaginatedAccountDeli
 export type { PaginatedBulkGenList } from './models/PaginatedBulkGenList';
 export type { PaginatedContentBlockList } from './models/PaginatedContentBlockList';
 export type { PaginatedDocumentMergeHistoryList } from './models/PaginatedDocumentMergeHistoryList';
+export type { PaginatedEnvelopeBulkDownloadList } from './models/PaginatedEnvelopeBulkDownloadList';
 export type { PaginatedEnvelopeList } from './models/PaginatedEnvelopeList';
 export type { PaginatedEnvelopeRecipientList } from './models/PaginatedEnvelopeRecipientList';
 export type { PaginatedESignWebhookEventLogList } from './models/PaginatedESignWebhookEventLogList';
