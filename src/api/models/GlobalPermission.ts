@@ -14,6 +14,7 @@ export type GlobalPermission = {
     reports: boolean;
     api_settings: boolean;
     eSignatures: boolean;
+    extensions: boolean;
     'delivery:create': boolean;
     esign_settings: boolean;
     esign_webhook: boolean;
