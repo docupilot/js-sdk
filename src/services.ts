@@ -9,6 +9,7 @@ export const AppServices = {
   domain: _API.DomainService,
   eSign: _API.EsignService,
   eSignSettings: _API.EsignSettingsService,
+  extensions: _API.ExtensionsService,
   folders: _API.FoldersService,
   galleryTemplates: _API.GalleryTemplatesService,
   general: _API.GeneralService,
