@@ -14284,21 +14284,21 @@ components:
           type: boolean
         delivery:create:
           type: boolean
-        esign_settings:
+        settings:esign:general:
           type: boolean
-        esign_webhook:
+        settings:esign:webhook:
           type: boolean
       required:
       - api_settings
       - billing
       - delivery:create
       - eSignatures
-      - esign_settings
-      - esign_webhook
       - extensions
       - folders
       - integrations
       - reports
+      - settings:esign:general
+      - settings:esign:webhook
       - team:manage
       - templates
       - workspace
