@@ -147,6 +147,9 @@ export type { PatchedUpdateNewTemplate } from './models/PatchedUpdateNewTemplate
 export type { PatchedUpdateTemplateSharing } from './models/PatchedUpdateTemplateSharing';
 export type { PatchedUpdateUser } from './models/PatchedUpdateUser';
 export type { PatchedWorkspace } from './models/PatchedWorkspace';
+export type { PDFTransformInput } from './models/PDFTransformInput';
+export type { PDFTransformJsonRequest } from './models/PDFTransformJsonRequest';
+export type { PDFTransformMultipartRequest } from './models/PDFTransformMultipartRequest';
 export type { Plan } from './models/Plan';
 export type { PolymorphicDelivery } from './models/PolymorphicDelivery';
 export type { PromptSuggestions } from './models/PromptSuggestions';
@@ -219,6 +222,7 @@ export { InvitationsService } from './services/InvitationsService';
 export { LinkedAccountsService } from './services/LinkedAccountsService';
 export { MergeHistoryService } from './services/MergeHistoryService';
 export { OrganizationService } from './services/OrganizationService';
+export { PdfService } from './services/PdfService';
 export { PermissionsService } from './services/PermissionsService';
 export { PersonalizationService } from './services/PersonalizationService';
 export { SubscriptionService } from './services/SubscriptionService';
