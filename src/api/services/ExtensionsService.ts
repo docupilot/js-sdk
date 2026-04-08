@@ -6,6 +6,7 @@ import type { Extension } from '../models/Extension';
 import type { ExtensionConfig } from '../models/ExtensionConfig';
 import type { ExtensionRunResponse } from '../models/ExtensionRunResponse';
 import type { PaginatedExtensionList } from '../models/PaginatedExtensionList';
+import type { PaginatedExtensionRunHistoryList } from '../models/PaginatedExtensionRunHistoryList';
 import type { PatchedExtension } from '../models/PatchedExtension';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -205,6 +206,64 @@ export class ExtensionsService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/dashboard/extensions/{id}/permanent_delete/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get extension run responses
+     * @returns PaginatedExtensionRunHistoryList
+     * @throws ApiError
+     */
+    public static getExtensionRunResponses({
+        id,
+        ordering,
+        page,
+        search,
+    }: {
+        id: number,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<PaginatedExtensionRunHistoryList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/extensions/{id}/responses/',
+            path: {
+                'id': id,
+            },
+            query: {
+                'ordering': ordering,
+                'page': page,
+                'search': search,
+            },
+        });
+    }
+
+    /**
+     * Export extension run metadata and responses as Excel
+     * @returns binary
+     * @throws ApiError
+     */
+    public static exportExtensionRunResponses({
+        id,
+    }: {
+        id: number,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/extensions/{id}/responses/export/',
             path: {
                 'id': id,
             },
