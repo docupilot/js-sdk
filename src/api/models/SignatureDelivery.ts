@@ -17,6 +17,7 @@ export type SignatureDelivery = {
     reminder_frequency?: number | null;
     warn_before?: number | null;
     sender: number;
+    folder?: number | null;
     name: string;
     type?: 'signature';
     success_callback_url?: string | null;
