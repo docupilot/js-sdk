@@ -8,6 +8,7 @@ export const AppServices = {
   contentBlocks: _API.ContentBlocksService,
   domain: _API.DomainService,
   eSign: _API.EsignService,
+  eSignFolders: _API.EsignFoldersService,
   eSignSettings: _API.EsignSettingsService,
   extensions: _API.ExtensionsService,
   folders: _API.FoldersService,
