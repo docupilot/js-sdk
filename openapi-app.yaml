@@ -2884,71 +2884,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
-  /dashboard/api/v2/content_blocks/{id}/editor_version/:
-    patch:
-      operationId: update_content_block_editor_version
-      summary: Update the content block editor version between v1 and v2
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this content block.
-        required: true
-      tags:
-      - content_blocks
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedContentBlockEditorVersion'
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ContentBlockEditorVersion'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/api/v2/content_blocks/{id}/inline_image/:
     post:
       operationId: upload_inline_image_of_content_block
@@ -5889,6 +5824,7 @@ paths:
           type: string
           enum:
           - docx
+          - dpt
           - fillable_pdf
           - g_document
           - g_presentation
@@ -6342,71 +6278,6 @@ paths:
               schema:
                 type: string
                 format: binary
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/api/v2/templates/{id}/editor_version/:
-    patch:
-      operationId: update_template_editor_version
-      summary: Update the template editor version between v1 and v2
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this document.
-        required: true
-      tags:
-      - templates
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedEditorVersion'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedEditorVersion'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedEditorVersion'
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EditorVersion'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -8951,6 +8822,12 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -12445,6 +12322,7 @@ components:
           enum:
           - docx
           - html
+          - dpt
           - fillable_pdf
           - pptx
           - xlsx
@@ -12470,8 +12348,11 @@ components:
           type: string
           format: date-time
           nullable: true
-        use_v2_editor:
-          type: boolean
+        editor_version:
+          enum:
+          - V1
+          - V2
+          type: string
         created_by:
           type: integer
           readOnly: true
@@ -12536,19 +12417,22 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        use_v2_editor:
-          type: boolean
+        editor_version:
+          enum:
+          - V1
+          - V2
+          type: string
           readOnly: true
       required:
       - created_by
       - created_time
+      - editor_version
       - id
       - key
       - name
       - type
       - updated_by
       - updated_time
-      - use_v2_editor
     ContentBlockDetailByKeyResponse:
       type: object
       properties:
@@ -12567,12 +12451,6 @@ components:
       - name
       - schema
       - type
-      description: ''
-    ContentBlockEditorVersion:
-      type: object
-      properties:
-        use_v2_editor:
-          type: boolean
       description: ''
     ContentBlockSharing:
       type: object
@@ -13339,12 +13217,6 @@ components:
       - is_retryable
       - last_triggered_at
       - webhook
-      description: ''
-    EditorVersion:
-      type: object
-      properties:
-        use_v2_editor:
-          type: boolean
       description: ''
     EmailDelivery:
       type: object
@@ -15387,12 +15259,6 @@ components:
             $ref: '#/components/schemas/Template'
         has_docusign_templates:
           type: boolean
-    PatchedContentBlockEditorVersion:
-      type: object
-      properties:
-        use_v2_editor:
-          type: boolean
-      description: ''
     PatchedDomain:
       type: object
       properties:
@@ -15495,12 +15361,6 @@ components:
           type: integer
           readOnly: true
           nullable: true
-      description: ''
-    PatchedEditorVersion:
-      type: object
-      properties:
-        use_v2_editor:
-          type: boolean
       description: ''
     PatchedEnvelopeDocumentsUpdate:
       type: object
@@ -16540,6 +16400,7 @@ components:
           enum:
           - docx
           - html
+          - dpt
           - fillable_pdf
           - pptx
           - xlsx
@@ -16567,8 +16428,11 @@ components:
           format: date-time
           readOnly: true
           nullable: true
-        use_v2_editor:
-          type: boolean
+        editor_version:
+          enum:
+          - V1
+          - V2
+          type: string
           readOnly: true
         created_by:
           type: integer
@@ -16581,13 +16445,13 @@ components:
       - created_by
       - created_time
       - deleted_time
+      - editor_version
       - has_docusign_delivery
       - id
       - title
       - type
       - updated_by
       - updated_time
-      - use_v2_editor
     TemplateCount:
       type: object
       properties:
