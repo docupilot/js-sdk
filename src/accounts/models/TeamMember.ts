@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { Workspace } from './Workspace';
+import type { UserWorkspace } from './UserWorkspace';
 
 export type TeamMember = {
     readonly id: number;
@@ -14,6 +14,6 @@ export type TeamMember = {
      * Designates whether this user should be treated as active. Unselect this instead of deleting accounts.
      */
     is_active?: boolean;
-    readonly workspaces: Array<Workspace>;
+    readonly workspaces: Array<UserWorkspace>;
 };
 
