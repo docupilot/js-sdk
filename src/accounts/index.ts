@@ -18,6 +18,7 @@ export type { ChargebeeSubscription } from './models/ChargebeeSubscription';
 export type { CreateInvitation } from './models/CreateInvitation';
 export type { CreateWorkspaceInvitation } from './models/CreateWorkspaceInvitation';
 export type { CSMDetails } from './models/CSMDetails';
+export type { DeleteWorkspace } from './models/DeleteWorkspace';
 export type { DemoGraphic } from './models/DemoGraphic';
 export type { Domain } from './models/Domain';
 export type { ExchangeSessionResponse } from './models/ExchangeSessionResponse';
