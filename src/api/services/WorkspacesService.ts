@@ -1,8 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { DeleteCurrentWorkspace } from '../models/DeleteCurrentWorkspace';
-import type { PatchedWorkspace } from '../models/PatchedWorkspace';
 import type { RetentionPreference } from '../models/RetentionPreference';
 import type { Workspace } from '../models/Workspace';
 
@@ -45,24 +43,6 @@ export class WorkspacesService {
     }
 
     /**
-     * Create Workspace
-     * @returns Workspace
-     * @throws ApiError
-     */
-    public static createWorkspace({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<Workspace>,
-    }): CancelablePromise<Workspace> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/accounts/v2/workspaces/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * get current workspace details
      * @returns Workspace
      * @throws ApiError
@@ -71,42 +51,6 @@ export class WorkspacesService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/accounts/v2/workspaces/current/',
-        });
-    }
-
-    /**
-     * update current workspace details
-     * @returns PatchedWorkspace
-     * @throws ApiError
-     */
-    public static updateCurrentWorkspace({
-        requestBody,
-    }: {
-        requestBody?: OmitReadonly<PatchedWorkspace>,
-    }): CancelablePromise<PatchedWorkspace> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/dashboard/accounts/v2/workspaces/current/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Delete a workspace and other related data permanently
-     * @returns any No response body
-     * @throws ApiError
-     */
-    public static deleteCurrentWorkspace({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<DeleteCurrentWorkspace>,
-    }): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/accounts/v2/workspaces/current/delete/',
-            body: requestBody,
-            mediaType: 'application/json',
         });
     }
 

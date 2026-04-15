@@ -2,7 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type DeleteCurrentWorkspace = {
-    otp: string;
+export type AddonTier = {
+    upto: string;
+    price: number;
 };
 

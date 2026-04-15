@@ -2,10 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { AddonPricingInfo } from '../models/AddonPricingInfo';
-import type { AddonPurchase } from '../models/AddonPurchase';
 import type { ChargebeeSubscription } from '../models/ChargebeeSubscription';
 import type { HostedPage } from '../models/HostedPage';
-import type { RenewSubscription } from '../models/RenewSubscription';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -42,23 +40,6 @@ export class SubscriptionService {
     }
 
     /**
-     * @returns any
-     * @throws ApiError
-     */
-    public static purchaseAddon({
-        requestBody,
-    }: {
-        requestBody: OmitReadonly<AddonPurchase>,
-    }): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/accounts/v2/subscription/buy_addon/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * @returns ChargebeeSubscription
      * @throws ApiError
      */
@@ -66,18 +47,6 @@ export class SubscriptionService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/accounts/v2/subscription/details/',
-        });
-    }
-
-    /**
-     * Extend trial
-     * @returns void
-     * @throws ApiError
-     */
-    public static extendTrial(): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/accounts/v2/subscription/extend_trial/',
         });
     }
 
@@ -118,34 +87,6 @@ export class SubscriptionService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/accounts/v2/subscription/remaining_months/',
-        });
-    }
-
-    /**
-     * @returns void
-     * @throws ApiError
-     */
-    public static subscriptionRenewRequestCreate({
-        requestBody,
-    }: {
-        requestBody?: OmitReadonly<RenewSubscription>,
-    }): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/accounts/v2/subscription/renew_request/',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * @returns any
-     * @throws ApiError
-     */
-    public static resumeSubscription(): CancelablePromise<Record<string, any>> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/dashboard/accounts/v2/subscription/resume/',
         });
     }
 
