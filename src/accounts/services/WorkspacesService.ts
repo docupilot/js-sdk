@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { DeleteWorkspace } from '../models/DeleteWorkspace';
 import type { PatchedUpdateWorkspace } from '../models/PatchedUpdateWorkspace';
 import type { PatchedWorkspace } from '../models/PatchedWorkspace';
 import type { Workspace } from '../models/Workspace';
@@ -104,15 +105,19 @@ export class WorkspacesService {
      */
     public static deleteWorkspace({
         uniqueKey,
+        requestBody,
     }: {
         uniqueKey: string,
+        requestBody: OmitReadonly<DeleteWorkspace>,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/workspaces/{unique_key}/',
+            method: 'POST',
+            url: '/workspaces/{unique_key}/delete/',
             path: {
                 'unique_key': uniqueKey,
             },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 
