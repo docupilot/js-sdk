@@ -64,6 +64,7 @@ export type { User } from './models/User';
 export type { UserDemographic } from './models/UserDemographic';
 export type { UserMeta } from './models/UserMeta';
 export type { UserOrganization } from './models/UserOrganization';
+export type { UserWorkspace } from './models/UserWorkspace';
 export type { ValidationError } from './models/ValidationError';
 export type { VerifyAuthorizationOTP } from './models/VerifyAuthorizationOTP';
 export type { VerifyDomain } from './models/VerifyDomain';

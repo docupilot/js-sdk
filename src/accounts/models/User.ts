@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 import type { UserOrganization } from './UserOrganization';
-import type { Workspace } from './Workspace';
+import type { UserWorkspace } from './UserWorkspace';
 
 export type User = {
     readonly id: number;
@@ -25,6 +25,6 @@ export type User = {
     readonly is_mfa_enabled: boolean;
     readonly organization: UserOrganization;
     readonly role: 'owner' | 'admin' | 'member';
-    readonly workspaces: Array<Workspace>;
+    readonly workspaces: Array<UserWorkspace>;
 };
 
