@@ -266,157 +266,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-    post:
-      operationId: create_invitation
-      summary: Create Invitation
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - invitations
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Invitation'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Invitation'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Invitation'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/accounts/v2/invitations/{id}/:
-    delete:
-      operationId: delete_invitation
-      summary: Delete Invitation
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this invitation.
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/accounts/v2/invitations/{id}/resend_invitation/:
-    post:
-      operationId: resend_invitation
-      summary: Resend invitation
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this invitation.
-        required: true
-      tags:
-      - invitations
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invitation'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
   /dashboard/accounts/v2/organization/current/:
     get:
       operationId: get_current_organization
@@ -493,57 +342,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/accounts/v2/subscription/buy_addon/:
-    post:
-      operationId: purchase_addon
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - subscription
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddonPurchase'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AddonPurchase'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AddonPurchase'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: object
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -564,42 +362,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChargebeeSubscription'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/accounts/v2/subscription/extend_trial/:
-    post:
-      operationId: extend_trial
-      summary: Extend trial
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - subscription
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -718,92 +480,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/accounts/v2/subscription/renew_request/:
-    post:
-      operationId: subscription_renew_request_create
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - subscription
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RenewSubscription'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/RenewSubscription'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/RenewSubscription'
-      security:
-      - SessionAuthentication: []
-      responses:
-        '204':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/accounts/v2/subscription/resume/:
-    post:
-      operationId: resume_subscription
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - subscription
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/subscription/unpaid_invoices/:
     get:
       operationId: get_chargebee_unpaid_invoices
@@ -890,124 +566,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/accounts/v2/team/{id}/change_role/:
-    put:
-      operationId: change_role_of_team_member
-      summary: Change role of team member.
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - team
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChangeRole'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ChangeRole'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ChangeRole'
-        required: true
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TeamMember'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-          description: ''
-  /dashboard/accounts/v2/team/{id}/toggle_user_status/:
-    patch:
-      operationId: toggle_user_status
-      summary: Activate or Deactivate a User
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - team
-      security:
-      - OAuthAuthentication: []
-      - SessionAuthentication: []
-      - tokenAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TeamMember'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /dashboard/accounts/v2/template_gallery/:
     get:
@@ -1511,50 +1069,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-    post:
-      operationId: create_workspace
-      summary: Create Workspace
-      tags:
-      - workspaces
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Workspace'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Workspace'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Workspace'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Workspace'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /dashboard/accounts/v2/workspaces/current/:
     get:
       operationId: get_current_workspace
@@ -1578,104 +1092,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Workspace'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-    patch:
-      operationId: update_current_workspace
-      summary: update current workspace details
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - workspaces
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedWorkspace'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedWorkspace'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedWorkspace'
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PatchedWorkspace'
-          description: ''
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-  /dashboard/accounts/v2/workspaces/current/delete/:
-    post:
-      operationId: delete_current_workspace
-      summary: Delete a workspace and other related data permanently
-      parameters:
-      - in: header
-        name: X-Workspace
-        schema:
-          type: string
-        description: Workspace unique_key
-        required: true
-      tags:
-      - workspaces
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteCurrentWorkspace'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DeleteCurrentWorkspace'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DeleteCurrentWorkspace'
-        required: true
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          description: No response body
-        '400':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -8951,6 +8367,12 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
       - name: page
         required: false
         in: query
@@ -11192,6 +10614,115 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/extensions/{extension_id}/responses/:
+    get:
+      operationId: get_extension_run_responses
+      summary: Get extension run responses
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: extension_id
+        schema:
+          type: integer
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - extensions
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedExtensionRunList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/extensions/{extension_id}/responses/export/:
+    get:
+      operationId: export_extension_run_responses
+      summary: Export extension run metadata and responses as Excel
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: extension_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - extensions
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/extensions/{id}/:
     get:
       operationId: get_extension
@@ -11702,6 +11233,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExtensionRunResponse'
           description: ''
+        '207':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtensionRunResponse'
+          description: ''
         '400':
           content:
             application/json:
@@ -11893,20 +11430,6 @@ components:
       - allowed_quantities
       - tiers
       - type
-      description: ''
-    AddonPurchase:
-      type: object
-      properties:
-        addon_id:
-          enum:
-          - esignature
-          - signnow
-          type: string
-        quantity:
-          type: integer
-      required:
-      - addon_id
-      - quantity
       description: ''
     AddonTier:
       type: object
@@ -12279,20 +11802,6 @@ components:
           type: integer
       required:
       - max_test_rows
-      description: ''
-    ChangeRole:
-      type: object
-      properties:
-        role:
-          enum:
-          - owner
-          - admin
-          - manager
-          - member
-          - billing_manager
-          type: string
-      required:
-      - role
       description: ''
     ChargebeeSubscription:
       type: object
@@ -12702,15 +12211,6 @@ components:
       required:
       - email_address
       - order
-      description: ''
-    DeleteCurrentWorkspace:
-      type: object
-      properties:
-        otp:
-          type: string
-          writeOnly: true
-      required:
-      - otp
       description: ''
     DeliveryAccount:
       type: object
@@ -14173,6 +13673,58 @@ components:
       required:
       - config
       description: ''
+    ExtensionRun:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          nullable: true
+          readOnly: true
+        data:
+          type: object
+          additionalProperties: {}
+        started_on:
+          type: string
+          format: date-time
+          readOnly: true
+        ended_on:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        status:
+          enum:
+          - queued
+          - in_progress
+          - success
+          - partial_success
+          - failed
+          type: string
+        request_id:
+          type: string
+          nullable: true
+          maxLength: 255
+        origin:
+          type: string
+          nullable: true
+          maxLength: 255
+      required:
+      - ended_on
+      - started_on
+      - user_id
+      description: ''
+    ExtensionRunError:
+      type: object
+      properties:
+        template_id:
+          type: integer
+          nullable: true
+        error:
+          type: string
+      required:
+      - error
+      - template_id
+      description: ''
     ExtensionRunResponse:
       type: object
       properties:
@@ -14180,7 +13732,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ExtensionRunResult'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRunError'
       required:
+      - errors
       - results
       description: ''
     ExtensionRunResult:
@@ -15316,6 +14873,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Extension'
+    PaginatedExtensionRunList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtensionRun'
     PaginatedMergeHistoryList:
       type: object
       required:
@@ -15682,167 +15262,6 @@ components:
           - system
           type: string
       description: ''
-    PatchedWorkspace:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        org_name:
-          type: string
-          maxLength: 60
-        unique_key:
-          type: string
-          readOnly: true
-        role:
-          type: string
-          readOnly: true
-        timezone:
-          enum:
-          - Pacific/Midway
-          - America/Adak
-          - Pacific/Honolulu
-          - Pacific/Marquesas
-          - America/Anchorage
-          - America/Tijuana
-          - America/Los_Angeles
-          - America/Phoenix
-          - America/Chihuahua
-          - America/Denver
-          - America/Belize
-          - America/Chicago
-          - Pacific/Easter
-          - America/Mexico_City
-          - America/Regina
-          - America/Bogota
-          - America/Cancun
-          - America/New_York
-          - America/Port-au-Prince
-          - America/Havana
-          - America/Indiana/Indianapolis
-          - America/Asuncion
-          - America/Halifax
-          - America/Caracas
-          - America/Cuiaba
-          - America/Manaus
-          - America/Santiago
-          - America/Grand_Turk
-          - America/St_Johns
-          - America/Fortaleza
-          - America/Sao_Paulo
-          - America/Cayenne
-          - America/Buenos_Aires
-          - America/Godthab
-          - America/Montevideo
-          - America/Miquelon
-          - America/Bahia
-          - America/Noronha
-          - Atlantic/Azores
-          - Atlantic/Cape_Verde
-          - UTC
-          - Africa/Casablanca
-          - Europe/London
-          - Africa/Monrovia
-          - Europe/Amsterdam
-          - Europe/Belgrade
-          - Europe/Brussels
-          - Europe/Warsaw
-          - Africa/Algiers
-          - Africa/Windhoek
-          - Asia/Amman
-          - Europe/Athens
-          - Asia/Beirut
-          - Africa/Cairo
-          - Asia/Damascus
-          - Asia/Gaza
-          - Africa/Harare
-          - Europe/Helsinki
-          - Asia/Jerusalem
-          - Europe/Kaliningrad
-          - Africa/Tripoli
-          - Asia/Baghdad
-          - Asia/Istanbul
-          - Asia/Kuwait
-          - Europe/Minsk
-          - Europe/Moscow
-          - Africa/Nairobi
-          - Asia/Tehran
-          - Asia/Muscat
-          - Europe/Astrakhan
-          - Asia/Baku
-          - Europe/Samara
-          - Indian/Mauritius
-          - Asia/Tbilisi
-          - Asia/Yerevan
-          - Asia/Kabul
-          - Asia/Tashkent
-          - Asia/Yekaterinburg
-          - Asia/Karachi
-          - Asia/Kolkata
-          - Asia/Colombo
-          - Asia/Katmandu
-          - Asia/Almaty
-          - Asia/Dhaka
-          - Asia/Rangoon
-          - Asia/Novosibirsk
-          - Asia/Bangkok
-          - Asia/Barnaul
-          - Asia/Hovd
-          - Asia/Krasnoyarsk
-          - Asia/Tomsk
-          - Asia/Chongqing
-          - Asia/Irkutsk
-          - Asia/Kuala_Lumpur
-          - Australia/Perth
-          - Asia/Taipei
-          - Asia/Ulaanbaatar
-          - Asia/Pyongyang
-          - Australia/Eucla
-          - Asia/Chita
-          - Asia/Tokyo
-          - Asia/Seoul
-          - Asia/Yakutsk
-          - Australia/Adelaide
-          - Australia/Darwin
-          - Australia/Brisbane
-          - Australia/Canberra
-          - Pacific/Guam
-          - Australia/Hobart
-          - Asia/Vladivostok
-          - Australia/Lord_Howe
-          - Pacific/Bougainville
-          - Asia/Srednekolymsk
-          - Asia/Magadan
-          - Pacific/Norfolk
-          - Asia/Sakhalin
-          - Pacific/Guadalcanal
-          - Asia/Anadyr
-          - Pacific/Auckland
-          - Pacific/Fiji
-          - Pacific/Chatham
-          - Pacific/Tongatapu
-          - Pacific/Apia
-          - Pacific/Kiritimati
-          type: string
-          readOnly: true
-        plan_id:
-          type: string
-          nullable: true
-          readOnly: true
-        plan_status:
-          type: string
-          readOnly: true
-        active:
-          type: boolean
-          readOnly: true
-        mfa_enforced:
-          type: boolean
-          readOnly: true
-        created_time:
-          type: string
-          format: date-time
-          readOnly: true
-      description: ''
     Plan:
       type: object
       properties:
@@ -15922,13 +15341,6 @@ components:
       required:
       - prompts
       - template_title
-      description: ''
-    RenewSubscription:
-      type: object
-      properties:
-        upgrade_message:
-          type: string
-          maxLength: 200
       description: ''
     RestoreTemplateResponse:
       type: object

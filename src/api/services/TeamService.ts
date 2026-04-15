@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ChangeRole } from '../models/ChangeRole';
 import type { TeamMember } from '../models/TeamMember';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -32,48 +31,6 @@ export class TeamService {
             query: {
                 'ordering': ordering,
                 'role': role,
-            },
-        });
-    }
-
-    /**
-     * Change role of team member.
-     * @returns TeamMember
-     * @throws ApiError
-     */
-    public static changeRoleOfTeamMember({
-        id,
-        requestBody,
-    }: {
-        id: string,
-        requestBody: OmitReadonly<ChangeRole>,
-    }): CancelablePromise<TeamMember> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/dashboard/accounts/v2/team/{id}/change_role/',
-            path: {
-                'id': id,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Activate or Deactivate a User
-     * @returns TeamMember
-     * @throws ApiError
-     */
-    public static toggleUserStatus({
-        id,
-    }: {
-        id: number,
-    }): CancelablePromise<TeamMember> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/dashboard/accounts/v2/team/{id}/toggle_user_status/',
-            path: {
-                'id': id,
             },
         });
     }

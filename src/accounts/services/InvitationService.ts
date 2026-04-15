@@ -18,8 +18,10 @@ export class InvitationService {
      * @throws ApiError
      */
     public static listInvitation({
+        isAccepted,
         ordering,
     }: {
+        isAccepted?: boolean,
         /**
          * Which field to use when ordering the results.
          */
@@ -29,6 +31,7 @@ export class InvitationService {
             method: 'GET',
             url: '/accounts/invitation/',
             query: {
+                'is_accepted': isAccepted,
                 'ordering': ordering,
             },
         });
@@ -146,8 +149,10 @@ export class InvitationService {
      * @throws ApiError
      */
     public static listWorkspaceInvitations({
+        isAccepted,
         ordering,
     }: {
+        isAccepted?: boolean,
         /**
          * Which field to use when ordering the results.
          */
@@ -157,6 +162,7 @@ export class InvitationService {
             method: 'GET',
             url: '/accounts/invitation/list_workspace_invitations/',
             query: {
+                'is_accepted': isAccepted,
                 'ordering': ordering,
             },
         });
