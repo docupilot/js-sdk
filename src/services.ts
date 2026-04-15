@@ -44,4 +44,8 @@ export const AccountServices = {
   scim: _Accounts.ScimService,
   team: _Accounts.TeamService,
   user: _Accounts.UserService,
+  workspaceInvites: _Accounts.WorkspaceInvitesService,
+  workspaces: _Accounts.WorkspacesService,
+  workspaceSubscription: _Accounts.WorkspaceSubscriptionService,
+  workspaceTeams: _Accounts.WorkspaceTeamsService,
 };
