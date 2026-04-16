@@ -4605,6 +4605,7 @@ components:
           type: integer
           readOnly: true
           writeOnly: true
+          nullable: true
     RenewSubscription:
       type: object
       properties:
@@ -5369,9 +5370,9 @@ components:
         application:
           type: integer
           writeOnly: true
+          nullable: true
       required:
       - active
-      - application
       - created_time
       - id
       - mfa_enforced
