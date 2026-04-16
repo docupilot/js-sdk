@@ -17,6 +17,6 @@ export type Workspace = {
     readonly plan_id: string | null;
     readonly plan_status: 'a' | 't' | 'e' | 'c' | 'p';
     readonly mfa_enforced: boolean;
-    application: number;
+    application?: number | null;
 };
 

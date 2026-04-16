@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { RetentionPreference } from '../models/RetentionPreference';
-import type { Workspace } from '../models/Workspace';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -10,49 +9,6 @@ import { request as __request } from '../core/request';
 import type { OmitReadonly } from '../core/utils/OmitReadonly';
 
 export class WorkspacesService {
-
-    /**
-     * Get list of Workspaces
-     * @returns Workspace
-     * @throws ApiError
-     */
-    public static listWorkspaces({
-        active,
-        ordering,
-        search,
-    }: {
-        active?: boolean,
-        /**
-         * Which field to use when ordering the results.
-         */
-        ordering?: string,
-        /**
-         * A search term.
-         */
-        search?: string,
-    }): CancelablePromise<Array<Workspace>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/accounts/v2/workspaces/',
-            query: {
-                'active': active,
-                'ordering': ordering,
-                'search': search,
-            },
-        });
-    }
-
-    /**
-     * get current workspace details
-     * @returns Workspace
-     * @throws ApiError
-     */
-    public static getCurrentWorkspace(): CancelablePromise<Workspace> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/accounts/v2/workspaces/current/',
-        });
-    }
 
     /**
      * get workspace data retention preference

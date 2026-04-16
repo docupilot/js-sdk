@@ -17,6 +17,6 @@ export type PatchedWorkspace = {
     readonly plan_id?: string | null;
     readonly plan_status?: 'a' | 't' | 'e' | 'c' | 'p';
     readonly mfa_enforced?: boolean;
-    readonly application?: number;
+    readonly application?: number | null;
 };
 
