@@ -12,8 +12,9 @@ async function run(orgName: string) {
     };
     return headers;
   });
-  const organizations =
-    await client.accountServices.user.getUserOrganizations();
+  const organizations = await client.accountServices.user.getUserOrganizations(
+    {},
+  );
   console.log('organizations', organizations);
   // todo get org url and set as host
   // configure interceptor without workspace initially
@@ -23,7 +24,7 @@ async function run(orgName: string) {
     };
     return headers;
   });
-  const workspaces = await client.appServices.workspaces.listWorkspaces({});
+  const workspaces = await client.accountServices.workspaces.listWorkspaces({});
   const workspace = workspaces[0];
   // configure interceptor with workspace now
   client.configureAppHeadersInterceptor(() => {

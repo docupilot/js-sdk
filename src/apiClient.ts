@@ -103,10 +103,6 @@ export class APIClient {
   /**@deprecated*/
   readonly WorkspacesService = _API.WorkspacesService;
   /**@deprecated*/
-  readonly InvitationsService = _API.InvitationsService;
-  /**@deprecated*/
-  readonly TeamService = _API.TeamService;
-  /**@deprecated*/
   readonly PermissionsService = _API.PermissionsService;
   /**@deprecated*/
   readonly AppendService = _API.AppendService;
