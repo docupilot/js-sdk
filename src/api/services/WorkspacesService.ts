@@ -11,6 +11,20 @@ import type { OmitReadonly } from '../core/utils/OmitReadonly';
 export class WorkspacesService {
 
     /**
+     * @returns any No response body
+     * @throws ApiError
+     */
+    public static getWorkspaceStatus(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/accounts/v2/workspaces/current/status/',
+            errors: {
+                400: `No response body`,
+            },
+        });
+    }
+
+    /**
      * get workspace data retention preference
      * @returns RetentionPreference
      * @throws ApiError

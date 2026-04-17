@@ -730,6 +730,25 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/accounts/v2/workspaces/current/status/:
+    get:
+      operationId: get_workspace_status
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - workspaces
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          description: No response body
+        '400':
+          description: No response body
   /dashboard/accounts/v2/workspaces/retention_preference/:
     get:
       operationId: get_workspace_data_retention_preference
