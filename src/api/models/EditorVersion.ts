@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type AcceptInvite = {
-    workspace_unique_key: string;
+export type EditorVersion = {
+    use_v2_editor?: boolean;
 };
 

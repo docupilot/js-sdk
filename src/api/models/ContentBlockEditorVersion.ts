@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UpdateRecipientEmail = {
-    email: string;
+export type ContentBlockEditorVersion = {
+    use_v2_editor?: boolean;
 };
 

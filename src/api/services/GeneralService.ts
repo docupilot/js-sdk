@@ -20,7 +20,7 @@ export class GeneralService {
     public static listBannerNotifications(): CancelablePromise<Array<BannerNotification>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/banner_notifications/',
+            url: '/dashboard/banner_notifications/',
         });
     }
 
@@ -31,7 +31,7 @@ export class GeneralService {
     public static getAppMeta(): CancelablePromise<Meta> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/meta/',
+            url: '/dashboard/meta/',
         });
     }
 
@@ -42,7 +42,7 @@ export class GeneralService {
     public static listSubscriptionPlans(): CancelablePromise<Array<Plan>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/plans/',
+            url: '/dashboard/plans/',
         });
     }
 
@@ -53,7 +53,7 @@ export class GeneralService {
     public static listTimezones(): CancelablePromise<Array<Timezone>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/tz/',
+            url: '/dashboard/tz/',
         });
     }
 

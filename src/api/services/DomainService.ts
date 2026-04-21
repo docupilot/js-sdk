@@ -27,7 +27,7 @@ export class DomainService {
     }): CancelablePromise<Domain> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/domain/{id}/',
+            url: '/dashboard/api/v2/domain/{id}/',
             path: {
                 'id': id,
             },
@@ -51,7 +51,7 @@ export class DomainService {
     }): CancelablePromise<DomainVerify> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/v2/domain/{id}/verify/',
+            url: '/dashboard/api/v2/domain/{id}/verify/',
             path: {
                 'id': id,
             },

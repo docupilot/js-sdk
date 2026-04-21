@@ -28,7 +28,7 @@ export type EnvelopeDetails = {
     warn_before?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
-    readonly completed_at: string;
+    completed_at?: string | null;
     deleted_at?: string | null;
     archived_at?: string | null;
     declined_at?: string | null;
@@ -38,6 +38,7 @@ export type EnvelopeDetails = {
      */
     reason?: string | null;
     audit_log_doc?: string | null;
+    source?: 1 | 2;
     workspace: number;
     sender: number;
     voided_by?: number | null;

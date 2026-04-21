@@ -29,7 +29,7 @@ export class AppendService {
     }> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/append/',
+            url: '/dashboard/api/v2/append/',
             headers: {
                 'X-Client': xClient,
             },

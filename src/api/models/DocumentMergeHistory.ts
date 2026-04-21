@@ -11,8 +11,9 @@ export type DocumentMergeHistory = {
     readonly template: ChildTemplate | null;
     executed_deliveries: Array<ChildDocumentMergeHistory>;
     readonly is_data_expired: boolean;
+    readonly action: 'Merge' | 'Append' | 'Convert' | 'Transform';
     readonly is_document_expired: boolean;
-    created_file_name?: string | null;
-    readonly created_time: string | null;
+    created_file_name: string;
+    readonly created_time: string;
 };
 

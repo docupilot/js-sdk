@@ -31,7 +31,7 @@ export class FoldersService {
     }): CancelablePromise<Array<Folder>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/folders/',
+            url: '/dashboard/api/v2/folders/',
             query: {
                 'ordering': ordering,
                 'permission': permission,
@@ -51,7 +51,7 @@ export class FoldersService {
     }): CancelablePromise<Folder> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/folders/',
+            url: '/dashboard/api/v2/folders/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -69,7 +69,7 @@ export class FoldersService {
     }): CancelablePromise<Array<FolderSharing>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/folders/{folder_id}/permissions/',
+            url: '/dashboard/api/v2/folders/{folder_id}/permissions/',
             path: {
                 'folder_id': folderId,
             },
@@ -90,7 +90,7 @@ export class FoldersService {
     }): CancelablePromise<Array<FolderSharing>> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/folders/{folder_id}/permissions/',
+            url: '/dashboard/api/v2/folders/{folder_id}/permissions/',
             path: {
                 'folder_id': folderId,
             },
@@ -116,7 +116,7 @@ export class FoldersService {
     }): CancelablePromise<FolderSharing> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/folders/{folder_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/folders/{folder_id}/permissions/{id}/',
             path: {
                 'folder_id': folderId,
                 'id': id,
@@ -143,7 +143,7 @@ export class FoldersService {
     }): CancelablePromise<FolderSharing> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/v2/folders/{folder_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/folders/{folder_id}/permissions/{id}/',
             path: {
                 'folder_id': folderId,
                 'id': id,
@@ -170,7 +170,7 @@ export class FoldersService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/folders/{folder_id}/permissions/{id}/',
+            url: '/dashboard/api/v2/folders/{folder_id}/permissions/{id}/',
             path: {
                 'folder_id': folderId,
                 'id': id,
@@ -195,7 +195,7 @@ export class FoldersService {
     }): CancelablePromise<Folder> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/folders/{id}/',
+            url: '/dashboard/api/v2/folders/{id}/',
             path: {
                 'id': id,
             },
@@ -220,7 +220,7 @@ export class FoldersService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/folders/{id}/',
+            url: '/dashboard/api/v2/folders/{id}/',
             path: {
                 'id': id,
             },
@@ -242,7 +242,7 @@ export class FoldersService {
     }): CancelablePromise<FolderCount> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/folders/count/',
+            url: '/dashboard/api/v2/folders/count/',
             query: {
                 'owner_id': ownerId,
             },
@@ -256,7 +256,7 @@ export class FoldersService {
     public static foldersSharingStatusRetrieve(): CancelablePromise<SharingInfoFolder> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/folders/sharing_status/',
+            url: '/dashboard/api/v2/folders/sharing_status/',
         });
     }
 

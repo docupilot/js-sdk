@@ -21,7 +21,7 @@ export class UserSatisfactionSurveyService {
     public static g2Review(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/user_satisfaction_survey/g2_review/',
+            url: '/dashboard/accounts/v2/user_satisfaction_survey/g2_review/',
             errors: {
                 302: `No response body`,
             },
@@ -40,7 +40,7 @@ export class UserSatisfactionSurveyService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/user_satisfaction_survey/nps_next_reminder/',
+            url: '/dashboard/accounts/v2/user_satisfaction_survey/nps_next_reminder/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -58,7 +58,7 @@ export class UserSatisfactionSurveyService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/user_satisfaction_survey/nps_rating/',
+            url: '/dashboard/accounts/v2/user_satisfaction_survey/nps_rating/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -76,7 +76,7 @@ export class UserSatisfactionSurveyService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/user_satisfaction_survey/save_user_feedback/',
+            url: '/dashboard/accounts/v2/user_satisfaction_survey/save_user_feedback/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -90,7 +90,7 @@ export class UserSatisfactionSurveyService {
     public static showSurveyPrompt(): CancelablePromise<SurveyPrompt> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/user_satisfaction_survey/show_survey_prompt/',
+            url: '/dashboard/accounts/v2/user_satisfaction_survey/show_survey_prompt/',
         });
     }
 
@@ -102,7 +102,7 @@ export class UserSatisfactionSurveyService {
     public static updateG2ReviewUpdatedOn(): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/',
+            url: '/dashboard/accounts/v2/user_satisfaction_survey/update_g2_review_updated_on/',
         });
     }
 

@@ -10,12 +10,12 @@ export type MergeHistory = {
     data: Record<string, any>;
     data_expired: boolean;
     document_expired: boolean;
+    mode: string;
+    created_file_name: string;
     delivery_type: string;
     status: 'pending' | 'success' | 'error';
     readonly created_time: string;
-    created_file_name: string;
     message?: Record<string, any> | null;
-    mode?: string | null;
     callback_status?: 'success' | 'fail' | null;
     callback_failure_message?: string | null;
     delivery?: number | null;

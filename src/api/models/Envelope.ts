@@ -5,6 +5,8 @@
 export type Envelope = {
     readonly id: number;
     readonly pending_signers_count: number;
+    readonly is_waiting_for_me: boolean;
+    readonly source: 'DOC_GEN' | 'MANUAL_SEND';
     readonly envelope_id: string;
     name: string;
     status?: 'created' | 'pending' | 'voided' | 'declined' | 'completed';
@@ -22,7 +24,7 @@ export type Envelope = {
     warn_before?: string | null;
     readonly created_at: string;
     readonly updated_at: string;
-    readonly completed_at: string;
+    completed_at?: string | null;
     readonly deleted_at: string | null;
     archived_at?: string | null;
     declined_at?: string | null;
@@ -31,7 +33,6 @@ export type Envelope = {
      * ex: Reason for Declining or Voiding provided by signer or sender respectively
      */
     reason?: string | null;
-    workspace: number;
     sender: number;
     voided_by?: number | null;
     readonly updated_by: number | null;

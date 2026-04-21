@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type UserDomainReservation = {
+export type DeliveryEmailAccount = {
     readonly id: number;
-    subdomain: string;
+    readonly name: string | null;
 };
 

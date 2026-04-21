@@ -19,5 +19,8 @@ export type PatchedEnvelopeUpdate = {
      * Days before expiry to send warning
      */
     warn_before?: string;
+    sequenced_signing?: boolean;
+    use_default_reminders?: boolean;
+    cc?: Array<string> | null;
 };
 

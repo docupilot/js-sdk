@@ -38,7 +38,7 @@ export class GenerateBulkService {
     }): CancelablePromise<PaginatedBulkGenList> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/',
             path: {
                 'template_id': templateId,
             },
@@ -70,7 +70,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -100,7 +100,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/cancel/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/cancel/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -130,7 +130,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -160,7 +160,7 @@ export class GenerateBulkService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/draft/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -195,7 +195,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/get_mapping/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -228,7 +228,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGen> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/{id}/trigger/',
             path: {
                 'id': id,
                 'template_id': templateId,
@@ -256,7 +256,7 @@ export class GenerateBulkService {
     }): CancelablePromise<BulkGenData> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/generate/bulk/upload/',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/upload/',
             path: {
                 'template_id': templateId,
             },

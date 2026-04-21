@@ -30,7 +30,7 @@ export class AuthTokensService {
     }): CancelablePromise<Array<AuthToken>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/accounts/v2/auth_tokens/',
+            url: '/dashboard/accounts/v2/auth_tokens/',
             query: {
                 'ordering': ordering,
                 'search': search,
@@ -49,7 +49,7 @@ export class AuthTokensService {
     }): CancelablePromise<NewAuthTokenResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/accounts/v2/auth_tokens/',
+            url: '/dashboard/accounts/v2/auth_tokens/',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -71,7 +71,7 @@ export class AuthTokensService {
     }): CancelablePromise<AuthToken> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/accounts/v2/auth_tokens/{id}/',
+            url: '/dashboard/accounts/v2/auth_tokens/{id}/',
             path: {
                 'id': id,
             },
@@ -94,7 +94,7 @@ export class AuthTokensService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/accounts/v2/auth_tokens/{id}/',
+            url: '/dashboard/accounts/v2/auth_tokens/{id}/',
             path: {
                 'id': id,
             },

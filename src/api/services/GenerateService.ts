@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { DocumentMergeLink } from '../models/DocumentMergeLink';
-import type { Template } from '../models/Template';
+import type { TemplateGenerateResponse } from '../models/TemplateGenerateResponse';
 import type { TemplateTestResponse } from '../models/TemplateTestResponse';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -14,7 +14,7 @@ export class GenerateService {
 
     /**
      * Generate document from template
-     * @returns Template
+     * @returns TemplateGenerateResponse file_url is included when download=true or no delivery configuration exists;otherwise, only file_name is returned.
      * @throws ApiError
      */
     public static generateDocument({
@@ -37,10 +37,10 @@ export class GenerateService {
         includeUrl?: boolean,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         requestBody?: Record<string, any>,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<TemplateGenerateResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{id}/generate/',
+            url: '/dashboard/api/v2/templates/{id}/generate/',
             path: {
                 'id': id,
             },
@@ -59,7 +59,7 @@ export class GenerateService {
 
     /**
      * Generates a test data used for testing template
-     * @returns Template
+     * @returns any
      * @throws ApiError
      */
     public static generateTestData({
@@ -69,10 +69,10 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{id}/generate_test_data/',
+            url: '/dashboard/api/v2/templates/{id}/generate_test_data/',
             path: {
                 'id': id,
             },
@@ -98,7 +98,7 @@ export class GenerateService {
     }): CancelablePromise<TemplateTestResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{id}/test/',
+            url: '/dashboard/api/v2/templates/{id}/test/',
             path: {
                 'id': id,
             },
@@ -112,7 +112,7 @@ export class GenerateService {
 
     /**
      * Get test data used for testing template
-     * @returns Template
+     * @returns any
      * @throws ApiError
      */
     public static getTestData({
@@ -122,12 +122,39 @@ export class GenerateService {
          * A unique integer value identifying this document.
          */
         id: number,
-    }): CancelablePromise<Template> {
+    }): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{id}/test_data/',
+            url: '/dashboard/api/v2/templates/{id}/test_data/',
             path: {
                 'id': id,
+            },
+        });
+    }
+
+    /**
+     * Generates a sample csv for the template using ai.
+     * @returns binary
+     * @throws ApiError
+     */
+    public static sampleCsv({
+        templateId,
+        format,
+    }: {
+        /**
+         * Template id
+         */
+        templateId: number,
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/api/v2/templates/{template_id}/generate/bulk/sample_csv/',
+            path: {
+                'template_id': templateId,
+            },
+            query: {
+                'format': format,
             },
         });
     }
@@ -145,7 +172,7 @@ export class GenerateService {
     }): CancelablePromise<Array<DocumentMergeLink>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/v2/templates/{template_id}/merge_links/',
+            url: '/dashboard/api/v2/templates/{template_id}/merge_links/',
             path: {
                 'template_id': templateId,
             },
@@ -164,7 +191,7 @@ export class GenerateService {
     }): CancelablePromise<DocumentMergeLink> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/v2/templates/{template_id}/merge_links/',
+            url: '/dashboard/api/v2/templates/{template_id}/merge_links/',
             path: {
                 'template_id': templateId,
             },
@@ -188,7 +215,7 @@ export class GenerateService {
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/v2/templates/{template_id}/merge_links/{id}/',
+            url: '/dashboard/api/v2/templates/{template_id}/merge_links/{id}/',
             path: {
                 'id': id,
                 'template_id': templateId,

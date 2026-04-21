@@ -3,8 +3,6 @@
 /* eslint-disable */
 
 export type SendEnvelopeViaEmail = {
-    subject: string;
-    description?: string | null;
     emails: Array<string> | null;
 };
 
