@@ -1672,8 +1672,7 @@ paths:
       - in: path
         name: key_id
         schema:
-          type: string
-          pattern: ^[^/]+$
+          type: integer
         required: true
       tags:
       - scim
@@ -2052,35 +2051,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
-  /accounts/user/exchange_session/:
-    get:
-      operationId: get_exchange_session_code
-      description: Generates a short-lived UUID code linked to the current session
-        key for cross-domain migration.
-      summary: Exchange session for a migration code
-      tags:
-      - user
-      security:
-      - SessionAuthentication: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExchangeSessionResponse'
-          description: ''
-        '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-        '403':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-          description: ''
   /accounts/user/initiate_authorization_sequence/:
     post:
       operationId: initiate_authorization_sequence
@@ -2219,34 +2189,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
-          description: ''
-  /accounts/user/migrate_session/:
-    get:
-      operationId: attach_session_from_exchange_code
-      description: Endpoint called on the API domain to exchange a short-lived code
-        for a session cookie.
-      summary: Migrate session to API domain
-      parameters:
-      - in: query
-        name: org
-        schema:
-          type: string
-        description: The organization subdomain (e.g., 'rush')
-        required: true
-      - in: query
-        name: session_exchange_code
-        schema:
-          type: string
-        description: The one-time UUID exchange code obtained from /exchange_session/
-        required: true
-      tags:
-      - user
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MigrateSessionResponse'
           description: ''
   /accounts/user/organizations/:
     get:
@@ -2482,13 +2424,6 @@ components:
       - is_txt_verified
       - txt_record
       - verification_expired_at
-    ExchangeSessionResponse:
-      type: object
-      properties:
-        code:
-          type: string
-      required:
-      - code
     ForbiddenError:
       type: object
       properties:
@@ -2582,13 +2517,6 @@ components:
       required:
       - id
       - type
-    MigrateSessionResponse:
-      type: object
-      properties:
-        status:
-          type: string
-      required:
-      - status
     NotFoundError:
       type: object
       properties:
