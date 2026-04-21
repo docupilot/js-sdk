@@ -79,6 +79,8 @@ export type { ExchangeSessionResponse } from './models/ExchangeSessionResponse';
 export type { ExportMergeHistory } from './models/ExportMergeHistory';
 export type { Extension } from './models/Extension';
 export type { ExtensionConfig } from './models/ExtensionConfig';
+export type { ExtensionRun } from './models/ExtensionRun';
+export type { ExtensionRunError } from './models/ExtensionRunError';
 export type { ExtensionRunResponse } from './models/ExtensionRunResponse';
 export type { ExtensionRunResult } from './models/ExtensionRunResult';
 export type { File } from './models/File';
@@ -124,6 +126,7 @@ export type { PaginatedEnvelopeRecipientList } from './models/PaginatedEnvelopeR
 export type { PaginatedESignWebhookEventLogList } from './models/PaginatedESignWebhookEventLogList';
 export type { PaginatedESignWebhookList } from './models/PaginatedESignWebhookList';
 export type { PaginatedExtensionList } from './models/PaginatedExtensionList';
+export type { PaginatedExtensionRunList } from './models/PaginatedExtensionRunList';
 export type { PaginatedMergeHistoryList } from './models/PaginatedMergeHistoryList';
 export type { PaginatedTemplateInfoList } from './models/PaginatedTemplateInfoList';
 export type { PaginatedTemplateList } from './models/PaginatedTemplateList';
