@@ -85,14 +85,17 @@ export class EsignService {
 
     /**
      * download generated export envelopes if available
-     * @returns binary Download the exported envelopes as a ZIP file
+     * @returns any The response contains file_name and file_URL to download the generated export file.
      * @throws ApiError
      */
     public static downloadCreatedExportEnvelopes({
         id,
     }: {
         id: number,
-    }): CancelablePromise<Blob> {
+    }): CancelablePromise<{
+        file_url?: string;
+        file_name?: string;
+    }> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/envelope-exports/{id}/download/',
