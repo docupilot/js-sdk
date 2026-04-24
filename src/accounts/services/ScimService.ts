@@ -41,7 +41,7 @@ export class ScimService {
     public static deleteScimKey({
         keyId,
     }: {
-        keyId: string,
+        keyId: number,
     }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'DELETE',

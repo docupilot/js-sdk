@@ -6,6 +6,7 @@ import type { Extension } from '../models/Extension';
 import type { ExtensionConfig } from '../models/ExtensionConfig';
 import type { ExtensionRunResponse } from '../models/ExtensionRunResponse';
 import type { PaginatedExtensionList } from '../models/PaginatedExtensionList';
+import type { PaginatedExtensionRunList } from '../models/PaginatedExtensionRunList';
 import type { PatchedExtension } from '../models/PatchedExtension';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -64,6 +65,64 @@ export class ExtensionsService {
             url: '/dashboard/extensions/',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get extension run responses
+     * @returns PaginatedExtensionRunList
+     * @throws ApiError
+     */
+    public static getExtensionRunResponses({
+        extensionId,
+        ordering,
+        page,
+        search,
+    }: {
+        extensionId: number,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A page number within the paginated result set.
+         */
+        page?: number,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<PaginatedExtensionRunList> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/extensions/{extension_id}/responses/',
+            path: {
+                'extension_id': extensionId,
+            },
+            query: {
+                'ordering': ordering,
+                'page': page,
+                'search': search,
+            },
+        });
+    }
+
+    /**
+     * Export extension run metadata and responses as Excel
+     * @returns binary
+     * @throws ApiError
+     */
+    public static exportExtensionRunResponses({
+        extensionId,
+    }: {
+        extensionId: number,
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/extensions/{extension_id}/responses/export/',
+            path: {
+                'extension_id': extensionId,
+            },
         });
     }
 
