@@ -6329,6 +6329,12 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -6743,6 +6749,12 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -6845,12 +6857,11 @@ paths:
         description: A unique integer value identifying this document.
         required: true
       - in: query
-        name: version_type
+        name: version_id
         schema:
           type: string
-          enum:
-          - latest
-          - live
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -6902,12 +6913,11 @@ paths:
         description: A unique integer value identifying this document.
         required: true
       - in: query
-        name: version_type
+        name: version_id
         schema:
           type: string
-          enum:
-          - latest
-          - live
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -6965,6 +6975,12 @@ paths:
           - png
           - pptx
           - xlsx
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - generate
       requestBody:
@@ -8847,6 +8863,67 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/download/:
+    get:
+      operationId: download_template_version_file
+      summary: Download template version file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/templates/{template_id}/versions/{id}/minor_versions/:
     get:
       operationId: get_template_minor_versions
@@ -9011,7 +9088,7 @@ paths:
       - SessionAuthentication: []
       - tokenAuth: []
       responses:
-        '200':
+        '204':
           description: No response body
         '400':
           content:
@@ -16287,12 +16364,6 @@ components:
             format: email
           nullable: true
       description: ''
-    PatchedRenameTemplateVersion:
-      type: object
-      properties:
-        name:
-          type: string
-      description: ''
     PatchedExtension:
       type: object
       description: ''
@@ -16334,6 +16405,12 @@ components:
         updated_by:
           type: integer
           readOnly: true
+    PatchedRenameTemplateVersion:
+      type: object
+      properties:
+        name:
+          type: string
+      description: ''
     PatchedUpdateContentBlockSharing:
       type: object
       description: ''

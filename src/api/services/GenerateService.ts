@@ -87,6 +87,7 @@ export class GenerateService {
     public static testDocumentGeneration({
         id,
         outputType,
+        versionId,
         requestBody,
     }: {
         /**
@@ -94,6 +95,10 @@ export class GenerateService {
          */
         id: number,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        /**
+         * Template version selector. Supports a numeric version id, `latest`, or `live`.
+         */
+        versionId?: string,
         requestBody?: Record<string, any>,
     }): CancelablePromise<TemplateTestResponse> {
         return __request(OpenAPI, {
@@ -104,6 +109,7 @@ export class GenerateService {
             },
             query: {
                 'output_type': outputType,
+                'version_id': versionId,
             },
             body: requestBody,
             mediaType: 'application/json',

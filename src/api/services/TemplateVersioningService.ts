@@ -111,6 +111,36 @@ export class TemplateVersioningService {
     }
 
     /**
+     * Download template version file
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadTemplateVersionFile({
+        id,
+        templateId,
+        format,
+    }: {
+        /**
+         * A unique integer value identifying this document content.
+         */
+        id: number,
+        templateId: string,
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/templates/{template_id}/versions/{id}/download/',
+            path: {
+                'id': id,
+                'template_id': templateId,
+            },
+            query: {
+                'format': format,
+            },
+        });
+    }
+
+    /**
      * Get template minor versions
      * @returns TemplateVersion
      * @throws ApiError
@@ -183,7 +213,7 @@ export class TemplateVersioningService {
 
     /**
      * Restore template version
-     * @returns any No response body
+     * @returns void
      * @throws ApiError
      */
     public static restoreTemplateVersion({
@@ -195,7 +225,7 @@ export class TemplateVersioningService {
          */
         id: number,
         templateId: string,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<void> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/templates/{template_id}/versions/{id}/restore/',
