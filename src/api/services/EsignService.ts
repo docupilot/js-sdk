@@ -35,8 +35,13 @@ export class EsignService {
      * @throws ApiError
      */
     public static getCreatedEnvelopeExport({
+        ordering,
         page,
     }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
         /**
          * A page number within the paginated result set.
          */
@@ -46,6 +51,7 @@ export class EsignService {
             method: 'GET',
             url: '/dashboard/esign/envelope-exports/',
             query: {
+                'ordering': ordering,
                 'page': page,
             },
         });
