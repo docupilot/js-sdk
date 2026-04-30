@@ -1,0 +1,47 @@
+import * as _API from './api/sdk.gen';
+import * as _Accounts from './accounts/sdk.gen';
+
+export const AppServices = {
+  ai: _API.Ai,
+  append: _API.Append,
+  authTokens: _API.AuthTokens,
+  contentBlocks: _API.ContentBlocks,
+  domain: _API.Domain,
+  eSign: _API.Esign,
+  eSignSettings: _API.EsignSettings,
+  extensions: _API.Extensions,
+  folders: _API.Folders,
+  galleryTemplates: _API.GalleryTemplates,
+  general: _API.General,
+  generate: _API.Generate,
+  generateBulk: _API.GenerateBulk,
+  history: _API.History,
+  invitations: _API.Invitations,
+  linkedAccounts: _API.LinkedAccounts,
+  mergeHistory: _API.MergeHistory,
+  organization: _API.Organization,
+  permissions: _API.Permissions,
+  personalization: _API.Personalization,
+  subscription: _API.Subscription,
+  team: _API.Team,
+  templateDelivery: _API.TemplateDelivery,
+  templates: _API.Templates,
+  users: _API.Users,
+  userSatisfactionSurvey: _API.UserSatisfactionSurvey,
+  workspaces: _API.Workspaces,
+};
+
+export const AccountServices = {
+  application: _Accounts.Application,
+  community: _Accounts.Community,
+  demographic: _Accounts.Demographic,
+  domain: _Accounts.Domain,
+  invitation: _Accounts.Invitation,
+  mfa: _Accounts.Mfa,
+  organization: _Accounts.Organization,
+  organizationOnboarding: _Accounts.OrganizationOnboarding,
+  saml: _Accounts.Saml,
+  scim: _Accounts.Scim,
+  team: _Accounts.Team,
+  user: _Accounts.User,
+};

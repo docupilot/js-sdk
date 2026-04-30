@@ -4,23 +4,50 @@
   "description": "interact with docupilot.app APIs",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.js"
+    },
+    "./v2": {
+      "types": "./dist/esm/v2/index.d.ts",
+      "import": "./dist/esm/v2/index.js",
+      "require": "./dist/cjs/v2/index.js",
+      "default": "./dist/esm/v2/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "example": "ts-node examples/basic.ts",
+    "example": "npm run generate.legacy.node && ts-node --compiler-options '{\"module\":\"CommonJS\"}' examples/token.ts",
+    "example:token": "npm run generate.legacy.node && ts-node --compiler-options '{\"module\":\"CommonJS\"}' examples/token.ts",
+    "example:session": "npm run generate.legacy.node && ts-node --compiler-options '{\"module\":\"CommonJS\"}' examples/session.ts",
+    "example:react-query": "npm run generate.legacy.node && npm run generate.v2 && ts-node --compiler-options '{\"module\":\"CommonJS\"}' examples/react-query.ts",
+    "generate.app-spec": "npm run generate.app-spec.react",
+    "generate.accounts-spec": "npm run generate.accounts-spec.react",
     "generate.app-spec.node": "node generate.js --input ./openapi-app.yaml --output ./src/api --useOptions --useUnionTypes --client node",
     "generate.app-spec.react": "node generate.js --input ./openapi-app.yaml --output ./src/api --useOptions --useUnionTypes --client xhr",
     "generate.app-spec.browser": "node generate.js --input ./openapi-app.yaml --output ./src/api --useUnionTypes --client xhr",
     "generate.accounts-spec.node": "node generate.js --input ./openapi-accounts.yaml --output ./src/accounts --useOptions --useUnionTypes --client node",
     "generate.accounts-spec.react": "node generate.js --input ./openapi-accounts.yaml --output ./src/accounts --useOptions --useUnionTypes --client xhr",
     "generate.accounts-spec.browser": "node generate.js --input ./openapi-accounts.yaml --output ./src/accounts --useUnionTypes --client xhr",
+    "generate.legacy.node": "npm run generate.app-spec.node && npm run generate.accounts-spec.node",
+    "generate.legacy": "npm run generate.app-spec.react && npm run generate.accounts-spec.react",
+    "generate.v2.app-spec": "node generate-v2.js --input ./openapi-app.yaml --output ./src/v2/api",
+    "generate.v2.accounts-spec": "node generate-v2.js --input ./openapi-accounts.yaml --output ./src/v2/accounts",
+    "generate.v2": "npm run generate.v2.app-spec && npm run generate.v2.accounts-spec",
+    "generate": "npm run generate.legacy && npm run generate.v2",
     "build": "npm run clean:dist && npm run build:web && npm run build:esm && npm run build:cjs",
     "clean:dist": "rm -rf dist/",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
-    "build:web": "npm run generate.app-spec.browser && npm run generate.accounts-spec.browser && npx webpack --mode=development && npx webpack --mode=production && npm run generate.app-spec.react && npm run generate.accounts-spec.react"
+    "build:web": "npm run generate.app-spec.browser && npm run generate.accounts-spec.browser && npm run generate.v2 && npx webpack --mode=development && npx webpack --mode=production && npm run generate.app-spec.react && npm run generate.accounts-spec.react"
   },
   "repository": {
     "type": "git",
@@ -42,7 +69,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@docupilot/openapi-typescript-codegen": "^0.23.8",
+    "@docupilot/openapi-typescript-codegen": "0.23.8",
+    "@hey-api/openapi-ts": "0.97.0",
+    "@tanstack/react-query": "5.100.6",
     "@types/node-fetch": "^2.6.2",
     "braces": "^3.0.3",
     "form-data": "^4.0.4",
@@ -50,7 +79,7 @@
     "prettier": "^2.7.1",
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.7.4",
+    "typescript": "5.9.3",
     "webpack": "^5.104.1",
     "webpack-cli": "^5.1.4",
     "yaml": "^2.5.1"

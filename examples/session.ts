@@ -4,8 +4,9 @@ function getCookie(name: string) {
   return 'sample-cookie-' + name;
 }
 
-async function run(orgName: string) {
+async function run() {
   const client = new APIClient();
+  client.setHost({});
   client.configureAccountsHeadersInterceptor(() => {
     const headers: Record<string, string> = {
       'X-CSRFToken': getCookie('csrftoken'),
@@ -13,7 +14,7 @@ async function run(orgName: string) {
     return headers;
   });
   const organizations =
-    await client.accountServices.user.getUserOrganizations();
+    await client.accountServices.user.getUserOrganizations({});
   console.log('organizations', organizations);
   // todo get org url and set as host
   // configure interceptor without workspace initially
@@ -51,6 +52,6 @@ async function run(orgName: string) {
   }
 }
 
-run('My Org 1')
+run()
   .then(() => console.log('Done'))
   .catch(console.log);

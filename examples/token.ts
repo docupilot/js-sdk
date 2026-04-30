@@ -1,12 +1,13 @@
 import { APIClient } from '../src';
 
-async function run(orgName: string) {
+async function run() {
   const client = new APIClient();
+  client.setHost({});
   client.authenticate('key', 'secret'); // authenticate all services using api key and secret
   const is_accounts_authenticated = await client.isAccountsAuthenticated();
   console.log('is_accounts_authenticated', is_accounts_authenticated);
   const organizations =
-    await client.accountServices.user.getUserOrganizations();
+    await client.accountServices.user.getUserOrganizations({});
   console.log('organizations', organizations);
   // todo get org url and set as host
   const workspaces = await client.appServices.workspaces.listWorkspaces({});
@@ -33,6 +34,6 @@ async function run(orgName: string) {
   }
 }
 
-run('My Org 1')
+run()
   .then(() => console.log('Done'))
   .catch(console.log);

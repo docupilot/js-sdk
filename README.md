@@ -9,18 +9,34 @@ APIs from `nodejs` or `javascript` environments
 
 #### Usage
 
-Creating a docupilot client
+Legacy client (default, backward-compatible)
 
 ```ts
-import Docupilot from 'docupilot-sdk';
+import { APIClient } from 'docupilot-sdk';
 
-const client = Docupilot.authorize('<your api key>', '<your api secret>');
+const client = new APIClient();
+client.authenticate('<your api key>', '<your api secret>');
+```
+
+v2 client (new, separate export)
+
+```ts
+import { v2 } from 'docupilot-sdk';
+
+const client = new v2.APIClient();
+client.authenticate('<your api key>', '<your api secret>');
 ```
 
 #### Trying out examples
 
-To troy out the _basic_ example
+Legacy token example:
 
 ```bash
-DOCUPILOT_ACCESS_KEY=<your-access-key> DOCUPILOT_ACCESS_SECRET=<your-access-secret> ts-node basic.ts
+npm run example:token
+```
+
+v2 + React Query example:
+
+```bash
+npm run example:react-query
 ```
