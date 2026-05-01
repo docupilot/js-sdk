@@ -3342,6 +3342,12 @@ paths:
           - url
         description: If stream, returns the converted file as a downloadable binary
           (PDF / PNG / ZIP). If url, returns JSON with file_url and file_name.
+      - in: query
+        name: test
+        schema:
+          type: boolean
+        description: If true, the document will be generated in test mode (with watermark
+          and without deducting merge credits).
       tags:
       - convert
       requestBody:
@@ -5436,6 +5442,12 @@ paths:
           - url
         description: If stream, returns the transformed file as a downloadable PDF.
           If url, returns JSON with file_url and file_name.
+      - in: query
+        name: test
+        schema:
+          type: boolean
+        description: If true, the document will be generated in test mode (with watermark
+          and without deducting merge credits).
       tags:
       - pdf
       requestBody:
@@ -17237,6 +17249,12 @@ components:
           nullable: true
         sender:
           type: integer
+          nullable: true
+        sender_mode:
+          enum:
+          - fixed
+          - smart
+          type: string
         name:
           type: string
           maxLength: 255
@@ -17295,7 +17313,6 @@ components:
       required:
       - id
       - name
-      - sender
       - signers
     SigningLinkResponse:
       type: object
