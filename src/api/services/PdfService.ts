@@ -18,6 +18,7 @@ export class PdfService {
         requestBody,
         xClient,
         responseType,
+        test,
     }: {
         requestBody: OmitReadonly<PDFTransformJsonRequest>,
         /**
@@ -28,6 +29,10 @@ export class PdfService {
          * If stream, returns the transformed file as a downloadable PDF. If url, returns JSON with file_url and file_name.
          */
         responseType?: 'stream' | 'url',
+        /**
+         * If true, the document will be generated in test mode (with watermark and without deducting merge credits).
+         */
+        test?: boolean,
     }): CancelablePromise<{
         file_url?: string;
         file_name?: string;
@@ -40,6 +45,7 @@ export class PdfService {
             },
             query: {
                 'response_type': responseType,
+                'test': test,
             },
             body: requestBody,
             mediaType: 'application/json',
