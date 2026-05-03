@@ -59,6 +59,17 @@ export class SubscriptionService {
     }
 
     /**
+     * @returns any
+     * @throws ApiError
+     */
+    public static cancelScheduledSubscriptionChanges(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/accounts/v2/subscription/cancel_scheduled_changes/',
+        });
+    }
+
+    /**
      * @returns ChargebeeSubscription
      * @throws ApiError
      */

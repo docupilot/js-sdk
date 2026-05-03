@@ -5,6 +5,7 @@
 export type Plan = {
     readonly plan_id: string;
     readonly documents_allowed: number;
+    readonly user_seats: number;
     readonly price: number;
     readonly billing_period_unit: 'year' | 'month';
 };

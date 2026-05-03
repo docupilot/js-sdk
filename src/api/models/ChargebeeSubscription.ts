@@ -22,5 +22,7 @@ export type ChargebeeSubscription = {
     readonly trial_signatures_used: number;
     readonly signatures_allowed: number;
     readonly signatures_used: number;
+    readonly user_seats: number;
+    readonly scheduled_change_info: Record<string, any> | null;
 };
 

@@ -544,6 +544,46 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/accounts/v2/subscription/cancel_scheduled_changes/:
+    post:
+      operationId: cancel_scheduled_subscription_changes
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - subscription
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/accounts/v2/subscription/details/:
     get:
       operationId: get_subscription_details
@@ -12034,6 +12074,7 @@ components:
           enum:
           - esignature
           - signnow
+          - users
           type: string
         quantity:
           type: integer
@@ -12495,6 +12536,14 @@ components:
         signatures_used:
           type: integer
           readOnly: true
+        user_seats:
+          type: integer
+          readOnly: true
+        scheduled_change_info:
+          type: object
+          additionalProperties: {}
+          nullable: true
+          readOnly: true
       required:
       - billing_period_unit
       - can_extend_trial
@@ -12505,6 +12554,7 @@ components:
       - max_allowed_unpaid_invoices
       - overage_enabled
       - plan_id
+      - scheduled_change_info
       - signatures_allowed
       - signatures_used
       - signnow_credits_allowed
@@ -12515,6 +12565,7 @@ components:
       - trial_signatures_allowed
       - trial_signatures_used
       - unpaid_invoices
+      - user_seats
       description: ''
     ChildDocumentMergeHistory:
       type: object
@@ -16065,6 +16116,9 @@ components:
         documents_allowed:
           type: integer
           readOnly: true
+        user_seats:
+          type: integer
+          readOnly: true
         price:
           type: integer
           readOnly: true
@@ -16079,6 +16133,7 @@ components:
       - documents_allowed
       - plan_id
       - price
+      - user_seats
       description: ''
     PolymorphicDelivery:
       oneOf:
