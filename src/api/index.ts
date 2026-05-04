@@ -162,6 +162,8 @@ export type { SendEmailAccountAuthorizationOTP } from './models/SendEmailAccount
 export type { SendEnvelopeViaEmail } from './models/SendEnvelopeViaEmail';
 export type { SendTestSmtpMail } from './models/SendTestSmtpMail';
 export type { SftpDelivery } from './models/SftpDelivery';
+export type { SharepointDelivery } from './models/SharepointDelivery';
+export type { SharepointPickerPayload } from './models/SharepointPickerPayload';
 export type { SharingInfoFolder } from './models/SharingInfoFolder';
 export type { SharingInfoTemplate } from './models/SharingInfoTemplate';
 export type { SignableDelivery } from './models/SignableDelivery';
