@@ -23,6 +23,7 @@ export class GenerateService {
         download,
         includeUrl,
         outputType,
+        test,
         requestBody,
     }: {
         /**
@@ -36,6 +37,10 @@ export class GenerateService {
         download?: 'false' | 'file' | 'true',
         includeUrl?: boolean,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        /**
+         * If true, generate from the latest template version in test mode.
+         */
+        test?: boolean,
         requestBody?: Record<string, any>,
     }): CancelablePromise<TemplateGenerateResponse> {
         return __request(OpenAPI, {
@@ -51,6 +56,7 @@ export class GenerateService {
                 'download': download,
                 'includeUrl': includeUrl,
                 'output_type': outputType,
+                'test': test,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -87,6 +93,7 @@ export class GenerateService {
     public static testDocumentGeneration({
         id,
         outputType,
+        versionId,
         requestBody,
     }: {
         /**
@@ -94,6 +101,10 @@ export class GenerateService {
          */
         id: number,
         outputType?: 'docx' | 'html' | 'pdf' | 'png' | 'pptx' | 'xlsx',
+        /**
+         * Template version selector. Supports a numeric version id, `latest`, or `live`.
+         */
+        versionId?: string,
         requestBody?: Record<string, any>,
     }): CancelablePromise<TemplateTestResponse> {
         return __request(OpenAPI, {
@@ -104,6 +115,7 @@ export class GenerateService {
             },
             query: {
                 'output_type': outputType,
+                'version_id': versionId,
             },
             body: requestBody,
             mediaType: 'application/json',
