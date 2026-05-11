@@ -5310,6 +5310,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: search
+        schema:
+          type: string
+        description: Search across created_file_name field
+      - in: query
         name: start_date
         schema:
           type: string
