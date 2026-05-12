@@ -12,7 +12,9 @@ export type SharepointDelivery = {
     success_callback_payload?: Record<string, any> | null;
     success_callback_headers?: Record<string, any> | null;
     last_used_on?: string | null;
+    folder_name?: string;
     folder_id: string;
+    drive_name?: string;
     drive_id: string;
 };
 
