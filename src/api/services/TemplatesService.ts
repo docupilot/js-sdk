@@ -19,6 +19,7 @@ import type { TemplateCount } from '../models/TemplateCount';
 import type { TemplateSchema } from '../models/TemplateSchema';
 import type { TemplateSchemaDetail } from '../models/TemplateSchemaDetail';
 import type { TemplateSharing } from '../models/TemplateSharing';
+import type { TemplateVersion } from '../models/TemplateVersion';
 import type { UploadTemplateImage } from '../models/UploadTemplateImage';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -62,7 +63,7 @@ export class TemplatesService {
          */
         search?: string,
         /**
-         * Filter templates by status (all, active, test)
+         * Filter templates by status. Active maps to published templates and test maps to unpublished templates.
          */
         status?: 'active' | 'test',
         type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
@@ -252,17 +253,25 @@ export class TemplatesService {
      */
     public static downloadTemplateFile({
         id,
+        versionId,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
+        /**
+         * Template version selector. Supports a numeric version id, `latest`, or `live`.
+         */
+        versionId?: string,
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/download/',
             path: {
                 'id': id,
+            },
+            query: {
+                'version_id': versionId,
             },
         });
     }
@@ -375,12 +384,17 @@ export class TemplatesService {
     public static previewTemplate({
         id,
         format,
+        versionId,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
         format?: 'json' | 'octet-stream',
+        /**
+         * Template version selector. Supports a numeric version id, `latest`, or `live`.
+         */
+        versionId?: string,
     }): CancelablePromise<Blob> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -390,6 +404,29 @@ export class TemplatesService {
             },
             query: {
                 'format': format,
+                'version_id': versionId,
+            },
+        });
+    }
+
+    /**
+     * Publish latest template version
+     * @returns TemplateVersion
+     * @throws ApiError
+     */
+    public static publishLatestTemplateVersion({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<TemplateVersion> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/api/v2/templates/{id}/publish/',
+            path: {
+                'id': id,
             },
         });
     }
@@ -423,17 +460,25 @@ export class TemplatesService {
      */
     public static getTemplateSchema({
         id,
+        versionId,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
+        /**
+         * Template version selector. Supports a numeric version id, `latest`, or `live`.
+         */
+        versionId?: string,
     }): CancelablePromise<Array<TemplateSchema>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/schema/',
             path: {
                 'id': id,
+            },
+            query: {
+                'version_id': versionId,
             },
         });
     }
@@ -445,17 +490,25 @@ export class TemplatesService {
      */
     public static getDetailedTemplateSchema({
         id,
+        versionId,
     }: {
         /**
          * A unique integer value identifying this document.
          */
         id: number,
+        /**
+         * Template version selector. Supports a numeric version id, `latest`, or `live`.
+         */
+        versionId?: string,
     }): CancelablePromise<TemplateSchemaDetail> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/api/v2/templates/{id}/schema/detail/',
             path: {
                 'id': id,
+            },
+            query: {
+                'version_id': versionId,
             },
         });
     }
