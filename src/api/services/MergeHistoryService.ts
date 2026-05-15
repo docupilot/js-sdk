@@ -19,6 +19,7 @@ export class MergeHistoryService {
         endDate,
         ordering,
         page,
+        search,
         startDate,
         status,
         template,
@@ -32,6 +33,10 @@ export class MergeHistoryService {
          * A page number within the paginated result set.
          */
         page?: number,
+        /**
+         * Search across created_file_name field
+         */
+        search?: string,
         startDate?: string,
         status?: 'error' | 'pending' | 'success',
         template?: number,
@@ -43,6 +48,7 @@ export class MergeHistoryService {
                 'end_date': endDate,
                 'ordering': ordering,
                 'page': page,
+                'search': search,
                 'start_date': startDate,
                 'status': status,
                 'template': template,
