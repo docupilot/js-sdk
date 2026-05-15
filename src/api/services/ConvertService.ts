@@ -17,12 +17,17 @@ export class ConvertService {
     public static convertFiles({
         requestBody,
         responseType,
+        test,
     }: {
         requestBody: OmitReadonly<ConvertJsonRequest>,
         /**
          * If stream, returns the converted file as a downloadable binary (PDF / PNG / ZIP). If url, returns JSON with file_url and file_name.
          */
         responseType?: 'stream' | 'url',
+        /**
+         * If true, the document will be generated in test mode (with watermark and without deducting merge credits).
+         */
+        test?: boolean,
     }): CancelablePromise<{
         file_url?: string;
         file_name?: string;
@@ -32,6 +37,7 @@ export class ConvertService {
             url: '/dashboard/api/v2/convert/',
             query: {
                 'response_type': responseType,
+                'test': test,
             },
             body: requestBody,
             mediaType: 'application/json',
