@@ -4504,6 +4504,7 @@ paths:
           - one_drive
           - podio
           - sftp
+          - sharepoint
           - sign_now
           - signable
           - yousign
@@ -4607,7 +4608,18 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|box|zoho$
+          enum:
+          - box
+          - docu_sign
+          - dropbox
+          - eversign
+          - google_drive
+          - one_drive
+          - podio
+          - sharepoint
+          - sign_now
+          - zoho
+        description: Type of integrator
         required: true
       tags:
       - linked_accounts
@@ -4837,6 +4849,7 @@ paths:
           - one_drive
           - podio
           - sftp
+          - sharepoint
           - sign_now
           - signable
           - yousign
@@ -5103,6 +5116,58 @@ paths:
       responses:
         '302':
           description: No response body
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/linked_accounts/{id}/sharepoint_picker_payload/:
+    get:
+      operationId: get_sharepoint_picker_payload
+      description: Get sharepoint picker payload
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharepointPickerPayload'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
         '401':
           content:
             application/json:
@@ -5849,6 +5914,7 @@ paths:
             - one_drive
             - podio
             - sftp
+            - sharepoint
             - sign_now
             - signable
             - signature
@@ -7189,6 +7255,7 @@ paths:
           - one_drive
           - podio
           - sftp
+          - sharepoint
           - sign_now
           - signable
           - signature
@@ -9342,6 +9409,7 @@ paths:
             - one_drive
             - podio
             - sftp
+            - sharepoint
             - sign_now
             - signable
             - signature
@@ -12826,6 +12894,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -12920,6 +12989,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -13220,6 +13290,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -13568,6 +13639,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - box
           - zoho
@@ -13712,6 +13784,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -13959,6 +14032,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -14211,6 +14285,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -14860,6 +14935,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15332,6 +15408,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15425,6 +15502,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15876,6 +15954,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -16821,6 +16900,7 @@ components:
       - $ref: '#/components/schemas/SignatureDelivery'
       - $ref: '#/components/schemas/DropboxDelivery'
       - $ref: '#/components/schemas/OneDriveDelivery'
+      - $ref: '#/components/schemas/SharepointDelivery'
       - $ref: '#/components/schemas/SignNowDelivery'
       - $ref: '#/components/schemas/GoogleDriveDelivery'
       - $ref: '#/components/schemas/S3Delivery'
@@ -16840,6 +16920,7 @@ components:
           signature: '#/components/schemas/SignatureDelivery'
           dropbox: '#/components/schemas/DropboxDelivery'
           one_drive: '#/components/schemas/OneDriveDelivery'
+          sharepoint: '#/components/schemas/SharepointDelivery'
           sign_now: '#/components/schemas/SignNowDelivery'
           google_drive: '#/components/schemas/GoogleDriveDelivery'
           aws_s3: '#/components/schemas/S3Delivery'
@@ -16922,6 +17003,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -17068,6 +17150,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -17100,6 +17183,83 @@ components:
       - account
       - id
       - name
+    SharepointDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - signature
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - sharepoint
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        folder_id:
+          type: string
+          maxLength: 100
+        drive_id:
+          type: string
+          maxLength: 100
+        path:
+          type: string
+      required:
+      - account
+      - drive_id
+      - folder_id
+      - id
+      - name
+      - path
+    SharepointPickerPayload:
+      type: object
+      properties:
+        payload:
+          type: string
+      required:
+      - payload
+      description: ''
     SharingInfoFolder:
       type: object
       properties:
@@ -17172,6 +17332,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -17266,6 +17427,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -17378,6 +17540,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -17574,6 +17737,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -17969,6 +18133,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - box
           - zoho
@@ -18309,6 +18474,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -18727,6 +18893,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
