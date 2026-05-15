@@ -47,7 +47,7 @@ export class TemplatesService {
         /**
          * Filter templates by configured delivery type (supports multiple values)
          */
-        deliveryType?: Array<'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'signature' | 'webhook' | 'yousign' | 'zoho_crm'>,
+        deliveryType?: Array<'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sharepoint' | 'sign_now' | 'signable' | 'signature' | 'webhook' | 'yousign' | 'zoho_crm'>,
         folder?: number,
         /**
          * Which field to use when ordering the results.
@@ -652,7 +652,7 @@ export class TemplatesService {
          *
          *
          */
-        deliveryType?: Array<'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'signature' | 'webhook' | 'yousign' | 'zoho_crm'>,
+        deliveryType?: Array<'aws_s3' | 'azure_blob_storage' | 'box_drive' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sharepoint' | 'sign_now' | 'signable' | 'signature' | 'webhook' | 'yousign' | 'zoho_crm'>,
         folder?: number,
         outputType?: 'docx' | 'html' | 'jpeg' | 'pdf' | 'png' | 'pptx' | 'xlsx',
         status?: 'active' | 'test',
