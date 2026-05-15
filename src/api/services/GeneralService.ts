@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BannerNotification } from '../models/BannerNotification';
+import type { FeatureFlags } from '../models/FeatureFlags';
 import type { Meta } from '../models/Meta';
 import type { Plan } from '../models/Plan';
 import type { Timezone } from '../models/Timezone';
@@ -21,6 +22,17 @@ export class GeneralService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/banner_notifications/',
+        });
+    }
+
+    /**
+     * @returns FeatureFlags
+     * @throws ApiError
+     */
+    public static getFeatureFlags(): CancelablePromise<FeatureFlags> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/feature_flags/',
         });
     }
 

@@ -10,6 +10,7 @@ export type Template = {
     preferences?: TemplateSettings;
     folder?: Folder | null;
     readonly has_docusign_delivery: boolean;
+    readonly published: boolean;
     title: string;
     description?: string | null;
     readonly type: 'docx' | 'html' | 'fillable_pdf' | 'pptx' | 'xlsx' | 'g_document' | 'g_presentation' | 'g_spreadsheet';
