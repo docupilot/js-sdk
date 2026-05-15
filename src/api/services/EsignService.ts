@@ -709,7 +709,7 @@ export class EsignService {
     public static bulkMoveEnvelopes({
         requestBody,
     }: {
-        requestBody?: OmitReadonly<EnvelopeBulkMove>,
+        requestBody: OmitReadonly<EnvelopeBulkMove>,
     }): CancelablePromise<BulkMoveEnvelopesResponse> {
         return __request(OpenAPI, {
             method: 'POST',

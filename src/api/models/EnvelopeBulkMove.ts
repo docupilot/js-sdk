@@ -5,6 +5,8 @@
 export type EnvelopeBulkMove = {
     envelope_ids?: Array<number>;
     is_move_all?: boolean;
-    new_folder_id?: number | null;
+    status?: Array<'created' | 'pending' | 'voided' | 'declined' | 'completed' | 'waiting_for_me'>;
+    folder_id?: number;
+    new_folder_id: number | null;
 };
 
