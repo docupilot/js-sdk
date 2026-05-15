@@ -8,6 +8,7 @@ import type { GoogleDrivePickerPayload } from '../models/GoogleDrivePickerPayloa
 import type { PaginatedAccountDeliveryList } from '../models/PaginatedAccountDeliveryList';
 import type { SendEmailAccountAuthorizationOTP } from '../models/SendEmailAccountAuthorizationOTP';
 import type { SendTestSmtpMail } from '../models/SendTestSmtpMail';
+import type { SharepointPickerPayload } from '../models/SharepointPickerPayload';
 import type { UpdateDeliveryAccount } from '../models/UpdateDeliveryAccount';
 import type { VerifyEmailAccountOTP } from '../models/VerifyEmailAccountOTP';
 
@@ -36,7 +37,7 @@ export class LinkedAccountsService {
          * A search term.
          */
         search?: string,
-        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sharepoint' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
     }): CancelablePromise<Array<DeliveryAccount>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -76,7 +77,10 @@ export class LinkedAccountsService {
         integratorType,
         environment,
     }: {
-        integratorType: string,
+        /**
+         * Type of integrator
+         */
+        integratorType: 'box' | 'docu_sign' | 'dropbox' | 'eversign' | 'google_drive' | 'one_drive' | 'podio' | 'sharepoint' | 'sign_now' | 'zoho',
         /**
          * sub-type of integrator. For example: sandbox or production for docu_sign
          */
@@ -185,7 +189,7 @@ export class LinkedAccountsService {
          * A page number within the paginated result set.
          */
         page?: number,
-        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
+        type?: 'aws_s3' | 'azure_storage' | 'box' | 'docu_sign' | 'dropbox' | 'email' | 'eversign' | 'google_drive' | 'hellosign' | 'one_drive' | 'podio' | 'sftp' | 'sharepoint' | 'sign_now' | 'signable' | 'yousign' | 'zoho' | 'zoho_crm',
     }): CancelablePromise<PaginatedAccountDeliveryList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -313,6 +317,28 @@ export class LinkedAccountsService {
             },
             errors: {
                 302: `No response body`,
+            },
+        });
+    }
+
+    /**
+     * Get sharepoint picker payload
+     * @returns SharepointPickerPayload
+     * @throws ApiError
+     */
+    public static getSharepointPickerPayload({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this delivery account.
+         */
+        id: number,
+    }): CancelablePromise<SharepointPickerPayload> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/linked_accounts/{id}/sharepoint_picker_payload/',
+            path: {
+                'id': id,
             },
         });
     }
