@@ -17237,22 +17237,21 @@ components:
           type: string
           format: date-time
           nullable: true
-        folder_name:
-          type: string
         folder_id:
           type: string
           maxLength: 100
-        drive_name:
-          type: string
         drive_id:
           type: string
           maxLength: 100
+        path:
+          type: string
       required:
       - account
       - drive_id
       - folder_id
       - id
       - name
+      - path
     SharepointPickerPayload:
       type: object
       properties:
