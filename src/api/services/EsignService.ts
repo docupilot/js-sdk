@@ -708,12 +708,26 @@ export class EsignService {
      */
     public static bulkMoveEnvelopes({
         requestBody,
+        sourceFolder,
+        status,
     }: {
         requestBody: OmitReadonly<EnvelopeBulkMove>,
+        /**
+         * Restrict bulk move to envelopes currently in this source folder
+         */
+        sourceFolder?: number,
+        /**
+         * Filter envelopes by status when moving all envelopes
+         */
+        status?: 'completed' | 'created' | 'declined' | 'pending' | 'voided' | 'waiting_for_me',
     }): CancelablePromise<BulkMoveEnvelopesResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/esign/envelopes/bulk-move/',
+            query: {
+                'source_folder': sourceFolder,
+                'status': status,
+            },
             body: requestBody,
             mediaType: 'application/json',
         });
