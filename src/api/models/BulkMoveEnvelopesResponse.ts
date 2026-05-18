@@ -6,12 +6,20 @@ import type { EnvelopeMoveFailureDetail } from './EnvelopeMoveFailureDetail';
 
 export type BulkMoveEnvelopesResponse = {
     /**
-     * List of successfully moved envelope IDs
+     * Number of envelopes requested for the bulk move
      */
-    success: Array<number>;
+    total_count: number;
     /**
-     * Mapping of failed envelope IDs to error messages
+     * Number of envelopes moved successfully
      */
-    failures: Record<string, EnvelopeMoveFailureDetail>;
+    moved_count: number;
+    /**
+     * Number of envelopes that were not moved
+     */
+    failure_count: number;
+    /**
+     * Failures grouped by reason
+     */
+    failures: Array<EnvelopeMoveFailureDetail>;
 };
 
