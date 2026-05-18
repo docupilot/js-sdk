@@ -11171,6 +11171,23 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: source_folder
+        schema:
+          type: integer
+        description: Restrict bulk move to envelopes currently in this source folder
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - completed
+          - created
+          - declined
+          - pending
+          - voided
+          - waiting_for_me
+        description: Filter envelopes by status when moving all envelopes
       tags:
       - esign
       requestBody:
@@ -15155,19 +15172,6 @@ components:
           writeOnly: true
         is_move_all:
           type: boolean
-          writeOnly: true
-        status:
-          enum:
-          - created
-          - pending
-          - voided
-          - declined
-          - completed
-          - waiting_for_me
-          type: string
-          writeOnly: true
-        folder_id:
-          type: integer
           writeOnly: true
         new_folder_id:
           type: integer
