@@ -607,7 +607,7 @@ paths:
     post:
       operationId: initiate_authorization_sequence
       summary: Initiate a re-authorization sequence that would verify authenticity
-        of logged-in userin order to allow performing high security operations like
+        of logged-in user in order to allow performing high security operations like
         delete workspace
       tags:
       - users
@@ -2402,6 +2402,12 @@ paths:
           - url
         description: If stream, returns the converted file as a downloadable binary
           (PDF / PNG / ZIP). If url, returns JSON with file_url and file_name.
+      - in: query
+        name: test
+        schema:
+          type: boolean
+        description: If true, the document will be generated in test mode (with watermark
+          and without deducting merge credits).
       tags:
       - convert
       requestBody:
@@ -3558,6 +3564,7 @@ paths:
           - one_drive
           - podio
           - sftp
+          - sharepoint
           - sign_now
           - signable
           - yousign
@@ -3661,7 +3668,18 @@ paths:
         name: integrator_type
         schema:
           type: string
-          pattern: ^dropbox|google_drive|one_drive|docu_sign|sign_now|podio|eversign|box|zoho$
+          enum:
+          - box
+          - docu_sign
+          - dropbox
+          - eversign
+          - google_drive
+          - one_drive
+          - podio
+          - sharepoint
+          - sign_now
+          - zoho
+        description: Type of integrator
         required: true
       tags:
       - linked_accounts
@@ -3891,6 +3909,7 @@ paths:
           - one_drive
           - podio
           - sftp
+          - sharepoint
           - sign_now
           - signable
           - yousign
@@ -4175,6 +4194,58 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/linked_accounts/{id}/sharepoint_picker_payload/:
+    get:
+      operationId: get_sharepoint_picker_payload
+      description: Get sharepoint picker payload
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this delivery account.
+        required: true
+      tags:
+      - linked_accounts
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharepointPickerPayload'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/linked_accounts/{id}/toggle_use_for_images/:
     post:
       operationId: update_delivery_accounts_use_for_images_flag
@@ -4364,6 +4435,11 @@ paths:
         schema:
           type: integer
       - in: query
+        name: search
+        schema:
+          type: string
+        description: Search across created_file_name field
+      - in: query
         name: start_date
         schema:
           type: string
@@ -4496,6 +4572,12 @@ paths:
           - url
         description: If stream, returns the transformed file as a downloadable PDF.
           If url, returns JSON with file_url and file_name.
+      - in: query
+        name: test
+        schema:
+          type: boolean
+        description: If true, the document will be generated in test mode (with watermark
+          and without deducting merge credits).
       tags:
       - pdf
       requestBody:
@@ -4892,6 +4974,7 @@ paths:
             - one_drive
             - podio
             - sftp
+            - sharepoint
             - sign_now
             - signable
             - signature
@@ -4942,7 +5025,8 @@ paths:
           enum:
           - active
           - test
-        description: Filter templates by status (all, active, test)
+        description: Filter templates by status. Active maps to published templates
+          and test maps to unpublished templates.
       - in: query
         name: type
         schema:
@@ -5389,6 +5473,12 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -5531,6 +5621,12 @@ paths:
           - png
           - pptx
           - xlsx
+      - in: query
+        name: version
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - generate
       requestBody:
@@ -5803,6 +5899,12 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -5814,6 +5916,60 @@ paths:
               schema:
                 type: string
                 format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{id}/publish/:
+    post:
+      operationId: publish_latest_template_version
+      summary: Publish latest template version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -5904,6 +6060,12 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -5954,6 +6116,12 @@ paths:
           type: integer
         description: A unique integer value identifying this document.
         required: true
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - templates
       security:
@@ -6011,6 +6179,12 @@ paths:
           - png
           - pptx
           - xlsx
+      - in: query
+        name: version_id
+        schema:
+          type: string
+        description: Template version selector. Supports a numeric version id, `latest`,
+          or `live`.
       tags:
       - generate
       requestBody:
@@ -6141,6 +6315,7 @@ paths:
           - one_drive
           - podio
           - sftp
+          - sharepoint
           - sign_now
           - signable
           - signature
@@ -7706,6 +7881,562 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/:
+    get:
+      operationId: list_template_versions
+      summary: Get list of template versions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: starred
+        schema:
+          type: boolean
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTemplateVersionList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/:
+    get:
+      operationId: get_template_version
+      summary: Get one template version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/copy/:
+    post:
+      operationId: copy_template_from_version
+      summary: Copy template from version including preferences, deliveries
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopyTemplateFromVersion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CopyTemplateFromVersion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CopyTemplateFromVersion'
+        required: true
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/download/:
+    get:
+      operationId: download_template_version_file
+      summary: Download template version file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/minor_versions/:
+    get:
+      operationId: get_template_minor_versions
+      summary: Get template minor versions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: starred
+        schema:
+          type: boolean
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/rename/:
+    patch:
+      operationId: update_template_version_name
+      summary: Update template version name
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRenameTemplateVersion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRenameTemplateVersion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRenameTemplateVersion'
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/restore/:
+    post:
+      operationId: restore_template_version
+      summary: Restore template version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/set_as_live_version/:
+    post:
+      operationId: set_template_version_live
+      summary: Set a template version to live version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{template_id}/versions/{id}/toggle_starred/:
+    post:
+      operationId: toggle_template_version_starred
+      summary: Toggle template version starred
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document content.
+        required: true
+      - in: path
+        name: template_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Template versioning
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/api/v2/templates/all/:
     get:
       operationId: list_all_templates
@@ -7738,6 +8469,7 @@ paths:
             - one_drive
             - podio
             - sftp
+            - sharepoint
             - sign_now
             - signable
             - signature
@@ -10907,6 +11639,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/feature_flags/:
+    get:
+      operationId: get_feature_flags
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - general
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureFlags'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/meta/:
     get:
       operationId: get_app_meta
@@ -11139,6 +11904,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -11233,6 +11999,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -11519,6 +12286,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -11788,6 +12556,18 @@ components:
       - folder
       - title
       description: ''
+    CopyTemplateFromVersion:
+      type: object
+      properties:
+        folder:
+          type: integer
+          nullable: true
+        title:
+          type: string
+          maxLength: 255
+      required:
+      - title
+      description: ''
     CreateEnvelope:
       type: object
       properties:
@@ -11846,6 +12626,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - box
           - zoho
@@ -11990,6 +12771,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -12237,6 +13019,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -12489,6 +13272,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -13138,6 +13922,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -13361,6 +14146,14 @@ components:
       required:
       - file_name
       - template_id
+      description: ''
+    FeatureFlags:
+      type: object
+      properties:
+        template_versioning_enabled:
+          type: boolean
+      required:
+      - template_versioning_enabled
       description: ''
     File:
       type: object
@@ -13602,6 +14395,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -13695,6 +14489,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -14084,6 +14879,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -14513,6 +15309,29 @@ components:
             $ref: '#/components/schemas/Template'
         has_docusign_templates:
           type: boolean
+    PaginatedTemplateVersionList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateVersion'
     PatchedContentBlockEditorVersion:
       type: object
       properties:
@@ -14709,6 +15528,12 @@ components:
         updated_by:
           type: integer
           readOnly: true
+    PatchedRenameTemplateVersion:
+      type: object
+      properties:
+        name:
+          type: string
+      description: ''
     PatchedUpdateContentBlockSharing:
       type: object
       description: ''
@@ -14839,6 +15664,7 @@ components:
       - $ref: '#/components/schemas/SignatureDelivery'
       - $ref: '#/components/schemas/DropboxDelivery'
       - $ref: '#/components/schemas/OneDriveDelivery'
+      - $ref: '#/components/schemas/SharepointDelivery'
       - $ref: '#/components/schemas/SignNowDelivery'
       - $ref: '#/components/schemas/GoogleDriveDelivery'
       - $ref: '#/components/schemas/S3Delivery'
@@ -14858,6 +15684,7 @@ components:
           signature: '#/components/schemas/SignatureDelivery'
           dropbox: '#/components/schemas/DropboxDelivery'
           one_drive: '#/components/schemas/OneDriveDelivery'
+          sharepoint: '#/components/schemas/SharepointDelivery'
           sign_now: '#/components/schemas/SignNowDelivery'
           google_drive: '#/components/schemas/GoogleDriveDelivery'
           aws_s3: '#/components/schemas/S3Delivery'
@@ -14933,6 +15760,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15079,6 +15907,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15111,6 +15940,83 @@ components:
       - account
       - id
       - name
+    SharepointDelivery:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        failure_email_recipients:
+          type: string
+          nullable: true
+          maxLength: 255
+        account:
+          type: integer
+        name:
+          type: string
+          maxLength: 255
+        type:
+          enum:
+          - webhook
+          - azure_blob_storage
+          - box_drive
+          - signature
+          - docu_sign
+          - sign_now
+          - zoho_crm
+          - dropbox
+          - google_drive
+          - podio
+          - one_drive
+          - sharepoint
+          - eversign
+          - hellosign
+          - aws_s3
+          - signable
+          - yousign
+          - email
+          - sftp
+          type: string
+        success_callback_url:
+          type: string
+          nullable: true
+          maxLength: 255
+        success_callback_payload:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        success_callback_headers:
+          type: object
+          additionalProperties: {}
+          nullable: true
+        last_used_on:
+          type: string
+          format: date-time
+          nullable: true
+        folder_id:
+          type: string
+          maxLength: 100
+        drive_id:
+          type: string
+          maxLength: 100
+        path:
+          type: string
+      required:
+      - account
+      - drive_id
+      - folder_id
+      - id
+      - name
+      - path
+    SharepointPickerPayload:
+      type: object
+      properties:
+        payload:
+          type: string
+      required:
+      - payload
+      description: ''
     SharingInfoFolder:
       type: object
       properties:
@@ -15183,6 +16089,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15277,6 +16184,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15367,6 +16275,12 @@ components:
           nullable: true
         sender:
           type: integer
+          nullable: true
+        sender_mode:
+          enum:
+          - fixed
+          - smart
+          type: string
         name:
           type: string
           maxLength: 255
@@ -15383,6 +16297,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15425,7 +16340,6 @@ components:
       required:
       - id
       - name
-      - sender
       - signers
     SigningLinkResponse:
       type: object
@@ -15459,6 +16373,9 @@ components:
           - $ref: '#/components/schemas/Folder'
           nullable: true
         has_docusign_delivery:
+          type: boolean
+          readOnly: true
+        published:
           type: boolean
           readOnly: true
         title:
@@ -15515,6 +16432,7 @@ components:
       - deleted_time
       - has_docusign_delivery
       - id
+      - published
       - title
       - type
       - updated_by
@@ -15550,6 +16468,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -15831,6 +16750,39 @@ components:
       - file_name
       - file_url
       description: ''
+    TemplateVersion:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          nullable: true
+          maxLength: 255
+        version_type:
+          enum:
+          - major
+          - minor
+          - null
+          type: string
+          nullable: true
+        starred:
+          type: boolean
+        live:
+          type: boolean
+        created_time:
+          type: string
+          format: date-time
+          readOnly: true
+        created_by_user_name:
+          type: string
+          readOnly: true
+      required:
+      - created_by_user_name
+      - created_time
+      - id
+      description: ''
     TestContentBlock:
       type: object
       properties:
@@ -15912,6 +16864,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - box
           - zoho
@@ -16252,6 +17205,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3
@@ -16498,6 +17452,7 @@ components:
           - google_drive
           - podio
           - one_drive
+          - sharepoint
           - eversign
           - hellosign
           - aws_s3

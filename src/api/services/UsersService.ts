@@ -28,7 +28,7 @@ export class UsersService {
     }
 
     /**
-     * Initiate a re-authorization sequence that would verify authenticity of logged-in userin order to allow performing high security operations like delete workspace
+     * Initiate a re-authorization sequence that would verify authenticity of logged-in user in order to allow performing high security operations like delete workspace
      * @returns void
      * @throws ApiError
      */

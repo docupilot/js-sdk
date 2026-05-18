@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type MigrateSessionResponse = {
-    status: string;
+export type FeatureFlags = {
+    template_versioning_enabled: boolean;
 };
 

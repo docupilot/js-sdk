@@ -3,8 +3,6 @@
 /* eslint-disable */
 import type { ChangeEmail } from '../models/ChangeEmail';
 import type { ChangePassword } from '../models/ChangePassword';
-import type { ExchangeSessionResponse } from '../models/ExchangeSessionResponse';
-import type { MigrateSessionResponse } from '../models/MigrateSessionResponse';
 import type { Organization } from '../models/Organization';
 import type { PatchedUser } from '../models/PatchedUser';
 import type { SendAuthorizationOTP } from '../models/SendAuthorizationOTP';
@@ -85,19 +83,6 @@ export class UserService {
     }
 
     /**
-     * Exchange session for a migration code
-     * Generates a short-lived UUID code linked to the current session key for cross-domain migration.
-     * @returns ExchangeSessionResponse
-     * @throws ApiError
-     */
-    public static getExchangeSessionCode(): CancelablePromise<ExchangeSessionResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/user/exchange_session/',
-        });
-    }
-
-    /**
      * @returns void
      * @throws ApiError
      */
@@ -159,35 +144,6 @@ export class UserService {
             url: '/accounts/user/me/',
             body: requestBody,
             mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * Migrate session to API domain
-     * Endpoint called on the API domain to exchange a short-lived code for a session cookie.
-     * @returns MigrateSessionResponse
-     * @throws ApiError
-     */
-    public static attachSessionFromExchangeCode({
-        org,
-        sessionExchangeCode,
-    }: {
-        /**
-         * The organization subdomain (e.g., 'rush')
-         */
-        org: string,
-        /**
-         * The one-time UUID exchange code obtained from /exchange_session/
-         */
-        sessionExchangeCode: string,
-    }): CancelablePromise<MigrateSessionResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/accounts/user/migrate_session/',
-            query: {
-                'org': org,
-                'session_exchange_code': sessionExchangeCode,
-            },
         });
     }
 
