@@ -13779,19 +13779,25 @@ components:
     BulkMoveEnvelopesResponse:
       type: object
       properties:
-        success:
+        total_count:
+          type: integer
+          description: Number of envelopes requested for the bulk move
+        moved_count:
+          type: integer
+          description: Number of envelopes moved successfully
+        failure_count:
+          type: integer
+          description: Number of envelopes that were not moved
+        failures:
           type: array
           items:
-            type: integer
-          description: List of successfully moved envelope IDs
-        failures:
-          type: object
-          additionalProperties:
             $ref: '#/components/schemas/EnvelopeMoveFailureDetail'
-          description: Mapping of failed envelope IDs to error messages
+          description: Failures grouped by reason
       required:
+      - failure_count
       - failures
-      - success
+      - moved_count
+      - total_count
       description: ''
     ChangeRole:
       type: object
@@ -15151,16 +15157,14 @@ components:
           type: boolean
           writeOnly: true
         status:
-          type: array
-          items:
-            enum:
-            - created
-            - pending
-            - voided
-            - declined
-            - completed
-            - waiting_for_me
-            type: string
+          enum:
+          - created
+          - pending
+          - voided
+          - declined
+          - completed
+          - waiting_for_me
+          type: string
           writeOnly: true
         folder_id:
           type: integer
@@ -15433,10 +15437,21 @@ components:
     EnvelopeMoveFailureDetail:
       type: object
       properties:
+        code:
+          type: string
         detail:
           type: string
+        ids:
+          type: array
+          items:
+            type: integer
+        count:
+          type: integer
       required:
+      - code
+      - count
       - detail
+      - ids
       description: ''
     EnvelopeRecipient:
       type: object
