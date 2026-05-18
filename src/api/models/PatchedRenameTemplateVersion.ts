@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ExchangeSessionResponse = {
-    code: string;
+export type PatchedRenameTemplateVersion = {
+    name?: string;
 };
 
