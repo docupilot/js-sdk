@@ -11316,6 +11316,15 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+      - in: query
+        name: permission
+        schema:
+          type: string
+          enum:
+          - manage
+          - read
+          - write
+        description: Restrict folders to the requested permission level.
       - name: search
         required: false
         in: query

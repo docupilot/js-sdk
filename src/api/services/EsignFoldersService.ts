@@ -18,12 +18,17 @@ export class EsignFoldersService {
      */
     public static listEsignFolders({
         ordering,
+        permission,
         search,
     }: {
         /**
          * Which field to use when ordering the results.
          */
         ordering?: string,
+        /**
+         * Restrict folders to the requested permission level.
+         */
+        permission?: 'manage' | 'read' | 'write',
         /**
          * A search term.
          */
@@ -34,6 +39,7 @@ export class EsignFoldersService {
             url: '/dashboard/esign/folders/',
             query: {
                 'ordering': ordering,
+                'permission': permission,
                 'search': search,
             },
         });
