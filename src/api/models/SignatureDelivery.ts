@@ -19,6 +19,7 @@ export type SignatureDelivery = {
     sender?: number | null;
     sender_mode?: 'fixed' | 'smart';
     folder?: number | null;
+    readonly folder_name: string | null;
     name: string;
     type?: 'signature';
     success_callback_url?: string | null;
