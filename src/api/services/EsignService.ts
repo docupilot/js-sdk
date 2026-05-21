@@ -708,14 +708,14 @@ export class EsignService {
      */
     public static bulkMoveEnvelopes({
         requestBody,
-        sourceFolder,
+        folder,
         status,
     }: {
         requestBody: OmitReadonly<EnvelopeBulkMove>,
         /**
-         * Restrict bulk move to envelopes currently in this source folder
+         * Restrict bulk move to envelopes currently in this folder
          */
-        sourceFolder?: number,
+        folder?: number,
         /**
          * Filter envelopes by status when moving all envelopes
          */
@@ -725,7 +725,7 @@ export class EsignService {
             method: 'POST',
             url: '/dashboard/esign/envelopes/bulk-move/',
             query: {
-                'source_folder': sourceFolder,
+                'folder': folder,
                 'status': status,
             },
             body: requestBody,
