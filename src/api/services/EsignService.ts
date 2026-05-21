@@ -403,6 +403,25 @@ export class EsignService {
     }
 
     /**
+     * Get e-sign folder permissions
+     * @returns string
+     * @throws ApiError
+     */
+    public static getEsignFolderPermissions({
+        ids,
+    }: {
+        ids?: string,
+    }): CancelablePromise<Record<string, Array<'read' | 'write' | 'manage'>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/permissions/folder/',
+            query: {
+                'ids': ids,
+            },
+        });
+    }
+
+    /**
      * details of an envelope
      * @returns EnvelopeDetails
      * @throws ApiError
