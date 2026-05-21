@@ -18297,6 +18297,10 @@ components:
         folder:
           type: integer
           nullable: true
+        folder_name:
+          type: string
+          nullable: true
+          readOnly: true
         name:
           type: string
           maxLength: 255
@@ -18354,6 +18358,7 @@ components:
         enable_optional_signers:
           type: boolean
       required:
+      - folder_name
       - id
       - name
       - signers
