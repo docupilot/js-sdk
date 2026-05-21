@@ -11172,10 +11172,10 @@ paths:
         description: Workspace unique_key
         required: true
       - in: query
-        name: source_folder
+        name: folder
         schema:
           type: integer
-        description: Restrict bulk move to envelopes currently in this source folder
+        description: Restrict bulk move to envelopes currently in this folder
       - in: query
         name: status
         schema:
