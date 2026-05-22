@@ -403,25 +403,6 @@ export class EsignService {
     }
 
     /**
-     * Get e-sign folder permissions
-     * @returns string
-     * @throws ApiError
-     */
-    public static getEsignFolderPermissions({
-        ids,
-    }: {
-        ids?: string,
-    }): CancelablePromise<Record<string, Array<'read' | 'write' | 'manage'>>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/dashboard/esign/permissions/folder/',
-            query: {
-                'ids': ids,
-            },
-        });
-    }
-
-    /**
      * details of an envelope
      * @returns EnvelopeDetails
      * @throws ApiError
@@ -900,6 +881,37 @@ export class EsignService {
             path: {
                 'folder_id': folderId,
                 'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get e-sign folder permissions
+     * @returns string
+     * @throws ApiError
+     */
+    public static getEsignFolderPermissions({
+        ids,
+        ordering,
+        search,
+    }: {
+        ids?: string,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<Array<Record<string, Array<'read' | 'write' | 'manage'>>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/permissions/folder/',
+            query: {
+                'ids': ids,
+                'ordering': ordering,
+                'search': search,
             },
         });
     }
