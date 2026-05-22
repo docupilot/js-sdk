@@ -67,28 +67,6 @@ export class EsignFoldersService {
      * @returns EnvelopeFolder
      * @throws ApiError
      */
-    public static esignFoldersUpdate({
-        id,
-        requestBody,
-    }: {
-        id: string,
-        requestBody: OmitReadonly<EnvelopeFolder>,
-    }): CancelablePromise<EnvelopeFolder> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/dashboard/esign/folders/{id}/',
-            path: {
-                'id': id,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * @returns EnvelopeFolder
-     * @throws ApiError
-     */
     public static esignFoldersPartialUpdate({
         id,
         requestBody,
