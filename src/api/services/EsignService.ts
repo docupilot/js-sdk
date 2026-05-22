@@ -7,6 +7,7 @@ import type { Envelope } from '../models/Envelope';
 import type { EnvelopeBulkDownload } from '../models/EnvelopeBulkDownload';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
+import type { EnvelopeExportDownloadResponse } from '../models/EnvelopeExportDownloadResponse';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
 import type { EnvelopeRecipient } from '../models/EnvelopeRecipient';
 import type { EnvelopeResponses } from '../models/EnvelopeResponses';
@@ -84,18 +85,15 @@ export class EsignService {
     }
 
     /**
-     * download generated export envelopes if available
-     * @returns any The response contains file_name and file_URL to download the generated export file.
+     * Download generated export envelopes if available
+     * @returns EnvelopeExportDownloadResponse The response contains file_name and file_url to download the generated export file.
      * @throws ApiError
      */
-    public static downloadCreatedExportEnvelopes({
+    public static downloadExportedEnvelopes({
         id,
     }: {
         id: number,
-    }): CancelablePromise<{
-        file_url?: string;
-        file_name?: string;
-    }> {
+    }): CancelablePromise<EnvelopeExportDownloadResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/envelope-exports/{id}/download/',
