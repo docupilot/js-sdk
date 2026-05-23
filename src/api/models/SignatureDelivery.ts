@@ -18,6 +18,7 @@ export type SignatureDelivery = {
     warn_before?: number | null;
     sender?: number | null;
     sender_mode?: 'fixed' | 'smart';
+    readonly folder_name: string | null;
     name: string;
     type?: 'signature';
     success_callback_url?: string | null;
@@ -29,5 +30,6 @@ export type SignatureDelivery = {
     cc?: Array<string>;
     sequenced_signing?: boolean;
     enable_optional_signers?: boolean;
+    folder?: number | null;
 };
 
