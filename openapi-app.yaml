@@ -9776,8 +9776,8 @@ paths:
           description: ''
   /dashboard/esign/envelope-exports/{id}/download/:
     get:
-      operationId: download_created_export_envelopes
-      summary: download generated export envelopes if available
+      operationId: download_exported_envelopes
+      summary: Download generated export envelopes if available
       parameters:
       - in: header
         name: X-Workspace
@@ -9797,26 +9797,26 @@ paths:
       responses:
         '200':
           content:
-            application/zip:
+            application/json:
               schema:
-                type: string
-                format: binary
-          description: Download the exported envelopes as a ZIP file
+                $ref: '#/components/schemas/EnvelopeExportDownloadResponse'
+          description: The response contains file_name and file_url to download the
+            generated export file.
         '401':
           content:
-            application/zip:
+            application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
         '403':
           content:
-            application/zip:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
-            application/zip:
+            application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -15346,6 +15346,18 @@ components:
       - document_name
       - fields_meta
       - id
+      description: ''
+    EnvelopeExportDownloadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
       description: ''
     EnvelopeFieldResponse:
       type: object
