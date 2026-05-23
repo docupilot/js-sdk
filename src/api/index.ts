@@ -66,6 +66,7 @@ export type { EnvelopeBulkDownload } from './models/EnvelopeBulkDownload';
 export type { EnvelopeBulkMove } from './models/EnvelopeBulkMove';
 export type { EnvelopeDetails } from './models/EnvelopeDetails';
 export type { EnvelopeDocuments } from './models/EnvelopeDocuments';
+export type { EnvelopeExportDownloadResponse } from './models/EnvelopeExportDownloadResponse';
 export type { EnvelopeFieldResponse } from './models/EnvelopeFieldResponse';
 export type { EnvelopeFolder } from './models/EnvelopeFolder';
 export type { EnvelopeFolderSharing } from './models/EnvelopeFolderSharing';
