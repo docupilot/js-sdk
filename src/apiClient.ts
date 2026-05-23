@@ -128,4 +128,6 @@ export class APIClient {
   readonly ContentBlocksService = _API.ContentBlocksService;
   /**@deprecated*/
   readonly EsignSettingsService = _API.EsignSettingsService;
+  /**@deprecated*/
+  readonly EsignFoldersService = _API.EsignFoldersService;
 }
