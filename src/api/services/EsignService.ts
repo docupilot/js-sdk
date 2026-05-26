@@ -17,11 +17,13 @@ import type { EnvelopeResponses } from '../models/EnvelopeResponses';
 import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountResponse';
 import type { EnvelopeUpdate } from '../models/EnvelopeUpdate';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
+import type { ESignNotificationSettings } from '../models/ESignNotificationSettings';
 import type { PaginatedEnvelopeBulkDownloadList } from '../models/PaginatedEnvelopeBulkDownloadList';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
 import type { PatchedEnvelopeDocumentsUpdate } from '../models/PatchedEnvelopeDocumentsUpdate';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
+import type { PatchedESignNotificationSettings } from '../models/PatchedESignNotificationSettings';
 import type { PatchedUpdateEnvelopeFolderSharing } from '../models/PatchedUpdateEnvelopeFolderSharing';
 import type { PatchedUpdateEnvelopeRecipient } from '../models/PatchedUpdateEnvelopeRecipient';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
@@ -883,6 +885,41 @@ export class EsignService {
                 'folder_id': folderId,
                 'id': id,
             },
+        });
+    }
+
+    /**
+     * Get eSign notification settings
+     * @returns ESignNotificationSettings
+     * @throws ApiError
+     */
+    public static getEsignNotificationSettings(): CancelablePromise<Array<ESignNotificationSettings>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/global-settings/notification/',
+        });
+    }
+
+    /**
+     * partial update eSign notification settings
+     * @returns ESignNotificationSettings
+     * @throws ApiError
+     */
+    public static updateEsignNotificationSettings({
+        id,
+        requestBody,
+    }: {
+        id: string,
+        requestBody?: OmitReadonly<PatchedESignNotificationSettings>,
+    }): CancelablePromise<ESignNotificationSettings> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/esign/global-settings/notification/{id}/',
+            path: {
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
         });
     }
 

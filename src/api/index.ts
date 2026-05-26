@@ -77,6 +77,7 @@ export type { EnvelopeResponses } from './models/EnvelopeResponses';
 export type { EnvelopeStatusCountResponse } from './models/EnvelopeStatusCountResponse';
 export type { EnvelopeUpdate } from './models/EnvelopeUpdate';
 export type { EnvelopeVoid } from './models/EnvelopeVoid';
+export type { ESignNotificationSettings } from './models/ESignNotificationSettings';
 export type { ESignReminderConfig } from './models/ESignReminderConfig';
 export type { ESignSettings } from './models/ESignSettings';
 export type { ESignWebhook } from './models/ESignWebhook';
@@ -146,6 +147,7 @@ export type { PatchedEnvelopeDocumentsUpdate } from './models/PatchedEnvelopeDoc
 export type { PatchedEnvelopeFolder } from './models/PatchedEnvelopeFolder';
 export type { PatchedEnvelopeUpdate } from './models/PatchedEnvelopeUpdate';
 export type { PatchedESignEmailAccount } from './models/PatchedESignEmailAccount';
+export type { PatchedESignNotificationSettings } from './models/PatchedESignNotificationSettings';
 export type { PatchedESignSettings } from './models/PatchedESignSettings';
 export type { PatchedESignWebhook } from './models/PatchedESignWebhook';
 export type { PatchedExtension } from './models/PatchedExtension';
