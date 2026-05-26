@@ -11964,6 +11964,104 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/esign/global-settings/notification/:
+    get:
+      operationId: get_esign_notification_settings
+      summary: Get eSign notification settings
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ESignNotificationSettings'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/global-settings/notification/{id}/:
+    patch:
+      operationId: update_esign_notification_settings
+      summary: partial update eSign notification settings
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedESignNotificationSettings'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedESignNotificationSettings'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedESignNotificationSettings'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ESignNotificationSettings'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/esign/global-settings/webhooks/:
     get:
       operationId: list_esign_webhooks
@@ -14764,6 +14862,28 @@ components:
       - top
       - width
       description: ''
+    ESignNotificationSettings:
+      type: object
+      properties:
+        signer_reminder_emails:
+          type: boolean
+        signer_expiry_warning:
+          type: boolean
+        sender_when_signed:
+          type: boolean
+        sender_document_completed:
+          type: boolean
+        sender_when_declined:
+          type: boolean
+        cc_envelope_signed:
+          type: boolean
+        cc_envelope_completed:
+          type: boolean
+        cc_envelope_declined:
+          type: boolean
+        cc_envelope_voided:
+          type: boolean
+      description: ''
     ESignReminderConfig:
       type: object
       properties:
@@ -17198,6 +17318,28 @@ components:
         email_account:
           type: integer
           nullable: true
+      description: ''
+    PatchedESignNotificationSettings:
+      type: object
+      properties:
+        signer_reminder_emails:
+          type: boolean
+        signer_expiry_warning:
+          type: boolean
+        sender_when_signed:
+          type: boolean
+        sender_document_completed:
+          type: boolean
+        sender_when_declined:
+          type: boolean
+        cc_envelope_signed:
+          type: boolean
+        cc_envelope_completed:
+          type: boolean
+        cc_envelope_declined:
+          type: boolean
+        cc_envelope_voided:
+          type: boolean
       description: ''
     PatchedESignSettings:
       type: object
