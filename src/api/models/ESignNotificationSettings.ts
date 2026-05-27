@@ -3,14 +3,14 @@
 /* eslint-disable */
 
 export type ESignNotificationSettings = {
-    signer_reminder_emails?: boolean;
-    signer_expiry_warning?: boolean;
-    sender_when_signed?: boolean;
-    sender_document_completed?: boolean;
-    sender_when_declined?: boolean;
-    cc_envelope_signed?: boolean;
-    cc_envelope_completed?: boolean;
-    cc_envelope_declined?: boolean;
-    cc_envelope_voided?: boolean;
+    notify_signer_reminder_emails?: boolean;
+    notify_signer_expiry_warning?: boolean;
+    notify_sender_on_envelope_signed?: boolean;
+    notify_sender_on_envelope_completed?: boolean;
+    notify_sender_on_envelope_declined?: boolean;
+    notify_cc_on_envelope_signed?: boolean;
+    notify_cc_on_envelope_completed?: boolean;
+    notify_cc_on_envelope_declined?: boolean;
+    notify_cc_on_envelope_voided?: boolean;
 };
 

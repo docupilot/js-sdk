@@ -14865,23 +14865,23 @@ components:
     ESignNotificationSettings:
       type: object
       properties:
-        signer_reminder_emails:
+        notify_signer_reminder_emails:
           type: boolean
-        signer_expiry_warning:
+        notify_signer_expiry_warning:
           type: boolean
-        sender_when_signed:
+        notify_sender_on_envelope_signed:
           type: boolean
-        sender_document_completed:
+        notify_sender_on_envelope_completed:
           type: boolean
-        sender_when_declined:
+        notify_sender_on_envelope_declined:
           type: boolean
-        cc_envelope_signed:
+        notify_cc_on_envelope_signed:
           type: boolean
-        cc_envelope_completed:
+        notify_cc_on_envelope_completed:
           type: boolean
-        cc_envelope_declined:
+        notify_cc_on_envelope_declined:
           type: boolean
-        cc_envelope_voided:
+        notify_cc_on_envelope_voided:
           type: boolean
       description: ''
     ESignReminderConfig:
@@ -16241,6 +16241,8 @@ components:
           type: boolean
         settings:esign:webhook:
           type: boolean
+        settings:esign:notifications:
+          type: boolean
       required:
       - api_settings
       - billing
@@ -16251,6 +16253,7 @@ components:
       - integrations
       - reports
       - settings:esign:general
+      - settings:esign:notifications
       - settings:esign:webhook
       - team:manage
       - templates
@@ -17322,23 +17325,23 @@ components:
     PatchedESignNotificationSettings:
       type: object
       properties:
-        signer_reminder_emails:
+        notify_signer_reminder_emails:
           type: boolean
-        signer_expiry_warning:
+        notify_signer_expiry_warning:
           type: boolean
-        sender_when_signed:
+        notify_sender_on_envelope_signed:
           type: boolean
-        sender_document_completed:
+        notify_sender_on_envelope_completed:
           type: boolean
-        sender_when_declined:
+        notify_sender_on_envelope_declined:
           type: boolean
-        cc_envelope_signed:
+        notify_cc_on_envelope_signed:
           type: boolean
-        cc_envelope_completed:
+        notify_cc_on_envelope_completed:
           type: boolean
-        cc_envelope_declined:
+        notify_cc_on_envelope_declined:
           type: boolean
-        cc_envelope_voided:
+        notify_cc_on_envelope_voided:
           type: boolean
       description: ''
     PatchedESignSettings:
