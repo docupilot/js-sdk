@@ -1,12 +1,16 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { BulkMoveEnvelopesResponse } from '../models/BulkMoveEnvelopesResponse';
 import type { CreateEnvelope } from '../models/CreateEnvelope';
 import type { CreateEnvelopeRecipient } from '../models/CreateEnvelopeRecipient';
 import type { Envelope } from '../models/Envelope';
 import type { EnvelopeBulkDownload } from '../models/EnvelopeBulkDownload';
+import type { EnvelopeBulkMove } from '../models/EnvelopeBulkMove';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
+import type { EnvelopeExportDownloadResponse } from '../models/EnvelopeExportDownloadResponse';
+import type { EnvelopeFolderSharing } from '../models/EnvelopeFolderSharing';
 import type { EnvelopeHistory } from '../models/EnvelopeHistory';
 import type { EnvelopeRecipient } from '../models/EnvelopeRecipient';
 import type { EnvelopeResponses } from '../models/EnvelopeResponses';
@@ -18,6 +22,7 @@ import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
 import type { PatchedEnvelopeDocumentsUpdate } from '../models/PatchedEnvelopeDocumentsUpdate';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
+import type { PatchedUpdateEnvelopeFolderSharing } from '../models/PatchedUpdateEnvelopeFolderSharing';
 import type { PatchedUpdateEnvelopeRecipient } from '../models/PatchedUpdateEnvelopeRecipient';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
 import type { SigningLinkResponse } from '../models/SigningLinkResponse';
@@ -84,15 +89,15 @@ export class EsignService {
     }
 
     /**
-     * download generated export envelopes if available
-     * @returns binary Download the exported envelopes as a ZIP file
+     * Download generated export envelopes if available
+     * @returns EnvelopeExportDownloadResponse The response contains file_name and file_url to download the generated export file.
      * @throws ApiError
      */
-    public static downloadCreatedExportEnvelopes({
+    public static downloadExportedEnvelopes({
         id,
     }: {
         id: number,
-    }): CancelablePromise<Blob> {
+    }): CancelablePromise<EnvelopeExportDownloadResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/envelope-exports/{id}/download/',
@@ -108,11 +113,16 @@ export class EsignService {
      * @throws ApiError
      */
     public static listEnvelopes({
+        folder,
         ordering,
         page,
         search,
         status,
     }: {
+        /**
+         * Filter by folder id
+         */
+        folder?: number,
         /**
          * Which field to use when ordering the results.
          */
@@ -134,6 +144,7 @@ export class EsignService {
             method: 'GET',
             url: '/dashboard/esign/envelopes/',
             query: {
+                'folder': folder,
                 'ordering': ordering,
                 'page': page,
                 'search': search,
@@ -752,6 +763,38 @@ export class EsignService {
     }
 
     /**
+     * Bulk move envelopes across folders
+     * @returns BulkMoveEnvelopesResponse
+     * @throws ApiError
+     */
+    public static bulkMoveEnvelopes({
+        requestBody,
+        folder,
+        status,
+    }: {
+        requestBody: OmitReadonly<EnvelopeBulkMove>,
+        /**
+         * Restrict bulk move to envelopes currently in this folder
+         */
+        folder?: number,
+        /**
+         * Filter envelopes by status when moving all envelopes
+         */
+        status?: 'completed' | 'created' | 'declined' | 'pending' | 'voided' | 'waiting_for_me',
+    }): CancelablePromise<BulkMoveEnvelopesResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/envelopes/bulk-move/',
+            query: {
+                'folder': folder,
+                'status': status,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
      * Get envelope count grouped by status
      * @returns EnvelopeStatusCountResponse Counts of envelopes grouped by status.
      * @throws ApiError
@@ -778,6 +821,158 @@ export class EsignService {
             url: '/dashboard/esign/envelopes/trash/',
             query: {
                 'page': page,
+            },
+        });
+    }
+
+    /**
+     * Get all shared permissions for specific signature folder
+     * @returns EnvelopeFolderSharing
+     * @throws ApiError
+     */
+    public static listEsignFolderSharing({
+        folderId,
+    }: {
+        folderId: number,
+    }): CancelablePromise<Array<EnvelopeFolderSharing>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/folders/{folder_id}/permissions/',
+            path: {
+                'folder_id': folderId,
+            },
+        });
+    }
+
+    /**
+     * Create signature folder sharing permission
+     * @returns EnvelopeFolderSharing
+     * @throws ApiError
+     */
+    public static createEsignFolderSharingPermission({
+        folderId,
+        requestBody,
+    }: {
+        folderId: number,
+        requestBody: Array<EnvelopeFolderSharing>,
+    }): CancelablePromise<Array<EnvelopeFolderSharing>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/esign/folders/{folder_id}/permissions/',
+            path: {
+                'folder_id': folderId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get specific permission details for given signature folder
+     * @returns EnvelopeFolderSharing
+     * @throws ApiError
+     */
+    public static getEsignFolderSharing({
+        folderId,
+        id,
+    }: {
+        folderId: number,
+        /**
+         * A unique integer value identifying this envelope folder sharing setting.
+         */
+        id: number,
+    }): CancelablePromise<EnvelopeFolderSharing> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/folders/{folder_id}/permissions/{id}/',
+            path: {
+                'folder_id': folderId,
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Update signature folder sharing permission partially
+     * @returns EnvelopeFolderSharing
+     * @throws ApiError
+     */
+    public static updateEsignFolderSharingPermission({
+        folderId,
+        id,
+        requestBody,
+    }: {
+        folderId: number,
+        /**
+         * A unique integer value identifying this envelope folder sharing setting.
+         */
+        id: number,
+        requestBody?: OmitReadonly<PatchedUpdateEnvelopeFolderSharing>,
+    }): CancelablePromise<EnvelopeFolderSharing> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/dashboard/esign/folders/{folder_id}/permissions/{id}/',
+            path: {
+                'folder_id': folderId,
+                'id': id,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Revoke signature folder sharing permission
+     * @returns void
+     * @throws ApiError
+     */
+    public static revokeEsignFolderSharingPermission({
+        folderId,
+        id,
+    }: {
+        folderId: number,
+        /**
+         * A unique integer value identifying this envelope folder sharing setting.
+         */
+        id: number,
+    }): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/dashboard/esign/folders/{folder_id}/permissions/{id}/',
+            path: {
+                'folder_id': folderId,
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get e-sign folder permissions
+     * @returns string
+     * @throws ApiError
+     */
+    public static getEsignFolderPermissions({
+        ids,
+        ordering,
+        search,
+    }: {
+        ids?: string,
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        /**
+         * A search term.
+         */
+        search?: string,
+    }): CancelablePromise<Array<Record<string, Array<'read' | 'write' | 'manage'>>>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/permissions/folder/',
+            query: {
+                'ids': ids,
+                'ordering': ordering,
+                'search': search,
             },
         });
     }
