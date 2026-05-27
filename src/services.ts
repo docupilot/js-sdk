@@ -26,6 +26,7 @@ export const AppServices = {
   team: _API.TeamService,
   templateDelivery: _API.TemplateDeliveryService,
   templates: _API.TemplatesService,
+  templateVersioning: _API.TemplateVersioningService,
   users: _API.UsersService,
   userSatisfactionSurvey: _API.UserSatisfactionSurveyService,
   workspaces: _API.WorkspacesService,
