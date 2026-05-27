@@ -5,5 +5,6 @@
 export type CreateEnvelope = {
     name: string;
     attachments: Array<Blob>;
+    folder?: number | null;
 };
 
