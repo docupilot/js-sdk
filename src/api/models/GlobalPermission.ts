@@ -18,5 +18,6 @@ export type GlobalPermission = {
     'delivery:create': boolean;
     'settings:esign:general': boolean;
     'settings:esign:webhook': boolean;
+    'settings:esign:notifications': boolean;
 };
 
