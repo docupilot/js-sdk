@@ -901,23 +901,18 @@ export class EsignService {
     }
 
     /**
-     * partial update eSign notification settings
+     * Partial update eSign notification settings
      * @returns ESignNotificationSettings
      * @throws ApiError
      */
     public static updateEsignNotificationSettings({
-        id,
         requestBody,
     }: {
-        id: string,
         requestBody?: OmitReadonly<PatchedESignNotificationSettings>,
     }): CancelablePromise<ESignNotificationSettings> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/dashboard/esign/global-settings/notification/{id}/',
-            path: {
-                'id': id,
-            },
+            url: '/dashboard/esign/global-settings/notification/update/',
             body: requestBody,
             mediaType: 'application/json',
         });

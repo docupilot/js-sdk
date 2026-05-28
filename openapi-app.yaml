@@ -12000,21 +12000,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/esign/global-settings/notification/{id}/:
+  /dashboard/esign/global-settings/notification/update/:
     patch:
       operationId: update_esign_notification_settings
-      summary: partial update eSign notification settings
+      summary: Partial update eSign notification settings
       parameters:
       - in: header
         name: X-Workspace
         schema:
           type: string
         description: Workspace unique_key
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: string
         required: true
       tags:
       - esign
@@ -12055,12 +12050,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
-          description: ''
-        '404':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /dashboard/esign/global-settings/webhooks/:
     get:
