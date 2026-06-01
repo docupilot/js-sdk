@@ -13335,6 +13335,1286 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/workflows/:
+    get:
+      operationId: list_workflows
+      summary: Get workflows
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: folder
+        schema:
+          type: string
+        description: Filter by folder id. Use null, home, or an empty value for the
+          home folder.
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedWorkflowList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_workflow
+      summary: Create workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Workflow'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/workflows/{id}/:
+    get:
+      operationId: get_workflow
+      summary: Get workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_workflow
+      summary: Edit workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkflowUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkflowUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkflowUpdate'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: permanent_delete_workflow
+      summary: Permanently delete workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{id}/activate/:
+    post:
+      operationId: activate_workflow
+      summary: Activate workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{id}/archive/:
+    post:
+      operationId: archive_workflow
+      summary: Archive workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{id}/pause/:
+    post:
+      operationId: pause_workflow
+      summary: Pause workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{id}/unarchive/:
+    post:
+      operationId: unarchive_workflow
+      summary: Unarchive workflow
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workflow'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/runs/:
+    get:
+      operationId: list_workflow_runs
+      summary: Get workflow runs
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowRunList'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/runs/{run_id}/:
+    get:
+      operationId: get_workflow_run
+      summary: Get workflow run
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: run_id
+        schema:
+          type: string
+          format: uuid
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunRetrieve'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/versions/:
+    get:
+      operationId: list_workflow_versions
+      summary: Get workflow versions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_workflow_version
+      summary: Create workflow version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowVersion'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkflowVersion'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkflowVersion'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/versions/{id}/:
+    get:
+      operationId: get_workflow_version
+      summary: Get workflow version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this workflow version.
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/versions/{id}/archive/:
+    post:
+      operationId: archive_workflow_version
+      summary: Archive workflow version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/versions/{id}/publish/:
+    post:
+      operationId: publish_workflow_version
+      summary: Publish workflow version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/versions/{id}/unarchive/:
+    post:
+      operationId: unarchive_workflow_version
+      summary: Unarchive workflow version
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/{workflow_id}/versions/{workflow_version_id}/blueprint/:
+    get:
+      operationId: get_workflow_blueprint
+      summary: Get workflow blueprint
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: workflow_version_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowBlueprint'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    put:
+      operationId: save_workflow_blueprint
+      summary: Save workflow blueprint
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: workflow_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: workflow_version_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowBlueprint'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkflowBlueprint'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkflowBlueprint'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowVersion'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/folders/:
+    get:
+      operationId: list_workflow_folders
+      summary: Get workflow folders
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkflowFolder'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_workflow_folder
+      summary: Create workflow folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkflowFolder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkflowFolder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkflowFolder'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowFolder'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/workflows/folders/{id}/:
+    patch:
+      operationId: update_workflow_folder
+      summary: Edit workflow folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkflowFolder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkflowFolder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWorkflowFolder'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowFolder'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_workflow_folder
+      description: This operation moves all workflows under this folder to the home
+        folder.
+      summary: Delete workflow folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - workflows
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/workflows/move/:
+    post:
+      operationId: move_workflows_to_folder
+      summary: Move workflows to folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoveWorkflow'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MoveWorkflow'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MoveWorkflow'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '207':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MoveWorkflowResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
 components:
   schemas:
     AITemplateCreate:
@@ -16572,6 +17852,37 @@ components:
       - failures
       - success
       description: ''
+    MoveWorkflow:
+      type: object
+      properties:
+        workflow_ids:
+          type: array
+          items:
+            type: integer
+        new_folder_id:
+          type: integer
+          nullable: true
+      required:
+      - new_folder_id
+      - workflow_ids
+      description: ''
+    MoveWorkflowResponse:
+      type: object
+      properties:
+        success:
+          type: array
+          items:
+            type: integer
+          description: List of successfully moved workflow IDs.
+        failures:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/WorkflowMoveFailureDetail'
+          description: Mapping of failed workflow IDs to error messages.
+      required:
+      - failures
+      - success
+      description: ''
     NewAuthTokenResponse:
       type: object
       properties:
@@ -17166,6 +18477,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TemplateVersion'
+    PaginatedWorkflowList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workflow'
     PatchedContentBlockEditorVersion:
       type: object
       properties:
@@ -17498,6 +18832,40 @@ components:
           - light
           - dark
           - system
+          type: string
+      description: ''
+    PatchedWorkflowFolder:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+    PatchedWorkflowUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        description:
           type: string
       description: ''
     PatchedWorkspace:
@@ -19362,6 +20730,885 @@ components:
       - selected_content
       - user_input
       description: ''
+    Workflow:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        status:
+          enum:
+          - active
+          - paused
+          type: string
+          readOnly: true
+        folder:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowFolder'
+          nullable: true
+        created_by:
+          type: integer
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+        archived_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        archived_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        latest_version:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowVersion'
+          nullable: true
+          readOnly: true
+        published_version:
+          allOf:
+          - $ref: '#/components/schemas/WorkflowVersion'
+          nullable: true
+          readOnly: true
+      required:
+      - archived_at
+      - archived_by
+      - created_by
+      - created_on
+      - id
+      - latest_version
+      - name
+      - published_version
+      - status
+    WorkflowBlueprint:
+      additionalProperties: false
+      properties:
+        nodes:
+          items:
+            discriminator:
+              mapping:
+                condition: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure'
+                convert: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure'
+                email_delivery: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure'
+                esign_delivery: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintESignDeliveryNodeStructure'
+                form: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintFormNodeStructure'
+                google_drive_delivery: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure'
+                template: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure'
+                webhook_delivery: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure'
+              propertyName: type
+            oneOf:
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintFormNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintESignDeliveryNodeStructure'
+          title: Nodes
+          type: array
+        edges:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEdgeStructure'
+          title: Edges
+          type: array
+      required:
+      - nodes
+      - edges
+      title: WorkflowBlueprintStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintConditionConfigStructure:
+      additionalProperties: false
+      properties:
+        outcomes:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConditionOutcomeStructure'
+          title: Outcomes
+          type: array
+      title: WorkflowBlueprintConditionConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - condition
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConditionConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      title: WorkflowBlueprintConditionNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintConditionOutcomeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        rules:
+          title: Rules
+        order:
+          anyOf:
+          - minimum: 0
+            type: integer
+          default: null
+          title: Order
+          nullable: true
+      required:
+      - id
+      - name
+      title: WorkflowBlueprintConditionOutcomeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintConvertConfigStructure:
+      additionalProperties: false
+      properties:
+        output_type:
+          title: Output Type
+          type: string
+      required:
+      - output_type
+      title: WorkflowBlueprintConvertConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - convert
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConvertConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintConvertNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintESignDeliveryConfigStructure:
+      additionalProperties: false
+      properties:
+        esign_delivery_id:
+          exclusiveMinimum: true
+          title: Esign Delivery Id
+          type: integer
+          minimum: 0
+      required:
+      - esign_delivery_id
+      title: WorkflowBlueprintESignDeliveryConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintESignDeliveryNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - esign_delivery
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintESignDeliveryConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintESignDeliveryNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintEdgeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        from:
+          format: uuid
+          title: From
+          type: string
+        to:
+          format: uuid
+          title: To
+          type: string
+      required:
+      - id
+      - from
+      - to
+      title: WorkflowBlueprintEdgeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintEmailDeliveryConfigStructure:
+      additionalProperties: false
+      properties:
+        email_delivery_id:
+          exclusiveMinimum: true
+          title: Email Delivery Id
+          type: integer
+          minimum: 0
+      required:
+      - email_delivery_id
+      title: WorkflowBlueprintEmailDeliveryConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - email_delivery
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintEmailDeliveryNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintFormConfigStructure:
+      additionalProperties: false
+      properties:
+        extension_id:
+          exclusiveMinimum: true
+          title: Extension Id
+          type: integer
+          minimum: 0
+      required:
+      - extension_id
+      title: WorkflowBlueprintFormConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintFormNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - form
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintFormConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintFormNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure:
+      additionalProperties: false
+      properties:
+        google_drive_delivery_id:
+          exclusiveMinimum: true
+          title: Google Drive Delivery Id
+          type: integer
+          minimum: 0
+      required:
+      - google_drive_delivery_id
+      title: WorkflowBlueprintGoogleDriveDeliveryConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - google_drive_delivery
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintGoogleDriveDeliveryNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintPortStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        type:
+          enum:
+          - input
+          - output
+          title: Type
+          type: string
+        key:
+          title: Key
+          type: string
+        is_required:
+          default: false
+          title: Is Required
+          type: boolean
+      required:
+      - id
+      - type
+      - key
+      title: WorkflowBlueprintPortStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintPositionStructure:
+      additionalProperties: false
+      properties:
+        x:
+          title: X
+          type: number
+        y:
+          title: Y
+          type: number
+      required:
+      - x
+      - y
+      title: WorkflowBlueprintPositionStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure:
+      additionalProperties: false
+      properties:
+        template_id:
+          exclusiveMinimum: true
+          title: Template Id
+          type: integer
+          minimum: 0
+      required:
+      - template_id
+      title: WorkflowBlueprintTemplateConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - template
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintTemplateNodeStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure:
+      additionalProperties: false
+      properties:
+        webhook_delivery_id:
+          exclusiveMinimum: true
+          title: Webhook Delivery Id
+          type: integer
+          minimum: 0
+      required:
+      - webhook_delivery_id
+      title: WorkflowBlueprintWebhookDeliveryConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - webhook_delivery
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      - config
+      title: WorkflowBlueprintWebhookDeliveryNodeStructure
+      type: object
+    WorkflowEdgeRun:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        edge_run_id:
+          type: string
+          format: uuid
+          readOnly: true
+        edge:
+          type: integer
+          readOnly: true
+        status:
+          enum:
+          - waiting
+          - executed
+          - skipped
+          - failed
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - edge
+      - edge_run_id
+      - id
+      - status
+      - updated_at
+      description: ''
+    WorkflowFolder:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
+        created_on:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        updated_on:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_by
+      - created_on
+      - id
+      - name
+      - updated_by
+      - updated_on
+    WorkflowMoveFailureDetail:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+      - detail
+      description: ''
+    WorkflowNodeRun:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        node_run_id:
+          type: string
+          format: uuid
+          readOnly: true
+        node:
+          type: integer
+          readOnly: true
+        node_name:
+          type: string
+          readOnly: true
+        node_type:
+          type: string
+          readOnly: true
+        status:
+          enum:
+          - queued
+          - running
+          - completed
+          - failed
+          - skipped
+          - waiting
+          type: string
+          readOnly: true
+        attempt_count:
+          type: integer
+          readOnly: true
+        input_data_json:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        output_data_json:
+          type: object
+          additionalProperties: {}
+          readOnly: true
+        error_message:
+          type: string
+          readOnly: true
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - attempt_count
+      - completed_at
+      - created_at
+      - error_message
+      - id
+      - input_data_json
+      - node
+      - node_name
+      - node_run_id
+      - node_type
+      - output_data_json
+      - started_at
+      - status
+      - updated_at
+      description: ''
+    WorkflowRunList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        run_id:
+          type: string
+          format: uuid
+          readOnly: true
+        workflow:
+          type: integer
+          readOnly: true
+        workflow_version:
+          type: integer
+          readOnly: true
+        status:
+          enum:
+          - queued
+          - running
+          - completed
+          - failed
+          - cancelled
+          - waiting
+          type: string
+          readOnly: true
+        error_message:
+          type: string
+          readOnly: true
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - completed_at
+      - created_at
+      - error_message
+      - id
+      - run_id
+      - started_at
+      - status
+      - updated_at
+      - workflow
+      - workflow_version
+      description: ''
+    WorkflowRunRetrieve:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        run_id:
+          type: string
+          format: uuid
+          readOnly: true
+        workflow:
+          type: integer
+          readOnly: true
+        workflow_version:
+          type: integer
+          readOnly: true
+        status:
+          enum:
+          - queued
+          - running
+          - completed
+          - failed
+          - cancelled
+          - waiting
+          type: string
+          readOnly: true
+        error_message:
+          type: string
+          readOnly: true
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        edge_runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowEdgeRun'
+          readOnly: true
+        node_runs:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowNodeRun'
+          readOnly: true
+      required:
+      - completed_at
+      - created_at
+      - edge_runs
+      - error_message
+      - id
+      - node_runs
+      - run_id
+      - started_at
+      - status
+      - updated_at
+      - workflow
+      - workflow_version
+      description: ''
+    WorkflowVersion:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        workflow:
+          type: integer
+          readOnly: true
+        source_version:
+          type: integer
+          readOnly: true
+          nullable: true
+        version:
+          type: integer
+          readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        published:
+          type: boolean
+          readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        published_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        archived_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        archived_by:
+          type: integer
+          readOnly: true
+          nullable: true
+      required:
+      - archived_at
+      - archived_by
+      - created_at
+      - created_by
+      - id
+      - published
+      - published_at
+      - published_by
+      - source_version
+      - version
+      - workflow
     Workspace:
       type: object
       properties:
