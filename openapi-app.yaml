@@ -21092,6 +21092,13 @@ components:
           title: Extension Id
           type: integer
           minimum: 0
+        extension_name:
+          anyOf:
+          - type: string
+          default: null
+          readOnly: true
+          title: Extension Name
+          nullable: true
       required:
       - extension_id
       title: WorkflowBlueprintFormConfigStructure
@@ -21231,6 +21238,13 @@ components:
           title: Template Id
           type: integer
           minimum: 0
+        template_name:
+          anyOf:
+          - type: string
+          default: null
+          readOnly: true
+          title: Template Name
+          nullable: true
       required:
       - template_id
       title: WorkflowBlueprintTemplateConfigStructure
