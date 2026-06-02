@@ -10557,6 +10557,15 @@ paths:
           type: integer
         description: A unique integer value identifying this envelope.
         required: true
+      - in: query
+        name: response_type
+        schema:
+          type: string
+          enum:
+          - stream
+          - url
+        description: If stream, returns the document as a downloadable file. If url,
+          returns JSON with file_url and file_name.
       tags:
       - esign
       security:
@@ -10566,10 +10575,19 @@ paths:
       responses:
         '200':
           content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDocumentDownloadResponse'
             application/octet-stream:
               schema:
                 type: string
                 format: binary
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -16608,6 +16626,18 @@ components:
       - updated_at
       - workspace
       description: ''
+    EnvelopeDocumentDownloadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
+      description: ''
     EnvelopeDocuments:
       type: object
       properties:
@@ -16669,9 +16699,16 @@ components:
         name:
           type: string
           maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
         updated_at:
@@ -16681,9 +16718,11 @@ components:
           nullable: true
       required:
       - created_at
+      - created_by
       - id
       - name
       - updated_at
+      - updated_by
     EnvelopeFolderSharing:
       type: object
       description: ''
@@ -18633,9 +18672,16 @@ components:
         name:
           type: string
           maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
         updated_at:
@@ -20759,6 +20805,15 @@ components:
           type: string
           format: date-time
           readOnly: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
         archived_at:
           type: string
           format: date-time
@@ -20788,6 +20843,8 @@ components:
       - name
       - published_version
       - status
+      - updated_at
+      - updated_by
     WorkflowBlueprint:
       additionalProperties: false
       properties:
@@ -20844,10 +20901,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -20860,7 +20922,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       title: WorkflowBlueprintAppendNodeStructure
       type: object
@@ -20886,10 +20947,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -20902,7 +20968,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       title: WorkflowBlueprintConditionNodeStructure
       type: object
@@ -20952,10 +21017,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -20968,7 +21038,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintConvertNodeStructure
@@ -20997,10 +21066,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -21013,7 +21087,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintESignDeliveryNodeStructure
@@ -21063,10 +21136,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -21079,7 +21157,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintEmailDeliveryNodeStructure
@@ -21115,10 +21192,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -21131,7 +21213,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintFormNodeStructure
@@ -21160,10 +21241,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -21176,23 +21262,16 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintGoogleDriveDeliveryNodeStructure
       type: object
-    WorkflowBlueprint_WorkflowBlueprintPortStructure:
+    WorkflowBlueprint_WorkflowBlueprintInputPortStructure:
       additionalProperties: false
       properties:
         id:
           format: uuid
           title: Id
-          type: string
-        type:
-          enum:
-          - input
-          - output
-          title: Type
           type: string
         key:
           title: Key
@@ -21201,20 +21280,34 @@ components:
           default: false
           title: Is Required
           type: boolean
+      required:
+      - id
+      - key
+      title: WorkflowBlueprintInputPortStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintOutputPortStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        key:
+          title: Key
+          type: string
         condition_outcome_id:
           anyOf:
           - format: uuid
             type: string
           default: null
-          description: Client UUID of the condition outcome represented by this port.
-            Required for condition output ports and only valid there.
+          description: Client UUID of the condition outcome represented by this output
+            port.
           title: Condition Outcome Id
           nullable: true
       required:
       - id
-      - type
       - key
-      title: WorkflowBlueprintPortStructure
+      title: WorkflowBlueprintOutputPortStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintPositionStructure:
       additionalProperties: false
@@ -21261,10 +21354,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -21277,7 +21375,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintTemplateNodeStructure
@@ -21306,10 +21403,15 @@ components:
           type: string
         position:
           $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
-        ports:
+        input_ports:
           items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
-          title: Ports
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintInputPortStructure'
+          title: Input Ports
+          type: array
+        output_ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure'
+          title: Output Ports
           type: array
         type:
           title: Type
@@ -21322,7 +21424,6 @@ components:
       - id
       - name
       - position
-      - ports
       - type
       - config
       title: WorkflowBlueprintWebhookDeliveryNodeStructure

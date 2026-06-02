@@ -65,6 +65,7 @@ export type { Envelope } from './models/Envelope';
 export type { EnvelopeBulkDownload } from './models/EnvelopeBulkDownload';
 export type { EnvelopeBulkMove } from './models/EnvelopeBulkMove';
 export type { EnvelopeDetails } from './models/EnvelopeDetails';
+export type { EnvelopeDocumentDownloadResponse } from './models/EnvelopeDocumentDownloadResponse';
 export type { EnvelopeDocuments } from './models/EnvelopeDocuments';
 export type { EnvelopeExportDownloadResponse } from './models/EnvelopeExportDownloadResponse';
 export type { EnvelopeFieldResponse } from './models/EnvelopeFieldResponse';
@@ -237,7 +238,8 @@ export type { WorkflowBlueprint_WorkflowBlueprintFormConfigStructure } from './m
 export type { WorkflowBlueprint_WorkflowBlueprintFormNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintFormNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure';
-export type { WorkflowBlueprint_WorkflowBlueprintPortStructure } from './models/WorkflowBlueprint_WorkflowBlueprintPortStructure';
+export type { WorkflowBlueprint_WorkflowBlueprintInputPortStructure } from './models/WorkflowBlueprint_WorkflowBlueprintInputPortStructure';
+export type { WorkflowBlueprint_WorkflowBlueprintOutputPortStructure } from './models/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintPositionStructure } from './models/WorkflowBlueprint_WorkflowBlueprintPositionStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure';

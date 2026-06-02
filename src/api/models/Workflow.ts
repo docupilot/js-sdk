@@ -13,6 +13,8 @@ export type Workflow = {
     folder?: WorkflowFolder | null;
     readonly created_by: number;
     readonly created_on: string;
+    readonly updated_by: number | null;
+    readonly updated_at: string | null;
     readonly archived_at: string | null;
     readonly archived_by: number | null;
     readonly latest_version: WorkflowVersion | null;
