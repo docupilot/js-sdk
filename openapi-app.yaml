@@ -20795,6 +20795,7 @@ components:
           items:
             discriminator:
               mapping:
+                append: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintAppendNodeStructure'
                 condition: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure'
                 convert: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure'
                 email_delivery: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure'
@@ -20809,6 +20810,7 @@ components:
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure'
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure'
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure'
+            - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintAppendNodeStructure'
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure'
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure'
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure'
@@ -20824,6 +20826,43 @@ components:
       - nodes
       - edges
       title: WorkflowBlueprintStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintAppendConfigStructure:
+      additionalProperties: false
+      properties: {}
+      title: WorkflowBlueprintAppendConfigStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintAppendNodeStructure:
+      additionalProperties: false
+      properties:
+        id:
+          format: uuid
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        position:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPositionStructure'
+        ports:
+          items:
+            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintPortStructure'
+          title: Ports
+          type: array
+        type:
+          title: Type
+          type: string
+          enum:
+          - append
+        config:
+          $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintAppendConfigStructure'
+      required:
+      - id
+      - name
+      - position
+      - ports
+      - type
+      title: WorkflowBlueprintAppendNodeStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintConditionConfigStructure:
       additionalProperties: false
@@ -20937,13 +20976,13 @@ components:
     WorkflowBlueprint_WorkflowBlueprintESignDeliveryConfigStructure:
       additionalProperties: false
       properties:
-        esign_delivery_id:
-          exclusiveMinimum: true
-          title: Esign Delivery Id
-          type: integer
-          minimum: 0
-      required:
-      - esign_delivery_id
+        delivery:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          default: null
+          title: Delivery
+          nullable: true
       title: WorkflowBlueprintESignDeliveryConfigStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintESignDeliveryNodeStructure:
@@ -21003,13 +21042,13 @@ components:
     WorkflowBlueprint_WorkflowBlueprintEmailDeliveryConfigStructure:
       additionalProperties: false
       properties:
-        email_delivery_id:
-          exclusiveMinimum: true
-          title: Email Delivery Id
-          type: integer
-          minimum: 0
-      required:
-      - email_delivery_id
+        delivery:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          default: null
+          title: Delivery
+          nullable: true
       title: WorkflowBlueprintEmailDeliveryConfigStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure:
@@ -21093,13 +21132,13 @@ components:
     WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure:
       additionalProperties: false
       properties:
-        google_drive_delivery_id:
-          exclusiveMinimum: true
-          title: Google Drive Delivery Id
-          type: integer
-          minimum: 0
-      required:
-      - google_drive_delivery_id
+        delivery:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          default: null
+          title: Delivery
+          nullable: true
       title: WorkflowBlueprintGoogleDriveDeliveryConfigStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure:
@@ -21223,13 +21262,13 @@ components:
     WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure:
       additionalProperties: false
       properties:
-        webhook_delivery_id:
-          exclusiveMinimum: true
-          title: Webhook Delivery Id
-          type: integer
-          minimum: 0
-      required:
-      - webhook_delivery_id
+        delivery:
+          anyOf:
+          - additionalProperties: true
+            type: object
+          default: null
+          title: Delivery
+          nullable: true
       title: WorkflowBlueprintWebhookDeliveryConfigStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure:

@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 export type WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure = {
-    webhook_delivery_id: number;
+    delivery?:  | null;
 };
 

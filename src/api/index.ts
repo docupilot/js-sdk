@@ -221,6 +221,8 @@ export type { WordAddInPromptSuggestions } from './models/WordAddInPromptSuggest
 export type { WordAddInTemplateEdit } from './models/WordAddInTemplateEdit';
 export type { Workflow } from './models/Workflow';
 export type { WorkflowBlueprint } from './models/WorkflowBlueprint';
+export type { WorkflowBlueprint_WorkflowBlueprintAppendConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintAppendConfigStructure';
+export type { WorkflowBlueprint_WorkflowBlueprintAppendNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintAppendNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintConditionConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintConditionConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintConditionOutcomeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintConditionOutcomeStructure';
