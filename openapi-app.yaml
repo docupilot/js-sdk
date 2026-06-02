@@ -21194,6 +21194,15 @@ components:
           default: false
           title: Is Required
           type: boolean
+        condition_outcome_id:
+          anyOf:
+          - format: uuid
+            type: string
+          default: null
+          description: Client UUID of the condition outcome represented by this port.
+            Required for condition output ports and only valid there.
+          title: Condition Outcome Id
+          nullable: true
       required:
       - id
       - type
