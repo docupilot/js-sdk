@@ -66,7 +66,7 @@ export class TemplatesService {
          * Filter templates by status. Active maps to published templates and test maps to unpublished templates.
          */
         status?: 'active' | 'test',
-        type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
+        type?: 'docx' | 'dpt_pdf' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
     }): CancelablePromise<PaginatedTemplateList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -425,6 +425,34 @@ export class TemplatesService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/dashboard/api/v2/templates/{id}/publish/',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
+     * Get template recipients
+     * @returns any
+     * @throws ApiError
+     */
+    public static getTemplateRecipients({
+        id,
+    }: {
+        /**
+         * A unique integer value identifying this document.
+         */
+        id: number,
+    }): CancelablePromise<Array<{
+        id: number;
+        role: {
+            live?: string | null;
+            latest?: string | null;
+        };
+    }> | null> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/api/v2/templates/{id}/recipients/',
             path: {
                 'id': id,
             },

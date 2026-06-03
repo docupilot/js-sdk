@@ -9,5 +9,6 @@ export type NewTemplate = {
     output_type: 'html' | 'pdf' | 'jpeg' | 'png' | 'docx' | 'pptx' | 'xlsx';
     description?: string | null;
     template_gallery_id?: number;
+    legacy?: boolean;
 };
 

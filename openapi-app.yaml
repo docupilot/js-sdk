@@ -5973,6 +5973,7 @@ paths:
           type: string
           enum:
           - docx
+          - dpt_pdf
           - fillable_pdf
           - g_document
           - g_presentation
@@ -6910,6 +6911,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/api/v2/templates/{id}/recipients/:
+    get:
+      operationId: get_template_recipients
+      summary: Get template recipients
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this document.
+        required: true
+      tags:
+      - templates
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                nullable: true
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    role:
+                      type: object
+                      properties:
+                        live:
+                          type: string
+                          nullable: true
+                        latest:
+                          type: string
+                          nullable: true
+                  required:
+                  - id
+                  - role
           description: ''
         '401':
           content:
@@ -14016,6 +14081,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
@@ -16695,6 +16761,9 @@ components:
           maxLength: 255
         template_gallery_id:
           type: integer
+        legacy:
+          type: boolean
+          default: true
       required:
       - output_type
       - title
@@ -18504,6 +18573,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
