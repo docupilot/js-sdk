@@ -66,7 +66,7 @@ export class TemplatesService {
          * Filter templates by status. Active maps to published templates and test maps to unpublished templates.
          */
         status?: 'active' | 'test',
-        type?: 'docx' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
+        type?: 'docx' | 'dpt_pdf' | 'fillable_pdf' | 'g_document' | 'g_presentation' | 'g_spreadsheet' | 'html' | 'pptx' | 'xlsx',
     }): CancelablePromise<PaginatedTemplateList> {
         return __request(OpenAPI, {
             method: 'GET',
