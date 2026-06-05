@@ -5033,6 +5033,7 @@ paths:
           type: string
           enum:
           - docx
+          - dpt_pdf
           - fillable_pdf
           - g_document
           - g_presentation
@@ -8836,8 +8837,8 @@ paths:
           description: ''
   /dashboard/esign/envelope-exports/{id}/download/:
     get:
-      operationId: download_created_export_envelopes
-      summary: download generated export envelopes if available
+      operationId: download_exported_envelopes
+      summary: Download generated export envelopes if available
       parameters:
       - in: header
         name: X-Workspace
@@ -8857,26 +8858,26 @@ paths:
       responses:
         '200':
           content:
-            application/zip:
+            application/json:
               schema:
-                type: string
-                format: binary
-          description: Download the exported envelopes as a ZIP file
+                $ref: '#/components/schemas/EnvelopeExportDownloadResponse'
+          description: The response contains file_name and file_url to download the
+            generated export file.
         '401':
           content:
-            application/zip:
+            application/json:
               schema:
                 $ref: '#/components/schemas/UnauthenticatedError'
           description: ''
         '403':
           content:
-            application/zip:
+            application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
         '404':
           content:
-            application/zip:
+            application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -8891,6 +8892,11 @@ paths:
           type: string
         description: Workspace unique_key
         required: true
+      - in: query
+        name: folder
+        schema:
+          type: integer
+        description: Filter by folder id
       - name: ordering
         required: false
         in: query
@@ -9612,6 +9618,15 @@ paths:
           type: integer
         description: A unique integer value identifying this envelope.
         required: true
+      - in: query
+        name: response_type
+        schema:
+          type: string
+          enum:
+          - stream
+          - url
+        description: If stream, returns the document as a downloadable file. If url,
+          returns JSON with file_url and file_name.
       tags:
       - esign
       security:
@@ -9621,10 +9636,19 @@ paths:
       responses:
         '200':
           content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDocumentDownloadResponse'
             application/octet-stream:
               schema:
                 type: string
                 format: binary
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -10215,6 +10239,75 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/esign/envelopes/bulk-move/:
+    post:
+      operationId: bulk_move_envelopes
+      summary: Bulk move envelopes across folders
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: folder
+        schema:
+          type: integer
+        description: Restrict bulk move to envelopes currently in this folder
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - completed
+          - created
+          - declined
+          - pending
+          - voided
+          - waiting_for_me
+        description: Filter envelopes by status when moving all envelopes
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeBulkMove'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeBulkMove'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeBulkMove'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '207':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkMoveEnvelopesResponse'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/esign/envelopes/count/:
     get:
       operationId: envelope_count_by_status
@@ -10284,6 +10377,505 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/folders/:
+    get:
+      operationId: list_esign_folders
+      summary: Get list of signature folders
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: permission
+        schema:
+          type: string
+          enum:
+          - manage
+          - read
+          - write
+        description: Restrict folders to the requested permission level.
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - esign-folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvelopeFolder'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_esign_folder
+      summary: Create signature folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      tags:
+      - esign-folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnvelopeFolder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EnvelopeFolder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnvelopeFolder'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeFolder'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/folders/{folder_id}/permissions/:
+    get:
+      operationId: list_esign_folder_sharing
+      summary: Get all shared permissions for specific signature folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvelopeFolderSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+    post:
+      operationId: create_esign_folder_sharing_permission
+      summary: Create signature folder sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnvelopeFolderSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnvelopeFolderSharing'
+          multipart/form-data:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EnvelopeFolderSharing'
+        required: true
+      security:
+      - SessionAuthentication: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnvelopeFolderSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/folders/{folder_id}/permissions/{id}/:
+    get:
+      operationId: get_esign_folder_sharing
+      summary: Get specific permission details for given signature folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope folder sharing
+          setting.
+        required: true
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeFolderSharing'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    patch:
+      operationId: update_esign_folder_sharing_permission
+      summary: Update signature folder sharing permission partially
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope folder sharing
+          setting.
+        required: true
+      tags:
+      - esign
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateEnvelopeFolderSharing'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateEnvelopeFolderSharing'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateEnvelopeFolderSharing'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeFolderSharing'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: revoke_esign_folder_sharing_permission
+      summary: Revoke signature folder sharing permission
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: folder_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope folder sharing
+          setting.
+        required: true
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/folders/{id}/:
+    patch:
+      operationId: esign_folders_partial_update
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeFolder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeFolder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedEnvelopeFolder'
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeFolder'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+    delete:
+      operationId: delete_esign_folder
+      summary: Delete signature folder
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign-folders
+      security:
+      - SessionAuthentication: []
+      responses:
+        '204':
+          description: No response body
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
           description: ''
   /dashboard/esign/global-settings/general/email-accounts/:
     get:
@@ -10874,6 +11466,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+  /dashboard/esign/permissions/folder/:
+    get:
+      operationId: get_esign_folder_permissions
+      summary: Get e-sign folder permissions
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: ids
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - esign
+      security:
+      - SessionAuthentication: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    type: array
+                    items:
+                      type: string
+                      enum:
+                      - read
+                      - write
+                      - manage
+                  example:
+                    '199':
+                    - read
+                    - write
+                    '1201':
+                    - read
+                    '90':
+                    - write
           description: ''
         '401':
           content:
@@ -12178,6 +12838,29 @@ components:
       required:
       - max_test_rows
       description: ''
+    BulkMoveEnvelopesResponse:
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: Number of envelopes requested for the bulk move
+        moved_count:
+          type: integer
+          description: Number of envelopes moved successfully
+        failure_count:
+          type: integer
+          description: Number of envelopes that were not moved
+        failures:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvelopeMoveFailureDetail'
+          description: Failures grouped by reason
+      required:
+      - failure_count
+      - failures
+      - moved_count
+      - total_count
+      description: ''
     ChargebeeSubscription:
       type: object
       properties:
@@ -12330,6 +13013,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
@@ -12581,6 +13265,9 @@ components:
             format: binary
           writeOnly: true
           maxItems: 3
+        folder:
+          type: integer
+          nullable: true
       required:
       - attachments
       - name
@@ -13501,6 +14188,24 @@ components:
       - id
       - name
       - status
+    EnvelopeBulkMove:
+      type: object
+      properties:
+        envelope_ids:
+          type: array
+          items:
+            type: integer
+          writeOnly: true
+        is_move_all:
+          type: boolean
+          writeOnly: true
+        new_folder_id:
+          type: integer
+          writeOnly: true
+          nullable: true
+      required:
+      - new_folder_id
+      description: ''
     EnvelopeDetails:
       type: object
       properties:
@@ -13630,6 +14335,18 @@ components:
       - updated_at
       - workspace
       description: ''
+    EnvelopeDocumentDownloadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
+      description: ''
     EnvelopeDocuments:
       type: object
       properties:
@@ -13648,6 +14365,18 @@ components:
       - document_name
       - fields_meta
       - id
+      description: ''
+    EnvelopeExportDownloadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
       description: ''
     EnvelopeFieldResponse:
       type: object
@@ -13669,6 +14398,58 @@ components:
       - signer_id
       - type
       description: ''
+    EnvelopeFolder:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - created_at
+      - created_by
+      - id
+      - name
+      - updated_at
+      - updated_by
+    EnvelopeFolderSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+        permission:
+          enum:
+          - read
+          - write
+          - manage
+          type: string
+      required:
+      - id
+      - user
     EnvelopeHistory:
       type: object
       properties:
@@ -13715,6 +14496,25 @@ components:
       - name
       - sender_email
       - signers
+      description: ''
+    EnvelopeMoveFailureDetail:
+      type: object
+      properties:
+        code:
+          type: string
+        detail:
+          type: string
+        ids:
+          type: array
+          items:
+            type: integer
+        count:
+          type: integer
+      required:
+      - code
+      - count
+      - detail
+      - ids
       description: ''
     EnvelopeRecipient:
       type: object
@@ -15455,6 +16255,33 @@ components:
           additionalProperties: {}
           nullable: true
       description: ''
+    PatchedEnvelopeFolder:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
+          readOnly: true
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
     PatchedEnvelopeUpdate:
       type: object
       properties:
@@ -15550,6 +16377,19 @@ components:
         user:
           type: integer
           readOnly: true
+    PatchedUpdateEnvelopeFolderSharing:
+      type: object
+      description: ''
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        permission:
+          enum:
+          - read
+          - write
+          - manage
+          type: string
     PatchedUpdateEnvelopeRecipient:
       type: object
       properties:
@@ -16281,6 +17121,10 @@ components:
           - fixed
           - smart
           type: string
+        folder_name:
+          type: string
+          nullable: true
+          readOnly: true
         name:
           type: string
           maxLength: 255
@@ -16337,7 +17181,11 @@ components:
           type: boolean
         enable_optional_signers:
           type: boolean
+        folder:
+          type: integer
+          nullable: true
       required:
+      - folder_name
       - id
       - name
       - signers
@@ -16389,6 +17237,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
