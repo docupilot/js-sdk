@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { WorkflowEdgeRun } from './WorkflowEdgeRun';
 import type { WorkflowNodeRun } from './WorkflowNodeRun';
 
 export type WorkflowRunRetrieve = {
@@ -16,7 +15,6 @@ export type WorkflowRunRetrieve = {
     readonly completed_at: string | null;
     readonly created_at: string;
     readonly updated_at: string;
-    readonly edge_runs: Array<WorkflowEdgeRun>;
     readonly node_runs: Array<WorkflowNodeRun>;
 };
 

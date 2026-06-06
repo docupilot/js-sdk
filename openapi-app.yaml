@@ -20874,14 +20874,8 @@ components:
             - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintESignDeliveryNodeStructure'
           title: Nodes
           type: array
-        edges:
-          items:
-            $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintEdgeStructure'
-          title: Edges
-          type: array
       required:
       - nodes
-      - edges
       title: WorkflowBlueprintStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintAppendConfigStructure:
@@ -20893,7 +20887,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -20939,7 +20934,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -20975,7 +20971,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21009,7 +21006,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21058,7 +21056,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21091,27 +21090,6 @@ components:
       - config
       title: WorkflowBlueprintESignDeliveryNodeStructure
       type: object
-    WorkflowBlueprint_WorkflowBlueprintEdgeStructure:
-      additionalProperties: false
-      properties:
-        id:
-          format: uuid
-          title: Id
-          type: string
-        from:
-          format: uuid
-          title: From
-          type: string
-        to:
-          format: uuid
-          title: To
-          type: string
-      required:
-      - id
-      - from
-      - to
-      title: WorkflowBlueprintEdgeStructure
-      type: object
     WorkflowBlueprint_WorkflowBlueprintEmailDeliveryConfigStructure:
       additionalProperties: false
       properties:
@@ -21128,7 +21106,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21184,7 +21163,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21233,7 +21213,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21270,11 +21251,9 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
-          type: string
-        key:
-          title: Key
           type: string
         is_required:
           default: false
@@ -21282,31 +21261,51 @@ components:
           type: boolean
       required:
       - id
-      - key
       title: WorkflowBlueprintInputPortStructure
+      type: object
+    WorkflowBlueprint_WorkflowBlueprintOutputPortConnectionStructure:
+      additionalProperties: false
+      properties:
+        node:
+          maxLength: 32
+          minLength: 1
+          title: Node
+          type: string
+        port:
+          maxLength: 32
+          minLength: 1
+          title: Port
+          type: string
+      required:
+      - node
+      - port
+      title: WorkflowBlueprintOutputPortConnectionStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintOutputPortStructure:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
-        key:
-          title: Key
-          type: string
+        connected_to:
+          anyOf:
+          - $ref: '#/components/schemas/WorkflowBlueprint_WorkflowBlueprintOutputPortConnectionStructure'
+          default: null
+          nullable: true
         condition_outcome_id:
           anyOf:
-          - format: uuid
+          - maxLength: 32
+            minLength: 1
             type: string
           default: null
-          description: Client UUID of the condition outcome represented by this output
+          description: Client ID of the condition outcome represented by this output
             port.
           title: Condition Outcome Id
           nullable: true
       required:
       - id
-      - key
       title: WorkflowBlueprintOutputPortStructure
       type: object
     WorkflowBlueprint_WorkflowBlueprintPositionStructure:
@@ -21346,7 +21345,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21395,7 +21395,8 @@ components:
       additionalProperties: false
       properties:
         id:
-          format: uuid
+          maxLength: 32
+          minLength: 1
           title: Id
           type: string
         name:
@@ -21428,43 +21429,6 @@ components:
       - config
       title: WorkflowBlueprintWebhookDeliveryNodeStructure
       type: object
-    WorkflowEdgeRun:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        edge_run_id:
-          type: string
-          format: uuid
-          readOnly: true
-        edge:
-          type: integer
-          readOnly: true
-        status:
-          enum:
-          - waiting
-          - executed
-          - skipped
-          - failed
-          type: string
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
-      required:
-      - created_at
-      - edge
-      - edge_run_id
-      - id
-      - status
-      - updated_at
-      description: ''
     WorkflowFolder:
       type: object
       description: ''
@@ -21691,11 +21655,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        edge_runs:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkflowEdgeRun'
-          readOnly: true
         node_runs:
           type: array
           items:
@@ -21704,7 +21663,6 @@ components:
       required:
       - completed_at
       - created_at
-      - edge_runs
       - error_message
       - id
       - node_runs

@@ -229,7 +229,6 @@ export type { WorkflowBlueprint_WorkflowBlueprintConditionNodeStructure } from '
 export type { WorkflowBlueprint_WorkflowBlueprintConditionOutcomeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintConditionOutcomeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintConvertConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintConvertConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintConvertNodeStructure';
-export type { WorkflowBlueprint_WorkflowBlueprintEdgeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintEdgeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintEmailDeliveryConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintEmailDeliveryNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintESignDeliveryConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintESignDeliveryConfigStructure';
@@ -239,13 +238,13 @@ export type { WorkflowBlueprint_WorkflowBlueprintFormNodeStructure } from './mod
 export type { WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintGoogleDriveDeliveryNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintInputPortStructure } from './models/WorkflowBlueprint_WorkflowBlueprintInputPortStructure';
+export type { WorkflowBlueprint_WorkflowBlueprintOutputPortConnectionStructure } from './models/WorkflowBlueprint_WorkflowBlueprintOutputPortConnectionStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintOutputPortStructure } from './models/WorkflowBlueprint_WorkflowBlueprintOutputPortStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintPositionStructure } from './models/WorkflowBlueprint_WorkflowBlueprintPositionStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure';
-export type { WorkflowEdgeRun } from './models/WorkflowEdgeRun';
 export type { WorkflowFolder } from './models/WorkflowFolder';
 export type { WorkflowMoveFailureDetail } from './models/WorkflowMoveFailureDetail';
 export type { WorkflowNodeRun } from './models/WorkflowNodeRun';
