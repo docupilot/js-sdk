@@ -12,7 +12,7 @@ export type Workflow = {
     readonly status: 'active' | 'paused';
     folder?: WorkflowFolder | null;
     readonly created_by: number;
-    readonly created_on: string;
+    readonly created_at: string;
     readonly updated_by: number | null;
     readonly updated_at: string | null;
     readonly archived_at: string | null;

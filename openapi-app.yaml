@@ -5973,6 +5973,7 @@ paths:
           type: string
           enum:
           - docx
+          - dpt_pdf
           - fillable_pdf
           - g_document
           - g_presentation
@@ -15296,6 +15297,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
@@ -18893,7 +18895,7 @@ components:
         created_by:
           type: integer
           readOnly: true
-        created_on:
+        created_at:
           type: string
           format: date-time
           readOnly: true
@@ -18901,7 +18903,7 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        updated_on:
+        updated_at:
           type: string
           format: date-time
           readOnly: true
@@ -19872,6 +19874,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
@@ -20801,7 +20804,7 @@ components:
         created_by:
           type: integer
           readOnly: true
-        created_on:
+        created_at:
           type: string
           format: date-time
           readOnly: true
@@ -20836,8 +20839,8 @@ components:
       required:
       - archived_at
       - archived_by
+      - created_at
       - created_by
-      - created_on
       - id
       - latest_version
       - name
@@ -21442,7 +21445,7 @@ components:
         created_by:
           type: integer
           readOnly: true
-        created_on:
+        created_at:
           type: string
           format: date-time
           readOnly: true
@@ -21450,17 +21453,17 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        updated_on:
+        updated_at:
           type: string
           format: date-time
           readOnly: true
       required:
+      - created_at
       - created_by
-      - created_on
       - id
       - name
+      - updated_at
       - updated_by
-      - updated_on
     WorkflowMoveFailureDetail:
       type: object
       properties:
@@ -21573,6 +21576,10 @@ components:
           - waiting
           type: string
           readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
         error_message:
           type: string
           readOnly: true
@@ -21598,6 +21605,7 @@ components:
       required:
       - completed_at
       - created_at
+      - created_by
       - error_message
       - id
       - run_id
@@ -21633,6 +21641,10 @@ components:
           - waiting
           type: string
           readOnly: true
+        created_by:
+          type: integer
+          readOnly: true
+          nullable: true
         error_message:
           type: string
           readOnly: true
@@ -21663,6 +21675,7 @@ components:
       required:
       - completed_at
       - created_at
+      - created_by
       - error_message
       - id
       - node_runs
