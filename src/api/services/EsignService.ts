@@ -903,10 +903,10 @@ export class EsignService {
      * @returns ESignNotificationSettingsResponse
      * @throws ApiError
      */
-    public static esignGlobalSettingsNotificationList(): CancelablePromise<Array<ESignNotificationSettingsResponse>> {
+    public static esignGlobalSettingsNotificationGetRetrieve(): CancelablePromise<ESignNotificationSettingsResponse> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/dashboard/esign/global-settings/notification/',
+            url: '/dashboard/esign/global-settings/notification/get/',
         });
     }
 
