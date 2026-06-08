@@ -65,6 +65,7 @@ export type { Envelope } from './models/Envelope';
 export type { EnvelopeBulkDownload } from './models/EnvelopeBulkDownload';
 export type { EnvelopeBulkMove } from './models/EnvelopeBulkMove';
 export type { EnvelopeDetails } from './models/EnvelopeDetails';
+export type { EnvelopeDocumentDownloadResponse } from './models/EnvelopeDocumentDownloadResponse';
 export type { EnvelopeDocuments } from './models/EnvelopeDocuments';
 export type { EnvelopeExportDownloadResponse } from './models/EnvelopeExportDownloadResponse';
 export type { EnvelopeFieldResponse } from './models/EnvelopeFieldResponse';
@@ -147,7 +148,7 @@ export type { PatchedEnvelopeDocumentsUpdate } from './models/PatchedEnvelopeDoc
 export type { PatchedEnvelopeFolder } from './models/PatchedEnvelopeFolder';
 export type { PatchedEnvelopeUpdate } from './models/PatchedEnvelopeUpdate';
 export type { PatchedESignEmailAccount } from './models/PatchedESignEmailAccount';
-export type { PatchedESignNotificationSettings } from './models/PatchedESignNotificationSettings';
+export type { PatchedESignNotificationSettingUpdateRequest } from './models/PatchedESignNotificationSettingUpdateRequest';
 export type { PatchedESignSettings } from './models/PatchedESignSettings';
 export type { PatchedESignWebhook } from './models/PatchedESignWebhook';
 export type { PatchedExtension } from './models/PatchedExtension';

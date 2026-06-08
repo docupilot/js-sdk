@@ -5973,6 +5973,7 @@ paths:
           type: string
           enum:
           - docx
+          - dpt_pdf
           - fillable_pdf
           - g_document
           - g_presentation
@@ -10557,6 +10558,15 @@ paths:
           type: integer
         description: A unique integer value identifying this envelope.
         required: true
+      - in: query
+        name: response_type
+        schema:
+          type: string
+          enum:
+          - stream
+          - url
+        description: If stream, returns the document as a downloadable file. If url,
+          returns JSON with file_url and file_name.
       tags:
       - esign
       security:
@@ -10566,10 +10576,19 @@ paths:
       responses:
         '200':
           content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDocumentDownloadResponse'
             application/octet-stream:
               schema:
                 type: string
                 format: binary
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -11966,7 +11985,7 @@ paths:
           description: ''
   /dashboard/esign/global-settings/notification/:
     get:
-      operationId: get_esign_notification_settings
+      operationId: esign_global_settings_notification_retrieve
       summary: Get eSign notification settings
       parameters:
       - in: header
@@ -11984,9 +12003,14 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ESignNotificationSettings'
+                type: object
+                additionalProperties: {}
+              examples:
+                Response:
+                  value:
+                    notify_signer_on_invitation_to_sign: true
+                    notify_signer_on_reminder_emails: false
+                    '...': true
           description: ''
         '401':
           content:
@@ -12002,8 +12026,8 @@ paths:
           description: ''
   /dashboard/esign/global-settings/notification/update/:
     patch:
-      operationId: update_esign_notification_settings
-      summary: Partial update eSign notification settings
+      operationId: update_esign_notification_setting
+      summary: Update eSign notification setting
       parameters:
       - in: header
         name: X-Workspace
@@ -12017,13 +12041,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedESignNotificationSettings'
+              $ref: '#/components/schemas/PatchedESignNotificationSettingUpdateRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedESignNotificationSettings'
+              $ref: '#/components/schemas/PatchedESignNotificationSettingUpdateRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedESignNotificationSettings'
+              $ref: '#/components/schemas/PatchedESignNotificationSettingUpdateRequest'
       security:
       - SessionAuthentication: []
       responses:
@@ -14085,6 +14109,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
@@ -14854,24 +14879,35 @@ components:
     ESignNotificationSettings:
       type: object
       properties:
-        notify_signer_reminder_emails:
+        id:
+          type: integer
+          readOnly: true
+        notification_key:
+          enum:
+          - notify_signer_on_invitation_to_sign
+          - notify_signer_on_reminder_emails
+          - notify_signer_on_envelope_completed
+          - notify_signer_on_envelope_voided
+          - notify_signer_on_expiry_warning
+          - notify_sender_on_invitation_sent
+          - notify_sender_on_envelope_signed
+          - notify_sender_on_envelope_completed
+          - notify_sender_on_envelope_declined
+          - notify_sender_when_expired
+          - notify_cc_on_envelope_signed
+          - notify_cc_on_envelope_completed
+          - notify_cc_on_envelope_declined
+          - notify_cc_on_envelope_voided
+          type: string
+        is_enabled:
           type: boolean
-        notify_signer_expiry_warning:
-          type: boolean
-        notify_sender_on_envelope_signed:
-          type: boolean
-        notify_sender_on_envelope_completed:
-          type: boolean
-        notify_sender_on_envelope_declined:
-          type: boolean
-        notify_cc_on_envelope_signed:
-          type: boolean
-        notify_cc_on_envelope_completed:
-          type: boolean
-        notify_cc_on_envelope_declined:
-          type: boolean
-        notify_cc_on_envelope_voided:
-          type: boolean
+        workspace:
+          type: integer
+          readOnly: true
+      required:
+      - id
+      - notification_key
+      - workspace
       description: ''
     ESignReminderConfig:
       type: object
@@ -15437,6 +15473,18 @@ components:
       - updated_at
       - workspace
       description: ''
+    EnvelopeDocumentDownloadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
+      description: ''
     EnvelopeDocuments:
       type: object
       properties:
@@ -15498,9 +15546,16 @@ components:
         name:
           type: string
           maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
         updated_at:
@@ -15510,9 +15565,11 @@ components:
           nullable: true
       required:
       - created_at
+      - created_by
       - id
       - name
       - updated_at
+      - updated_by
     EnvelopeFolderSharing:
       type: object
       description: ''
@@ -17311,26 +17368,27 @@ components:
           type: integer
           nullable: true
       description: ''
-    PatchedESignNotificationSettings:
+    PatchedESignNotificationSettingUpdateRequest:
       type: object
       properties:
-        notify_signer_reminder_emails:
-          type: boolean
-        notify_signer_expiry_warning:
-          type: boolean
-        notify_sender_on_envelope_signed:
-          type: boolean
-        notify_sender_on_envelope_completed:
-          type: boolean
-        notify_sender_on_envelope_declined:
-          type: boolean
-        notify_cc_on_envelope_signed:
-          type: boolean
-        notify_cc_on_envelope_completed:
-          type: boolean
-        notify_cc_on_envelope_declined:
-          type: boolean
-        notify_cc_on_envelope_voided:
+        notification_key:
+          enum:
+          - notify_signer_on_invitation_to_sign
+          - notify_signer_on_reminder_emails
+          - notify_signer_on_envelope_completed
+          - notify_signer_on_envelope_voided
+          - notify_signer_on_expiry_warning
+          - notify_sender_on_invitation_sent
+          - notify_sender_on_envelope_signed
+          - notify_sender_on_envelope_completed
+          - notify_sender_on_envelope_declined
+          - notify_sender_when_expired
+          - notify_cc_on_envelope_signed
+          - notify_cc_on_envelope_completed
+          - notify_cc_on_envelope_declined
+          - notify_cc_on_envelope_voided
+          type: string
+        is_enabled:
           type: boolean
       description: ''
     PatchedESignSettings:
@@ -17433,9 +17491,16 @@ components:
         name:
           type: string
           maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
         updated_at:
@@ -18592,6 +18657,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
