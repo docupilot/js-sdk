@@ -11983,9 +11983,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
-  /dashboard/esign/global-settings/notification/:
+  /dashboard/esign/global-settings/notification/get/:
     get:
-      operationId: esign_global_settings_notification_list
+      operationId: esign_global_settings_notification_get_retrieve
       summary: Get eSign notification settings
       parameters:
       - in: header
@@ -12003,9 +12003,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ESignNotificationSettingsResponse'
+                $ref: '#/components/schemas/ESignNotificationSettingsResponse'
           description: ''
         '401':
           content:
