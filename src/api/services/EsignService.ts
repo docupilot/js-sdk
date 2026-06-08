@@ -8,6 +8,7 @@ import type { Envelope } from '../models/Envelope';
 import type { EnvelopeBulkDownload } from '../models/EnvelopeBulkDownload';
 import type { EnvelopeBulkMove } from '../models/EnvelopeBulkMove';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
+import type { EnvelopeDocumentDownloadResponse } from '../models/EnvelopeDocumentDownloadResponse';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
 import type { EnvelopeExportDownloadResponse } from '../models/EnvelopeExportDownloadResponse';
 import type { EnvelopeFolderSharing } from '../models/EnvelopeFolderSharing';
@@ -23,7 +24,7 @@ import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
 import type { PatchedEnvelopeDocumentsUpdate } from '../models/PatchedEnvelopeDocumentsUpdate';
 import type { PatchedEnvelopeUpdate } from '../models/PatchedEnvelopeUpdate';
-import type { PatchedESignNotificationSettings } from '../models/PatchedESignNotificationSettings';
+import type { PatchedESignNotificationSettingUpdateRequest } from '../models/PatchedESignNotificationSettingUpdateRequest';
 import type { PatchedUpdateEnvelopeFolderSharing } from '../models/PatchedUpdateEnvelopeFolderSharing';
 import type { PatchedUpdateEnvelopeRecipient } from '../models/PatchedUpdateEnvelopeRecipient';
 import type { SendEnvelopeViaEmail } from '../models/SendEnvelopeViaEmail';
@@ -429,25 +430,33 @@ export class EsignService {
 
     /**
      * Download envelope file
-     * @returns binary
+     * @returns EnvelopeDocumentDownloadResponse
      * @throws ApiError
      */
     public static downloadEnvelopeFile({
         documentId,
         id,
+        responseType,
     }: {
         documentId: string,
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-    }): CancelablePromise<Blob> {
+        /**
+         * If stream, returns the document as a downloadable file. If url, returns JSON with file_url and file_name.
+         */
+        responseType?: 'stream' | 'url',
+    }): CancelablePromise<EnvelopeDocumentDownloadResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/envelopes/{id}/documents/{document_id}/download/',
             path: {
                 'document_id': documentId,
                 'id': id,
+            },
+            query: {
+                'response_type': responseType,
             },
         });
     }
@@ -890,10 +899,10 @@ export class EsignService {
 
     /**
      * Get eSign notification settings
-     * @returns ESignNotificationSettings
+     * @returns any
      * @throws ApiError
      */
-    public static getEsignNotificationSettings(): CancelablePromise<Array<ESignNotificationSettings>> {
+    public static esignGlobalSettingsNotificationRetrieve(): CancelablePromise<Record<string, any>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/global-settings/notification/',
@@ -901,14 +910,14 @@ export class EsignService {
     }
 
     /**
-     * Partial update eSign notification settings
+     * Update eSign notification setting
      * @returns ESignNotificationSettings
      * @throws ApiError
      */
-    public static updateEsignNotificationSettings({
+    public static updateEsignNotificationSetting({
         requestBody,
     }: {
-        requestBody?: OmitReadonly<PatchedESignNotificationSettings>,
+        requestBody?: OmitReadonly<PatchedESignNotificationSettingUpdateRequest>,
     }): CancelablePromise<ESignNotificationSettings> {
         return __request(OpenAPI, {
             method: 'PATCH',

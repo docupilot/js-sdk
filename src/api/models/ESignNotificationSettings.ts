@@ -3,14 +3,9 @@
 /* eslint-disable */
 
 export type ESignNotificationSettings = {
-    notify_signer_reminder_emails?: boolean;
-    notify_signer_expiry_warning?: boolean;
-    notify_sender_on_envelope_signed?: boolean;
-    notify_sender_on_envelope_completed?: boolean;
-    notify_sender_on_envelope_declined?: boolean;
-    notify_cc_on_envelope_signed?: boolean;
-    notify_cc_on_envelope_completed?: boolean;
-    notify_cc_on_envelope_declined?: boolean;
-    notify_cc_on_envelope_voided?: boolean;
+    readonly id: number;
+    notification_key: 'notify_signer_on_invitation_to_sign' | 'notify_signer_on_reminder_emails' | 'notify_signer_on_envelope_completed' | 'notify_signer_on_envelope_voided' | 'notify_signer_on_expiry_warning' | 'notify_sender_on_invitation_sent' | 'notify_sender_on_envelope_signed' | 'notify_sender_on_envelope_completed' | 'notify_sender_on_envelope_declined' | 'notify_sender_when_expired' | 'notify_cc_on_envelope_signed' | 'notify_cc_on_envelope_completed' | 'notify_cc_on_envelope_declined' | 'notify_cc_on_envelope_voided';
+    is_enabled?: boolean;
+    readonly workspace: number;
 };
 
