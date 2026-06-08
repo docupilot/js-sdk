@@ -12,7 +12,6 @@ export type ESignNotificationSettingsResponse = {
     notify_sender_on_envelope_signed: boolean;
     notify_sender_on_envelope_completed: boolean;
     notify_sender_on_envelope_declined: boolean;
-    notify_sender_when_expired: boolean;
     notify_cc_on_envelope_signed: boolean;
     notify_cc_on_envelope_completed: boolean;
     notify_cc_on_envelope_declined: boolean;
