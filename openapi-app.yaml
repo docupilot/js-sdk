@@ -276,6 +276,60 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
           description: ''
+  /dashboard/accounts/v2/team/:
+    get:
+      operationId: list_all_team_members
+      summary: List all team members
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: role
+        schema:
+          type: string
+          enum:
+          - admin
+          - billing_manager
+          - manager
+          - member
+          - owner
+      tags:
+      - team
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamMember'
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
   /dashboard/accounts/v2/template_gallery/:
     get:
       operationId: list_gallery_templates
@@ -17206,6 +17260,32 @@ components:
           readOnly: true
       required:
       - show_survey_prompt
+      description: ''
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+        role:
+          enum:
+          - owner
+          - admin
+          - manager
+          - member
+          - billing_manager
+          type: string
+        deactivated_at:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - id
+      - user
       description: ''
     Template:
       type: object
