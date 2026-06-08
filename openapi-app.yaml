@@ -14886,7 +14886,6 @@ components:
           - notify_sender_on_envelope_signed
           - notify_sender_on_envelope_completed
           - notify_sender_on_envelope_declined
-          - notify_sender_when_expired
           - notify_cc_on_envelope_signed
           - notify_cc_on_envelope_completed
           - notify_cc_on_envelope_declined
@@ -14923,8 +14922,6 @@ components:
           type: boolean
         notify_sender_on_envelope_declined:
           type: boolean
-        notify_sender_when_expired:
-          type: boolean
         notify_cc_on_envelope_signed:
           type: boolean
         notify_cc_on_envelope_completed:
@@ -14942,7 +14939,6 @@ components:
       - notify_sender_on_envelope_declined
       - notify_sender_on_envelope_signed
       - notify_sender_on_invitation_sent
-      - notify_sender_when_expired
       - notify_signer_on_envelope_completed
       - notify_signer_on_envelope_voided
       - notify_signer_on_expiry_warning
@@ -17422,7 +17418,6 @@ components:
           - notify_sender_on_envelope_signed
           - notify_sender_on_envelope_completed
           - notify_sender_on_envelope_declined
-          - notify_sender_when_expired
           - notify_cc_on_envelope_signed
           - notify_cc_on_envelope_completed
           - notify_cc_on_envelope_declined
