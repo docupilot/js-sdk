@@ -1,0 +1,38 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+import type { TeamMember } from '../models/TeamMember';
+
+import type { CancelablePromise } from '../core/CancelablePromise';
+import { OpenAPI } from '../core/OpenAPI';
+import { request as __request } from '../core/request';
+import type { OmitReadonly } from '../core/utils/OmitReadonly';
+
+export class TeamService {
+
+    /**
+     * List all team members
+     * @returns TeamMember
+     * @throws ApiError
+     */
+    public static listAllTeamMembers({
+        ordering,
+        role,
+    }: {
+        /**
+         * Which field to use when ordering the results.
+         */
+        ordering?: string,
+        role?: 'admin' | 'billing_manager' | 'manager' | 'member' | 'owner',
+    }): CancelablePromise<Array<TeamMember>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/accounts/v2/team/',
+            query: {
+                'ordering': ordering,
+                'role': role,
+            },
+        });
+    }
+
+}
