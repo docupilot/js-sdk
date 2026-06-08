@@ -29,6 +29,7 @@ export const AppServices = {
   userSatisfactionSurvey: _API.UserSatisfactionSurveyService,
   workspaces: _API.WorkspacesService,
   templateVersioning: _API.TemplateVersioningService,
+  team: _API.TeamService,
 };
 
 export const AccountServices = {
