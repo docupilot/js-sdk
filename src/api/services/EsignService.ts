@@ -19,6 +19,7 @@ import type { EnvelopeStatusCountResponse } from '../models/EnvelopeStatusCountR
 import type { EnvelopeUpdate } from '../models/EnvelopeUpdate';
 import type { EnvelopeVoid } from '../models/EnvelopeVoid';
 import type { ESignNotificationSettings } from '../models/ESignNotificationSettings';
+import type { ESignNotificationSettingsResponse } from '../models/ESignNotificationSettingsResponse';
 import type { PaginatedEnvelopeBulkDownloadList } from '../models/PaginatedEnvelopeBulkDownloadList';
 import type { PaginatedEnvelopeList } from '../models/PaginatedEnvelopeList';
 import type { PaginatedEnvelopeRecipientList } from '../models/PaginatedEnvelopeRecipientList';
@@ -899,10 +900,10 @@ export class EsignService {
 
     /**
      * Get eSign notification settings
-     * @returns any
+     * @returns ESignNotificationSettingsResponse
      * @throws ApiError
      */
-    public static esignGlobalSettingsNotificationRetrieve(): CancelablePromise<Record<string, any>> {
+    public static esignGlobalSettingsNotificationList(): CancelablePromise<Array<ESignNotificationSettingsResponse>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/global-settings/notification/',

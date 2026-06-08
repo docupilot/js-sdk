@@ -79,6 +79,7 @@ export type { EnvelopeStatusCountResponse } from './models/EnvelopeStatusCountRe
 export type { EnvelopeUpdate } from './models/EnvelopeUpdate';
 export type { EnvelopeVoid } from './models/EnvelopeVoid';
 export type { ESignNotificationSettings } from './models/ESignNotificationSettings';
+export type { ESignNotificationSettingsResponse } from './models/ESignNotificationSettingsResponse';
 export type { ESignReminderConfig } from './models/ESignReminderConfig';
 export type { ESignSettings } from './models/ESignSettings';
 export type { ESignWebhook } from './models/ESignWebhook';

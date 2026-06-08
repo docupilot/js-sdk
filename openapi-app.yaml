@@ -11985,7 +11985,7 @@ paths:
           description: ''
   /dashboard/esign/global-settings/notification/:
     get:
-      operationId: esign_global_settings_notification_retrieve
+      operationId: esign_global_settings_notification_list
       summary: Get eSign notification settings
       parameters:
       - in: header
@@ -12003,14 +12003,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: {}
-              examples:
-                Response:
-                  value:
-                    notify_signer_on_invitation_to_sign: true
-                    notify_signer_on_reminder_emails: false
-                    '...': true
+                type: array
+                items:
+                  $ref: '#/components/schemas/ESignNotificationSettingsResponse'
           description: ''
         '401':
           content:
@@ -14908,6 +14903,53 @@ components:
       - id
       - notification_key
       - workspace
+      description: ''
+    ESignNotificationSettingsResponse:
+      type: object
+      properties:
+        notify_signer_on_invitation_to_sign:
+          type: boolean
+        notify_signer_on_reminder_emails:
+          type: boolean
+        notify_signer_on_envelope_completed:
+          type: boolean
+        notify_signer_on_envelope_voided:
+          type: boolean
+        notify_signer_on_expiry_warning:
+          type: boolean
+        notify_sender_on_invitation_sent:
+          type: boolean
+        notify_sender_on_envelope_signed:
+          type: boolean
+        notify_sender_on_envelope_completed:
+          type: boolean
+        notify_sender_on_envelope_declined:
+          type: boolean
+        notify_sender_when_expired:
+          type: boolean
+        notify_cc_on_envelope_signed:
+          type: boolean
+        notify_cc_on_envelope_completed:
+          type: boolean
+        notify_cc_on_envelope_declined:
+          type: boolean
+        notify_cc_on_envelope_voided:
+          type: boolean
+      required:
+      - notify_cc_on_envelope_completed
+      - notify_cc_on_envelope_declined
+      - notify_cc_on_envelope_signed
+      - notify_cc_on_envelope_voided
+      - notify_sender_on_envelope_completed
+      - notify_sender_on_envelope_declined
+      - notify_sender_on_envelope_signed
+      - notify_sender_on_invitation_sent
+      - notify_sender_when_expired
+      - notify_signer_on_envelope_completed
+      - notify_signer_on_envelope_voided
+      - notify_signer_on_expiry_warning
+      - notify_signer_on_invitation_to_sign
+      - notify_signer_on_reminder_emails
       description: ''
     ESignReminderConfig:
       type: object
