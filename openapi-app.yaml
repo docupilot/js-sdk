@@ -5973,6 +5973,7 @@ paths:
           type: string
           enum:
           - docx
+          - dpt_pdf
           - fillable_pdf
           - g_document
           - g_presentation
@@ -10627,6 +10628,15 @@ paths:
           type: integer
         description: A unique integer value identifying this envelope.
         required: true
+      - in: query
+        name: response_type
+        schema:
+          type: string
+          enum:
+          - stream
+          - url
+        description: If stream, returns the document as a downloadable file. If url,
+          returns JSON with file_url and file_name.
       tags:
       - esign
       security:
@@ -10636,10 +10646,19 @@ paths:
       responses:
         '200':
           content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvelopeDocumentDownloadResponse'
             application/octet-stream:
               schema:
                 type: string
                 format: binary
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
           description: ''
         '401':
           content:
@@ -14138,6 +14157,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
@@ -15468,6 +15488,18 @@ components:
       - updated_at
       - workspace
       description: ''
+    EnvelopeDocumentDownloadResponse:
+      type: object
+      properties:
+        file_url:
+          type: string
+          format: uri
+        file_name:
+          type: string
+      required:
+      - file_name
+      - file_url
+      description: ''
     EnvelopeDocuments:
       type: object
       properties:
@@ -15532,9 +15564,16 @@ components:
         name:
           type: string
           maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
         updated_at:
@@ -15544,9 +15583,11 @@ components:
           nullable: true
       required:
       - created_at
+      - created_by
       - id
       - name
       - updated_at
+      - updated_by
     EnvelopeFolderSharing:
       type: object
       description: ''
@@ -17442,9 +17483,16 @@ components:
         name:
           type: string
           maxLength: 50
+        created_by:
+          type: integer
+          readOnly: true
         created_at:
           type: string
           format: date-time
+          readOnly: true
+          nullable: true
+        updated_by:
+          type: integer
           readOnly: true
           nullable: true
         updated_at:
@@ -18601,6 +18649,7 @@ components:
           enum:
           - docx
           - html
+          - dpt_pdf
           - fillable_pdf
           - pptx
           - xlsx
