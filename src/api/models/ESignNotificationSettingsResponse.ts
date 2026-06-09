@@ -4,10 +4,8 @@
 
 export type ESignNotificationSettingsResponse = {
     notify_signer_on_invitation_to_sign: boolean;
-    notify_signer_on_reminder_emails: boolean;
     notify_signer_on_envelope_completed: boolean;
     notify_signer_on_envelope_voided: boolean;
-    notify_signer_on_expiry_warning: boolean;
     notify_sender_on_invitation_sent: boolean;
     notify_sender_on_envelope_signed: boolean;
     notify_sender_on_envelope_completed: boolean;

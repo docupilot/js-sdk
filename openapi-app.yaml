@@ -14878,10 +14878,8 @@ components:
         notification_key:
           enum:
           - notify_signer_on_invitation_to_sign
-          - notify_signer_on_reminder_emails
           - notify_signer_on_envelope_completed
           - notify_signer_on_envelope_voided
-          - notify_signer_on_expiry_warning
           - notify_sender_on_invitation_sent
           - notify_sender_on_envelope_signed
           - notify_sender_on_envelope_completed
@@ -14906,13 +14904,9 @@ components:
       properties:
         notify_signer_on_invitation_to_sign:
           type: boolean
-        notify_signer_on_reminder_emails:
-          type: boolean
         notify_signer_on_envelope_completed:
           type: boolean
         notify_signer_on_envelope_voided:
-          type: boolean
-        notify_signer_on_expiry_warning:
           type: boolean
         notify_sender_on_invitation_sent:
           type: boolean
@@ -14941,9 +14935,7 @@ components:
       - notify_sender_on_invitation_sent
       - notify_signer_on_envelope_completed
       - notify_signer_on_envelope_voided
-      - notify_signer_on_expiry_warning
       - notify_signer_on_invitation_to_sign
-      - notify_signer_on_reminder_emails
       description: ''
     ESignReminderConfig:
       type: object
@@ -17410,10 +17402,8 @@ components:
         notification_key:
           enum:
           - notify_signer_on_invitation_to_sign
-          - notify_signer_on_reminder_emails
           - notify_signer_on_envelope_completed
           - notify_signer_on_envelope_voided
-          - notify_signer_on_expiry_warning
           - notify_sender_on_invitation_sent
           - notify_sender_on_envelope_signed
           - notify_sender_on_envelope_completed
