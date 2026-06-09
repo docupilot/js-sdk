@@ -8,6 +8,7 @@ import type { Envelope } from '../models/Envelope';
 import type { EnvelopeBulkDownload } from '../models/EnvelopeBulkDownload';
 import type { EnvelopeBulkMove } from '../models/EnvelopeBulkMove';
 import type { EnvelopeDetails } from '../models/EnvelopeDetails';
+import type { EnvelopeDocumentDownloadResponse } from '../models/EnvelopeDocumentDownloadResponse';
 import type { EnvelopeDocuments } from '../models/EnvelopeDocuments';
 import type { EnvelopeExportDownloadResponse } from '../models/EnvelopeExportDownloadResponse';
 import type { EnvelopeFolderSharing } from '../models/EnvelopeFolderSharing';
@@ -457,25 +458,33 @@ export class EsignService {
 
     /**
      * Download envelope file
-     * @returns binary
+     * @returns EnvelopeDocumentDownloadResponse
      * @throws ApiError
      */
     public static downloadEnvelopeFile({
         documentId,
         id,
+        responseType,
     }: {
         documentId: string,
         /**
          * A unique integer value identifying this envelope.
          */
         id: number,
-    }): CancelablePromise<Blob> {
+        /**
+         * If stream, returns the document as a downloadable file. If url, returns JSON with file_url and file_name.
+         */
+        responseType?: 'stream' | 'url',
+    }): CancelablePromise<EnvelopeDocumentDownloadResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/dashboard/esign/envelopes/{id}/documents/{document_id}/download/',
             path: {
                 'document_id': documentId,
                 'id': id,
+            },
+            query: {
+                'response_type': responseType,
             },
         });
     }
