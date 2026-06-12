@@ -8,5 +8,6 @@ export type EnvelopeFieldResponse = {
     name: string;
     type: string;
     value?: string | null;
+    file_name?: string | null;
 };
 

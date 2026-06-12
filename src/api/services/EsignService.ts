@@ -360,6 +360,36 @@ export class EsignService {
     }
 
     /**
+     * Download an individual attachment
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadAttachment({
+        attachmentId,
+        id,
+        format,
+    }: {
+        attachmentId: string,
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        format?: 'json' | 'octet-stream',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/attachment/{attachment_id}/download/',
+            path: {
+                'attachment_id': attachmentId,
+                'id': id,
+            },
+            query: {
+                'format': format,
+            },
+        });
+    }
+
+    /**
      * Cancel an Envelope
      * @returns void
      * @throws ApiError
@@ -588,6 +618,36 @@ export class EsignService {
             url: '/dashboard/esign/envelopes/{id}/permanent_delete/',
             path: {
                 'id': id,
+            },
+        });
+    }
+
+    /**
+     * Download all attachments of an envelope recipient as a zip file
+     * @returns binary
+     * @throws ApiError
+     */
+    public static downloadRecipientAttachments({
+        id,
+        recipientId,
+        format,
+    }: {
+        /**
+         * A unique integer value identifying this envelope.
+         */
+        id: number,
+        recipientId: string,
+        format?: 'json' | 'zip',
+    }): CancelablePromise<Blob> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/esign/envelopes/{id}/recipient/{recipient_id}/attachments/download/',
+            path: {
+                'id': id,
+                'recipient_id': recipientId,
+            },
+            query: {
+                'format': format,
             },
         });
     }
