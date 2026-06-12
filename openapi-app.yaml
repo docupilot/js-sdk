@@ -10374,6 +10374,76 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
+  /dashboard/esign/envelopes/{id}/attachment/{attachment_id}/download/:
+    get:
+      operationId: download_attachment
+      summary: Download an individual attachment
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: path
+        name: attachment_id
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - octet-stream
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
   /dashboard/esign/envelopes/{id}/cancel/:
     post:
       operationId: cancel_envelope
@@ -10904,6 +10974,76 @@ paths:
         '404':
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+          description: ''
+  /dashboard/esign/envelopes/{id}/recipient/{recipient_id}/attachments/download/:
+    get:
+      operationId: download_recipient_attachments
+      summary: Download all attachments of an envelope recipient as a zip file
+      parameters:
+      - in: header
+        name: X-Workspace
+        schema:
+          type: string
+        description: Workspace unique_key
+        required: true
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - zip
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this envelope.
+        required: true
+      - in: path
+        name: recipient_id
+        schema:
+          type: string
+        required: true
+      tags:
+      - esign
+      security:
+      - OAuthAuthentication: []
+      - SessionAuthentication: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+          description: ''
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/UnauthenticatedError'
+          description: ''
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+          description: ''
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+            application/zip:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
           description: ''
@@ -14877,9 +15017,11 @@ components:
           readOnly: true
         notification_key:
           enum:
-          - notify_signer_on_invitation_to_sign
-          - notify_signer_on_envelope_completed
-          - notify_signer_on_envelope_voided
+          - notify_recipient_on_invitation_to_sign
+          - notify_recipient_on_reminder_emails
+          - notify_recipient_on_envelope_completed
+          - notify_recipient_on_envelope_voided
+          - notify_recipient_on_expiry_warning
           - notify_sender_on_invitation_sent
           - notify_sender_on_envelope_signed
           - notify_sender_on_envelope_completed
@@ -14902,11 +15044,15 @@ components:
     ESignNotificationSettingsResponse:
       type: object
       properties:
-        notify_signer_on_invitation_to_sign:
+        notify_recipient_on_invitation_to_sign:
           type: boolean
-        notify_signer_on_envelope_completed:
+        notify_recipient_on_reminder_emails:
           type: boolean
-        notify_signer_on_envelope_voided:
+        notify_recipient_on_envelope_completed:
+          type: boolean
+        notify_recipient_on_envelope_voided:
+          type: boolean
+        notify_recipient_on_expiry_warning:
           type: boolean
         notify_sender_on_invitation_sent:
           type: boolean
@@ -14929,13 +15075,15 @@ components:
       - notify_cc_on_envelope_declined
       - notify_cc_on_envelope_signed
       - notify_cc_on_envelope_voided
+      - notify_recipient_on_envelope_completed
+      - notify_recipient_on_envelope_voided
+      - notify_recipient_on_expiry_warning
+      - notify_recipient_on_invitation_to_sign
+      - notify_recipient_on_reminder_emails
       - notify_sender_on_envelope_completed
       - notify_sender_on_envelope_declined
       - notify_sender_on_envelope_signed
       - notify_sender_on_invitation_sent
-      - notify_signer_on_envelope_completed
-      - notify_signer_on_envelope_voided
-      - notify_signer_on_invitation_to_sign
       description: ''
     ESignReminderConfig:
       type: object
@@ -15557,6 +15705,9 @@ components:
         type:
           type: string
         value:
+          type: string
+          nullable: true
+        file_name:
           type: string
           nullable: true
       required:
@@ -17401,9 +17552,11 @@ components:
       properties:
         notification_key:
           enum:
-          - notify_signer_on_invitation_to_sign
-          - notify_signer_on_envelope_completed
-          - notify_signer_on_envelope_voided
+          - notify_recipient_on_invitation_to_sign
+          - notify_recipient_on_reminder_emails
+          - notify_recipient_on_envelope_completed
+          - notify_recipient_on_envelope_voided
+          - notify_recipient_on_expiry_warning
           - notify_sender_on_invitation_sent
           - notify_sender_on_envelope_signed
           - notify_sender_on_envelope_completed
