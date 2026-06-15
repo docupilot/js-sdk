@@ -245,6 +245,8 @@ export type { WorkflowBlueprint_WorkflowBlueprintTemplateConfigStructure } from 
 export type { WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintTemplateNodeStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure } from './models/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryConfigStructure';
 export type { WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure } from './models/WorkflowBlueprint_WorkflowBlueprintWebhookDeliveryNodeStructure';
+export type { WorkflowConfig } from './models/WorkflowConfig';
+export type { WorkflowExecuteResponse } from './models/WorkflowExecuteResponse';
 export type { WorkflowFolder } from './models/WorkflowFolder';
 export type { WorkflowMoveFailureDetail } from './models/WorkflowMoveFailureDetail';
 export type { WorkflowNodeRun } from './models/WorkflowNodeRun';

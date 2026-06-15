@@ -8,6 +8,8 @@ import type { PatchedWorkflowFolder } from '../models/PatchedWorkflowFolder';
 import type { PatchedWorkflowUpdate } from '../models/PatchedWorkflowUpdate';
 import type { Workflow } from '../models/Workflow';
 import type { WorkflowBlueprint } from '../models/WorkflowBlueprint';
+import type { WorkflowConfig } from '../models/WorkflowConfig';
+import type { WorkflowExecuteResponse } from '../models/WorkflowExecuteResponse';
 import type { WorkflowFolder } from '../models/WorkflowFolder';
 import type { WorkflowRunList } from '../models/WorkflowRunList';
 import type { WorkflowRunRetrieve } from '../models/WorkflowRunRetrieve';
@@ -30,6 +32,7 @@ export class WorkflowsService {
         ordering,
         page,
         search,
+        status,
     }: {
         /**
          * Filter by folder id. Use null, home, or an empty value for the home folder.
@@ -47,6 +50,10 @@ export class WorkflowsService {
          * A search term.
          */
         search?: string,
+        /**
+         * Filter workflows by status.
+         */
+        status?: 'active' | 'all' | 'archived' | 'draft' | 'paused',
     }): CancelablePromise<PaginatedWorkflowList> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -56,6 +63,7 @@ export class WorkflowsService {
                 'ordering': ordering,
                 'page': page,
                 'search': search,
+                'status': status,
             },
         });
     }
@@ -459,6 +467,54 @@ export class WorkflowsService {
             path: {
                 'workflow_id': workflowId,
                 'workflow_version_id': workflowVersionId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * Get workflow config by unique id
+     * @returns WorkflowConfig
+     * @throws ApiError
+     */
+    public static getWorkflowConfigByUniqueId({
+        workflowUnique,
+        workspaceUnique,
+    }: {
+        workflowUnique: string,
+        workspaceUnique: string,
+    }): CancelablePromise<WorkflowConfig> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/dashboard/workflows/{workspace_unique}/{workflow_unique}/config/',
+            path: {
+                'workflow_unique': workflowUnique,
+                'workspace_unique': workspaceUnique,
+            },
+        });
+    }
+
+    /**
+     * Execute workflow by unique id
+     * @returns WorkflowExecuteResponse
+     * @throws ApiError
+     */
+    public static runWorkflowByUniqueId({
+        workflowUnique,
+        workspaceUnique,
+        requestBody,
+    }: {
+        workflowUnique: string,
+        workspaceUnique: string,
+        requestBody?: Record<string, any>,
+    }): CancelablePromise<WorkflowExecuteResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/dashboard/workflows/{workspace_unique}/{workflow_unique}/execute/',
+            path: {
+                'workflow_unique': workflowUnique,
+                'workspace_unique': workspaceUnique,
             },
             body: requestBody,
             mediaType: 'application/json',
